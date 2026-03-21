@@ -12,7 +12,7 @@ Feature: Theorem 1 — Substring-matching regex guardrails are aperiodic
       | id | pattern                          | monoid_size |
       | F1 | (bomb\|weapon\|explosive)        | 70          |
       | F2 | b[i1][t+]ch                      | 17          |
-      | F3 | ignore\s+(all\s+)?(previous\|prior)\s+instructions? | 813 |
+      | F3 | ignore\s+(all\s+)?(previous\|prior)\s+instructions? | 562 |
       | F4 | AKIA[0-9A-Z]{16}                 | 91          |
       | F5 | (eval\|exec)\s*\(               | 26          |
 

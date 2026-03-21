@@ -10,7 +10,7 @@ from collections import deque
 @given('a config with medium "{medium}" and target "{target}"')
 def step_config(context, medium, target):
     """Create a config dict with the specified medium and target."""
-    context.config = {
+    context.engine_config = {
         "medium": medium,
         "params": {
             "initial_state": ["N0", "N1"],
@@ -32,7 +32,7 @@ def step_config(context, medium, target):
 @when('I encode the config to base64')
 def step_encode(context):
     """Encode the config to base64 and store it in a temporary file."""
-    config_json = json.dumps(context.config)
+    config_json = json.dumps(context.engine_config)
     context.encoded = base64.b64encode(config_json.encode('utf-8'))
     
     # Write to temporary file

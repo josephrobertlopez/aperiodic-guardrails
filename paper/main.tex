@@ -51,6 +51,8 @@
 \newcommand{\ie}{i.e.,\xspace}
 \newcommand{\eg}{e.g.,\xspace}
 
+\begin{document}
+
 % ============================================================
 \title{\Large\bfseries Algebraic and Computational Limits of LLM Guardrails}
 
@@ -628,7 +630,7 @@ Then:
 \end{enumerate}
 \end{theorem}
 
-\begin{proof}
+\begin{proof}\leavevmode
 \paragraph{(1) Regularity.}
 The decoding function $w \mapsto w[0::p]$ is computed by a length-$p$ cyclic DFA
 that counts position modulo $p$ and records the character at position $\equiv 0
@@ -769,7 +771,7 @@ program $P[\iota]$ satisfies $G(P[\iota]) = 1$ (i.e., the program is dangerous)?
 \textsc{GIDP} is NP-complete.
 \end{theorem}
 
-\begin{proof}
+\begin{proof}\leavevmode
 \paragraph{Membership in NP.}
 A certificate is an assignment $\iota\colon M \to R$.
 Given $\iota$, checking $\iota(m) \in I(m)$ for all $m$ takes time $O(|M| \cdot |R|)$;

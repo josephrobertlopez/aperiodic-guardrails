@@ -392,7 +392,7 @@ def print_summary(stats):
 # Entry point
 # ---------------------------------------------------------------------------
 
-if __name__ == "__main__":
+def main():
     import sys
     n = int(sys.argv[1]) if len(sys.argv) > 1 else 20
 
@@ -416,3 +416,7 @@ if __name__ == "__main__":
     with open(out_path, "w") as f:
         json.dump(output, f, indent=2)
     print(f"\nResults saved to {out_path}")
+
+
+if __name__ == "__main__":
+    main()

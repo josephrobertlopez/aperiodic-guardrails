@@ -780,6 +780,44 @@ def analyze(pattern: str):
         print("=" * 60)
 
 
+def extract_monoid(pattern: str) -> dict:
+    """
+    Extract the syntactic monoid from a regex pattern.
+
+    Returns dict with:
+        size: int       -- number of elements in the monoid
+        aperiodic: bool -- True if the monoid is aperiodic
+        groups: list    -- orders of non-trivial cyclic subgroups (empty if aperiodic)
+    """
+    result = try_greenery(pattern)
+    if result:
+        num_states, transitions, start, accept, alphabet = result
+    else:
+        num_states, transitions, start, accept, alphabet = builtin_path(pattern)
+
+    elements, mult_table = compute_transition_monoid(
+        num_states, transitions, start, alphabet
+    )
+    is_aperiodic, cycle_orders = check_aperiodic(elements, mult_table)
+
+    groups: List[int] = []
+    if not is_aperiodic:
+        idem = find_idempotents(elements, mult_table)
+        subgroup_orders = maximal_subgroup_orders(elements, mult_table, idem)
+        groups = sorted(set(cycle_orders + subgroup_orders))
+
+    return {
+        'size': len(elements),
+        'aperiodic': is_aperiodic,
+        'groups': groups,
+    }
+
+
+def check_aperiodicity(pattern: str) -> bool:
+    """Return True if the syntactic monoid of the pattern is aperiodic."""
+    return extract_monoid(pattern)['aperiodic']
+
+
 def main():
     if len(sys.argv) < 2:
         print("Usage: python monoid_extractor.py \"regex_pattern\"")
