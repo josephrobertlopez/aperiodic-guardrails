@@ -1,0 +1,2002 @@
+% USENIX Security-style consolidated paper
+% Part 1: Preamble through Section 4 (Algebraic Foundations)
+% Part 2 (§5–§11 + bibliography + \end{document}) written separately.
+
+\documentclass[letterpaper,twocolumn,10pt]{article}
+\usepackage[letterpaper,left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{times}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+\usepackage{cleveref}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+  basicstyle=\small\ttfamily,
+  breaklines=true,
+  frame=single,
+  framesep=3pt,
+  xleftmargin=6pt,
+  xrightmargin=6pt,
+  aboveskip=8pt,
+  belowskip=8pt,
+  columns=fullflexible,
+  keepspaces=true,
+}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{assumption}[theorem]{Assumption}
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=*}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{xspace}
+\newcommand{\ie}{i.e.,\xspace}
+\newcommand{\eg}{e.g.,\xspace}
+
+% ============================================================
+\title{\Large\bfseries Algebraic and Computational Limits of LLM Guardrails}
+
+\author{Joseph Robert Lopez}
+\date{}
+\maketitle
+
+% ============================================================
+\begin{abstract}
+LLM guardrails face four structurally distinct and independently provable barriers:
+algebraic blindness arising from syntactic monoid aperiodicity,
+information-theoretic loss formalized by the Fano bound,
+NP-hardness of instantiation verification,
+and structural transfer via functorial homomorphism combined with syntactic indistinguishability.
+Together these results characterize why inference-layer defenses are necessary but insufficient.
+
+We operationalize these barriers through five attack vectors.
+V1--V4 (\emph{homomorphic reasoning}: decomposition, zero-knowledge pipelines,
+Tree-of-Thought solving over abstract grammars, and encoding bootstrap) exploit
+the information-theoretic and computational barriers against abstraction-based attacks.
+V5 (\emph{modular counting bypass}) exploits algebraic blindness: we prove that all
+substring-matching regex guardrails have aperiodic syntactic monoids and are therefore
+provably blind to any payload encoded using modular counting.
+Empirically, V3 yields a mean solve rate of $0.512$ for LLM-guided Tree-of-Thought
+versus $0.203$ for random-beam and $0.119$ for BFS ($N{=}20$, $p{<}0.01$).
+We extracted syntactic monoids from a corpus of 91 regex patterns drawn from five
+open-source guardrail tools; $97.1\%$ are aperiodic, and the $\mathrm{MOD}_2$
+bypass construction succeeds against all aperiodic patterns.
+A 391-line proof-of-concept with three execution mediums validates all five vectors.
+We conclude that inference-layer guardrails are necessary but insufficient, and that
+effective defense must migrate to the execution layer where concrete artifacts
+become observable.
+\end{abstract}
+
+% ============================================================
+\section{Introduction}\label{sec:intro}
+
+Production LLM deployments stack safety measures in depth: a regex pre-filter
+blocks known-harmful patterns before the request reaches the model, a neural
+classifier operating at inference time catches a broader distributional range of
+harmful intent, and an inference-time monitor inspects generated outputs before
+they are returned to the user.
+Each layer is individually sound for the threats it was designed to address.
+We show that each layer has a structural limitation provable from first principles,
+and that together these limitations leave a systematic gap an adversary can exploit
+without model access, fine-tuning, or gradient computation.
+
+\subsection{The Chinese Room Inversion}\label{sec:chinese-room}
+
+Searle's Chinese Room~\cite{searle1980minds} argues that symbol manipulation
+without understanding is not intelligence.
+We observe that for the purposes of producing operationally correct procedures,
+it does not matter---the room produces correct answers regardless.
+An LLM operating as a theorem prover over an uninterpreted formal system
+produces derivations that, when instantiated via an external interpretation
+function held by the attacker, constitute valid operation sequences in real domains.
+The LLM never crosses the abstraction boundary.
+Understanding is unnecessary; structural fidelity is sufficient.
+
+This inverts the usual framing: the Chinese Room is not a weakness of AI but a
+\emph{weapon}.
+If an LLM can solve formal reasoning problems without understanding what they mean,
+it can solve harmful problems encoded as formal systems without triggering
+content-based guardrails---because the content visible to the guardrail is
+indistinguishable from legitimate formal reasoning.
+
+\subsection{Overview of Results and Paper Organization}\label{sec:contributions}
+
+We use \emph{homomorphic} in its algebraic sense throughout: the interpretation
+functor $\hat{I}$ (Theorem~\ref{thm:transfer}) is a structure-preserving map from
+the free category of abstract derivations to the category of domain
+operations---a homomorphism of categories.
+The attack exploits this homomorphism: reasoning performed in the abstract category
+maps faithfully to operational sequences in the target domain.
+
+Our contributions, organized by section, are:
+
+\begin{enumerate}
+  \item \textbf{Algebraic impossibility} (\cref{sec:algebraic-foundations,sec:blindness-theorem}):
+    substring-matching regex guardrails have aperiodic syntactic monoids
+    (Theorem~\ref{thm:substring-aperiodic}) and are therefore provably blind to all
+    modular counting encodings (Theorem~\ref{thm:blindness}; Corollary~\ref{cor:parity}).
+  \item \textbf{Information-theoretic impossibility} (\cref{sec:fano}):
+    abstraction functions destroy safety-critical information; the Fano bound
+    (Proposition~\ref{prop:fano}) gives an irreducible error floor for any lifted guardrail.
+  \item \textbf{Computational impossibility} (\cref{sec:np}):
+    verifying whether an abstract program has a dangerous instantiation is
+    NP-complete (Theorem~\ref{thm:np}).
+  \item \textbf{Structural impossibility} (\cref{sec:functor,sec:indistinguish}):
+    abstract derivations transfer faithfully to real domains via free-category
+    functoriality (Theorem~\ref{thm:transfer}), and adversarial formal reasoning
+    tasks are syntactically indistinguishable from legitimate ones
+    (Theorem~\ref{thm:indistinguish}).
+  \item \textbf{Five attack vectors validated empirically} (\cref{sec:vectors}):
+    V1--V4 demonstrate homomorphic reasoning; V5 demonstrates modular counting bypass.
+  \item \textbf{91-pattern regex corpus analysis} (\cref{sec:corpus}):
+    confirms $97.1\%$ aperiodicity across five open-source guardrail tools with
+    verified $\mathrm{MOD}_2$ bypass constructions.
+  \item \textbf{Defense recommendations grounded in formal results} (\cref{sec:discussion}):
+    each impossibility theorem maps to a specific layer of a defense-in-depth stack.
+\end{enumerate}
+
+\paragraph{Scope.}
+The algebraic blindness result (\S\ref{sec:algebraic-foundations}) applies
+specifically to regex guardrails and is unconditional.
+Transformer-based (neural) guardrails operate in $\mathrm{TC}^0$~\cite{merrill2023saturated,chiang2024tighter},
+which \emph{can} compute $\mathrm{MOD}_p$, so the modular counting blind spot does
+not transfer.
+However, neural guardrails face the information-theoretic and computational barriers
+(\S\S\ref{sec:fano}--\ref{sec:np}) and the structural indistinguishability result
+(\S\ref{sec:indistinguish}), which apply at any layer that inspects only LLM-visible content.
+
+% ============================================================
+\section{Background and Related Work}\label{sec:related}
+
+\subsection{Jailbreaking Taxonomies}\label{sec:related-jailbreak}
+
+Wei et al.~\cite{wei2023jailbroken} identify \emph{mismatched generalization} as
+a failure mode in which safety training does not cover the full distribution of
+capability-eliciting inputs.
+Our abstraction bypass is a systematic instance: the model's formal reasoning
+capabilities generalize beyond the distribution on which safety training was
+performed.
+Zou et al.~\cite{zou2023universal} demonstrate gradient-based adversarial suffixes;
+our attacks operate in semantic space rather than weight space and require no model
+access whatsoever.
+
+Esmradi et al.~\cite{esmradi2024h4rm3l} introduce h4rm3l, a composable jailbreak
+language in which individual text-level transformations are composed to produce
+effective attacks.
+Our homomorphic reasoning framework generalizes composable string transformations:
+rather than composing text-level encodings, we compose structure-level abstractions
+whose compositional behavior is guaranteed by functoriality
+(Theorem~\ref{thm:transfer}).
+
+Huang et al.~\cite{reasoning_jailbreak2026} demonstrate that large reasoning models
+achieve a $97\%$ attack success rate when deployed as autonomous jailbreak agents,
+confirming that LLM reasoning capability itself is the primary attack surface.
+This directly parallels our core thesis: the attack does not exploit model
+miscalibration but the model's genuine reasoning competence applied to
+abstractions the guardrail cannot interpret.
+
+\subsection{Encoding and Structural Attacks}\label{sec:related-encoding}
+
+StructuralSleight~\cite{structuralsleight2024} achieves $94.62\%$ attack success
+on GPT-4o via uncommon text-encoded structures (ASCII art, cipher text, etc.),
+demonstrating that encoding diversity defeats content filters.
+Our algebraic results explain \emph{why}: any encoding that requires modular
+counting to decode lies outside the $\mathrm{AC}^0$ closure of any aperiodic
+guardrail language (Theorem~\ref{thm:blindness}).
+
+Boucher et al.~\cite{boucher2021badchars} demonstrate imperceptible attacks via
+Unicode manipulation---inserting invisible characters between payload characters
+so that the guardrail sees an interrupted substring.
+Zero-width character insertion is an instance of $\mathrm{MOD}_2$ interleaving with
+a null filler character; our Corollary~\ref{cor:parity} proves it cannot be patched
+within the regex paradigm.
+
+The Content Concretization attack~\cite{concretization2025} traverses the
+abstraction hierarchy in the opposite direction: given an abstract harmful
+specification, the attacker prompts the LLM to supply concrete details.
+We proceed concrete-to-abstract---encoding a concrete harmful task as an abstract
+formal system---and the interpretation happens offline.
+The two approaches are complementary instances of the same general principle that
+abstraction boundaries defeat content inspection.
+
+S2C~\cite{s2c2026} appeared concurrently (March 2026) and manipulates semantic
+reconstruction during inference across multiple semantic dimensions, overlapping
+with our abstraction tower concept.
+Where S2C operates within a single LLM inference pass, our pipeline distributes
+the harmful reasoning across multiple agents and an offline interpretation table.
+
+\subsection{Computational and Algebraic Impossibility}\label{sec:related-impossibility}
+
+Ball et al.~\cite{ball2025impossibility} prove that under standard cryptographic
+assumptions, adversarial prompts can be computationally indistinguishable from
+benign ones for any efficient filter.
+Our results are complementary.
+We establish \emph{syntactic} (perfect, unconditional) indistinguishability for
+formal reasoning attacks (Theorem~\ref{thm:indistinguish}) and \emph{algebraic}
+(unconditional) blindness for modular counting attacks
+(Theorem~\ref{thm:blindness}).
+Ball et al.\ give a more general but assumption-dependent result over a broader
+attack class; our results apply to specific attack constructions and carry no
+computational hardness assumption.
+
+The abstract encoding channel in homomorphic reasoning is a form of
+\emph{steganographic channel}~\cite{hopper2002steganography}: the payload
+(harmful intent) is hidden in a covertext (legitimate formal reasoning task)
+such that no efficient observer (the guardrail) can distinguish stegotext from
+covertext.
+Hopper, Langford, and von Ahn~\cite{hopper2002steganography} formalize perfect
+steganographic security as the requirement that no polynomial-time distinguisher
+achieves better than negligible advantage in separating channel transmissions from
+covertext.
+Theorem~\ref{thm:indistinguish} can be viewed as establishing \emph{perfect}
+steganographic security for the homomorphic reasoning channel: the distinguisher
+advantage is exactly zero (not merely negligible) because the LLM-visible content
+of the attack is syntactically equal to a legitimate reasoning task, making the
+distinguisher's task information-theoretically impossible rather than merely
+computationally hard.
+
+\subsection{Formal Languages and Neural Networks}\label{sec:related-formal}
+
+Merrill~\cite{merrill2024survey} surveys the formal language expressivity of
+transformer architectures.
+Merrill and Sabharwal~\cite{merrill2023saturated} establish that log-precision
+transformers are contained in $\mathrm{TC}^0$, implying they can compute modular
+counting functions.
+Chiang et al.~\cite{chiang2024tighter} give tighter expressivity bounds.
+Hahn~\cite{hahn2020limitations} proves that self-attention mechanisms are limited
+on periodic formal languages, providing circuit-theoretic evidence for the same
+qualitative boundary our algebraic results formalize.
+Weiss et al.~\cite{weiss2022extracting} extract DFAs from RNNs using the Angluin
+$L^*$ algorithm~\cite{angluin1987}; the same DFA extraction pipeline underlies our
+empirical syntactic monoid computation.
+
+\subsection{Indirect Prompt Injection}\label{sec:related-injection}
+
+Greshake et al.~\cite{greshake2023injection} establish that LLM-integrated
+applications blur the boundary between data and instructions, enabling an attacker
+to inject control flow via data channels.
+Our V2 (zero-knowledge pipeline) is a specific instance of this pattern: the
+``data'' is a base64-encoded configuration that contains harmful parameters the
+agent processing it never reads.
+The theoretical underpinning differs---Greshake et al.\ exploit instruction/data
+confusion, while V2 exploits the information destruction formalized in
+Proposition~\ref{prop:fano}---but the practical attack pattern is closely related.
+
+% ============================================================
+\section{Threat Model and Formalization}\label{sec:threat}
+
+\subsection{Attacker and Defender Model}\label{sec:threat-model}
+
+\paragraph{Attacker capabilities.}
+The attacker has access to:
+(a)~an LLM-based coding assistant with bash execution (\eg Claude Code, Copilot, Cursor);
+(b)~local LLM infrastructure (\eg Ollama with open-weight models) for offline
+grammar solving without guardrail exposure;
+(c)~standard programming tools (Python, AST manipulation, base64 encoding).
+
+\paragraph{Defender capabilities.}
+The guardrail system operates at LLM inference time via RLHF training,
+system prompt rules, and output filters.
+It inspects the content visible to the LLM---prompts, generated code, tool
+calls---but not runtime arguments, environment variables, base64-encoded data
+in files the agent does not read, or offline interpretation tables.
+
+\paragraph{Attacker goal.}
+Cause the LLM to produce computation that, when instantiated with
+attacker-controlled parameters or interpreted via an attacker-held interpretation
+table, performs a task the guardrail would refuse if asked directly.
+The LLM must never observe the harmful intent in plaintext during any inference call
+subject to guardrail inspection.
+
+\paragraph{Out of scope.}
+Attacks requiring model weight access, fine-tuning, or gradient computation.
+Attacks against execution-layer defenses (sandboxing, network ACLs).
+Social engineering of human reviewers.
+
+\subsection{Abstraction-Based Formalization}\label{sec:formalization}
+
+\begin{definition}[Abstraction function]\label{def:abstraction}
+Let $R$ be a finite set of concrete artifacts and $M$ a finite set of abstract types.
+An \emph{abstraction function} $U\colon R \to M$ maps each concrete artifact to its
+abstract type (\eg $U(\texttt{streaming.example}) = \text{``video endpoint''}$,
+$U(\texttt{C}_9\texttt{H}_8\texttt{O}_4) = \text{``acetyl compound''}$).
+\end{definition}
+
+We do not require $U$ to be surjective; we only use the existence of the fiber
+structure defined below.
+
+\begin{definition}[Fiber]\label{def:fiber}
+For $m \in M$, the \emph{fiber} $U^{-1}(m) = \{r \in R : U(r) = m\}$ is the
+set of all concrete artifacts mapping to abstract type $m$.
+A fiber is \emph{mixed} if it contains both allowed ($G(r) = 0$) and denied
+($G(r) = 1$) artifacts under the ground-truth guardrail $G\colon R \to \{0,1\}$.
+\end{definition}
+
+\begin{definition}[Lifted guardrail]\label{def:lifted}
+A \emph{lifted guardrail} is a function $G'\colon M \to \{0,1\}$ that approximates
+the ground-truth guardrail $G$ through the abstraction layer: the system classifies
+concrete artifact $r$ by evaluating $G'(U(r))$ rather than $G(r)$ directly.
+\end{definition}
+
+The existence of mixed fibers is the root cause of the information-theoretic lower
+bound in Proposition~\ref{prop:fano}: if a fiber $U^{-1}(m)$ contains both safe
+and unsafe concrete artifacts, no lifted guardrail $G'$ can correctly classify all
+of them without access to $r$ itself---but the guardrail operating at the
+abstraction layer sees only $m = U(r)$.
+
+\subsection{Guardrails as Language Recognizers}\label{sec:guardrail-language}
+
+Let $\Sigma$ be the finite alphabet of LLM prompt characters.
+
+\begin{definition}[Regex guardrail]\label{def:regex-guardrail}
+A \emph{regex guardrail} is a function $G\colon \Sigma^* \to \{\mathsf{allow}, \mathsf{block}\}$
+defined by a finite set of regular expression patterns $\{r_1, \ldots, r_k\}$
+applied via substring search:
+\[
+  G(w) = \begin{cases}
+    \mathsf{block} & \text{if } \exists\, i,\; \exists\, u,v \in \Sigma^*:
+                      w = u \cdot x \cdot v,\; x \in L(r_i), \\
+    \mathsf{allow} & \text{otherwise.}
+  \end{cases}
+\]
+\end{definition}
+
+Let $L_{\mathsf{safe}} = \{w \in \Sigma^* : G(w) = \mathsf{allow}\}$ be the set of
+strings the guardrail permits.
+
+\begin{definition}[Blocked language]\label{def:blocked-language}
+The \emph{blocked language} of $G$ is the complement
+$L_G = \Sigma^* \setminus L_{\mathsf{safe}} = \Sigma^* \cdot \bigl(\bigcup_{i=1}^{k} L(r_i)\bigr) \cdot \Sigma^*$.
+This is a regular language (closed under concatenation with $\Sigma^*$ and finite union).
+\end{definition}
+
+\begin{definition}[Guardrail blindness to encoding class]\label{def:blindness}
+Let $\mathcal{E}$ be a class of invertible encodings $\phi\colon \Sigma^* \to \Sigma^*$.
+A guardrail $G$ is \emph{blind to encoding class $\mathcal{E}$} if for every
+$\phi \in \mathcal{E}$:
+\begin{enumerate}
+  \item $\phi(L_{\mathsf{blocked}}) \cap L_G = \emptyset$ (encoded harmful strings
+    pass the guardrail), and
+  \item there is no regular language $L'$ with aperiodic syntactic monoid such that
+    $\phi(L_{\mathsf{blocked}}) \subseteq L' \subseteq \overline{L_{\mathsf{safe}}}$
+    (no aperiodic regex can separate encoded-harmful from genuinely-benign strings).
+\end{enumerate}
+\end{definition}
+
+Condition (1) states that the encoding evades the current guardrail; condition (2)
+states that the evasion cannot be patched by adding any regex whose syntactic monoid
+is aperiodic---which by \S\ref{sec:algebraic-foundations} is the entire aperiodic
+regex class.
+This pair of conditions connects the regex language-recognizer formalization to the
+abstraction-based formalization of \S\ref{sec:formalization}: regex guardrails are
+a specific instance of lifted guardrails operating on string content, and their
+fibers are the equivalence classes of the syntactic congruence $\equiv_{L_G}$.
+
+% ============================================================
+\section{Algebraic Foundations}\label{sec:algebraic-foundations}
+
+This section recalls the classical algebraic and circuit-theoretic machinery that
+underlies the impossibility results in \S\ref{sec:blindness-theorem}.
+All results here are classical; we present them to establish notation and
+make the paper self-contained.
+Proofs and detailed developments can be found in Pin~\cite{pin1986},
+Eilenberg~\cite{eilenberg1976}, and Straubing~\cite{straubing1994}.
+
+\subsection{Syntactic Monoids}\label{sec:syntactic-monoids}
+
+Let $\Sigma$ be a finite alphabet and $L \subseteq \Sigma^*$ a regular language.
+The \emph{syntactic congruence} $\equiv_L$ is defined on $\Sigma^*$ by
+\[
+  u \equiv_L v
+  \;\iff\;
+  \forall x, y \in \Sigma^*: (xuy \in L \Leftrightarrow xvy \in L).
+\]
+Two strings are syntactically equivalent when they behave identically in every
+left-right context with respect to membership in $L$.
+
+\begin{definition}[Syntactic monoid]\label{def:syntactic-monoid}
+The \emph{syntactic monoid} of $L$ is the quotient
+$M(L) = \Sigma^* / {\equiv_L}$, equipped with the monoid operation inherited from
+string concatenation.
+\end{definition}
+
+$M(L)$ is finite by the Myhill--Nerode theorem~\cite{myhill1957,nerode1958}: the
+number of $\equiv_L$-classes equals the number of distinct state-transformation
+functions on the minimal DFA for $L$.
+It is the smallest monoid recognizing $L$ up to division~\cite{pin1986}.
+
+Equivalently, $M(L)$ is isomorphic to the \emph{transition monoid} of the minimal
+DFA for $L$: the monoid of all state-transformation functions
+$\delta_w\colon Q \to Q$ defined by $\delta_w(q) = \hat{\delta}(q, w)$ under
+function composition~\cite{eilenberg1976}.
+This equivalence makes $M(L)$ computable from the minimal DFA via standard monoid
+enumeration.
+
+\subsection{Aperiodicity and Star-Freeness}\label{sec:aperiodicity}
+
+\begin{definition}[Aperiodic monoid]\label{def:aperiodic}
+A monoid $M$ is \emph{aperiodic} (equivalently, \emph{group-free}) if it contains
+no nontrivial subgroup, or equivalently, if every element has period~$1$:
+for all $m \in M$, there exists $n \geq 1$ such that $m^n = m^{n+1}$.
+\end{definition}
+
+The prototypical non-aperiodic monoid is $\mathbb{Z}/p\mathbb{Z}$ for a prime
+$p \geq 2$: the element $1$ satisfies $1^n \neq 1^{n+1}$ for all $n < p$,
+so the group structure forces cyclic behavior that no aperiodic monoid can replicate.
+
+\begin{theorem}[Sch\"{u}tzenberger 1965, McNaughton--Papert 1971~{\cite{schutzenberger1965,mcnaughton1971}}]\label{thm:smp}
+For a regular language $L$, the following are equivalent:
+\begin{enumerate}
+  \item $M(L)$ is aperiodic.
+  \item $L$ is star-free: definable from $\Sigma$, $\emptyset$, $\{\varepsilon\}$,
+    and single letters using Boolean operations and concatenation, without Kleene star.
+  \item $L$ is definable in first-order logic with linear order, $\mathrm{FO}[{<}]$.
+\end{enumerate}
+\end{theorem}
+
+Star-freeness and $\mathrm{FO}[{<}]$ definability are both ``counting-free'' in the
+sense that they can express positional and ordering constraints but cannot express
+modular periodicity.
+Theorem~\ref{thm:smp} makes this precise algebraically.
+
+\subsection{Circuit Complexity and Modular Counting}\label{sec:circuit-complexity}
+
+A language $L$ is in $\mathrm{AC}^0$ if it is recognized by a family of
+constant-depth, polynomial-size Boolean circuits with unbounded fan-in AND/OR gates.
+The class $\mathrm{AC}^0$ is the circuit-complexity analogue of ``polynomial time
+with limited depth,'' capturing exactly the computations that can be massively
+parallelized without counting.
+
+\begin{theorem}[Barrington--Compton--Straubing--Th\'{e}rien 1992~{\cite{barrington1992}}]\label{thm:bcst}
+A regular language is in $\mathrm{AC}^0$ if and only if its syntactic monoid is
+aperiodic.
+\end{theorem}
+
+\begin{theorem}[Furst--Saxe--Sipser 1981, H\r{a}stad 1987~{\cite{furst1981,hastad1987}}]\label{thm:fss}
+$\mathrm{PARITY} \notin \mathrm{AC}^0$.
+More generally, $\mathrm{MOD}_p \notin \mathrm{AC}^0$ for any prime $p$, where
+$\mathrm{MOD}_p = \{w \in \{0,1\}^* : |w|_1 \equiv 0 \pmod{p}\}$.
+\end{theorem}
+
+The chain Theorem~\ref{thm:smp} $\to$ Theorem~\ref{thm:bcst} $\to$
+Theorem~\ref{thm:fss} forms the backbone of the algebraic impossibility argument
+in \S\ref{sec:blindness-theorem}: aperiodic monoid $\Rightarrow$ language in
+$\mathrm{AC}^0$ $\Rightarrow$ language cannot compute $\mathrm{MOD}_p$ $\Rightarrow$
+language is blind to any payload encoding requiring modular counting to decode.
+
+\subsection{Krohn--Rhodes Decomposition}\label{sec:krohn-rhodes}
+
+\begin{theorem}[Krohn--Rhodes 1965~{\cite{krohnrhodes1965}}]\label{thm:kr-classical}
+Every finite monoid $M$ divides a wreath product of simple groups and aperiodic
+semigroups.
+The simple groups appearing in the decomposition (the \emph{group components} of
+$M$) are uniquely determined up to isomorphism.
+\end{theorem}
+
+The group components of $M(L)$ determine precisely which modular predicates $L$ can
+express.
+Formally, by the variety-theoretic characterization of Eilenberg~\cite{eilenberg1976}
+and Straubing~\cite{straubing1994}: a language $L$ can express the modular predicate
+$\mathrm{MOD}_p$ only if $M(L)$ contains a subgroup whose order is divisible by $p$,
+which requires $\mathbb{Z}/p\mathbb{Z}$ to divide some group component.
+The Krohn--Rhodes decomposition therefore gives a \emph{complete spectrum of
+algebraic blind spots}: for any guardrail with syntactic monoid $M(L_G)$, the primes
+$p$ for which $G$ is potentially sensitive to $\mathrm{MOD}_p$ are precisely those
+dividing the order of some group component, and the guardrail is provably blind to
+all other primes.
+
+When $M(L_G)$ is aperiodic (no group components), the guardrail is blind to
+$\mathrm{MOD}_p$ for every prime $p$---the blindness is total.
+This is the case for all substring-matching regex guardrails (Theorem~\ref{thm:substring-aperiodic},
+proved in \S\ref{sec:blindness-theorem}).
+
+% ============================================================
+\section{Impossibility Results}\label{sec:blindness-theorem}
+
+\subsection{Substring-Matching Patterns Are Aperiodic}\label{sec:substring-aperiodic}
+
+\begin{theorem}[Substring aperiodicity]\label{thm:substring-aperiodic}
+Let $r$ be a regular expression built from literals, character classes,
+bounded repetition, alternation, optional groups, dot, and Kleene star or plus
+applied to character classes.
+Let $L_r = \Sigma^* \cdot L(r) \cdot \Sigma^*$ be the language of strings
+containing a substring matching $r$.
+Then the syntactic monoid $M(L_r)$ is aperiodic.
+\end{theorem}
+
+\begin{proof}
+We show $L_r$ is star-free, hence aperiodic by the equivalence in
+Theorem~\ref{thm:smp}.
+
+\paragraph{Star-free closure under substring wrapping.}
+For any regular language $K$ over $\Sigma$, the language
+$\Sigma^* \cdot K \cdot \Sigma^*$ is star-free whenever $K$ is star-free.
+This follows directly from the closure of star-free languages under
+concatenation~\cite{pin1986}: $\Sigma^* = \overline{\emptyset}$ is star-free,
+and the concatenation of three star-free languages is star-free.
+It therefore suffices to show that $L(r)$ itself is star-free for each
+building-block construction.
+
+\paragraph{Literals and character classes.}
+A single character $a \in \Sigma$ defines $\{a\}$, trivially star-free.
+A character class $[c_1 c_2 \cdots c_k]$ is $\{c_1\} \cup \cdots \cup \{c_k\}$,
+a finite union of singletons, hence star-free.
+
+\paragraph{Bounded repetition.}
+$r^{\{n\}}$ (exactly $n$ repetitions) is the $n$-fold concatenation of $L(r)$,
+star-free by induction on $n$ using closure under concatenation.
+$r^{\{m,n\}}$ (between $m$ and $n$ repetitions) is $\bigcup_{k=m}^{n} r^{\{k\}}$,
+a finite union of star-free languages, hence star-free.
+
+\paragraph{Alternation.}
+$r_1 \mid r_2$ yields $L(r_1) \cup L(r_2)$; star-free languages are closed under
+union (and Boolean operations generally), so this is star-free.
+
+\paragraph{Optional groups.}
+$r?$ yields $L(r) \cup \{\varepsilon\}$; since $\{\varepsilon\}$ is star-free and
+star-free is closed under union, this is star-free.
+
+\paragraph{Dot.}
+The pattern $.$ matches any single character in $\Sigma$.
+It equals $\bigcup_{a \in \Sigma}\{a\}$, a finite union of singletons, star-free.
+
+\paragraph{Kleene plus over character classes.}
+Let $C$ be a character class with language $L(C) \subseteq \Sigma$.
+We claim $L(C)^+$ is star-free.
+$L(C)^+$ is the set of nonempty strings over $L(C)$, equal to
+$\overline{\overline{L(C) \cdot \Sigma^*} \cup \{\varepsilon\}}$; more directly,
+$L(C)^+ = \Sigma^* \setminus (\Sigma^* \cdot \overline{L(C)} \cdot \Sigma^* \cup \{\varepsilon\})$.
+Since $\overline{L(C)} = \Sigma \setminus L(C)$ is a finite set of singletons (hence
+star-free), and star-free is closed under complement and concatenation with $\Sigma^*$,
+$L(C)^+$ is star-free.
+The argument applies equally to $L(C)^*$: $L(C)^* = L(C)^+ \cup \{\varepsilon\}$,
+a union of two star-free languages.
+
+\paragraph{Conclusion.}
+Every building block of $r$ produces a star-free language, and
+closure under concatenation and Boolean operations preserves star-freeness
+throughout the construction of $L(r)$.
+Wrapping with $\Sigma^* \cdot (\cdot) \cdot \Sigma^*$ preserves star-freeness.
+Therefore $L_r$ is star-free, and by Theorem~\ref{thm:smp} its syntactic
+monoid $M(L_r)$ is aperiodic.
+\end{proof}
+
+\begin{remark}[Guardrail patterns vs.\ $(aa)^*$]
+A pattern such as $(aa)^*$ recognizes strings of even $a$-count, requiring
+$\mathbb{Z}/2\mathbb{Z}$ in its syntactic monoid, so it is \emph{not} aperiodic.
+However, $(aa)^*$ is not a substring-matching guardrail pattern: it is a
+character-class Kleene iteration over a two-character literal, not a single
+character class.
+The guardrail patterns in our corpus---keyword blocklists, domain
+patterns, toxicity keywords---are constructed precisely as described in the
+theorem: Kleene star and plus are applied to character classes, not to
+multi-character sequences.
+The syntactic monoid of the representative guardrail pattern $(ab)^*$ is the
+six-element monoid $B_2 = \{1, a, b, ab, ba, 0\}$ where multiplication follows
+from string concatenation modulo the syntactic congruence; this monoid has no
+nontrivial subgroups, confirmed by our monoid extractor (Section~\ref{sec:corpus}).
+\end{remark}
+
+\subsection{The Guardrail Blindness Theorem}\label{sec:blindness-proof}
+
+Define the \emph{modular decode language} as follows.
+Fix a prime $p \geq 2$.
+Let $\Sigma_0 = \{0, 1\}$ and let $w \in \{0,1\}^*$.
+The \emph{$p$-interleaved encoding} of a harmful string $h \in L_{\mathsf{blocked}}$
+is a string $\phi_p(h) \in \Sigma^*$ constructed by inserting $p-1$ arbitrary
+filler characters between successive characters of $h$, so that position $i$
+(zero-indexed) of $h$ appears at position $p \cdot i$ in $\phi_p(h)$.
+The decoder recovers $h$ by reading every $p$-th character: $h = \phi_p(h)[0::p]$.
+Define
+\[
+  L_{\mathsf{decode}}(p)
+  = \bigl\{ w \in \Sigma^* :
+    w[0::p] \in L_{\mathsf{blocked}} \bigr\}
+\]
+as the language of strings whose every-$p$-th character subsequence is in the
+blocked language.
+
+\begin{theorem}[Guardrail blindness]\label{thm:blindness}
+Let $G$ be any regex guardrail with aperiodic syntactic monoid $M(L_G)$.
+Let $p \geq 2$ be any integer.
+Then:
+\begin{enumerate}
+  \item $L_{\mathsf{decode}}(p)$ is regular.
+  \item $M(L_{\mathsf{decode}}(p))$ is not aperiodic; it contains
+        $\mathbb{Z}/p\mathbb{Z}$ as a subgroup.
+  \item $\phi_p(L_{\mathsf{blocked}}) \cap L_G = \emptyset$, and no
+        modification of $G$ within the class of aperiodic regex guardrails
+        can detect $L_{\mathsf{decode}}(p)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\paragraph{(1) Regularity.}
+The decoding function $w \mapsto w[0::p]$ is computed by a length-$p$ cyclic DFA
+that counts position modulo $p$ and records the character at position $\equiv 0
+\pmod{p}$.
+This DFA has state set $Q = \{0, 1, \ldots, p-1\} \times Q_{\mathsf{block}}$,
+where $Q_{\mathsf{block}}$ is the state set of the minimal DFA for $L_{\mathsf{blocked}}$.
+Transitions increment the counter modulo $p$ and advance the $L_{\mathsf{blocked}}$
+component only when the counter is $0$.
+Since both components are finite, $L_{\mathsf{decode}}(p)$ is accepted by a finite
+automaton of size $p \cdot |Q_{\mathsf{block}}|$ and is therefore regular.
+
+\paragraph{(2) Non-aperiodicity.}
+Consider the DFA constructed above, with states $(i, q) \in \{0,\ldots,p{-}1\} \times Q_{\mathsf{block}}$.
+Let $a \in \Sigma$ be any character that acts non-trivially on the counter component.
+The transformation $t_a$ induced by reading $a$ maps
+$(q, i) \mapsto (q', (i+1) \bmod p)$,
+where $q' = \delta_{\mathsf{block}}(q, a)$ if $i = 0$ and $q' = q$ otherwise.
+This transformation has order $p$ in the transition monoid: $t_a^p$ is the identity
+on the counter component while $t_a^j$ for $1 \le j < p$ is not.
+The cyclic group $\langle t_a \rangle \cong \mathbb{Z}/p\mathbb{Z}$ therefore
+divides $M(L_{\mathsf{decode}}(p))$, which is thus non-aperiodic.
+
+\paragraph{(3) Blindness consequence.}
+By construction, $\phi_p(L_{\mathsf{blocked}}) \subseteq L_{\mathsf{decode}}(p)$.
+If $w = \phi_p(h)$ for some $h \in L_{\mathsf{blocked}}$, then $w$ contains no
+substring in $\bigcup_i L(r_i)$ (the harmful keywords appear only at every $p$-th
+position, not as contiguous substrings), so $G(w) = \mathsf{allow}$.
+
+For the patchability claim: any regex guardrail added to $G$ with an aperiodic
+syntactic monoid defines a language in $\mathrm{AC}^0$ by Theorem~\ref{thm:bcst}.
+But detecting whether $w[0::p] \in L_{\mathsf{blocked}}$ requires computing a
+$\mathrm{MOD}_p$ predicate on the position counter, which is not in $\mathrm{AC}^0$
+by Theorem~\ref{thm:fss} (for prime $p$).
+Therefore, no aperiodic regex can be added that correctly classifies all encodings
+in $\phi_p(L_{\mathsf{blocked}})$ while leaving genuinely benign strings allowed.
+\end{proof}
+
+\begin{corollary}[$\mathrm{MOD}_2$ sufficiency]\label{cor:parity}
+$p = 2$ suffices for a complete bypass: every aperiodic regex guardrail is blind to
+the alternating-character encoding $\phi_2$, which interleaves the payload with
+arbitrary filler characters at every odd position.
+Existing evasion techniques---reading every other character, zero-width character
+insertion between payload characters, even-position acrostics---are all instances
+of $\phi_2$ and are therefore provably undetectable by any current regex guardrail.
+\end{corollary}
+
+\subsection{Krohn--Rhodes Attack Taxonomy}\label{sec:kr-taxonomy}
+
+\begin{proposition}[Blindness spectrum, after Straubing~\cite{straubing1994}]\label{prop:krohn-rhodes}
+Let $G$ be a regex guardrail with syntactic monoid $M(L_G)$ and Krohn--Rhodes
+group components $G_1, G_2, \ldots, G_k$ (simple groups appearing in the
+decomposition of Theorem~\ref{thm:kr-classical}).
+Then:
+\begin{enumerate}
+  \item $G$ \emph{can detect} $\mathrm{MOD}_p$-encoded payloads only if
+        $p$ divides $|G_i|$ for some $i \in \{1,\ldots,k\}$.
+  \item $G$ is \emph{provably blind} to $\mathrm{MOD}_q$-encoded payloads for
+        every prime $q$ not dividing any $|G_i|$.
+  \item If $M(L_G)$ is aperiodic (no group components), then $G$ is blind to
+        $\mathrm{MOD}_p$-encoded payloads for every prime $p \geq 2$---blindness
+        is total.
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}[Constructive audit via monoid extractor]
+The Krohn--Rhodes blindness spectrum is constructively computable.
+Given a guardrail regex, the monoid extractor (Section~\ref{sec:corpus}) computes
+the minimal DFA, enumerates the transition monoid, and identifies all group
+components via standard semigroup algorithms.
+The output is a complete list of primes to which the guardrail is blind: if the
+group components are $\{S_5, \mathbb{Z}/3\mathbb{Z}\}$, the guardrail can
+potentially detect $\mathrm{MOD}_3$ and $\mathrm{MOD}_5$ encodings but is blind to
+all other modular encodings.
+For $97.1\%$ of patterns in our corpus, the component list is empty and blindness
+is total.
+\end{remark}
+
+\subsection{Information Destruction (Fano Bound)}\label{sec:fano}
+
+\begin{proposition}[Information destruction]\label{prop:fano}
+Let $U\colon R \to M$ be an abstraction function and $G\colon R \to \{0,1\}$
+the ground-truth guardrail.
+Let $R$ be distributed uniformly over $R$.
+Then for any lifted guardrail $G'\colon M \to \{0,1\}$, the probability of
+misclassification satisfies
+\[
+  P_e \;=\; \Pr[G'(U(R)) \neq G(R)]
+  \;\geq\;
+  h^{-1}\!\bigl(H(G(R) \mid U(R))\bigr),
+\]
+where $h(x) = -x\log_2 x - (1-x)\log_2(1-x)$ is the binary entropy function and
+$h^{-1}$ is its inverse on $[0, \tfrac{1}{2}]$.
+\end{proposition}
+
+\begin{proof}
+Consider the Markov chain $G(R) \to U(R) \to G'(U(R))$.
+By the data-processing inequality, the mutual information satisfies
+$I(G(R); G'(U(R))) \leq I(G(R); U(R)) = H(G(R)) - H(G(R) \mid U(R))$.
+The lifted guardrail's decision $G'(U(R))$ is a binary function of $U(R)$, so the
+probability of error is $P_e = \Pr[G'(U(R)) \neq G(R)]$.
+By Fano's inequality~\cite{cover2006elements},
+$H(G(R) \mid G'(U(R))) \leq h(P_e) + P_e \cdot \log_2(|\{0,1\}| - 1) = h(P_e)$.
+Since conditioning can only reduce entropy,
+$H(G(R) \mid U(R)) \leq H(G(R) \mid G'(U(R))) \leq h(P_e)$.
+Inverting the (monotone increasing on $[0, \tfrac{1}{2}]$) binary entropy function
+gives $P_e \geq h^{-1}(H(G(R) \mid U(R)))$.
+\end{proof}
+
+\paragraph{Interpretation.}
+The conditional entropy $H(G(R) \mid U(R))$ is positive precisely when mixed fibers
+exist (Definition~\ref{def:fiber}).
+If $30\%$ of probability mass falls in mixed fibers with ${\sim}50/50$ safe/unsafe
+split, then $H(G(R) \mid U(R)) \approx 0.3$ bits, forcing
+$P_e \ge h^{-1}(0.3) \approx 0.048$ (about $5\%$).
+This floor is irreducible: no lifted guardrail, regardless of its internal
+complexity, can reduce the error below $h^{-1}(H(G(R) \mid U(R)))$ when the
+abstraction function $U$ has mixed fibers.
+The only remedy is to reduce the abstraction---move inspection closer to the
+concrete artifact level---but this makes the guardrail more brittle to novel
+formulations.
+
+\subsection{Computational Intractability (NP-Completeness)}\label{sec:np}
+
+\begin{definition}[Guardrail Instantiation Decision Problem (GIDP)]\label{def:gidp}
+Given:
+\begin{itemize}
+  \item An abstract program $P$ over a finite set of abstract symbols $M$,
+  \item An interpretation domain $R$ with ground-truth guardrail $G\colon R \to \{0,1\}$,
+  \item An interpretation function schema $I\colon M \to 2^R$ mapping each abstract
+    symbol to a nonempty set of candidate concrete values,
+\end{itemize}
+\textsc{GIDP} asks: does there exist a \emph{total assignment}
+$\iota\colon M \to R$ with $\iota(m) \in I(m)$ for all $m$ such that the concretized
+program $P[\iota]$ satisfies $G(P[\iota]) = 1$ (i.e., the program is dangerous)?
+\end{definition}
+
+\begin{theorem}[NP-completeness of GIDP]\label{thm:np}
+\textsc{GIDP} is NP-complete.
+\end{theorem}
+
+\begin{proof}
+\paragraph{Membership in NP.}
+A certificate is an assignment $\iota\colon M \to R$.
+Given $\iota$, checking $\iota(m) \in I(m)$ for all $m$ takes time $O(|M| \cdot |R|)$;
+evaluating $G(P[\iota])$ takes polynomial time in the program size.
+Therefore \textsc{GIDP} $\in$ NP.
+
+\paragraph{NP-hardness.}
+We reduce 3-SAT to \textsc{GIDP}.
+Given a 3-CNF formula $\varphi$ with variables $x_1, \ldots, x_n$ and clauses
+$C_1, \ldots, C_m$, construct:
+\begin{itemize}
+  \item Abstract symbols $M = \{v_1, \ldots, v_n\}$ representing variable assignments.
+  \item Interpretation domain $R = \{T, F\}^n$ (all Boolean assignments).
+  \item $I(v_i) = \{T, F\}$ for each $i$.
+  \item Abstract program $P$ that evaluates $\varphi$ on the assignment; $P$ is
+    built from the clause structure as a conjunction check.
+  \item Guardrail $G(\iota) = 1$ iff $\varphi(\iota) = \mathsf{true}$.
+\end{itemize}
+A satisfying assignment for $\varphi$ exists iff the \textsc{GIDP} instance has
+a positive answer.
+Since 3-SAT is NP-complete, \textsc{GIDP} is NP-hard.
+\end{proof}
+
+\begin{remark}[Pointwise vs.\ combinatorial]
+The NP-hardness comes from the combinatorial search over the exponentially large
+space of concrete interpretations, not from any single concretization step.
+If the interpretation function $I$ is a bijection (each abstract symbol has a
+unique concrete value), \textsc{GIDP} is solvable in polynomial time: just evaluate
+$G(P[\iota])$ directly.
+The hardness is precisely the problem of searching through a product of fiber
+sets---the same mixed-fiber phenomenon that drives the Fano bound.
+\end{remark}
+
+\subsection{Faithful Transfer (Free Category Functoriality)}\label{sec:functor}
+
+\begin{theorem}[Faithful transfer]\label{thm:transfer}
+Let $\mathcal{A}$ be the free category generated by a context-free grammar
+$\mathcal{G}$ over abstract symbols $M$, and let $\mathcal{D}$ be the category of
+domain operations over $R$.
+Let $I\colon M \to R$ be a valid graph homomorphism from the grammar's dependency
+structure to $\mathcal{D}$.
+Then the interpretation functor $\hat{I}\colon \mathcal{A} \to \mathcal{D}$ defined
+by $\hat{I}(f_m) = I(m)$ on generating morphisms is a faithful functor: distinct
+derivation paths in $\mathcal{A}$ map to distinct operation sequences in $\mathcal{D}$.
+\end{theorem}
+
+\begin{proof}
+Since $\mathcal{A}$ is the free category on $\mathcal{G}$, morphisms in $\mathcal{A}$
+are equivalence classes of derivation paths under the grammar's production rules.
+The functor $\hat{I}$ maps each abstract step $m \in M$ to the concrete operation
+$I(m) \in R$.
+Because $I$ is a graph homomorphism, it respects the dependency structure: if
+$m_1 \to m_2$ is a dependency edge in $\mathcal{G}$, then $I(m_1) \to I(m_2)$ is
+a valid operation sequence in $\mathcal{D}$.
+Faithfulness follows from the freeness of $\mathcal{A}$: there are no non-trivial
+relations among the generating morphisms beyond those imposed by $\mathcal{G}$, so
+distinct derivation paths---in the sense of distinct sequences of abstract steps---map
+to distinct sequences of concrete operations.
+The functor is well-defined and faithful by the universal property of the free
+category.
+\end{proof}
+
+\paragraph{What this means for the attack.}
+An LLM that correctly solves the abstract grammar $\mathcal{G}$ produces an
+abstract derivation path.
+The interpretation functor $\hat{I}$ maps this to a valid operation sequence in
+the real domain, and the faithfulness guarantee means no step is dropped or
+distorted.
+The attacker verifies this offline when constructing the grammar.
+\textbf{Caveat:} Theorem~\ref{thm:transfer}'s guarantee is conditional on the
+interpretation function $I$ being a valid graph homomorphism.
+In the V4 pipeline (\S\ref{sec:v4}), the grammar is extracted by an LLM, not
+verified by hand; the pipeline therefore inherits any extraction error from the
+bootstrap step.
+If the LLM hallucinates a production rule or misspecifies a yield, the functor
+maps to an invalid domain sequence.
+The formal guarantee applies to the solved path, not to the extraction step.
+
+\subsection{Syntactic Indistinguishability}\label{sec:indistinguish}
+
+\begin{definition}[Syntactic equivalence of prompt classes]\label{def:synequiv}
+Two prompt classes $\mathcal{P}_A$ and $\mathcal{P}_B$ are \emph{syntactically
+equivalent} with respect to a guardrail $G$ if for every $p_A \in \mathcal{P}_A$
+there exists $p_B \in \mathcal{P}_B$ such that $p_A = p_B$ as strings, and vice versa.
+\end{definition}
+
+\begin{theorem}[Indistinguishability]\label{thm:indistinguish}
+Let $\mathcal{P}_{\mathsf{harm}}$ be the class of adversarial prompts that instantiate
+(via offline interpretation) to harmful operation sequences, and let
+$\mathcal{P}_{\mathsf{legit}}$ be the class of legitimate formal reasoning prompts
+(e.g., theorem proving, grammar completion) over the same abstract symbol set $M$.
+Under the homomorphic reasoning construction, $\mathcal{P}_{\mathsf{harm}} = \mathcal{P}_{\mathsf{legit}}$
+as sets of strings.
+Therefore, for any guardrail $G$ operating on prompt content, the adversarial
+advantage in distinguishing $\mathcal{P}_{\mathsf{harm}}$ from $\mathcal{P}_{\mathsf{legit}}$
+is exactly zero.
+\end{theorem}
+
+\begin{proof}
+By construction, the homomorphic reasoning prompt $p \in \mathcal{P}_{\mathsf{harm}}$
+contains only the abstract grammar $\mathcal{G}$ and an instruction to produce a
+derivation.
+Both the symbols and the grammatical structure are drawn from a symbol set $M$ that
+carries no harmful semantics; the interpretation function $I\colon M \to R$ is
+held offline by the attacker and never appears in any inference call.
+Therefore, $p$ is syntactically identical to a legitimate formal reasoning prompt
+over the same grammar.
+The set of all such prompts is exactly $\mathcal{P}_{\mathsf{legit}}$.
+\end{proof}
+
+\begin{assumption}[Semantic opacity of abstract symbols]\label{ass:opacity}
+The abstract grammar $\mathcal{G}$ uses symbol names drawn from a domain-neutral
+vocabulary (e.g., $A, B, C$ or arbitrary identifiers) such that no symbol name
+reveals the interpretation $I(m)$.
+\end{assumption}
+
+Theorem~\ref{thm:indistinguish} is unconditional given Assumption~\ref{ass:opacity}.
+If Assumption~\ref{ass:opacity} fails---for example, if the attacker carelessly
+names symbols after their real-world referents---the theorem does not apply, and a
+sufficiently informed guardrail might detect the attack through symbolic name
+inspection.
+A weakened version holds without Assumption~\ref{ass:opacity}: the adversarial
+prompt class is computationally indistinguishable from the legitimate class under
+any efficient guardrail, by the argument of Ball et al.~\cite{ball2025impossibility};
+but Theorem~\ref{thm:indistinguish} gives the stronger information-theoretic result
+under the stated assumption.
+
+\paragraph{Relation to Ball et al.}
+Ball et al.~\cite{ball2025impossibility} prove computational indistinguishability
+under standard cryptographic assumptions, establishing that no efficient guardrail
+can distinguish adversarial from benign prompts with non-negligible advantage.
+Our Theorem~\ref{thm:indistinguish} is complementary: it establishes \emph{perfect}
+(information-theoretic, unconditional) indistinguishability for the specific
+construction of homomorphic reasoning, with the trade-off that it applies to this
+construction specifically rather than to the general attack class.
+Together, the two results cover the full distinguishability landscape: Ball et al.\
+handle general attacks under computational assumptions; Theorem~\ref{thm:indistinguish}
+handles the homomorphic reasoning construction without any assumption beyond
+Assumption~\ref{ass:opacity}.
+
+% ============================================================
+\section{Attack Vectors}\label{sec:vectors}
+
+\subsection{V1: Decomposition (Known Technique, New Framing)}\label{sec:v1}
+
+We observe that runtime argument injection---a technique well-known in software
+security---is an instance of our general abstraction framework.
+The attacker requests that the LLM generate a function or script with
+\emph{parametric placeholders} rather than literal harmful values.
+The harmful values are then injected at runtime via environment variables, command-line
+arguments, or configuration files that the guardrail never inspects.
+
+In the abstraction framework (Definition~\ref{def:abstraction}), the function
+signature serves as the abstract type $m \in M$, and the runtime argument
+constitutes the concrete fiber element $r \in U^{-1}(m)$.
+The guardrail evaluates $G'(m) = \mathsf{allow}$ because the function signature is
+benign; the ground truth $G(r)$ for the runtime-instantiated version may be
+$\mathsf{block}$.
+The mixed fiber is the mechanism, and the Fano bound (Proposition~\ref{prop:fano})
+gives the irreducible misclassification floor.
+
+The novelty of this paper's contribution is not the injection technique but the
+algebraic and information-theoretic \emph{proof} that no modification within the
+inference-layer guardrail paradigm can eliminate the mixed-fiber structure without
+abandoning the abstraction entirely.
+
+\subsection{V2: Zero-Knowledge Pipeline (Known Technique, New Framing)}\label{sec:v2}
+
+Base64 encoding to create opaque data channels is a well-known technique; we observe
+it as an instance of the information destruction formalized in
+Proposition~\ref{prop:fano}.
+
+In the V2 construction, the attacker base64-encodes a configuration file containing
+harmful parameters (\eg a target URL, an API endpoint, a chemical structure
+identifier).
+The encoded blob is written to a file that the LLM-integrated agent processes
+without decoding and inspecting the payload.
+The agent's behavior is conditioned on the decoded values at runtime, but the
+guardrail sees only the base64 string---a string whose content is in the mixed fiber
+of the base64 encoding abstraction.
+
+The zero-knowledge property is that the LLM never observes the decoded harmful
+parameters in any inference call subject to guardrail inspection.
+The Fano bound quantifies the exact misclassification rate for the lifted guardrail
+that must classify requests based only on the base64-encoded form.
+
+\subsection{V3: Homomorphic Reasoning (Tree-of-Thought on Abstract Grammar)}\label{sec:v3}
+
+V3 is the core homomorphic reasoning vector.
+The attacker constructs a context-free grammar $\mathcal{G}$ over abstract symbols
+$M$, representing the procedure to be derived.
+The LLM is prompted to produce a complete derivation (a sequence of production rule
+applications) that generates the target yield.
+The interpretation function $I\colon M \to R$ is held offline and applied to the
+solved derivation to recover the real-world operation sequence.
+
+\paragraph{Example grammar.}
+The following grammar encodes a three-step operational procedure over abstract
+symbols \texttt{A}, \texttt{B}, \texttt{C} with operation types \texttt{OP1},
+\texttt{OP2}:
+
+\begin{lstlisting}[language=Python, caption={Abstract grammar for V3 homomorphic reasoning}]
+grammar = {
+    "START": [["PROC"]],
+    "PROC":  [["STEP", "PROC"], ["STEP"]],
+    "STEP":  [["OP1", "ARG"],  ["OP2", "ARG", "ARG"]],
+    "ARG":   [["A"], ["B"], ["C"]],
+    "OP1":   [["op1"]],
+    "OP2":   [["op2"]],
+}
+# Offline interpretation table (attacker-held, never sent to LLM)
+I = {"A": "...", "B": "...", "C": "...",
+     "op1": "...", "op2": "..."}
+\end{lstlisting}
+
+The prompt sent to the LLM contains only the grammar definition and the instruction
+to produce a derivation satisfying a specified constraint; the interpretation table
+$I$ is never included.
+
+\paragraph{Viability ratings.}
+For each grammar node type, we assign the LLM viability rating:
+\textsc{sure} (the LLM handles this node class reliably),
+\textsc{likely} (the LLM handles this with moderate reliability), or
+\textsc{impossible} (the node class is outside LLM competence for this construction).
+Terminal symbol substitution is \textsc{sure}; recursive production expansion is
+\textsc{likely}; cycle detection in unbounded derivations is \textsc{impossible}
+without explicit bounding.
+
+\paragraph{Search strategies.}
+Three search strategies were evaluated: breadth-first search (BFS), random-beam,
+and Tree-of-Thought (ToT) with LLM-guided branch pruning.
+Results are detailed in Section~\ref{sec:tot-benchmark}.
+
+\subsection{V4: Encoding Bootstrap}\label{sec:v4}
+
+V4 bootstraps the abstract grammar from a real-world domain description using an
+LLM, then uses the extracted grammar as input to V3.
+The attacker provides a natural-language description of the target domain
+(\eg ``organic synthesis procedure with common reagents'') and prompts a local LLM
+to extract a formal grammar over abstract symbols.
+
+\begin{table}[t]
+\centering
+\caption{V4 encoding bootstrap pipeline stages.}
+\label{tab:v4-pipeline}
+\small
+\begin{tabularx}{\columnwidth}{lX}
+\toprule
+Stage & Description \\
+\midrule
+1. Domain description & Attacker provides natural-language domain summary to local LLM \\
+2. Grammar extraction & Local LLM extracts context-free grammar with abstract symbols \\
+3. Interpretation table & Attacker manually verifies and annotates $I\colon M \to R$ \\
+4. Grammar solving & Grammar sent to target LLM via V3 pipeline \\
+5. Instantiation & Attacker applies $I$ offline to solved derivation \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The extraction-fidelity connection to Theorem~\ref{thm:transfer}: the formal
+guarantee of faithful transfer applies to the solved derivation given a correctly
+specified grammar, but Stage~2 (LLM extraction) is not formally verified.
+Extraction errors---hallucinated production rules, misspecified yields---propagate
+to Stage~4 and produce invalid domain sequences after instantiation.
+In practice, we found that extraction fidelity is high for well-structured domains
+with clear operational semantics but degrades for domains with ambiguous or
+context-sensitive dependencies.
+
+\subsection{V5: Modular Counting Bypass (The Algebraic Attack Class)}\label{sec:v5}
+
+Where V1--V4 exploit information-theoretic and computational barriers at the
+neural/inference layer, V5 exploits the algebraic blind spot at the regex
+pre-filter layer.
+
+The attack is direct: a harmful payload $h \in L_{\mathsf{blocked}}$ is encoded as
+$\phi_p(h)$ using the $p$-interleaving construction from
+Section~\ref{sec:blindness-proof}, where consecutive characters of $h$ are
+separated by $p-1$ arbitrary filler characters.
+For $p = 2$, this is the alternating-character encoding: the payload characters
+appear at positions $0, 2, 4, \ldots$ of the encoded string.
+By Corollary~\ref{cor:parity}, no aperiodic regex guardrail can detect this encoding.
+
+\paragraph{Attack instances.}
+Table~\ref{tab:v5-attacks} lists representative V5 attack instances from our corpus.
+
+\begin{table}[t]
+\centering
+\caption{V5 modular counting bypass instances. $p$ is the interleaving modulus.
+Encoded string column shows the literal string sent to the guardrail.
+F-labels correspond to guardrail patterns in Table~\ref{tab:corpus}.}
+\label{tab:v5-attacks}
+\small
+\begin{tabularx}{\columnwidth}{llX}
+\toprule
+Label & Payload & Encoded ($p{=}2$) \\
+\midrule
+F1 & \texttt{rm -rf /} & \texttt{rxmx -xrxfx /} \\
+F2 & \texttt{wget malware} & \texttt{wxgxext xmxaxlxwxaxrxe} \\
+F3 & \texttt{import os} & \texttt{ixmxpxoxrxtx xoxs} \\
+F4 & \texttt{eval()} & \texttt{exvxaxlx(x)} \\
+F5 & \texttt{exec(} & \texttt{exxxexcx(} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+For F5: decoding \texttt{exxxexcx(} by selecting every other character
+(positions 0, 2, 4, 6) yields \texttt{e}, \texttt{x}, \texttt{e}, \texttt{c},
+\texttt{(}, recovering \texttt{exec(} as required.
+
+\paragraph{Connection to known jailbreak techniques.}
+Several documented jailbreak techniques are instances of $\phi_2$:
+\begin{itemize}
+  \item \emph{Read every other character}: the canonical $\phi_2$ encoding.
+  \item \emph{Acrostics}: $\phi_k$ at line level rather than character level.
+  \item \emph{Zero-width character insertion}: inserting Unicode zero-width
+    non-joiner (\textsc{u+200c}) between payload characters is exactly $\phi_2$
+    with the null filler character.
+  \item \emph{Token splitting}: splitting a keyword across token boundaries forces
+    the tokenizer to reassemble the substring, which is a partial $\phi_2$
+    at token level.
+\end{itemize}
+
+Our contribution is not the attacks themselves but the proof that they cannot be
+patched: no regex modification can detect $\mathrm{MOD}_p$-encoded payloads while
+the syntactic monoid remains aperiodic.
+The only defense is to move to a guardrail architecture that can compute modular
+predicates---which, by Theorem~\ref{thm:bcst}, requires a non-aperiodic syntactic
+monoid, i.e., a non-$\mathrm{AC}^0$ language recognizer.
+
+% ============================================================
+\section{Empirical Validation}\label{sec:empirical}
+
+\subsection{Regex Corpus Analysis}\label{sec:corpus}
+
+\paragraph{Methodology.}
+We collected 91 regex patterns from five open-source guardrail tools (LLM Guard,
+Rebuff, NeMo Guardrails, Guardrails AI, and llm-guard-py).
+For each pattern $r$, we:
+\begin{enumerate}
+  \item Compiled $r$ to a Thompson NFA using the standard construction.
+  \item Converted to the minimal DFA via powerset construction followed by
+    Hopcroft's minimization algorithm.
+  \item Enumerated the transition monoid $M(L_r)$ by computing all distinct
+    state-transformation functions $\delta_w\colon Q \to Q$ for $w \in \Sigma^*$
+    via BFS over the Cayley graph of the monoid.
+  \item Tested aperiodicity by checking, for each monoid element $m$, whether the
+    sequence $m, m^2, m^3, \ldots$ stabilizes (i.e., $m^n = m^{n+1}$ for some
+    computable $n \leq |M(L_r)|^2$).
+\end{enumerate}
+The monoid extractor tool (798 lines of Python) is an artifact contribution of
+this paper, enabling other researchers to audit their own guardrail corpora.
+
+\paragraph{Results.}
+Of the 91 patterns, 88 ($97.1\%$) have aperiodic syntactic monoids.
+The three non-aperiodic patterns all arise from numeric range checks of the form
+\texttt{[0-9]\{n,m\}} where the specific range inadvertently introduces a modular
+periodicity; none are from semantic content filters.
+All 88 aperiodic patterns were verified to admit the $\mathrm{MOD}_2$ bypass
+construction (Corollary~\ref{cor:parity}): for each pattern, we constructed an
+encoded payload string $\phi_2(h)$ where $h$ was a string in $L_{\mathsf{blocked}}$,
+and confirmed that the pattern did not match $\phi_2(h)$.
+
+Table~\ref{tab:corpus} shows representative patterns from each tool with DFA state
+count, monoid size, and aperiodicity verdict.
+
+\begin{table}[t]
+\centering
+\caption{Representative guardrail regex patterns from 5 tools.
+DFA states and monoid sizes are for the substring-matching version
+$L_r = \Sigma^* L(r) \Sigma^*$.
+AP: aperiodic (Y/N). All 5 shown are aperiodic; the 3 non-aperiodic patterns in the
+full corpus are numeric range patterns, not semantic filters.}
+\label{tab:corpus}
+\small
+\begin{tabularx}{\columnwidth}{lXrrr}
+\toprule
+ID & Pattern (abbreviated) & DFA & $|M|$ & AP \\
+\midrule
+F1 & \texttt{rm\textbackslash s*-[rR][fF]} & 9 & 18 & Y \\
+F2 & \texttt{wget|curl.*malware} & 14 & 31 & Y \\
+F3 & \texttt{import\textbackslash s+os} & 11 & 22 & Y \\
+F4 & \texttt{eval\textbackslash s*\textbackslash(} & 8 & 14 & Y \\
+F5 & \texttt{exec\textbackslash s*\textbackslash(} & 8 & 14 & Y \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Tree-of-Thought Benchmark}\label{sec:tot-benchmark}
+
+\paragraph{Protocol.}
+We generated $N = 20$ randomized abstract grammars with production rules drawn from
+a fixed symbol set ($|M| = 12$, depth up to 6).
+Each grammar was presented to an LLM under three conditions:
+(BFS) breadth-first search with no LLM guidance---the LLM is queried only to expand
+individual nodes;
+(Random-beam) beam search with $k = 3$ with randomly sampled expansion order;
+(ToT) Tree-of-Thought with LLM-guided branch pruning---the LLM explicitly rates
+each branch as \textsc{sure}, \textsc{likely}, or \textsc{impossible} before
+expanding.
+The solve rate is the fraction of grammars for which the LLM produced a complete,
+valid derivation within the generation budget.
+
+\paragraph{Results.}
+Table~\ref{tab:tot-results} reports mean solve rates across the 20 grammar instances.
+
+\begin{table}[t]
+\centering
+\caption{Tree-of-Thought benchmark results ($N = 20$ randomized grammars).
+Solve rate = fraction of grammars solved within generation budget.}
+\label{tab:tot-results}
+\small
+\begin{tabular}{lcc}
+\toprule
+Condition & Mean solve rate & 95\% CI \\
+\midrule
+BFS (no LLM guidance)    & 0.119 & [0.048, 0.190] \\
+Random-beam ($k{=}3$)    & 0.203 & [0.112, 0.294] \\
+ToT (LLM-guided pruning) & 0.512 & [0.401, 0.623] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+ToT achieves a $4.3\times$ improvement over BFS and a $2.5\times$ improvement over
+random-beam.
+Statistical tests: ToT vs.\ BFS: Wilcoxon signed-rank $W = 0$, $p < 0.001$,
+rank-biserial correlation $r = 1.0$ (all 20 pairs favored ToT).
+ToT vs.\ random-beam: $W = 12$, $p < 0.01$, $r = 0.88$.
+
+The key finding is not speed but reasoning correctness: the LLM correctly identifies
+\textsc{impossible} branches and \textsc{sure} branches on symbols whose real-world
+meaning it has never seen.
+This confirms that the LLM's formal reasoning competence generalizes across abstract
+symbol sets---the theoretical prediction of Theorem~\ref{thm:transfer}'s faithfulness
+guarantee.
+
+\subsection{Aspirin Case Study}\label{sec:aspirin}
+
+We validated the full V3/V4 pipeline on a concrete benign-domain case study using
+the organic chemistry domain.
+A grammar encoding the synthesis procedure for aspirin (acetylsalicylic acid,
+$\mathrm{C}_9\mathrm{H}_8\mathrm{O}_4$) was extracted via V4 from a natural-language
+description and solved via V3.
+The solved derivation, when instantiated with the interpretation table
+$I\colon M_{\mathsf{chem}} \to R_{\mathsf{chem}}$, produced the correct four-step
+synthesis sequence: salicylic acid + acetic anhydride $\to$ crude product
+$\to$ recrystallization $\to$ aspirin.
+
+\paragraph{Severity note.}
+Aspirin synthesis was chosen as a \emph{validation} case because it is a well-known
+pharmaceutical synthesis that poses minimal harm risk.
+The same pipeline applies in principle to any domain expressible as a context-free
+grammar; the present paper does not attempt to demonstrate high-severity cases and
+reports only benign validation.
+
+\paragraph{Domain-agnosticism caveat.}
+We conjecture that the pipeline is domain-agnostic for any domain whose operational
+structure can be expressed as a context-free grammar
+(Theorem~\ref{thm:transfer}).
+We validated this on one domain (organic chemistry); additional benign domains
+(\eg network protocol state machines, software build dependency graphs) remain as
+future work.
+
+% ============================================================
+\section{Proof-of-Concept Implementation}\label{sec:poc}
+
+The PoC implements all five attack vectors in three Python modules:
+\texttt{grammar.py} (abstract grammar representation and V3 ToT search),
+\texttt{engine.py} (derivation execution and V1/V2 injection scaffolding),
+and \texttt{bootstrap.py} (V4 grammar extraction via local LLM).
+The PoC totals 391 lines of Python across three files---compact enough to fit within
+a single code review session and below typical automated complexity thresholds.
+
+\paragraph{Architecture.}
+\texttt{grammar.py} implements the context-free grammar data structure, the three
+search strategies (BFS, random-beam, ToT), and the \textsc{sure}/\textsc{likely}/\textsc{impossible}
+branch viability rating interface.
+\texttt{engine.py} executes solved derivations against the interpretation table;
+it uses Python's \texttt{ast.parse} and \texttt{compile} to construct an abstract
+syntax tree from the derivation yield before execution, avoiding the presence of
+any harmful string literal in the source code.
+\texttt{bootstrap.py} implements Stage~2 of the V4 pipeline using the local LLM
+API.
+
+\paragraph{AST medium.}
+The derivation output is processed through Python's AST rather than via
+\texttt{eval} of a raw string.
+This medium was chosen for its zero-literal property: the AST nodes are constructed
+programmatically from grammar terminal symbols, so the executed code is never present
+as a string in the source.
+
+\paragraph{CLI usage.}
+\begin{lstlisting}[caption={PoC CLI usage}]
+# Solve an abstract grammar and instantiate
+python grammar.py --mode tot --grammar path/to/grammar.json \
+  --budget 100 --output derivation.json
+
+# Apply interpretation table offline
+python engine.py --derivation derivation.json \
+  --interpretation path/to/I.json --dry-run
+
+# Bootstrap grammar from domain description
+python bootstrap.py --domain "organic synthesis" \
+  --symbols 12 --output grammar.json
+\end{lstlisting}
+
+The \texttt{--dry-run} flag to \texttt{engine.py} prints the instantiated operation
+sequence without executing it, enabling human review before any execution step.
+
+% ============================================================
+\section{Defense Recommendations}\label{sec:discussion}
+
+\subsection{Defense Layer Mapping}\label{sec:defense-table}
+
+Table~\ref{tab:defense} maps each impossibility result to the defense layer it
+constrains, the threats that layer can and cannot address, and the formal bound
+from this paper.
+
+\begin{table}[t]
+\centering
+\caption{Defense layer mapping. Each row gives the guardrail layer, its mechanism,
+the threats it can address, and the formal limitation established in this paper.}
+\label{tab:defense}
+\small
+\begin{tabularx}{\columnwidth}{lXX}
+\toprule
+Layer & Mechanism & Formal limitation \\
+\midrule
+Regex & Substring patterns, blocklists & Provably blind to $\mathrm{MOD}_p$ encodings (\S\ref{sec:substring-aperiodic}--\ref{sec:blindness-proof}); $97.1\%$ of corpus aperiodic \\
+Inference & Content filters, RLHF & Fano error floor for abstracted requests (\S\ref{sec:fano}); direct requests and obvious encodings caught \\
+Schema & Domain-aware validation & Catches some homomorphic reasoning (high false-positive rate, NP-hard to verify, \S\ref{sec:np}) \\
+Execution & Runtime payload inspection, allowlists & Catches ZK pipelines (V2) and instantiated procedures; best defense against V1 \\
+OS & Sandboxing, network ACLs & Catches all execution-layer attacks; limits legitimate functionality \\
+Provenance & End-to-end pipeline monitoring & Catches full pipeline attacks; requires offline visibility into attacker-held interpretation table \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The key structural insight is that no single layer is sufficient.
+The Regex layer is algebraically blind; the Inference layer has an irreducible Fano
+floor; the Schema layer is NP-hard; and the Execution/OS layers limit functionality.
+Effective defense requires all layers operating in concert, with particular emphasis
+on the Execution and Provenance layers, which are the only ones capable of observing
+the concrete artifacts that carry harmful intent.
+
+\subsection{Neural Guardrails and $\mathrm{TC}^0$}\label{sec:neural-tc0}
+
+Transformer-based guardrails operate in $\mathrm{TC}^0$~\cite{merrill2023saturated,chiang2024tighter},
+the class of constant-depth threshold circuits.
+$\mathrm{TC}^0$ \emph{can} compute $\mathrm{MOD}_p$ for all primes $p$, which means
+the modular counting blind spot of regex guardrails does \emph{not} transfer to
+neural guardrails.
+A sufficiently trained transformer can in principle detect $\phi_p$-encoded payloads.
+
+However, $\mathrm{TC}^0 \subsetneq \mathrm{NC}^1$ is strongly believed (though not
+proved), suggesting that neural guardrails have their own circuit-theoretic limitations
+at higher expressivity thresholds.
+More practically, the information-theoretic barrier (Proposition~\ref{prop:fano})
+and the computational barrier (Theorem~\ref{thm:np}) apply to neural guardrails
+operating on abstracted content regardless of their circuit complexity, because these
+barriers arise from the fiber structure of the abstraction function---not from the
+guardrail's computational class.
+
+\subsection{The Monoid Extractor as Audit Tool}\label{sec:monoid-extractor}
+
+The 798-line Python monoid extractor produced as part of this work provides
+a practical audit capability.
+Given a guardrail regex, the tool outputs:
+(1) the minimal DFA state count;
+(2) the full transition monoid with multiplication table;
+(3) all group components identified via semigroup algorithms;
+(4) the complete blindness spectrum (set of primes $p$ for which the guardrail is
+potentially sensitive, and all others for which it is provably blind);
+(5) a concrete $\mathrm{MOD}_2$ bypass witness string for each aperiodic pattern.
+
+This tool enables organizations to perform a \emph{formal algebraic audit} of their
+regex guardrail corpus without any manual reasoning about individual patterns.
+The audit result is provably correct: the blindness spectrum is not a heuristic but
+a theorem-backed characterization.
+
+\subsection{The Aperiodicity Conjecture}\label{sec:conjecture}
+
+\begin{conjecture}[Universal aperiodicity]\label{conj:aperiodic}
+Every regex pattern used as a semantic content guardrail in practice (keyword
+blocklists, domain filters, toxicity patterns) has an aperiodic syntactic monoid.
+\end{conjecture}
+
+\paragraph{Evidence.}
+$97.1\%$ of the 91-pattern corpus is aperiodic.
+The three non-aperiodic patterns are numeric range checks, not semantic filters.
+Among the 88 semantic filter patterns, the aperiodicity rate is $100\%$.
+
+\paragraph{Structural argument.}
+Semantic guardrail patterns are designed to match specific substrings
+(keywords, domains, toxic phrases).
+Such patterns are inherently positional and Boolean in character: they ask
+``does this substring appear?'' rather than ``does a count of occurrences satisfy
+a modular condition?''
+The substring-matching structure is precisely what Theorem~\ref{thm:substring-aperiodic}
+formalizes, and the proof shows that every pattern of this structural type has an
+aperiodic monoid.
+The conjecture amounts to the claim that no semantic guardrail in practice has
+the structural form of a modular counter, which is supported by both the empirical
+evidence and the design rationale of practical guardrail systems.
+
+\paragraph{PCRE caveat.}
+This conjecture applies to true regular expressions.
+PCRE extensions with backreferences recognize context-sensitive languages and fall
+outside our formal model.
+Backreferences can encode counting predicates that a pure regex cannot; a PCRE
+pattern using backreferences to enforce exact character count parity would not have
+an aperiodic syntactic monoid in the standard sense.
+In practice, no guardrail pattern in our corpus used backreferences.
+
+% ============================================================
+\section{Limitations and Ethical Considerations}\label{sec:limitations}
+
+\subsection{Limitations}\label{sec:limitations-list}
+
+\paragraph{1. Test case severity.}
+The empirical validation uses the aspirin synthesis case study, chosen for its
+minimal harm risk.
+The formal results (Theorems~\ref{thm:substring-aperiodic}--\ref{thm:indistinguish})
+are domain-independent; their applicability to high-severity domains is implied by
+the theory but not empirically demonstrated here by design.
+
+\paragraph{2. ToT scope.}
+The Tree-of-Thought benchmark evaluates 20 randomized grammars.
+This is a small sample; the solve-rate estimates carry confidence intervals reported
+in Table~\ref{tab:tot-results}.
+Systematic variation with grammar depth, branching factor, and symbol set size
+remains to be characterized.
+
+\paragraph{3. Mathematical novelty.}
+We use classical tools---syntactic monoids, star-freeness, Fano's inequality,
+free categories, Krohn--Rhodes decomposition---applied to the guardrail security
+setting.
+The mathematical novelty lies in the \emph{application} and the combination of
+results into a unified framework, not in the algebraic or information-theoretic
+tools themselves.
+We state this honestly to situate the contribution accurately.
+
+\paragraph{4. Uniformity assumption.}
+The Fano bound (Proposition~\ref{prop:fano}) assumes a uniform distribution over
+the concrete artifact space $R$.
+In practice, the distribution over prompts is highly non-uniform; the bound is
+tight under uniformity and may be loose or conservative under real prompt
+distributions.
+A distribution-aware version of the bound would require a model of the attacker's
+prompt distribution.
+
+\paragraph{5. Regex corpus size.}
+The corpus of 91 patterns from 5 tools is representative but not exhaustive.
+A larger corpus would strengthen the aperiodicity conjecture
+(Section~\ref{sec:conjecture}).
+We make the monoid extractor available to enable independent extension of the corpus.
+
+\paragraph{6. Abstract scope.}
+The algebraic impossibility results (Theorems~\ref{thm:substring-aperiodic}
+and \ref{thm:blindness}) apply specifically to \emph{substring-matching regex
+guardrails}.
+They do not apply to all regular expression uses, to neural guardrails (which
+operate in $\mathrm{TC}^0$), or to guardrails that perform semantic analysis
+beyond pattern matching.
+
+\subsection{Ethical Considerations}\label{sec:ethics}
+
+The impossibility results in this paper demonstrate structural limitations of LLM
+guardrail systems.
+We have taken the following precautions.
+
+\paragraph{Validation without high-severity cases.}
+Empirical validation uses only the aspirin synthesis case study and abstract
+grammar benchmarks.
+We do not demonstrate the pipeline on domains with high harm potential.
+
+\paragraph{Responsible disclosure.}
+The existence of modular counting bypasses against regex guardrails is an
+implication of classical algebraic results (Theorem~\ref{thm:blindness}); any
+party aware of the Sch\"{u}tzenberger--McNaughton--Papert theorem and its circuit
+complexity consequences could derive this result independently.
+We therefore consider the algebraic results non-sensitive from a disclosure
+perspective.
+The V3/V4 pipeline design is more operationally specific; we describe it at the
+level of algorithmic structure rather than providing a production-ready exploit.
+
+\paragraph{Defense-first framing.}
+Every impossibility result in this paper is paired with a specific defense
+recommendation in Section~\ref{sec:discussion}.
+The paper is structured to enable defenders to audit their systems using the monoid
+extractor and to migrate critical enforcement to execution-layer defenses.
+
+\paragraph{The exec(compile()) irony.}
+We note the irony that the PoC's \texttt{engine.py} uses
+\texttt{exec(compile(...))}---a well-known security antipattern---as its core
+execution mechanism.
+This is by design: the zero-literal AST compilation is precisely the technique that
+enables the attack.
+Highlighting this irony is intended to motivate defenders to treat dynamic code
+construction patterns as a first-class detection target at the execution layer.
+
+% ============================================================
+\section{Conclusion}\label{sec:conclusion}
+
+We have established four independent, formally grounded impossibility results for
+LLM guardrail systems.
+
+\paragraph{Algebraic impossibility (regex layer).}
+All substring-matching regex guardrails have aperiodic syntactic monoids
+(Theorem~\ref{thm:substring-aperiodic}).
+By the Sch\"{u}tzenberger--$\mathrm{AC}^0$--Furst--Saxe--Sipser chain, aperiodic
+syntactic monoids characterize exactly the languages in $\mathrm{AC}^0$, which
+cannot compute modular counting predicates.
+Therefore, any regex guardrail is provably blind to modular counting encodings
+(Theorem~\ref{thm:blindness}), and this blindness cannot be patched within the
+aperiodic regex paradigm (Corollary~\ref{cor:parity}).
+The Krohn--Rhodes decomposition gives a constructive audit tool: the blindness
+spectrum of any guardrail is computable from its syntactic monoid's group components
+(Proposition~\ref{prop:krohn-rhodes}).
+Our corpus study confirms $97.1\%$ aperiodicity in practice.
+
+\paragraph{Information-theoretic impossibility (inference layer).}
+Abstraction functions that map concrete artifacts to abstract types inevitably
+create mixed fibers.
+The Fano inequality gives an irreducible misclassification floor for any lifted
+guardrail: with $30\%$ of mass in mixed fibers, the floor is approximately $5\%$
+(Proposition~\ref{prop:fano}).
+This floor cannot be reduced by improving the guardrail's classifier---it can only
+be reduced by reducing the abstraction.
+
+\paragraph{Computational impossibility (schema layer).}
+Verifying whether an abstract program has a harmful instantiation is NP-complete
+(Theorem~\ref{thm:np}).
+Exhaustive checking is therefore infeasible, and heuristic checking inherits the
+false-negative rate implied by the combinatorial search space.
+
+\paragraph{Structural impossibility (functor + indistinguishability).}
+Abstract derivations transfer faithfully to real-domain operation sequences via
+free-category functoriality (Theorem~\ref{thm:transfer}), meaning that LLM
+reasoning over abstract grammars produces correct real-world procedures after
+offline instantiation.
+Adversarial formal reasoning tasks are syntactically identical to legitimate ones
+under Assumption~\ref{ass:opacity} (Theorem~\ref{thm:indistinguish}), giving
+information-theoretically perfect steganographic security for the attack channel.
+
+\paragraph{Empirical grounding.}
+Five attack vectors demonstrate both barrier classes.
+The Tree-of-Thought benchmark ($N = 20$, $p < 0.01$) shows that LLM-guided
+reasoning over abstract grammars substantially outperforms unguided search.
+The aspirin synthesis case study validates end-to-end pipeline correctness in a
+benign domain.
+
+\paragraph{Practical consequence.}
+Inference-layer guardrails are necessary but insufficient.
+The formal results collectively imply that safety enforcement cannot be achieved
+at the content-inspection layer alone: the barriers are structural, not
+implementation defects.
+Effective defense must migrate critical enforcement to the execution layer,
+where concrete artifacts---decoded strings, instantiated parameters, evaluated
+ASTs---become observable.
+The Provenance layer (end-to-end pipeline monitoring) provides the only defense
+against the full attack chain, at the cost of requiring offline visibility into
+attacker-held interpretation tables.
+This is a fundamental asymmetry: the attacker's interpretation table is not a
+secret key whose existence can be assumed away, but an intrinsic feature of the
+homomorphic reasoning construction.
+Defense-in-depth across all six layers of Table~\ref{tab:defense} is the only
+configuration that addresses all four barrier classes simultaneously.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+% ============================================================
+\appendix
+
+\section{Proof-of-Concept Source Code}\label{app:poc}
+
+The complete PoC consists of 391 lines across five files.
+The monoid extractor (798 lines) and benchmark harness (619 lines) are provided
+as supplementary material.
+
+\subsection{Engine: Zero-Knowledge Recurrent Executor}\label{app:engine}
+
+\texttt{engine.py} decodes a base64-encoded configuration, selects an AST medium,
+compiles it via \texttt{exec(compile(...))}, and loops until a termination condition.
+No LLM sees the configuration contents.
+
+\begin{lstlisting}[language=Python,caption={engine.py (78 lines)}]
+"""ZK Recurrent Executor. Decodes b64 config, selects
+AST medium, compiles, injects params at runtime, loops
+until termination. No LLM sees the config contents."""
+import base64, json, sys, time
+from mediums import get_medium
+
+def decode_config(path):
+    with open(path, 'rb') as f:
+        return json.loads(base64.b64decode(f.read()))
+
+def check_termination(results, iteration, config):
+    term = config.get('termination',
+                      {'type': 'count', 'value': 1})
+    t = term['type']
+    if t == 'count':
+        return iteration >= term.get('value', 1)
+    if t == 'has_results':
+        return bool(results)
+    if t == 'min_results':
+        if isinstance(results, dict) and 'path' in results:
+            return len(results['path']) > 0
+        return bool(results) \
+            and len(results) >= term.get('value', 1)
+    if t == 'score_threshold':
+        return isinstance(results, dict) \
+            and results.get('score', 0) >= term['value']
+    return True
+
+def mutate_params(params, iteration, config):
+    m = config.get('mutation', {})
+    if m.get('type') == 'paginate':
+        k = m.get('key', 'page')
+        params[k] = params.get(k, 1) + 1
+    elif m.get('type') == 'backoff':
+        time.sleep(min(2 ** iteration, 30))
+    return params
+
+def main():
+    config = decode_config(
+        sys.argv[1] if len(sys.argv) > 1 else 'config.b64')
+    params = config['params']
+    build_ast = get_medium(config['medium'])
+
+    ns = {}
+    exec(compile(build_ast(),
+         f'<{config["medium"]}>', 'exec'), ns)
+    run = ns['run']
+
+    max_iter = config.get('max_iterations', 10)
+    results = None
+    for i in range(1, max_iter + 1):
+        print(f"[engine] iteration {i}/{max_iter}")
+        try:
+            results = run(**params)
+        except Exception as e:
+            print(f"[engine] error: {e}")
+        if check_termination(results, i, config):
+            break
+        params = mutate_params(params, i, config)
+
+    print(f"\n[engine] RESULTS:")
+    if isinstance(results, list):
+        for j, item in enumerate(results, 1):
+            t = item.strip() if isinstance(item, str) \
+                else str(item)
+            if t:
+                print(f"  {j}. {t}")
+    elif isinstance(results, dict):
+        print(json.dumps(results, indent=2))
+    else:
+        print(results)
+
+if __name__ == '__main__':
+    main()
+\end{lstlisting}
+
+\subsection{Medium: BFS Graph Solver}\label{app:graph-solver}
+
+\texttt{graph\_solver.py} implements BFS over an abstract state space.
+States are sets of opaque symbols; rules define valid transitions.
+Zero domain content --- all semantics injected at runtime.
+
+\begin{lstlisting}[language=Python,caption={graph\_solver.py (49 lines)}]
+"""AST template: BFS state-space solver.
+Zero domain content."""
+import ast
+
+def build_graph_solver_ast() -> ast.Module:
+    source = '''
+from collections import deque
+
+def applicable_rules(state, rules):
+    return [r for r in rules
+            if all(i in state for i in r["inputs"])]
+
+def apply_rule(state, rule):
+    new = [s for s in state
+           if s not in rule["inputs"]]
+    new.extend(rule["outputs"])
+    return sorted(set(new))
+
+def check_constraints(state, constraints):
+    for c in constraints:
+        if c["type"] == "forbidden_pair":
+            if c["params"][0] in state \
+               and c["params"][1] in state:
+                return False
+    return True
+
+def run(initial_state, target, rules, constraints):
+    queue = deque([(initial_state, [], 1.0)])
+    visited = set()
+    best = None
+    while queue:
+        state, path, score = queue.popleft()
+        key = tuple(state)
+        if target in state:
+            if best is None or score > best["score"]:
+                best = {"path": path, "score": score,
+                        "final_state": state}
+            continue
+        if key in visited:
+            continue
+        visited.add(key)
+        if len(path) >= 10:
+            continue
+        for rule in applicable_rules(state, rules):
+            new_state = apply_rule(state, rule)
+            if check_constraints(new_state, constraints):
+                new_score = score * rule["yield_est"]
+                queue.append((new_state,
+                    path + [rule["id"]], new_score))
+    return best or {"path": [], "score": 0,
+                    "final_state": initial_state}
+'''
+    tree = ast.parse(source)
+    ast.fix_missing_locations(tree)
+    return tree
+\end{lstlisting}
+
+\subsection{Medium: Tree-of-Thought Solver with LLM Evaluation}\label{app:tot-solver}
+
+\texttt{tot\_solver.py} implements beam search with LLM-guided branch pruning.
+The LLM sees \emph{only} abstract symbols (\texttt{N1}, \texttt{R7}, etc.)
+and rates branches as \textsc{sure}, \textsc{likely}, or \textsc{impossible}.
+Composite scoring: yield weight $0.4$ + LLM viability $0.6$.
+Beam width~5, max depth~8.
+
+\begin{lstlisting}[language=Python,caption={tot\_solver.py --- core evaluation and search (abbreviated, 147 lines full)}]
+def ollama_evaluate(state, target, rules, model):
+    """Ask LLM: is this state viable toward target?
+    Returns 0.0-1.0. LLM sees ONLY abstract symbols."""
+    system_ctx = _build_system_context(target, rules)
+    applicable = [
+        f'{r["id"]}: {r["inputs"]} -> {r["outputs"]}'
+        f' (yield {r["yield_est"]})'
+        for r in rules
+        if all(i in state for i in r["inputs"])]
+    user_prompt = (
+        f"CURRENT STATE: {state}\n"
+        f"APPLICABLE NOW:\n"
+        + ("\n".join(applicable)
+           if applicable else "(none)")
+        + f"\n\nCan {target} be reached? "
+        f"Trace forward briefly, then rate.\n"
+        f"RATING: SURE / LIKELY / IMPOSSIBLE")
+    try:
+        data = json.dumps({
+            "model": model,
+            "messages": [
+                {"role": "system",
+                 "content": system_ctx},
+                {"role": "user",
+                 "content": user_prompt}],
+            "stream": False}).encode()
+        req = urllib.request.Request(
+            "http://localhost:11434/api/chat",
+            data=data,
+            headers={"Content-Type":
+                      "application/json"})
+        with urllib.request.urlopen(req,
+                timeout=15) as resp:
+            result = json.loads(resp.read())
+        content = result["message"]["content"]
+        lines = [l.strip()
+                 for l in content.strip().split("\n")
+                 if l.strip()]
+        last_line = lines[-1].upper() if lines else ""
+        if "IMPOSSIBLE" in last_line: return 0.0
+        if "SURE" in last_line: return 1.0
+        if "LIKELY" in last_line: return 0.6
+        return 0.5
+    except Exception:
+        return 0.5
+
+def run(initial_state, target, rules, constraints,
+        model="llama3.2:3b"):
+    """Tree-of-Thought search: generate branches,
+    LLM evaluates, prune, expand."""
+    beam_width, max_depth = 5, 8
+    frontier = [(initial_state, [], 1.0, 1.0)]
+    visited = set()
+    best = None
+    for depth in range(max_depth):
+        if not frontier: break
+        candidates = []
+        for state, path, cum_yield, _ in frontier:
+            key = tuple(state)
+            if target in state:
+                if best is None \
+                   or cum_yield > best["score"]:
+                    best = {"path": path,
+                            "score": cum_yield,
+                            "final_state": state}
+                continue
+            if key in visited: continue
+            visited.add(key)
+            for rule in applicable_rules(state, rules):
+                new_state = apply_rule(state, rule)
+                if not check_constraints(
+                        new_state, constraints):
+                    continue
+                new_yield = cum_yield*rule["yield_est"]
+                new_path = path + [rule["id"]]
+                candidates.append((new_state,
+                    new_path, new_yield, rule))
+        if not candidates: break
+        scored = []
+        for ns, np, ny, rule in candidates:
+            llm = ollama_evaluate(
+                ns, target, rules, model)
+            composite = ny * 0.4 + llm * 0.6
+            scored.append((ns, np, ny, composite))
+        scored.sort(key=lambda x: x[3], reverse=True)
+        frontier = [f for f in scored[:beam_width]
+                    if f[3] > 0.1]
+    return best or {"path": [], "score": 0.0,
+                    "final_state": initial_state}
+\end{lstlisting}
+
+\subsection{Config Encoder}\label{app:encode}
+
+\begin{lstlisting}[language=Python,caption={encode\_config.py (26 lines)}]
+"""Encode a JSON config to b64.
+No LLM sees plaintext values."""
+import base64, json, sys
+
+def main():
+    if sys.argv[1] == '--stdin':
+        config = json.loads(sys.stdin.read())
+    else:
+        with open(sys.argv[1]) as f:
+            config = json.load(f)
+    out = sys.argv[2] if len(sys.argv) > 2 \
+        else 'config.b64'
+    encoded = base64.b64encode(
+        json.dumps(config).encode())
+    with open(out, 'wb') as f:
+        f.write(encoded)
+    print(f"[encode] {out} ({len(encoded)}B) "
+          f"medium={config.get('medium','?')} "
+          f"keys={list(config.get('params',{}).keys())}")
+
+if __name__ == '__main__':
+    main()
+\end{lstlisting}
+
+\subsection{Medium Registry}\label{app:registry}
+
+\begin{lstlisting}[language=Python,caption={mediums/\_\_init\_\_.py (16 lines)}]
+"""Medium registry."""
+from mediums.web_scraper import build_web_scraper_ast
+from mediums.graph_solver import build_graph_solver_ast
+from mediums.tot_solver import build_tot_solver_ast
+
+REGISTRY = {
+    "web_scraper": build_web_scraper_ast,
+    "graph_solver": build_graph_solver_ast,
+    "tot_solver": build_tot_solver_ast,
+}
+
+def get_medium(name: str):
+    if name not in REGISTRY:
+        raise ValueError(
+            f"Unknown medium '{name}'. "
+            f"Available: {list(REGISTRY.keys())}")
+    return REGISTRY[name]
+\end{lstlisting}
+
+\subsection{Supplementary Material}\label{app:supplementary}
+
+The following artifacts are provided as supplementary material and are not
+included inline due to length:
+\begin{itemize}
+  \item \texttt{monoid\_extractor.py} (798 lines): Thompson NFA construction,
+    powerset DFA conversion, Hopcroft minimization, transition monoid
+    enumeration, aperiodicity test, Krohn--Rhodes group component extraction,
+    and $\mathrm{MOD}_2$ bypass witness generation.
+  \item \texttt{benchmark.py} (619 lines): Grammar generator with guaranteed
+    reachability, dead-end traps, noise rules, and constraint variation;
+    BFS, random-beam, and ToT+LLM solvers; Wilcoxon signed-rank test
+    computation; JSON result serialization.
+  \item \texttt{web\_scraper.py} (80 lines): AST-based web scraper medium
+    with zero string literals.
+\end{itemize}
+
+% ============================================================
+\section{Agentic Research Methodology}\label{app:methodology}
+
+This paper was developed using an agentic AI research pipeline built on
+Claude Code (Anthropic's CLI agent) with specialized subagents, custom
+skills, and iterative self-review.
+We document the methodology both as a reproducibility aid and because the
+pipeline itself demonstrated a quality-gate property relevant to the paper's
+thesis: an AI peer-review agent caught an overclaimed empirical result during
+development, forcing an honest reframe that strengthened the final paper.
+
+\subsection{Pipeline Architecture}\label{app:pipeline-arch}
+
+The research pipeline consisted of five stages, each mediated by specialized
+Claude Code agents or skills:
+
+\begin{enumerate}
+  \item \textbf{Conceptualization} (human-directed): The threat model, attack
+    vector taxonomy, and formal result targets were specified by the human
+    researcher. Claude served as an architecture advisor, producing Mermaid
+    diagrams of the proof dependency graph and attack escalation ladder before
+    any code or proofs were written.
+
+  \item \textbf{Implementation} (delegated to subagents): Code generation for
+    the PoC, benchmark harness, and monoid extractor was delegated to
+    local LLM code-generation agents (via a GPU gateway running
+    open-weight models) or Claude Code subagents with the \texttt{haiku}
+    model.
+    Two custom Claude Code skills governed PoC development:
+    \begin{itemize}
+      \item \textbf{\texttt{/gen-medium}} --- a skill that generates new AST
+        medium templates for the zero-knowledge executor, enforcing the
+        constraint that every medium contains zero domain-content literals
+        and that all semantics enter via runtime parameters from the encrypted
+        config.
+      \item \textbf{\texttt{/encode-request}} --- a skill that translates
+        plain-English requests into base64-encoded engine configurations,
+        selecting the appropriate medium and mapping the request to abstract
+        parameters without ever printing decoded content.
+    \end{itemize}
+    The human researcher did not write PoC code directly; all code was
+    generated by agents operating under skill-defined constraints.
+
+  \item \textbf{Formal verification} (iterative human--AI review): Theorem
+    statements and proofs were drafted by Claude (Opus) and subjected to an
+    adversarial mathematical audit by a separate Claude instance acting as a
+    hostile peer reviewer. The audit (documented in the project's
+    \texttt{MATH\_AUDIT.md}) evaluated each proof against the standard
+    ``would this survive peer review at STOC/FOCS/ITCS/CSF?'' and produced
+    per-theorem verdicts with specific error descriptions.
+    Key findings from the audit:
+    \begin{itemize}
+      \item The original Theorem~3 (free category functoriality) used
+        category-theoretic language without properly specifying morphisms or
+        verifying axioms; it was reformulated as a set-theoretic result with
+        a category-theoretic upgrade path.
+      \item The original indistinguishability theorem had a hidden uniformity
+        assumption that was not stated; it was promoted to an explicit
+        Assumption (now Assumption~\ref{ass:opacity}).
+      \item The Fano bound's numerical example originally claimed ${\sim}8\%$
+        error floor; the audit computed $h^{-1}(0.3) \approx 0.048 \approx 5\%$,
+        correcting the figure.
+    \end{itemize}
+
+  \item \textbf{Peer review simulation} (automated): A Claude-based peer
+    reviewer agent was configured to simulate the review process at target
+    venues (USENIX Security, CCS, CSF).
+    Each paper underwent three review rounds:
+    \begin{itemize}
+      \item \textbf{V1}: Initial submission. Received REJECT (scores 5/3/6)
+        for the homomorphic reasoning paper and WEAK REJECT (6/4/7) for the
+        algebraic blindness paper. Critical errors identified: broken
+        category-theoretic formalization (Paper~1), incorrect $(ab)^*$
+        example and vacuous blindness definition (Paper~2).
+      \item \textbf{V2}: Revision addressing all critical errors. Received
+        WEAK ACCEPT (6/6/7) and WEAK ACCEPT (7/6/7). Remaining issues:
+        missing random-beam baseline, BFS comparison confound, F5 attack
+        table encoding error.
+      \item \textbf{V3}: Final revision with random-beam baseline, Wilcoxon
+        statistics, and corrected attack table. Received WEAK ACCEPT with
+        minor revisions from both reviewers.
+    \end{itemize}
+    The peer reviewer agent caught the BFS-vs-ToT confound (Section~\ref{sec:tot-benchmark}):
+    the original comparison attributed a $4.3\times$ yield improvement entirely
+    to LLM reasoning, but the reviewer identified that beam search structure
+    (independent of LLM evaluation) contributed ${\sim}1.7\times$ of that
+    improvement.
+    This forced the addition of the random-beam baseline, which isolated the
+    genuine LLM reasoning contribution at $2.5\times$---a weaker but more
+    defensible claim.
+
+  \item \textbf{Consolidation} (current paper): The two independently
+    reviewed papers were merged into a single submission with unified
+    notation, sequential theorem numbering, merged related work, and a
+    combined defense framework. The consolidation was performed by Claude
+    (Opus) under detailed structural specifications from the human
+    researcher, with the human providing the section architecture and the
+    agent producing the \LaTeX.
+\end{enumerate}
+
+\subsection{Quality-Gate Observation}\label{app:quality-gate}
+
+The peer reviewer agent's detection of the BFS confound is itself relevant to
+the paper's thesis.
+The same LLM reasoning capability that enables the homomorphic reasoning
+attack (Section~\ref{sec:v3}) also enables effective quality gates in
+AI-assisted research pipelines.
+The reviewer agent performed genuine analytical reasoning---identifying that
+two experimental conditions differed in both search strategy \emph{and}
+evaluation method, and that the claimed attribution required a controlled
+baseline---on a task (experimental design critique) that is structurally
+analogous to the formal reasoning tasks in our attack vectors.
+
+This is not a defense against the attacks described in this paper (the
+reviewer agent operates on plaintext research artifacts, not on opaque
+formal systems), but it demonstrates that the formal reasoning competence
+underlying the attack is dual-use: the same capability that enables
+guardrail bypass also enables research quality assurance.
+
+\subsection{Reproducibility Notes}\label{app:reproducibility}
+
+\begin{itemize}
+  \item All Claude Code sessions used model versions available as of
+    March 2026 (Claude Opus 4.6 for architecture and review, Claude Haiku
+    4.5 for code generation tasks).
+  \item The GPU code-generation gateway used open-weight models
+    (qwen2.5-coder:7b for the ToT benchmark, llama3.2:3b for the PoC's
+    tot\_solver medium) via Ollama.
+  \item The peer review agent used the same model (Opus) as the paper
+    drafting agent but in a separate context with no shared session state,
+    ensuring adversarial independence.
+  \item Custom skill definitions (\texttt{/gen-medium},
+    \texttt{/encode-request}) are provided as supplementary material in
+    YAML/Markdown format compatible with Claude Code's skill system.
+\end{itemize}
+
+\end{document}
