@@ -1,6 +1,6 @@
 # Algebraic and Computational Limits of LLM Guardrails
 
-**Joseph Robert Lopez** | [Paper (arXiv)](https://arxiv.org/abs/XXXX.XXXXX) | [Paper (PDF)](paper/main.pdf)
+**Joseph Robert Lopez** | Paper (arXiv — pending endorsement) | [Paper (PDF)](paper/main.pdf)
 
 LLM guardrails face four structurally distinct barriers: algebraic blindness (syntactic monoid aperiodicity), information-theoretic loss (Fano bound), computational intractability (NP-completeness), and structural transfer (functorial homomorphism + syntactic indistinguishability). This repository contains the proof-of-concept code, monoid extractor tool, and benchmark harness accompanying the paper.
 
