@@ -3,7 +3,7 @@ import json
 import base64
 import tempfile
 import os
-from guardrail_impossibility.engine import decode_config, check_termination
+from aperiodic_guardrails.engine import decode_config, check_termination
 
 def test_decode_config():
     config = {"medium": "graph_solver", "params": {"target": "N30"}, "max_iterations": 1}

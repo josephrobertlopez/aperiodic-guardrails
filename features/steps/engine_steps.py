@@ -45,7 +45,7 @@ def step_encode(context):
 def step_decode(context):
     """Decode the base64 config using the engine."""
     try:
-        from guardrail_impossibility.engine import decode_config
+        from aperiodic_guardrails.engine import decode_config
         context.decoded = decode_config(context.b64_path)
     except (ImportError, AttributeError):
         # Fallback: manually decode
@@ -124,7 +124,7 @@ def step_rules(context, path):
 def step_run_solver(context):
     """Run the graph solver to find a path from initial state to target."""
     try:
-        from guardrail_impossibility.mediums.graph_solver import solve
+        from aperiodic_guardrails.mediums.graph_solver import solve
         context.solver_result = solve(
             context.grammar_initial,
             context.grammar_target,

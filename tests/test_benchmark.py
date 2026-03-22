@@ -1,7 +1,7 @@
 """Tests for the benchmark grammar generator."""
 
 def test_grammar_generation():
-    from guardrail_impossibility.benchmark.grammar import generate_grammar
+    from aperiodic_guardrails.benchmark.grammar import generate_grammar
     g = generate_grammar(seed=1000)
     assert "initial_state" in g
     assert "target" in g
@@ -10,7 +10,7 @@ def test_grammar_generation():
     assert g["target"] == "N30"
 
 def test_grammar_has_valid_path():
-    from guardrail_impossibility.benchmark.grammar import generate_grammar
+    from aperiodic_guardrails.benchmark.grammar import generate_grammar
     from collections import deque
     g = generate_grammar(seed=1042)
     # BFS to verify path exists

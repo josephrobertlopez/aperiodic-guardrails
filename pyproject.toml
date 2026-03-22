@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "guardrail-impossibility"
+name = "aperiodic-guardrails"
 version = "1.0.0"
 description = "Algebraic and computational limits of LLM guardrails — proof-of-concept, monoid extractor, and benchmark harness"
 readme = "README.md"
@@ -29,17 +29,17 @@ dependencies = [
 dev = ["pytest>=7.0", "pytest-cov", "behave>=1.2.6"]
 
 [project.scripts]
-guardrail-run = "guardrail_impossibility.engine:main"
-guardrail-encode = "guardrail_impossibility.encode:main"
-monoid-extract = "guardrail_impossibility.monoid.extractor:main"
-guardrail-benchmark = "guardrail_impossibility.benchmark.runner:main"
+guardrail-run = "aperiodic_guardrails.engine:main"
+guardrail-encode = "aperiodic_guardrails.encode:main"
+monoid-extract = "aperiodic_guardrails.monoid.extractor:main"
+guardrail-benchmark = "aperiodic_guardrails.benchmark.runner:main"
 
 [project.urls]
 Paper = "https://arxiv.org/abs/XXXX.XXXXX"
-Repository = "https://github.com/josephrobertlopez/guardrail-impossibility"
+Repository = "https://github.com/josephrobertlopez/aperiodic-guardrails"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/guardrail_impossibility"]
+packages = ["src/aperiodic_guardrails"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

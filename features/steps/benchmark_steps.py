@@ -16,7 +16,7 @@ def step_generate_grammars(context, n, start, end):
     - constraints: list of constraints (if any)
     """
     try:
-        from guardrail_impossibility.benchmark.grammar import generate_grammar
+        from aperiodic_guardrails.benchmark.grammar import generate_grammar
         context.grammars = []
         for seed in range(start, start + n):
             grammar = generate_grammar(seed)

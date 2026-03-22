@@ -24,7 +24,7 @@ def step_compute_monoid(context):
         return
 
     try:
-        from guardrail_impossibility.monoid.extractor import extract_monoid
+        from aperiodic_guardrails.monoid.extractor import extract_monoid
         result = extract_monoid(context.pattern)
         context.monoid_size = result.get('size', 0)
         context.is_aperiodic = result.get('aperiodic', None)

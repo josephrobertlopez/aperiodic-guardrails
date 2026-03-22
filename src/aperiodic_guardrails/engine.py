@@ -6,7 +6,7 @@ No LLM sees the config contents.
 Usage: python engine.py config.b64
 """
 import base64, json, sys, time
-from guardrail_impossibility.mediums import get_medium
+from aperiodic_guardrails.mediums import get_medium
 
 
 def decode_config(path):

@@ -2,7 +2,7 @@
 import pytest
 
 def test_import():
-    from guardrail_impossibility.monoid import extractor
+    from aperiodic_guardrails.monoid import extractor
     assert hasattr(extractor, 'main')
 
 def test_literal_pattern_aperiodic():
