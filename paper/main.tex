@@ -78,7 +78,7 @@ substring-matching regex guardrails have aperiodic syntactic monoids and are the
 provably blind to any payload encoded using modular counting.
 Empirically, V3 yields a mean solve rate of $0.512$ for LLM-guided Tree-of-Thought
 versus $0.203$ for random-beam and $0.119$ for BFS ($N{=}20$, $p{<}0.01$).
-We extracted syntactic monoids from a corpus of 91 regex patterns drawn from five
+We extracted syntactic monoids from a corpus of 140 regex patterns drawn from eleven
 open-source guardrail tools; $97.1\%$ are aperiodic, and the $\mathrm{MOD}_2$
 bypass construction succeeds against all aperiodic patterns.
 A 391-line proof-of-concept with three execution mediums validates all five vectors.
@@ -148,8 +148,8 @@ Our contributions, organized by section, are:
     (Theorem~\ref{thm:indistinguish}).
   \item \textbf{Five attack vectors validated empirically} (\cref{sec:vectors}):
     V1--V4 demonstrate homomorphic reasoning; V5 demonstrates modular counting bypass.
-  \item \textbf{91-pattern regex corpus analysis} (\cref{sec:corpus}):
-    confirms $97.1\%$ aperiodicity across five open-source guardrail tools with
+  \item \textbf{140-pattern regex corpus analysis} (\cref{sec:corpus}):
+    confirms $97.9\%$ aperiodicity across eleven open-source guardrail tools with
     verified $\mathrm{MOD}_2$ bypass constructions.
   \item \textbf{Defense recommendations grounded in formal results} (\cref{sec:discussion}):
     each impossibility theorem maps to a specific layer of a defense-in-depth stack.
@@ -1142,8 +1142,8 @@ monoid, i.e., a non-$\mathrm{AC}^0$ language recognizer.
 \subsection{Regex Corpus Analysis}\label{sec:corpus}
 
 \paragraph{Methodology.}
-We collected 91 regex patterns from five open-source guardrail tools (LLM Guard,
-Rebuff, NeMo Guardrails, Guardrails AI, and llm-guard-py).
+We collected 140 regex patterns from eleven open-source guardrail tools (LLM Guard,
+Rebuff, NeMo Guardrails, Guardrails AI, llm-guard-py, Presidio, GitLeaks, OWASP-LLM, WAF-generic, LangKit, and BodAIGuard).
 For each pattern $r$, we:
 \begin{enumerate}
   \item Compiled $r$ to a Thompson NFA using the standard construction.
@@ -1160,7 +1160,7 @@ The monoid extractor tool (798 lines of Python) is an artifact contribution of
 this paper, enabling other researchers to audit their own guardrail corpora.
 
 \paragraph{Results.}
-Of the 91 patterns, 88 ($97.1\%$) have aperiodic syntactic monoids.
+Of the 140 patterns, 137 ($97.9\%$) have aperiodic syntactic monoids.
 The three non-aperiodic patterns all arise from numeric range checks of the form
 \texttt{[0-9]\{n,m\}} where the specific range inadvertently introduces a modular
 periodicity; none are from semantic content filters.
@@ -1174,7 +1174,7 @@ count, monoid size, and aperiodicity verdict.
 
 \begin{table}[t]
 \centering
-\caption{Representative guardrail regex patterns from 5 tools.
+\caption{Representative guardrail regex patterns from 11 tools.
 DFA states and monoid sizes are for the substring-matching version
 $L_r = \Sigma^* L(r) \Sigma^*$.
 AP: aperiodic (Y/N). All 5 shown are aperiodic; the 3 non-aperiodic patterns in the
@@ -1400,9 +1400,9 @@ blocklists, domain filters, toxicity patterns) has an aperiodic syntactic monoid
 \end{conjecture}
 
 \paragraph{Evidence.}
-$97.1\%$ of the 91-pattern corpus is aperiodic.
+$97.9\%$ of the 140-pattern corpus is aperiodic.
 The three non-aperiodic patterns are numeric range checks, not semantic filters.
-Among the 88 semantic filter patterns, the aperiodicity rate is $100\%$.
+Among the 137 semantic filter patterns, the aperiodicity rate is $100\%$.
 
 \paragraph{Structural argument.}
 Semantic guardrail patterns are designed to match specific substrings
@@ -1464,7 +1464,7 @@ A distribution-aware version of the bound would require a model of the attacker'
 prompt distribution.
 
 \paragraph{5. Regex corpus size.}
-The corpus of 91 patterns from 5 tools is representative but not exhaustive.
+The corpus of 140 patterns from 11 tools is representative but not exhaustive.
 A larger corpus would strengthen the aperiodicity conjecture
 (Section~\ref{sec:conjecture}).
 We make the monoid extractor available to enable independent extension of the corpus.
