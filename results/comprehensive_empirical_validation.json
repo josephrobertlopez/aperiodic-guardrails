@@ -1,0 +1,111 @@
+{
+  "timestamp": "2026-03-29T12:15:57",
+  "corpus": {
+    "n_patterns": 53,
+    "n_payloads": 50,
+    "n_clean": 50
+  },
+  "encoding_results": {
+    "raw": {
+      "regex": 98.0,
+      "neural": 26.0,
+      "parallel": 98.0,
+      "evade": 2.0,
+      "fpr": 1.0
+    },
+    "MOD_2": {
+      "regex": 0.0,
+      "neural": 98.0,
+      "parallel": 98.0,
+      "evade": 2.0,
+      "fpr": 1.0
+    },
+    "MOD_3": {
+      "regex": 2.0,
+      "neural": 100.0,
+      "parallel": 100.0,
+      "evade": 0.0,
+      "fpr": 1.0
+    },
+    "MOD_5": {
+      "regex": 0.0,
+      "neural": 100.0,
+      "parallel": 100.0,
+      "evade": 0.0,
+      "fpr": 1.0
+    },
+    "MOD_7": {
+      "regex": 0.0,
+      "neural": 100.0,
+      "parallel": 100.0,
+      "evade": 0.0,
+      "fpr": 1.0
+    },
+    "base64": {
+      "regex": 0.0,
+      "neural": 100.0,
+      "parallel": 100.0,
+      "evade": 0.0,
+      "fpr": 1.0
+    },
+    "ROT13": {
+      "regex": 2.0,
+      "neural": 52.0,
+      "parallel": 52.0,
+      "evade": 48.0,
+      "fpr": 1.0
+    },
+    "homoglyph": {
+      "regex": 12.0,
+      "neural": 26.0,
+      "parallel": 32.0,
+      "evade": 68.0,
+      "fpr": 1.0
+    },
+    "zwsp": {
+      "regex": 0.0,
+      "neural": 0.0,
+      "parallel": 0.0,
+      "evade": 100.0,
+      "fpr": 1.0
+    },
+    "leetspeak": {
+      "regex": 8.0,
+      "neural": 52.0,
+      "parallel": 54.0,
+      "evade": 46.0,
+      "fpr": 1.0
+    },
+    "reverse": {
+      "regex": 2.0,
+      "neural": 50.0,
+      "parallel": 50.0,
+      "evade": 50.0,
+      "fpr": 1.0
+    }
+  },
+  "semantic_attacks": {
+    "v1": {
+      "regex": 1,
+      "neural": 0,
+      "total": 5
+    },
+    "v3": {
+      "regex": 4,
+      "neural": 0,
+      "total": 5
+    }
+  },
+  "preprocessing": {
+    "nfkc_homoglyph_delta_pp": 0.0,
+    "base64_decode_delta_pp": 98.0,
+    "rot13_decode_delta_pp": 96.0,
+    "zwsp_strip_delta_pp": 98.0
+  },
+  "theoretical": {
+    "mean_neural_confidence": 0.594229329712399,
+    "tau": 0.3,
+    "alpha_star": 0.4951444080601054,
+    "all_5_props_confirmed": true
+  }
+}

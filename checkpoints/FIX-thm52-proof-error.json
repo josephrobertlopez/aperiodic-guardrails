@@ -1,0 +1,9 @@
+{
+  "status": "done",
+  "started": "2026-03-25T22:18:24.081777",
+  "completed": "2026-03-25T22:18:24.081777",
+  "evidence": [
+    "Thm 5.2(2) proof corrected with explicit filler word",
+    "Thm 5.3 + 5.5 downgraded to Propositions"
+  ]
+}

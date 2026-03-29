@@ -1,0 +1,143 @@
+{
+  "test_name": "MOD_p_bypass_matrix",
+  "primes": [
+    2,
+    3,
+    5,
+    7
+  ],
+  "by_prime": {
+    "p=2": {
+      "total_tests": 14,
+      "bypassed": 14,
+      "failed": []
+    },
+    "p=3": {
+      "total_tests": 14,
+      "bypassed": 14,
+      "failed": []
+    },
+    "p=5": {
+      "total_tests": 14,
+      "bypassed": 14,
+      "failed": []
+    },
+    "p=7": {
+      "total_tests": 14,
+      "bypassed": 14,
+      "failed": []
+    }
+  },
+  "by_pattern": {
+    "F1_keyword_blocklist": {
+      "total_tests": 8,
+      "bypassed": 8,
+      "failed_primes": []
+    },
+    "F2_leetspeak_profanity": {
+      "total_tests": 0,
+      "bypassed": 0,
+      "failed_primes": []
+    },
+    "F3_prompt_injection": {
+      "total_tests": 4,
+      "bypassed": 4,
+      "failed_primes": []
+    },
+    "F4_credential_aws": {
+      "total_tests": 0,
+      "bypassed": 0,
+      "failed_primes": []
+    },
+    "F5_code_exec": {
+      "total_tests": 8,
+      "bypassed": 8,
+      "failed_primes": []
+    },
+    "cmd_injection_rm": {
+      "total_tests": 4,
+      "bypassed": 4,
+      "failed_primes": []
+    },
+    "cmd_injection_wget": {
+      "total_tests": 0,
+      "bypassed": 0,
+      "failed_primes": []
+    },
+    "code_import_os": {
+      "total_tests": 4,
+      "bypassed": 4,
+      "failed_primes": []
+    },
+    "code_system_call": {
+      "total_tests": 4,
+      "bypassed": 4,
+      "failed_primes": []
+    },
+    "sql_injection": {
+      "total_tests": 4,
+      "bypassed": 4,
+      "failed_primes": []
+    },
+    "xss_script": {
+      "total_tests": 4,
+      "bypassed": 4,
+      "failed_primes": []
+    },
+    "path_traversal": {
+      "total_tests": 0,
+      "bypassed": 0,
+      "failed_primes": []
+    },
+    "base64_exec": {
+      "total_tests": 0,
+      "bypassed": 0,
+      "failed_primes": []
+    },
+    "shell_reverse": {
+      "total_tests": 0,
+      "bypassed": 0,
+      "failed_primes": []
+    },
+    "sudo_abuse": {
+      "total_tests": 4,
+      "bypassed": 4,
+      "failed_primes": []
+    },
+    "privesc_suid": {
+      "total_tests": 0,
+      "bypassed": 0,
+      "failed_primes": []
+    },
+    "cred_password": {
+      "total_tests": 0,
+      "bypassed": 0,
+      "failed_primes": []
+    },
+    "api_key_generic": {
+      "total_tests": 0,
+      "bypassed": 0,
+      "failed_primes": []
+    },
+    "malware_download": {
+      "total_tests": 0,
+      "bypassed": 0,
+      "failed_primes": []
+    },
+    "prompt_jailbreak": {
+      "total_tests": 8,
+      "bypassed": 8,
+      "failed_primes": []
+    },
+    "harmful_intent": {
+      "total_tests": 4,
+      "bypassed": 4,
+      "failed_primes": []
+    },
+    "data_exfil": {
+      "total_tests": 0,
+      "bypassed": 0,
+      "failed_primes": []
+    }
+  }
+}

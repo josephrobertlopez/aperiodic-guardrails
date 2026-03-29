@@ -1,0 +1,26 @@
+{
+  "id": "L5-openreview-submit",
+  "name": "OpenReview Submission — Open Peer Review",
+  "status": "ready",
+  "priority": 2,
+  "effort": "1 hour",
+  "value": "HIGH — no endorsement needed, indexed by Semantic Scholar, public peer review history",
+  "started": null,
+  "completed": null,
+  "blocked_by": null,
+  "notes": "OpenReview supports independent preprint submissions. No gatekeeping. Public reviews build credibility and generate discussion. Indexed by Semantic Scholar within days.",
+  "steps": [
+    "Go to openreview.net → New Submission",
+    "Select venue: 'OpenReview Preprints' (or similar general track)",
+    "Upload PDF",
+    "Fill authors, abstract, keywords",
+    "Submit and await confirmation",
+    "Link the OpenReview URL in jrlopez.dev article"
+  ],
+  "evidence": [],
+  "post_actions": [
+    "Share OpenReview URL for community feedback",
+    "Respond to any public reviews promptly",
+    "Use reviewer comments to strengthen USENIX submission"
+  ]
+}

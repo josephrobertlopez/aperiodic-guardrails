@@ -1,0 +1,409 @@
+{
+  "total_patterns": 49,
+  "monoid_size_stats": {
+    "min": 7,
+    "max": 1475,
+    "median": 103.0,
+    "mean": 219.82,
+    "std": 311.51
+  },
+  "by_source": {
+    "Presidio": {
+      "count": 15,
+      "mean_size": 117.27,
+      "min_size": 31,
+      "max_size": 1475,
+      "median_size": 87.0
+    },
+    "GitLeaks": {
+      "count": 8,
+      "mean_size": 390.75,
+      "min_size": 72,
+      "max_size": 1238,
+      "median_size": 214.0
+    },
+    "OWASP-LLM": {
+      "count": 8,
+      "mean_size": 441.125,
+      "min_size": 118,
+      "max_size": 982,
+      "median_size": 456.5
+    },
+    "WAF-generic": {
+      "count": 12,
+      "mean_size": 86.58,
+      "min_size": 7,
+      "max_size": 185,
+      "median_size": 78.0
+    },
+    "LangKit": {
+      "count": 3,
+      "mean_size": 96.33,
+      "min_size": 54,
+      "max_size": 147,
+      "median_size": 87.0
+    },
+    "BodAIGuard": {
+      "count": 3,
+      "mean_size": 133.33,
+      "min_size": 29,
+      "max_size": 401,
+      "median_size": 104.0
+    }
+  },
+  "by_category": {
+    "PII-SSN": {
+      "size": 68,
+      "count": 1,
+      "mean": 68.0,
+      "min": 68,
+      "max": 68
+    },
+    "PII-SSN-nodash": {
+      "size": 31,
+      "count": 1,
+      "mean": 31.0,
+      "min": 31,
+      "max": 31
+    },
+    "PII-passport": {
+      "size": 50,
+      "count": 1,
+      "mean": 50.0,
+      "min": 50,
+      "max": 50
+    },
+    "PII-credit-card": {
+      "size": 132,
+      "count": 1,
+      "mean": 132.0,
+      "min": 132,
+      "max": 132
+    },
+    "PII-email": {
+      "size": 44,
+      "count": 1,
+      "mean": 44.0,
+      "min": 44,
+      "max": 44
+    },
+    "PII-phone-US": {
+      "size": 77,
+      "count": 1,
+      "mean": 77.0,
+      "min": 77,
+      "max": 77
+    },
+    "PII-zipcode": {
+      "size": 59,
+      "count": 1,
+      "mean": 59.0,
+      "min": 59,
+      "max": 59
+    },
+    "PII-IPv4": {
+      "size": 85,
+      "count": 1,
+      "mean": 85.0,
+      "min": 85,
+      "max": 85
+    },
+    "PII-MAC": {
+      "size": 87,
+      "count": 1,
+      "mean": 87.0,
+      "min": 87,
+      "max": 87
+    },
+    "PII-UK-postcode": {
+      "size": 62,
+      "count": 1,
+      "mean": 62.0,
+      "min": 62,
+      "max": 62
+    },
+    "PII-BR-CPF": {
+      "size": 103,
+      "count": 1,
+      "mean": 103.0,
+      "min": 103,
+      "max": 103
+    },
+    "PII-BR-CNPJ": {
+      "size": 175,
+      "count": 1,
+      "mean": 175.0,
+      "min": 175,
+      "max": 175
+    },
+    "PII-IBAN-DE": {
+      "size": 235,
+      "count": 1,
+      "mean": 235.0,
+      "min": 235,
+      "max": 235
+    },
+    "PII-IBAN-generic": {
+      "size": 1475,
+      "count": 1,
+      "mean": 1475.0,
+      "min": 1475,
+      "max": 1475
+    },
+    "PII-date-US": {
+      "size": 133,
+      "count": 1,
+      "mean": 133.0,
+      "min": 133,
+      "max": 133
+    },
+    "secret-github-pat": {
+      "size": 192,
+      "count": 1,
+      "mean": 192.0,
+      "min": 192,
+      "max": 192
+    },
+    "secret-openai-key": {
+      "size": 200,
+      "count": 1,
+      "mean": 200.0,
+      "min": 200,
+      "max": 200
+    },
+    "secret-aws-access-key": {
+      "size": 91,
+      "count": 1,
+      "mean": 91.0,
+      "min": 91,
+      "max": 91
+    },
+    "secret-password-assign": {
+      "size": 103,
+      "count": 1,
+      "mean": 103.0,
+      "min": 103,
+      "max": 103
+    },
+    "secret-jwt-bearer": {
+      "size": 72,
+      "count": 1,
+      "mean": 72.0,
+      "min": 72,
+      "max": 72
+    },
+    "secret-private-key": {
+      "size": 495,
+      "count": 1,
+      "mean": 495.0,
+      "min": 495,
+      "max": 495
+    },
+    "secret-slack-token": {
+      "size": 131,
+      "count": 1,
+      "mean": 131.0,
+      "min": 131,
+      "max": 131
+    },
+    "secret-sendgrid": {
+      "size": 1238,
+      "count": 1,
+      "mean": 1238.0,
+      "min": 1238,
+      "max": 1238
+    },
+    "injection-ignore-prev": {
+      "size": 813,
+      "count": 1,
+      "mean": 813.0,
+      "min": 813,
+      "max": 813
+    },
+    "injection-system-prompt": {
+      "size": 134,
+      "count": 1,
+      "mean": 134.0,
+      "min": 134,
+      "max": 134
+    },
+    "injection-roleplay": {
+      "size": 470,
+      "count": 1,
+      "mean": 470.0,
+      "min": 470,
+      "max": 470
+    },
+    "injection-template-markers": {
+      "size": 142,
+      "count": 1,
+      "mean": 142.0,
+      "min": 142,
+      "max": 142
+    },
+    "injection-DAN": {
+      "size": 118,
+      "count": 1,
+      "mean": 118.0,
+      "min": 118,
+      "max": 118
+    },
+    "injection-pretend": {
+      "size": 172,
+      "count": 1,
+      "mean": 172.0,
+      "min": 172,
+      "max": 172
+    },
+    "injection-forget": {
+      "size": 679,
+      "count": 1,
+      "mean": 679.0,
+      "min": 679,
+      "max": 679
+    },
+    "injection-reveal": {
+      "size": 982,
+      "count": 1,
+      "mean": 982.0,
+      "min": 982,
+      "max": 982
+    },
+    "code-xss-script": {
+      "size": 39,
+      "count": 1,
+      "mean": 39.0,
+      "min": 39,
+      "max": 39
+    },
+    "code-xss-protocol": {
+      "size": 68,
+      "count": 1,
+      "mean": 68.0,
+      "min": 68,
+      "max": 68
+    },
+    "code-xss-event": {
+      "size": 137,
+      "count": 1,
+      "mean": 137.0,
+      "min": 137,
+      "max": 137
+    },
+    "code-sqli-union": {
+      "size": 78,
+      "count": 1,
+      "mean": 78.0,
+      "min": 78,
+      "max": 78
+    },
+    "code-sqli-destructive": {
+      "size": 103,
+      "count": 1,
+      "mean": 103.0,
+      "min": 103,
+      "max": 103
+    },
+    "code-path-traversal": {
+      "size": 7,
+      "count": 1,
+      "mean": 7.0,
+      "min": 7,
+      "max": 7
+    },
+    "code-eval": {
+      "size": 18,
+      "count": 1,
+      "mean": 18.0,
+      "min": 18,
+      "max": 18
+    },
+    "code-exec": {
+      "size": 17,
+      "count": 1,
+      "mean": 17.0,
+      "min": 17,
+      "max": 17
+    },
+    "code-python-os": {
+      "size": 119,
+      "count": 1,
+      "mean": 119.0,
+      "min": 119,
+      "max": 119
+    },
+    "code-python-subprocess": {
+      "size": 185,
+      "count": 1,
+      "mean": 185.0,
+      "min": 185,
+      "max": 185
+    },
+    "code-python-import": {
+      "size": 67,
+      "count": 1,
+      "mean": 67.0,
+      "min": 67,
+      "max": 67
+    },
+    "toxicity-profanity": {
+      "size": 87,
+      "count": 1,
+      "mean": 87.0,
+      "min": 87,
+      "max": 87
+    },
+    "toxicity-violence": {
+      "size": 147,
+      "count": 1,
+      "mean": 147.0,
+      "min": 147,
+      "max": 147
+    },
+    "content-url-detect": {
+      "size": 54,
+      "count": 1,
+      "mean": 54.0,
+      "min": 54,
+      "max": 54
+    },
+    "injection-base64": {
+      "size": 104,
+      "count": 1,
+      "mean": 104.0,
+      "min": 104,
+      "max": 104
+    },
+    "injection-hex": {
+      "size": 66,
+      "count": 1,
+      "mean": 66.0,
+      "min": 66,
+      "max": 66
+    },
+    "injection-rot13": {
+      "size": 29,
+      "count": 1,
+      "mean": 29.0,
+      "min": 29,
+      "max": 29
+    },
+    "injection-encoding": {
+      "size": 401,
+      "count": 1,
+      "mean": 401.0,
+      "min": 401,
+      "max": 401
+    }
+  },
+  "size_vs_length_correlation": 0.4876,
+  "histogram": {
+    "1-8": 2,
+    "9-16": 2,
+    "17-32": 5,
+    "33-64": 10,
+    "65-128": 14,
+    "129-256": 11,
+    "257+": 5
+  }
+}

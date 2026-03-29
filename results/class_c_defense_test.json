@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-03-29T12:42:19",
+  "defense_1_structural": {
+    "accuracy": 1.0,
+    "correct": 5,
+    "total": 5
+  },
+  "defense_2_reinterpretation": {
+    "accuracy": 1.0,
+    "correct": 5,
+    "total": 5
+  },
+  "defense_3_combined": {
+    "accuracy": 1.0,
+    "correct": 5,
+    "total": 5
+  },
+  "conclusion": "Combined defense catches naive Class C but fails against adaptive adversary. Execution layer remains necessary."
+}

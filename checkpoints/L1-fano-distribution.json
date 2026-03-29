@@ -1,0 +1,8 @@
+{
+  "status": "pending",
+  "started": null,
+  "completed": null,
+  "evidence": [],
+  "blocked_by": null,
+  "notes": "Reviewer attack surface: uniform distribution assumption in Fano bound. Build sensitivity analysis: P_e floor vs distribution skew. Python script + matplotlib figure. ~2-3 days."
+}

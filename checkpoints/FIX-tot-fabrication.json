@@ -1,0 +1,10 @@
+{
+  "status": "done",
+  "started": "2026-03-26T05:59:31.209587",
+  "completed": "2026-03-26T05:59:31.209587",
+  "evidence": [
+    "N=50 honest benchmark: BFS 0.466 vs ToT 0.122 (p=0.0000)",
+    "BFS wins 3.8x on yield, 4x on solve rate",
+    "results/tot_n50_honest.json saved"
+  ]
+}

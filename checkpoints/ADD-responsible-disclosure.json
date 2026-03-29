@@ -1,0 +1,13 @@
+{
+  "status": "done",
+  "started": "2026-03-25T22:29:55.559097",
+  "completed": "2026-03-26T18:49:24.198569",
+  "evidence": [
+    "3 disclosure emails SENT 2026-03-26",
+    "ProtectAI: security@protectai.com (confirmed via SECURITY.md)",
+    "NVIDIA: psirt@nvidia.com (corrected from security-guardrails@nvidia.com)",
+    "Guardrails AI: security@guardrailsai.com",
+    "Ethics section addendum ready for main.tex \u00a710.2",
+    "90-day embargo clock started 2026-03-26, expires ~2026-06-24"
+  ]
+}
