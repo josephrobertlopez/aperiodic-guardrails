@@ -1,0 +1,8 @@
+{
+  "status": "blocked",
+  "started": null,
+  "completed": null,
+  "evidence": [],
+  "blocked_by": "endorsement code 3YEWSA",
+  "notes": "Strategy: email cited authors from references.bib who are cs.CR endorsers. This is the designed mechanism. If stalls, Zenodo+OpenReview are parallel unblocked paths. Precedent: ciris.ai author was rejected post-endorsement, pivoted to Zenodo successfully."
+}

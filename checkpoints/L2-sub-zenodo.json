@@ -1,0 +1,8 @@
+{
+  "status": "pending",
+  "started": null,
+  "completed": null,
+  "evidence": [],
+  "blocked_by": null,
+  "notes": "Parallel path - unblocked. Upload PDF to Zenodo for DOI + Semantic Scholar indexing. Precedent: ciris.ai published 2 papers this way (DOI 10.5281/zenodo.18217688, 10.5281/zenodo.18137161). No gatekeeping."
+}

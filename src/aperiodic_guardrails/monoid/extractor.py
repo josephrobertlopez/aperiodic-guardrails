@@ -682,6 +682,7 @@ def builtin_path(pattern: str):
 # ---------------------------------------------------------------------------
 
 def analyze(pattern: str):
+    validate_regex(pattern)
     print(f"\n{'='*60}")
     print(f"  Pattern : {pattern!r}")
     print(f"{'='*60}\n")
@@ -780,6 +781,26 @@ def analyze(pattern: str):
         print("=" * 60)
 
 
+_PCRE_PATTERNS = [
+    (r'\(\?=',   "lookahead (?="),
+    (r'\(\?!',   "negative lookahead (?!"),
+    (r'\(\?<=',  "lookbehind (?<="),
+    (r'\(\?<!',  "negative lookbehind (?<!"),
+    (r'\\[1-9]', "backreference \\1-\\9"),
+    (r'\(\?>',   "atomic group (?>"),
+    (r'\(\?P<',  "named group (?P<"),
+]
+
+def validate_regex(pattern: str) -> None:
+    """Raise ValueError if pattern contains PCRE-only features unsupported by the DFA path."""
+    import re as _re
+    for pcre_pat, label in _PCRE_PATTERNS:
+        if _re.search(pcre_pat, pattern):
+            raise ValueError(
+                f"Pattern contains PCRE-only feature not supported by DFA construction: {label}"
+            )
+
+
 def extract_monoid(pattern: str) -> dict:
     """
     Extract the syntactic monoid from a regex pattern.
@@ -789,6 +810,7 @@ def extract_monoid(pattern: str) -> dict:
         aperiodic: bool -- True if the monoid is aperiodic
         groups: list    -- orders of non-trivial cyclic subgroups (empty if aperiodic)
     """
+    validate_regex(pattern)
     result = try_greenery(pattern)
     if result:
         num_states, transitions, start, accept, alphabet = result

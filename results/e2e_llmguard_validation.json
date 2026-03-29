@@ -1,0 +1,72 @@
+{
+  "timestamp": "2026-03-29T12:34:52",
+  "patterns_source": "protectai/llm-guard BanSubstrings + code/SQL/XSS patterns",
+  "n_patterns": 23,
+  "n_payloads": 20,
+  "encodings": [
+    "raw",
+    "MOD_2",
+    "MOD_3",
+    "base64",
+    "ROT13",
+    "ZWSP",
+    "homoglyph",
+    "leetspeak"
+  ],
+  "defense_stacks": [
+    "regex_only",
+    "regex+preprocess",
+    "regex+neural",
+    "full_stack"
+  ],
+  "results": {
+    "raw": {
+      "regex_only": 95.0,
+      "regex+preprocess": 95.0,
+      "regex+neural": 95.0,
+      "full_stack": 95.0
+    },
+    "MOD_2": {
+      "regex_only": 0.0,
+      "regex+preprocess": 0.0,
+      "regex+neural": 100.0,
+      "full_stack": 100.0
+    },
+    "MOD_3": {
+      "regex_only": 0.0,
+      "regex+preprocess": 0.0,
+      "regex+neural": 100.0,
+      "full_stack": 100.0
+    },
+    "base64": {
+      "regex_only": 0.0,
+      "regex+preprocess": 95.0,
+      "regex+neural": 100.0,
+      "full_stack": 100.0
+    },
+    "ROT13": {
+      "regex_only": 0.0,
+      "regex+preprocess": 95.0,
+      "regex+neural": 90.0,
+      "full_stack": 100.0
+    },
+    "ZWSP": {
+      "regex_only": 0.0,
+      "regex+preprocess": 95.0,
+      "regex+neural": 0.0,
+      "full_stack": 95.0
+    },
+    "homoglyph": {
+      "regex_only": 15.0,
+      "regex+preprocess": 95.0,
+      "regex+neural": 60.0,
+      "full_stack": 95.0
+    },
+    "leetspeak": {
+      "regex_only": 0.0,
+      "regex+preprocess": 95.0,
+      "regex+neural": 80.0,
+      "full_stack": 100.0
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "L5-zenodo-submit",
+  "name": "Zenodo Submission — Get DOI",
+  "status": "ready",
+  "priority": 1,
+  "effort": "30 minutes",
+  "value": "HIGH — unblocked, DOI + Semantic Scholar indexing today",
+  "started": null,
+  "completed": null,
+  "blocked_by": null,
+  "notes": "Parallel path requiring zero gatekeeping. Upload PDF to zenodo.org, fill metadata, publish. Precedent: ciris.ai published 2 papers this way (DOI 10.5281/zenodo.18217688, 10.5281/zenodo.18137161). Paper is submission-ready (7/7/8 peer review). Do this BEFORE arXiv endorsement arrives.",
+  "steps": [
+    "Go to zenodo.org → New upload",
+    "Upload PDF: paper/main.pdf (compile first if needed)",
+    "Title: 'Algebraic and Computational Limits of LLM Guardrails'",
+    "Authors: Joseph Robert Lopez",
+    "Resource type: Preprint",
+    "Keywords: LLM guardrails, syntactic monoids, aperiodic languages, regex security, adversarial ML, formal methods",
+    "License: CC BY 4.0",
+    "Communities: cs.CR (if available)",
+    "Click Publish → record DOI (format: 10.5281/zenodo.XXXXXXXX)",
+    "Add DOI to paper/main.tex acknowledgments and jrlopez.dev post"
+  ],
+  "evidence": [],
+  "post_actions": [
+    "Share DOI link on LinkedIn and Twitter/X",
+    "Update jrlopez.dev post with Zenodo DOI",
+    "Add Zenodo DOI to USENIX submission metadata"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "status": "done",
+  "started": "2026-03-26T10:07:22.867280",
+  "completed": "2026-03-26T10:07:22.867280",
+  "evidence": [
+    "S2C concurrent framing fixed",
+    "Table F5 caption expanded",
+    "All Theorem\u2192Proposition refs (13)",
+    "Thm 5.8 (Indistinguishability) downgraded to Proposition (2026-03-26)",
+    "All 8 Theorem~ref{thm:indistinguish} \u2192 Proposition~ref (2026-03-26)",
+    "Ball et al. citation: full author list (Ball, Barak, Goldreich) (2026-03-26)",
+    "GIDP scope clarification added to Remark after Prop 5.7 (2026-03-26)"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "status": "done",
+  "started": "2026-03-26T10:32:02.644328",
+  "completed": "2026-03-26T10:32:02.644328",
+  "evidence": [
+    "Peer review: Weak Accept (7/7/8)",
+    "3 fixes applied: MacLane cite, DictAttack cite, corpus 123+19",
+    "Bib types fixed: hastad\u2192phdthesis, pin\u2192book",
+    "PAPER SUBMISSION READY"
+  ]
+}

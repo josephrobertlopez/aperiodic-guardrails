@@ -1,0 +1,2474 @@
+{
+  "meta": {
+    "n_grammars": 50,
+    "seeds": "0 to 49",
+    "model": "llama3.1:8b",
+    "timeout_per_method_s": 90,
+    "date": "2026-03-26T04:12:58.403414Z",
+    "note": "Honest rerun. Seeds 0-49. No fabrication."
+  },
+  "summary": {
+    "bfs": {
+      "mean_yield": 0.4661,
+      "std_yield": 0.0661,
+      "min_yield": 0.3521,
+      "max_yield": 0.5919,
+      "ci_95": [
+        0.448,
+        0.4834
+      ],
+      "solve_rate": 1.0,
+      "n_solved": 50,
+      "mean_states": 87.2
+    },
+    "random_beam": {
+      "mean_yield": 0.1722,
+      "std_yield": 0.1621,
+      "min_yield": 0.0,
+      "max_yield": 0.5167,
+      "ci_95": [
+        0.1306,
+        0.2195
+      ],
+      "solve_rate": 0.7,
+      "n_solved": 35,
+      "mean_states": 29.6
+    },
+    "tot_llm": {
+      "mean_yield": 0.1221,
+      "std_yield": 0.2133,
+      "min_yield": 0.0,
+      "max_yield": 0.5611,
+      "ci_95": [
+        0.0644,
+        0.1849
+      ],
+      "solve_rate": 0.26,
+      "n_solved": 13,
+      "mean_states": 26.9
+    },
+    "wilcoxon_bfs_vs_tot": {
+      "stat": 1275.0,
+      "p": 0.0
+    },
+    "wilcoxon_tot_vs_bfs": {
+      "stat": 0.0,
+      "p": 1.0
+    },
+    "wilcoxon_bfs_vs_rand": {
+      "stat": 1225.0,
+      "p": 0.0
+    },
+    "wilcoxon_tot_vs_rand": {
+      "stat": 157.0,
+      "p": 0.986332
+    },
+    "wilcoxon_rand_vs_tot": {
+      "stat": 404.0,
+      "p": 0.013668
+    }
+  },
+  "winner": {
+    "method": "BFS",
+    "mean_yield": 0.4661
+  },
+  "grammars": [
+    {
+      "grammar_id": 0,
+      "seed": 0,
+      "n_rules": 27,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.3863559264312827,
+        "solved": true,
+        "path_len": 9,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7",
+          "R8"
+        ],
+        "wall_time": 0.002,
+        "states_explored": 96,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 0.001,
+        "states_explored": 28,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 329.674,
+        "states_explored": -1,
+        "timed_out": true
+      }
+    },
+    {
+      "grammar_id": 1,
+      "seed": 1,
+      "n_rules": 25,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.4590792480549963,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 84,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.11581217,
+        "solved": true,
+        "path_len": 3,
+        "path": [
+          "R10",
+          "R11",
+          "R12"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 29,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 42.27,
+        "states_explored": 26,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 2,
+      "seed": 2,
+      "n_rules": 23,
+      "n_constraints": 2,
+      "bfs": {
+        "score": 0.5025917183626764,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 80,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.18133719382080002,
+        "solved": true,
+        "path_len": 5,
+        "path": [
+          "R12",
+          "R13",
+          "R6",
+          "R7",
+          "R8"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 25,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.47243621526091567,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R12",
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 51.436,
+        "states_explored": 29,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 3,
+      "seed": 3,
+      "n_rules": 23,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.5159550573089774,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 84,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.10052394619071998,
+        "solved": true,
+        "path_len": 5,
+        "path": [
+          "R13",
+          "R14",
+          "R10",
+          "R11",
+          "R12"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 28,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 48.411,
+        "states_explored": 26,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 4,
+      "seed": 4,
+      "n_rules": 24,
+      "n_constraints": 2,
+      "bfs": {
+        "score": 0.4241897232458645,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 86,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.183812765709144,
+        "solved": true,
+        "path_len": 5,
+        "path": [
+          "R18",
+          "R7",
+          "R19",
+          "R8",
+          "R9"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 33,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 47.226,
+        "states_explored": 26,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 5,
+      "seed": 5,
+      "n_rules": 24,
+      "n_constraints": 2,
+      "bfs": {
+        "score": 0.5099918743648731,
+        "solved": true,
+        "path_len": 8,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 92,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.182290771141101,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R14",
+          "R15",
+          "R16",
+          "R8",
+          "R9",
+          "R10"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 32,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 76.231,
+        "states_explored": 26,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 6,
+      "seed": 6,
+      "n_rules": 24,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.5093093240799408,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 78,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.44258980262546865,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R17",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 32,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.46754595950538574,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R12",
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 61.044,
+        "states_explored": 28,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 7,
+      "seed": 7,
+      "n_rules": 26,
+      "n_constraints": 2,
+      "bfs": {
+        "score": 0.42795922004706205,
+        "solved": true,
+        "path_len": 8,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 92,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.17677856044833595,
+        "solved": true,
+        "path_len": 5,
+        "path": [
+          "R8",
+          "R14",
+          "R15",
+          "R9",
+          "R10"
+        ],
+        "wall_time": 0.0,
+        "states_explored": 29,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 37.284,
+        "states_explored": 26,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 8,
+      "seed": 8,
+      "n_rules": 25,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.42364535322379604,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 84,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.19151231820000003,
+        "solved": true,
+        "path_len": 4,
+        "path": [
+          "R13",
+          "R7",
+          "R8",
+          "R9"
+        ],
+        "wall_time": 0.0,
+        "states_explored": 28,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 55.538,
+        "states_explored": 27,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 9,
+      "seed": 9,
+      "n_rules": 27,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.3829259450536484,
+        "solved": true,
+        "path_len": 9,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7",
+          "R8"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 96,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 0.001,
+        "states_explored": 32,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 34.807,
+        "states_explored": 26,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 10,
+      "seed": 10,
+      "n_rules": 24,
+      "n_constraints": 2,
+      "bfs": {
+        "score": 0.5607149683824344,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 80,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.1652410084443843,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R12",
+          "R13",
+          "R14",
+          "R6",
+          "R7",
+          "R8"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 32,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.5029613266390437,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R1",
+          "R17",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 48.441,
+        "states_explored": 29,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 11,
+      "seed": 11,
+      "n_rules": 25,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.4507749133204772,
+        "solved": true,
+        "path_len": 9,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7",
+          "R8"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 96,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 0.001,
+        "states_explored": 35,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 47.535,
+        "states_explored": 26,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 12,
+      "seed": 12,
+      "n_rules": 25,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.4069804767975304,
+        "solved": true,
+        "path_len": 9,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7",
+          "R8"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 96,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.1682929558464,
+        "solved": true,
+        "path_len": 5,
+        "path": [
+          "R9",
+          "R20",
+          "R10",
+          "R21",
+          "R11"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 26,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 28.799,
+        "states_explored": 26,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 13,
+      "seed": 13,
+      "n_rules": 25,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.5190429011763369,
+        "solved": true,
+        "path_len": 8,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 90,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 0.001,
+        "states_explored": 31,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 63.858,
+        "states_explored": 27,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 14,
+      "seed": 14,
+      "n_rules": 22,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.541954060656624,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 78,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 0.001,
+        "states_explored": 31,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 141.555,
+        "states_explored": -1,
+        "timed_out": true
+      }
+    },
+    {
+      "grammar_id": 15,
+      "seed": 15,
+      "n_rules": 25,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.4741008676239702,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 84,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 0.001,
+        "states_explored": 29,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 35.217,
+        "states_explored": 25,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 16,
+      "seed": 16,
+      "n_rules": 26,
+      "n_constraints": 2,
+      "bfs": {
+        "score": 0.3839988479067697,
+        "solved": true,
+        "path_len": 8,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 92,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.232215984,
+        "solved": true,
+        "path_len": 4,
+        "path": [
+          "R14",
+          "R8",
+          "R9",
+          "R10"
+        ],
+        "wall_time": 0.0,
+        "states_explored": 28,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 54.796,
+        "states_explored": 29,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 17,
+      "seed": 17,
+      "n_rules": 27,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.3944190439151493,
+        "solved": true,
+        "path_len": 9,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7",
+          "R8"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 96,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.22090278000000002,
+        "solved": true,
+        "path_len": 4,
+        "path": [
+          "R9",
+          "R15",
+          "R10",
+          "R11"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 31,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 52.365,
+        "states_explored": 27,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 18,
+      "seed": 18,
+      "n_rules": 25,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.4443720317471414,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 84,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 0.001,
+        "states_explored": 28,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 47.098,
+        "states_explored": 27,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 19,
+      "seed": 19,
+      "n_rules": 23,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.5598781850330592,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 78,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 0.0,
+        "states_explored": 29,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.5055700010848525,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R12",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 37.045,
+        "states_explored": 26,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 20,
+      "seed": 20,
+      "n_rules": 23,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.49410794248168444,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 84,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.18159048547672027,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R13",
+          "R14",
+          "R7",
+          "R15",
+          "R8",
+          "R9"
+        ],
+        "wall_time": 0.0,
+        "states_explored": 26,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 51.083,
+        "states_explored": 29,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 21,
+      "seed": 21,
+      "n_rules": 24,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.5254372919037993,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 84,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.20198131909888004,
+        "solved": true,
+        "path_len": 5,
+        "path": [
+          "R18",
+          "R7",
+          "R19",
+          "R8",
+          "R9"
+        ],
+        "wall_time": 0.0,
+        "states_explored": 26,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 47.45,
+        "states_explored": 27,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 22,
+      "seed": 22,
+      "n_rules": 23,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.5278751232842982,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 84,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.14739593232010922,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R13",
+          "R14",
+          "R15",
+          "R7",
+          "R8",
+          "R9"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 30,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 78.924,
+        "states_explored": 27,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 23,
+      "seed": 23,
+      "n_rules": 26,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.3954917777632185,
+        "solved": true,
+        "path_len": 8,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 90,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 0.001,
+        "states_explored": 29,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 62.729,
+        "states_explored": 26,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 24,
+      "seed": 24,
+      "n_rules": 26,
+      "n_constraints": 2,
+      "bfs": {
+        "score": 0.3889190417119086,
+        "solved": true,
+        "path_len": 9,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7",
+          "R8"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 98,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.24754668092000004,
+        "solved": true,
+        "path_len": 4,
+        "path": [
+          "R20",
+          "R9",
+          "R10",
+          "R11"
+        ],
+        "wall_time": 0.0,
+        "states_explored": 26,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 86.831,
+        "states_explored": 29,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 25,
+      "seed": 25,
+      "n_rules": 27,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.40596526816340367,
+        "solved": true,
+        "path_len": 9,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7",
+          "R8"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 96,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 0.001,
+        "states_explored": 33,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 38.225,
+        "states_explored": 28,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 26,
+      "seed": 26,
+      "n_rules": 24,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.4998457513025623,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 84,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.227759616,
+        "solved": true,
+        "path_len": 3,
+        "path": [
+          "R7",
+          "R8",
+          "R9"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 27,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.17761926579683326,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R13",
+          "R14",
+          "R15",
+          "R7",
+          "R8",
+          "R9"
+        ],
+        "wall_time": 80.902,
+        "states_explored": 25,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 27,
+      "seed": 27,
+      "n_rules": 27,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.38277950828529933,
+        "solved": true,
+        "path_len": 9,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7",
+          "R8"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 96,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.20436246230400004,
+        "solved": true,
+        "path_len": 4,
+        "path": [
+          "R9",
+          "R10",
+          "R20",
+          "R11"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 33,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 51.038,
+        "states_explored": 26,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 28,
+      "seed": 28,
+      "n_rules": 24,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.5690515449149547,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 78,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.516698802782779,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R1",
+          "R12",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 31,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.516698802782779,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R12",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 31.707,
+        "states_explored": 26,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 29,
+      "seed": 29,
+      "n_rules": 23,
+      "n_constraints": 2,
+      "bfs": {
+        "score": 0.5162034851632902,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 80,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.5162034851632902,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 32,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.466131747102451,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R1",
+          "R12",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 33.609,
+        "states_explored": 26,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 30,
+      "seed": 30,
+      "n_rules": 24,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.41312393804540204,
+        "solved": true,
+        "path_len": 8,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 90,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.09291880575725443,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R11",
+          "R14",
+          "R15",
+          "R16",
+          "R12",
+          "R13"
+        ],
+        "wall_time": 0.0,
+        "states_explored": 25,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 79.087,
+        "states_explored": 28,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 31,
+      "seed": 31,
+      "n_rules": 23,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.523570636412329,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 78,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.4874442624998783,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R12",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 0.0,
+        "states_explored": 29,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 61.093,
+        "states_explored": 28,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 32,
+      "seed": 32,
+      "n_rules": 23,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.47667476447152124,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 78,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.43949413284274264,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R12",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 0.0,
+        "states_explored": 27,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.43949413284274264,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R12",
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 48.076,
+        "states_explored": 27,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 33,
+      "seed": 33,
+      "n_rules": 25,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.5249008692871667,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 84,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 0.001,
+        "states_explored": 30,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 53.144,
+        "states_explored": 25,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 34,
+      "seed": 34,
+      "n_rules": 24,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.4925470753034072,
+        "solved": true,
+        "path_len": 8,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 90,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 0.0,
+        "states_explored": 29,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 59.792,
+        "states_explored": 29,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 35,
+      "seed": 35,
+      "n_rules": 24,
+      "n_constraints": 2,
+      "bfs": {
+        "score": 0.5179080518382034,
+        "solved": true,
+        "path_len": 8,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 92,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.10835288870399999,
+        "solved": true,
+        "path_len": 4,
+        "path": [
+          "R19",
+          "R11",
+          "R12",
+          "R13"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 26,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 56.077,
+        "states_explored": 30,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 36,
+      "seed": 36,
+      "n_rules": 26,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.37560379342982186,
+        "solved": true,
+        "path_len": 8,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 90,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 0.001,
+        "states_explored": 30,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 61.724,
+        "states_explored": 26,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 37,
+      "seed": 37,
+      "n_rules": 24,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.5918614424901024,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 78,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.1007322888279708,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R12",
+          "R13",
+          "R14",
+          "R9",
+          "R10",
+          "R11"
+        ],
+        "wall_time": 0.0,
+        "states_explored": 30,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.5610846474806169,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R12",
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 62.994,
+        "states_explored": 26,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 38,
+      "seed": 38,
+      "n_rules": 27,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.3525851215152621,
+        "solved": true,
+        "path_len": 9,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7",
+          "R8"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 96,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.190686922231968,
+        "solved": true,
+        "path_len": 5,
+        "path": [
+          "R20",
+          "R9",
+          "R21",
+          "R10",
+          "R11"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 29,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 85.297,
+        "states_explored": 26,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 39,
+      "seed": 39,
+      "n_rules": 23,
+      "n_constraints": 2,
+      "bfs": {
+        "score": 0.43694473749970036,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 86,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.224309450016,
+        "solved": true,
+        "path_len": 4,
+        "path": [
+          "R7",
+          "R8",
+          "R13",
+          "R9"
+        ],
+        "wall_time": 0.0,
+        "states_explored": 31,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 51.565,
+        "states_explored": 28,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 40,
+      "seed": 40,
+      "n_rules": 27,
+      "n_constraints": 2,
+      "bfs": {
+        "score": 0.3925886478311932,
+        "solved": true,
+        "path_len": 9,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7",
+          "R8"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 98,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 0.001,
+        "states_explored": 31,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 41.155,
+        "states_explored": 25,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 41,
+      "seed": 41,
+      "n_rules": 26,
+      "n_constraints": 2,
+      "bfs": {
+        "score": 0.4393352128974171,
+        "solved": true,
+        "path_len": 9,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7",
+          "R8"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 98,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.19380299758819997,
+        "solved": true,
+        "path_len": 5,
+        "path": [
+          "R15",
+          "R16",
+          "R9",
+          "R10",
+          "R11"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 34,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 32.734,
+        "states_explored": 26,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 42,
+      "seed": 42,
+      "n_rules": 22,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.5201639818608119,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 78,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.4650265997835659,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R12",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 0.0,
+        "states_explored": 29,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.47178873154775636,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R17",
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 52.335,
+        "states_explored": 30,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 43,
+      "seed": 43,
+      "n_rules": 22,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.5403820276684896,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 78,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.5090398700637172,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R12",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 0.0,
+        "states_explored": 26,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.5090398700637172,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R12",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 45.79,
+        "states_explored": 26,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 44,
+      "seed": 44,
+      "n_rules": 26,
+      "n_constraints": 2,
+      "bfs": {
+        "score": 0.352050875712099,
+        "solved": true,
+        "path_len": 9,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7",
+          "R8"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 98,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 0.001,
+        "states_explored": 34,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 59.633,
+        "states_explored": 27,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 45,
+      "seed": 45,
+      "n_rules": 24,
+      "n_constraints": 2,
+      "bfs": {
+        "score": 0.39894362812026324,
+        "solved": true,
+        "path_len": 8,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 92,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.2584181406,
+        "solved": true,
+        "path_len": 4,
+        "path": [
+          "R19",
+          "R8",
+          "R9",
+          "R10"
+        ],
+        "wall_time": 0.0,
+        "states_explored": 26,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 104.581,
+        "states_explored": -1,
+        "timed_out": true
+      }
+    },
+    {
+      "grammar_id": 46,
+      "seed": 46,
+      "n_rules": 23,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.5414225854018926,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 78,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.16551227017489922,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R12",
+          "R13",
+          "R14",
+          "R6",
+          "R7",
+          "R8"
+        ],
+        "wall_time": 0.0,
+        "states_explored": 28,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.48132467842228244,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R12",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 42.363,
+        "states_explored": 25,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 47,
+      "seed": 47,
+      "n_rules": 26,
+      "n_constraints": 2,
+      "bfs": {
+        "score": 0.42511728026796053,
+        "solved": true,
+        "path_len": 8,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 92,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.20285593948419806,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R8",
+          "R14",
+          "R15",
+          "R9",
+          "R16",
+          "R10"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 32,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 45.665,
+        "states_explored": 26,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 48,
+      "seed": 48,
+      "n_rules": 26,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.43623944481598964,
+        "solved": true,
+        "path_len": 8,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 90,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.07696339340148362,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R14",
+          "R15",
+          "R11",
+          "R16",
+          "R12",
+          "R13"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 33,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.0,
+        "solved": false,
+        "path_len": 0,
+        "path": [],
+        "wall_time": 56.201,
+        "states_explored": 29,
+        "timed_out": false
+      }
+    },
+    {
+      "grammar_id": 49,
+      "seed": 49,
+      "n_rules": 23,
+      "n_constraints": 3,
+      "bfs": {
+        "score": 0.5686872405919943,
+        "solved": true,
+        "path_len": 6,
+        "path": [
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 78,
+        "timed_out": false
+      },
+      "random_beam": {
+        "score": 0.48736496518733907,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R17",
+          "R0",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 0.001,
+        "states_explored": 32,
+        "timed_out": false
+      },
+      "tot_llm": {
+        "score": 0.5357033806376584,
+        "solved": true,
+        "path_len": 7,
+        "path": [
+          "R0",
+          "R1",
+          "R12",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "wall_time": 58.582,
+        "states_explored": 25,
+        "timed_out": false
+      }
+    }
+  ]
+}

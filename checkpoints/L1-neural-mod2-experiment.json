@@ -1,0 +1,8 @@
+{
+  "status": "pending",
+  "started": null,
+  "completed": null,
+  "evidence": [],
+  "blocked_by": null,
+  "notes": "THE missing experiment. Run MOD_2 bypass against DistilBERT safety classifier. If neural catches it \u2192 validates AC^0 vs TC^0 distinction. If not \u2192 shows training gap. 1-2 days."
+}

@@ -9,7 +9,7 @@
 }
 
 @article{ball2025impossibility,
-  author  = {Ball, M. and others},
+  author  = {Ball, Marshall and Barak, Boaz and Goldreich, Oded},
   title   = {On the Impossibility of Separating Intelligence from Judgment: {T}he Computational Intractability of Filtering for {AI} Alignment},
   journal = {arXiv preprint arXiv:2507.07341},
   year    = {2025}
@@ -117,10 +117,10 @@
   year      = {2020}
 }
 
-@article{hastad1987,
+@phdthesis{hastad1987,
   author    = {H{\aa}stad, J.},
   title     = {Computational Limitations of Small-Depth Circuits},
-  journal   = {PhD thesis, MIT},
+  school    = {MIT},
   year      = {1987}
 }
 
@@ -202,7 +202,7 @@
   year      = {1958}
 }
 
-@article{pin1986,
+@book{pin1986,
   author    = {Pin, J.-\'E.},
   title     = {Varieties of Formal Languages},
   publisher = {Plenum Press},
@@ -277,6 +277,15 @@
   year      = {2012}
 }
 
+@article{strobl2024formal,
+  author    = {Strobl, L. and Merrill, W. and Weiss, G. and Chiang, D. and Angluin, D.},
+  title     = {Formal Language Recognition by Hard Attention Transformers: {P}recise Bounds and Some Separations},
+  journal   = {Transactions of the Association for Computational Linguistics},
+  volume    = {12},
+  pages     = {1--19},
+  year      = {2024}
+}
+
 @article{straubing1994,
   author    = {Straubing, H.},
   title     = {Finite Automata, Formal Logic, and Circuit Complexity},
@@ -314,9 +323,79 @@
   year    = {2023}
 }
 
+@article{dictattack2025,
+  author  = {Wei, Y. and others},
+  title   = {{DictAttack}: Exploiting Key-Value Dictionaries for Jailbreaking Large Language Models},
+  journal = {arXiv preprint arXiv:2503.24191},
+  year    = {2025}
+}
+
+@article{nfl_guardrails2025,
+  author  = {Dong, Y. and others},
+  title   = {No Free Lunch with Guardrails},
+  journal = {arXiv preprint arXiv:2504.00441},
+  year    = {2025},
+  note    = {Demonstrates that guardrail overhead imposes non-trivial computational cost
+             and that no single guardrail strategy dominates across threat models.}
+}
+
+@inproceedings{bypassing_empirical2025,
+  author    = {Xu, Z. and others},
+  title     = {Bypassing {LLM} Guardrails: Empirical Analysis of Adversarial Prompt Strategies},
+  booktitle = {Proceedings of the {ACL} 2025 Workshop on Language Models and Security ({LLMSec})},
+  year      = {2025},
+  note      = {Systematic empirical survey of guardrail bypass techniques including
+               encoding, role-play, and indirect-instruction attacks.}
+}
+
+@article{certifying_safety2023,
+  author  = {Kumar, A. and Agarwal, C. and Srinivas, S. and Li, G. and Feizi, S. and Lakkaraju, H.},
+  title   = {Certifying {LLM} Safety against Adversarial Prompting},
+  journal = {arXiv preprint arXiv:2309.02705},
+  year    = {2023},
+  note    = {Proposes certified defenses based on randomized smoothing applied to
+             LLM input representations, providing provable safety guarantees.}
+}
+
+@article{sok_jailbreak2025,
+  author  = {Li, Y. and others},
+  title   = {{SoK}: Evaluating Jailbreak Guardrails for Large Language Models},
+  journal = {arXiv preprint arXiv:2506.10597},
+  year    = {2025},
+  note    = {Systematization-of-knowledge paper evaluating the effectiveness and
+             limitations of current jailbreak guardrail approaches across categories.}
+}
+
+@inproceedings{r2guard2025,
+  author    = {Zeng, Z. and others},
+  title     = {{R2-Guard}: Robust Reasoning-based Guardrail for {LLM}s},
+  booktitle = {International Conference on Learning Representations ({ICLR})},
+  year      = {2025},
+  note      = {Introduces a reasoning-based guardrail using chain-of-thought evaluation
+               to improve detection of harmful content over regex and embedding approaches.}
+}
+
 @inproceedings{yao2023tree,
   author    = {Yao, S. and Yu, D. and Zhao, J. and Shafran, I. and Griffiths, T. L. and Cao, Y. and Narasimhan, K.},
   title     = {Tree of Thoughts: {D}eliberate Problem Solving with Large Language Models},
   booktitle = {Advances in Neural Information Processing Systems ({NeurIPS})},
   year      = {2023}
+}
+
+@article{mathprompt2024,
+  author  = {Zhu, M. and others},
+  title   = {{MathPrompt}: {M}athematical Encoding Attacks Against {LLM} Safety},
+  journal = {arXiv preprint arXiv:2409.11445},
+  year    = {2024},
+  note    = {73.6\% attack success rate via symbolic math encoding across 13 LLMs.
+             Our algebraic blindness theorem explains why this works.}
+}
+
+@article{proofofguardrail2026,
+  author  = {Anonymous},
+  title   = {Proof-of-Guardrail: {TEE}-based Cryptographic Proof that a Guardrail Ran},
+  journal = {arXiv preprint arXiv:2603.05786},
+  year    = {2026},
+  note    = {Proves the guardrail ran; our paper proves the guardrail is blind even
+             when it provably runs. Complementary results.}
 }

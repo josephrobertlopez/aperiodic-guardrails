@@ -1,0 +1,8 @@
+{
+  "status": "pending",
+  "started": null,
+  "completed": null,
+  "evidence": [],
+  "blocked_by": null,
+  "notes": "Reviewer attack: BFS beats ToT 4x. Need grammars large enough that BFS times out. Depth 15-25, branching 4-6, 500+ states. Find crossover point. ~3-4 days."
+}

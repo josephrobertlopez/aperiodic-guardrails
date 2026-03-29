@@ -1,0 +1,8 @@
+{
+  "status": "pending",
+  "started": null,
+  "completed": null,
+  "evidence": [],
+  "blocked_by": null,
+  "notes": "Aspirin is n=1. Need 2-3 more: TCP FSM, Makefile grammar, cooking recipe. Tests domain-agnosticism claim. ~2 days per domain."
+}
