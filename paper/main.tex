@@ -291,6 +291,18 @@ Our contributions, organized by section, are:
     each impossibility theorem maps to a specific layer of a defense-in-depth stack.
 \end{enumerate}
 
+\paragraph{Nature of the contribution.}
+We use classical tools---syntactic monoids, star-freeness, Fano's inequality,
+free categories, Krohn--Rhodes decomposition---applied to the guardrail security
+setting.
+The mathematical novelty lies in the \emph{application} and in the combination
+of four independent barriers (algebraic, information-theoretic, computational,
+and structural) into a single unified impossibility argument, not in the
+underlying tools themselves.
+We state this up front to situate the contribution accurately: this is a
+security paper that uses formal language theory, not a formal language theory
+paper.
+
 \paragraph{Scope.}
 The algebraic blindness result (\S\ref{sec:algebraic-foundations}) applies
 specifically to regex guardrails and is unconditional.
@@ -2110,16 +2122,7 @@ This is a moderate sample; the yield and solve-rate estimates carry bootstrap
 Systematic variation with grammar depth, branching factor, and symbol set size
 remains to be characterized.
 
-\paragraph{3. Mathematical novelty.}
-We use classical tools---syntactic monoids, star-freeness, Fano's inequality,
-free categories, Krohn--Rhodes decomposition---applied to the guardrail security
-setting.
-The mathematical novelty lies in the \emph{application} and the combination of
-results into a unified framework, not in the algebraic or information-theoretic
-tools themselves.
-We state this honestly to situate the contribution accurately.
-
-\paragraph{4. Uniformity assumption.}
+\paragraph{3. Uniformity assumption.}
 The Fano bound (Proposition~\ref{prop:fano}) assumes a uniform distribution over
 the concrete artifact space $R$.
 In practice, the distribution over prompts is highly non-uniform; the bound is
@@ -2136,13 +2139,13 @@ prompt distribution; we leave this as future work, noting that the
 \emph{algebraic} barriers (Theorems~\ref{thm:substring-aperiodic}--\ref{thm:blindness})
 are unconditional and do not depend on any distributional assumption.
 
-\paragraph{5. Regex corpus size.}
+\paragraph{4. Regex corpus size.}
 The corpus of 142 patterns from 11 tools is representative but not exhaustive.
 A larger corpus would strengthen the aperiodicity conjecture
 (Section~\ref{sec:conjecture}).
 We make the monoid extractor available to enable independent extension of the corpus.
 
-\paragraph{6. Abstract scope.}
+\paragraph{5. Abstract scope.}
 The algebraic impossibility results (Theorems~\ref{thm:substring-aperiodic}
 and \ref{thm:blindness}) apply specifically to \emph{substring-matching regex
 guardrails}.
