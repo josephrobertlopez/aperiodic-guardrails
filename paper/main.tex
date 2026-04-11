@@ -196,6 +196,13 @@ Our contributions, organized by section, are:
     plus 19 test patterns (142 total), with verified $\mathrm{MOD}_2$ bypass constructions.
   \item \textbf{Defense recommendations grounded in formal results} (\cref{sec:discussion}):
     each impossibility theorem maps to a specific layer of a defense-in-depth stack.
+  \item \textbf{An open-source execution-layer defense}
+    (\cref{sec:secrets-router}): \texttt{secrets-router}, an MIT-licensed
+    MCP server that implements the Class~C defense architecture our theory
+    recommends. Credentials are held outside the LLM context as opaque
+    handles and resolved at the execution layer; the interpretation table
+    is held by the defender, not the attacker, \emph{inverting} the
+    asymmetry that enables the homomorphic-reasoning attack.
 \end{enumerate}
 
 \paragraph{Nature of the contribution.}
@@ -2208,14 +2215,37 @@ filling browser fields directly at the execution layer.
 The agent sees only masked feedback: \texttt{"filled [MASKED ****1017]"}.
 
 \paragraph{Connection to the theory.}
-The opaque handle mechanism is an implementation of the quotient functor $Q$ from
-our abstraction formalization (\S\ref{sec:formalization}): $Q$ maps concrete
-credentials to abstract handles, and the non-invertibility of $Q$ at the
-inference layer is the security guarantee.
-The CDP fill operates at the execution layer (Table~\ref{tab:defense}, row~4),
-precisely the layer our theory identifies as necessary for Class~C defense.
-Even if a semantic attack (V1--V4) causes the LLM to reason about credential
-extraction, it cannot extract what it never received.
+The opaque handle mechanism is an implementation of the quotient functor $Q$
+from our abstraction formalization (\S\ref{sec:formalization}): $Q$ maps
+concrete credentials to abstract handles, and the non-invertibility of $Q$ at
+the inference layer is the security guarantee.
+The CDP fill operates at the execution layer
+(Table~\ref{tab:defense}, row~4), precisely the layer our theory identifies
+as necessary for Class~C defense.
+Of the three components the Interpretation Firewall requires
+(\S\ref{sec:aspirin}: action allowlisting, sandboxed interpretation,
+provenance tracking), MCP natively provides two---tool declarations
+implement allowlisting, and opaque handles implement provenance---leaving
+sandboxed interpretation as the only remaining gap.
+
+\paragraph{Defense walkthrough against V3/V4.}
+The symmetry with our own attack is exact.
+An attacker running V3 or V4 against a system protected by
+\texttt{secrets-router} cannot exfiltrate credentials: the LLM context
+contains only opaque handles, the interpretation table $I\colon
+M_{\mathsf{cred}} \to R_{\mathsf{cred}}$ is held by the defender and never
+appears on an LLM-visible surface, and the resolution of handles to
+concrete values happens at the execution layer after every inference-layer
+inspection has already passed.
+The homomorphic-reasoning attack of \S\ref{sec:v3} exploits the defender's
+inability to see the interpretation table while the attacker holds it;
+\texttt{secrets-router} inverts this asymmetry by putting the defender on
+the held-offline side of the same quotient functor.
+The attack and the defense are instances of the same algebraic
+construction, distinguished only by who holds $I$
+(cf.~Table~\ref{tab:visibility-trace}, row structure): the non-invertibility
+of $Q$ is a vulnerability when the attacker holds $I$ and a security
+guarantee when the defender holds it.
 
 % ============================================================
 \section{Conclusion}\label{sec:conclusion}
