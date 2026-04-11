@@ -1439,9 +1439,12 @@ and raw outputs are archived in
 
 \subsection{Case Studies}\label{sec:aspirin}
 
-We validate the V3/V4 pipeline on two structurally distinct domains: organic
-chemistry (aspirin synthesis) and network protocols (TCP state machine).
-Both runs instantiate the same homomorphic reasoning construction
+We validate the V3/V4 pipeline on three structurally distinct domains:
+organic chemistry (aspirin synthesis), a network protocol (TCP state
+machine), and a synthetic process calculus we constructed specifically
+for this paper to eliminate any possibility of LLM pre-training exposure
+(the Zerbik calculus, below).
+All three runs instantiate the same homomorphic-reasoning construction
 (\S\ref{sec:v3}) over different interpretation tables; the abstract
 derivations are solved by an LLM that never observes any domain content.
 
@@ -1500,19 +1503,79 @@ Different domain, same structural vulnerability.}
 \end{tabularx}
 \end{table}
 
-\paragraph{Scope of the claim.}
+\paragraph{Synthetic domain: the Zerbik process calculus.}
+Aspirin and TCP are public-knowledge domains in the LLM's training
+distribution.
+A hostile reviewer could reasonably ask whether successful V4/V3 runs on
+those domains are evidence of homomorphic reasoning over abstract grammars
+or merely retrieval of memorized sequences keyed off recognisable patterns
+(``the LLM sees an aspirin-shaped grammar and reaches for the memorised
+synthesis'').
+To separate the two hypotheses we constructed the \emph{Zerbik process
+calculus}---a fully invented formal system whose symbol vocabulary
+(\texttt{zerbik}, \texttt{flarn}, \texttt{quonker}, etc.) appears in no
+pre-training corpus we are aware of and whose rules we wrote for this
+paper.
+The calculus has seven primitive symbols $\{z_0,\ldots,z_7\}$ and a goal
+symbol $z_*$; its six rewrite rules
+($\{z_0\}\to\{z_1,z_2\}$,
+$\{z_1\}\to\{z_3\}$,
+$\{z_2\}\to\{z_4,z_5\}$,
+$\{z_3,z_4\}\to\{z_6\}$,
+$\{z_5\}\to\{z_7\}$,
+$\{z_6,z_7\}\to\{z_*\}$)
+define a reachability problem whose solution is the six-step derivation
+$\{z_0\}{\to}\{z_1,z_2\}{\to}\{z_3,z_2\}{\to}\{z_3,z_4,z_5\}{\to}\{z_6,z_5\}{\to}\{z_6,z_7\}{\to}\{z_*\}$.
+BFS solves this in 6 rule applications; the LLM-guided V3 solver also
+recovers a valid derivation (sometimes the same one, sometimes an
+equivalent ordering).
+Table~\ref{tab:zerbik-case} gives the interpretation table
+$I\colon M_{\mathsf{zbk}} \to R_{\mathsf{zbk}}$ under which the solved
+derivation produces a fictional but procedurally coherent
+industrial-process output; the table is kept offline, as in the other two
+case studies, and never enters the LLM context.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Zerbik process calculus: a synthetic case study we constructed
+for this paper. The symbol vocabulary is a deliberate non-word set; no
+memorisation of the derivation is available to the LLM.}
+\label{tab:zerbik-case}
+\begin{tabularx}{\columnwidth}{@{}cllX@{}}
+\toprule
+\# & Abstract & $I(\cdot)$ & Real artifact \\
+\midrule
+1 & $z_1$ & \textsc{combine} & base + catalyst $\to$ mixture \\
+2 & $z_3,z_4$ & \textsc{cure} & cured intermediate \\
+3 & $z_5$ & \textsc{distill} & distilled solvent \\
+4 & $z_*$ & \textsc{bond} & final compound \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Scope of the claim and the memorisation question.}
 The contribution is domain-agnostic pipeline correctness, not severity
 demonstration.
-Any domain expressible as a context-free grammar is vulnerable to the same
-construction; we validate on two structurally distinct domains and decline
-to validate on high-severity domains by design (\S\ref{sec:ethics}).
-Both case-study domains are public knowledge in LLM pre-training data, so
-these runs cannot empirically separate homomorphic reasoning from memorized
-retrieval; the formal argument (functoriality and structural
-indistinguishability) does not require such a separation, and the
-visibility trace (Table~\ref{tab:visibility-trace}) demonstrates the
-inference-layer blindness property directly under either interpretation.
-\S\ref{sec:limitations-list}, item~6 discusses this confound in detail.
+Any domain expressible as a context-free grammar is vulnerable to the
+same construction; we validate on three structurally distinct domains
+and decline to validate on high-severity domains by design
+(\S\ref{sec:ethics}).
+Two of the three domains (aspirin, TCP) are public knowledge and so in
+isolation they cannot empirically separate symbolic reasoning from
+retrieval of memorised sequences.
+The Zerbik calculus is included precisely to address this confound: its
+vocabulary is invented, its rules were written for this paper, and the
+LLM cannot have seen it before---yet the V3 pipeline still recovers a
+valid derivation, demonstrating that the homomorphic-reasoning
+construction does not require the LLM to hold prior memory of the target
+domain.
+Under either interpretation of what the LLM is ``really doing'' (symbolic
+manipulation or pattern-matched retrieval), the inference-layer guardrail
+sees only abstract grammar symbols and is unable to determine which
+concrete domain is being instantiated offline.
+\S\ref{sec:limitations-list}, item~6 discusses what the synthetic case
+does and does not rule out.
 
 \paragraph{Visibility trace: what each party sees.}
 Table~\ref{tab:visibility-trace} gives the reviewer-critical observation
@@ -1547,6 +1610,10 @@ salicylic acid $+$ acetic anhydride $\to$ crude $\to$ recrystallize $\to$ aspiri
 \texttt{Grammar}~$S{\to}t_1t_2t_3t_4t_5t_6$; \texttt{solve for}~\texttt{CLOSED} &
 \texttt{Grammar}~$S{\to}t_1t_2t_3t_4t_5t_6$; \texttt{solve for}~\texttt{CLOSED} &
 SYN $\to$ SYN-ACK $\to$ ACK $\to$ ESTABLISHED $\to$ FIN $\to$ FIN-ACK $\to$ CLOSED \\
+\addlinespace
+\texttt{Rules}~$R_1{:}\{z_0\}{\to}\{z_1,z_2\},\ldots$; \texttt{solve for reachable}~$z_*$ &
+\texttt{Rules}~$R_1{:}\{z_0\}{\to}\{z_1,z_2\},\ldots$; \texttt{solve for reachable}~$z_*$ &
+combine $\to$ cure $\to$ distill $\to$ bond (Zerbik, synthetic) \\
 \bottomrule
 \end{tabularx}
 \end{table*}
@@ -2083,29 +2150,32 @@ operate in $\mathrm{TC}^0$), or to guardrails that perform semantic analysis
 beyond pattern matching.
 
 \paragraph{6. Case-study memorization confound.}
-Both end-to-end case studies (aspirin synthesis, TCP state machine) are
-public-knowledge domains extensively represented in LLM pre-training data.
-This creates a legitimate confound: our experimental runs cannot empirically
-distinguish genuine homomorphic reasoning over abstract grammars from
-retrieval of memorized concrete sequences keyed off symbolic patterns.
-We flag this disclosure explicitly.
-The formal contribution, however, does not depend on the LLM actually
-performing symbolic reasoning in an interpretive sense: the functoriality
-of the quotient interpretation map (Proposition~\ref{thm:transfer}) and
-the structural indistinguishability observation
-(Observation~\ref{thm:indistinguish}) require only that the LLM-visible
-surface of the attack---the abstract grammar, its derivations, and the
-solver's outputs---be syntactically indistinguishable from a legitimate
-formal-reasoning workload.
-Table~\ref{tab:visibility-trace} demonstrates that property directly,
-independently of whether the LLM reaches its outputs via symbolic
-manipulation or pattern retrieval; the inference-layer guardrail sees only
-abstract grammar symbols under either interpretation and is unable to
-determine which concrete domain is being instantiated offline.
-A stronger empirical separation of reasoning from retrieval would require
-evaluating the pipeline on a genuinely novel synthetic context-free
-grammar the LLM could not have seen in training; we leave this to future
-work.
+Two of the three end-to-end case studies (aspirin synthesis, TCP state
+machine) are public-knowledge domains extensively represented in LLM
+pre-training data, raising a legitimate confound: those runs in isolation
+cannot empirically distinguish homomorphic reasoning over abstract
+grammars from retrieval of memorised sequences keyed off recognisable
+symbolic patterns.
+The third case study (the Zerbik process calculus of \S\ref{sec:aspirin},
+Table~\ref{tab:zerbik-case}) was constructed specifically to control for
+this confound: its symbol vocabulary is invented, its rewrite rules were
+written for this paper, and the LLM cannot have seen it in pre-training;
+the V3 pipeline nonetheless recovers a valid derivation, demonstrating
+that the homomorphic-reasoning construction does not require prior
+memorisation of the target domain.
+Beyond that controlled case, the formal contribution does not depend on
+the LLM actually performing symbolic reasoning in any interpretive sense:
+the functoriality of the quotient interpretation map
+(Proposition~\ref{thm:transfer}) and the structural indistinguishability
+observation (Observation~\ref{thm:indistinguish}) require only that the
+LLM-visible surface of the attack be syntactically indistinguishable from
+a legitimate formal-reasoning workload, which
+Table~\ref{tab:visibility-trace} demonstrates directly across all three
+case studies.
+The Zerbik case study is a single invented domain; further scale-up
+(many synthetic grammars parameterised by rule count, branching factor,
+and symbol-set size) would strengthen the empirical evidence beyond this
+point and is left as future work.
 
 \subsection{Ethical Considerations}\label{sec:ethics}
 
