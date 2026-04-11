@@ -318,67 +318,49 @@ both works independently identify abstraction boundaries as the core attack surf
 
 \subsection{Computational and Algebraic Impossibility}\label{sec:related-impossibility}
 
-Ball et al.~\cite{ball2025impossibility} prove that under standard cryptographic
-assumptions, adversarial prompts can be computationally indistinguishable from
-benign ones for any efficient filter.
-Our results are complementary.
-We establish \emph{algebraic} (unconditional) blindness for modular
-counting attacks (Theorem~\ref{thm:blindness}), and---under an explicit
-semantic-opacity assumption on symbol naming---\emph{string-level}
-indistinguishability for the homomorphic-reasoning construction
+Ball et al.~\cite{ball2025impossibility} prove that under standard
+cryptographic assumptions, adversarial prompts are computationally
+indistinguishable from benign ones for any efficient filter; our results
+are complementary---algebraic (assumption-free) blindness against modular
+counting for regex guardrails (Theorem~\ref{thm:blindness}), and under
+an opacity assumption on symbol naming, string-level indistinguishability
+for the homomorphic-reasoning construction
 (Observation~\ref{thm:indistinguish}).
-Ball et al.\ give a more general computational result under cryptographic
-assumptions; our algebraic result is assumption-free but applies to the
-specific regex-guardrail setting, and our indistinguishability observation
-is assumption-light (symbol opacity only) but applies to the specific
-homomorphic-reasoning construction.
-Kumar et al.~\cite{certifying_safety2023} propose certified defenses via randomized
-smoothing applied to LLM inputs, establishing provable safety radii around benign
-inputs under $\ell_p$-bounded perturbations; our results identify a complementary
-regime where the attack is not a small perturbation but a structure-preserving map
-that lies outside the support of the smoothing distribution.
-Dong et al.~\cite{nfl_guardrails2025} demonstrate a no-free-lunch tradeoff between
-guardrail thoroughness and computational cost, showing that any guardrail imposes
-overhead that scales with threat coverage; our results show that even unbounded
-overhead cannot patch the regex blindness established in Theorem~\ref{thm:blindness}.
-R2-Guard~\cite{r2guard2025} replaces regex matching with reasoning-based evaluation
-via chain-of-thought; this approach operates in $\mathrm{TC}^0$ and is not subject
-to the aperiodic blindness theorem, but remains susceptible to the information-theoretic
-and structural indistinguishability barriers established in
+Kumar et al.~\cite{certifying_safety2023} give certified defenses via
+randomized smoothing against $\ell_p$-bounded perturbations; our attack is
+a structure-preserving map that lies outside the smoothing distribution's
+support.
+Dong et al.~\cite{nfl_guardrails2025} establish a thoroughness/cost
+no-free-lunch tradeoff; our results show that unbounded cost cannot
+patch the regex blindness of Theorem~\ref{thm:blindness}.
+R2-Guard~\cite{r2guard2025} replaces regex with chain-of-thought
+reasoning, operating in $\mathrm{TC}^0$ and escaping aperiodic blindness
+but remaining subject to the information-theoretic and structural
+indistinguishability barriers of
 \S\S\ref{sec:fano}--\ref{sec:indistinguish}.
 
-The abstract encoding channel in homomorphic reasoning is a form of
-\emph{steganographic channel}~\cite{hopper2002steganography}: the payload
-(harmful intent) is hidden in a covertext (legitimate formal reasoning task)
-such that no efficient observer (the guardrail) can distinguish stegotext from
-covertext.
-Hopper, Langford, and von Ahn~\cite{hopper2002steganography} formalize perfect
-steganographic security as the requirement that no polynomial-time distinguisher
-achieves better than negligible advantage in separating channel transmissions from
-covertext.
-Observation~\ref{thm:indistinguish} can be viewed as establishing
-\emph{perfect} steganographic security for the homomorphic reasoning
-channel \emph{under Assumption~\ref{ass:opacity}}: any distinguisher
-operating on strings has exactly zero advantage (not merely negligible),
-because the attack's LLM-visible content lies as a string set inside the
-legitimate formal-reasoning task set, making the
-distinguisher's task information-theoretically impossible rather than merely
-computationally hard.
+The homomorphic-reasoning channel is a \emph{steganographic
+channel}~\cite{hopper2002steganography}: harmful intent is hidden in a
+legitimate-formal-reasoning covertext.
+In the Hopper--Langford--von Ahn formalism, perfect steganographic
+security requires that no polynomial-time distinguisher exceed negligible
+advantage; Observation~\ref{thm:indistinguish} establishes \emph{perfect}
+security under Assumption~\ref{ass:opacity} at the string-set level (zero
+advantage, not merely negligible), rendering the distinguisher's task
+information-theoretically impossible rather than computationally hard.
 
 \subsection{Formal Languages and Neural Networks}\label{sec:related-formal}
 
-Merrill~\cite{merrill2024survey} surveys the formal language expressivity of
-transformer architectures.
-Merrill and Sabharwal~\cite{merrill2023saturated} establish that log-precision
-transformers are contained in $\mathrm{TC}^0$, implying they can compute modular
-counting functions.
-Chiang et al.~\cite{chiang2024tighter} give tighter expressivity bounds.
-Hahn~\cite{hahn2020limitations} proves that self-attention mechanisms are limited
-on periodic formal languages, providing circuit-theoretic evidence for the same
-qualitative boundary our algebraic results formalize.
-Weiss et al.~\cite{weiss2022extracting} extract DFAs from RNNs using the Angluin
-$L^*$ algorithm~\cite{angluin1987}; the same DFA extraction pipeline underlies our
-empirical syntactic monoid computation.
+The transformer complexity-theoretic literature places log-precision
+transformers in $\mathrm{TC}^0$~\cite{merrill2023saturated,chiang2024tighter,merrill2024survey},
+which \emph{can} compute modular predicates---hence neural guardrails are
+not subject to the aperiodic blindness of the regex layer but remain
+subject to the other barriers (\S\ref{sec:neural-tc0}).
+Hahn~\cite{hahn2020limitations} provides circuit-theoretic evidence for a
+related qualitative boundary on self-attention over periodic languages.
+Our empirical syntactic monoid computation follows the same minimal-DFA
+extraction pipeline used by Weiss et al.~\cite{weiss2022extracting} to
+extract DFAs from RNNs via Angluin's $L^*$~\cite{angluin1987}.
 
 \subsection{Indirect Prompt Injection}\label{sec:related-injection}
 
@@ -1109,6 +1091,27 @@ construction rather than as an independent impossibility result.
 
 % ============================================================
 \section{Attack Vectors}\label{sec:vectors}
+
+\paragraph{Taxonomy and relationships.}
+We enumerate five attack vectors.
+V1 (\emph{Decomposition}) and V2 (\emph{Zero-Knowledge Pipeline}) are
+reframings of known techniques---runtime argument injection and
+base64-encoded configuration---presented here as instances of the
+abstraction framework rather than as novel attacks.
+V3 (\emph{Homomorphic Reasoning}) and V4 (\emph{Encoding Bootstrap}) are
+the joint novel contribution and compose as a single pipeline, read in
+execution order as V4~$\to$~V3:
+V4 uses the LLM to extract an abstract grammar from a natural-language
+description of the target domain, and V3 then uses the LLM (or a classical
+solver) to find derivations over that grammar using only opaque symbols;
+the attacker applies an offline interpretation table to the solved
+derivation to obtain the concrete procedure.
+The aspirin and TCP case studies of \S\ref{sec:aspirin} run the full
+V4~$\to$~V3 pipeline on two structurally distinct domains.
+V5 (\emph{Modular Counting Bypass}) is independent: it exploits algebraic
+blindness at the regex layer (Theorem~\ref{thm:blindness}) rather than the
+homomorphic-reasoning construction, and is presented last as the
+algebraic counterpart to V1--V4's structural attacks.
 
 \subsection{V1: Decomposition (Known Technique, New Framing)}\label{sec:v1}
 
