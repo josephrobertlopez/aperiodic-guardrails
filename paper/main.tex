@@ -494,122 +494,88 @@ fibers are the equivalence classes of the syntactic congruence $\equiv_{L_G}$.
 % ============================================================
 \section{Algebraic Foundations}\label{sec:algebraic-foundations}
 
-This section recalls the classical algebraic and circuit-theoretic machinery that
-underlies the impossibility results in \S\ref{sec:blindness-theorem}.
-All results here are classical; we present them to establish notation and
-make the paper self-contained.
-Proofs and detailed developments can be found in Pin~\cite{pin1986},
-Eilenberg~\cite{eilenberg1976}, and Straubing~\cite{straubing1994}.
+This section recalls the classical algebraic and circuit-theoretic machinery
+underlying the impossibility results of \S\ref{sec:blindness-theorem}.
+All results here are classical; full developments appear in
+Pin~\cite{pin1986}, Eilenberg~\cite{eilenberg1976}, and
+Straubing~\cite{straubing1994}.
 
 \subsection{Syntactic Monoids}\label{sec:syntactic-monoids}
 
-Let $\Sigma$ be a finite alphabet and $L \subseteq \Sigma^*$ a regular language.
-The \emph{syntactic congruence} $\equiv_L$ is defined on $\Sigma^*$ by
-\[
-  u \equiv_L v
-  \;\iff\;
-  \forall x, y \in \Sigma^*: (xuy \in L \Leftrightarrow xvy \in L).
-\]
-Two strings are syntactically equivalent when they behave identically in every
-left-right context with respect to membership in $L$.
+For a finite alphabet $\Sigma$ and regular language $L \subseteq \Sigma^*$,
+the \emph{syntactic congruence} $\equiv_L$ identifies two strings when they
+behave identically in every left-right context: $u \equiv_L v$ iff
+$xuy \in L \Leftrightarrow xvy \in L$ for all $x, y \in \Sigma^*$.
 
 \begin{definition}[Syntactic monoid]\label{def:syntactic-monoid}
-The \emph{syntactic monoid} of $L$ is the quotient
-$M(L) = \Sigma^* / {\equiv_L}$, equipped with the monoid operation inherited from
-string concatenation.
+The \emph{syntactic monoid} of $L$ is $M(L) = \Sigma^* / {\equiv_L}$, with the
+operation inherited from string concatenation.
+It is finite~\cite{myhill1957,nerode1958}, isomorphic to the transition monoid
+of the minimal DFA for $L$, and the smallest monoid recognizing $L$ up to
+division~\cite{pin1986,eilenberg1976}---hence computable from the minimal DFA
+by standard monoid enumeration.
 \end{definition}
-
-$M(L)$ is finite by the Myhill--Nerode theorem~\cite{myhill1957,nerode1958}: the
-number of $\equiv_L$-classes equals the number of distinct state-transformation
-functions on the minimal DFA for $L$.
-It is the smallest monoid recognizing $L$ up to division~\cite{pin1986}.
-
-Equivalently, $M(L)$ is isomorphic to the \emph{transition monoid} of the minimal
-DFA for $L$: the monoid of all state-transformation functions
-$\delta_w\colon Q \to Q$ defined by $\delta_w(q) = \hat{\delta}(q, w)$ under
-function composition~\cite{eilenberg1976}.
-This equivalence makes $M(L)$ computable from the minimal DFA via standard monoid
-enumeration.
 
 \subsection{Aperiodicity and Star-Freeness}\label{sec:aperiodicity}
 
 \begin{definition}[Aperiodic monoid]\label{def:aperiodic}
-A monoid $M$ is \emph{aperiodic} (equivalently, \emph{group-free}) if it contains
-no nontrivial subgroup, or equivalently, if every element has period~$1$:
-for all $m \in M$, there exists $n \geq 1$ such that $m^n = m^{n+1}$.
+A monoid $M$ is \emph{aperiodic} (equivalently, \emph{group-free}) if it
+contains no nontrivial subgroup: for all $m \in M$, there exists $n \geq 1$
+with $m^n = m^{n+1}$.
+Cyclic groups $\mathbb{Z}/p\mathbb{Z}$ are the prototypical non-aperiodic
+monoids; aperiodic monoids cannot replicate their cyclic behavior.
 \end{definition}
-
-The prototypical non-aperiodic monoid is the cyclic group
-$(\mathbb{Z}/p\mathbb{Z}, +)$ for a prime $p \geq 2$: the generator $\bar{1}$
-has additive order $p$, so $n \cdot \bar{1} \neq (n{+}1) \cdot \bar{1}$ for
-$0 \leq n < p - 1$, and no power of $\bar{1}$ stabilizes before step $p$.
-This cyclic behavior is precisely what aperiodic monoids cannot replicate.
 
 \begin{theorem}[Sch\"{u}tzenberger 1965, McNaughton--Papert 1971~{\cite{schutzenberger1965,mcnaughton1971}}]\label{thm:smp}
 For a regular language $L$, the following are equivalent:
-\begin{enumerate}
-  \item $M(L)$ is aperiodic.
-  \item $L$ is star-free: definable from $\Sigma$, $\emptyset$, $\{\varepsilon\}$,
-    and single letters using Boolean operations and concatenation, without Kleene star.
-  \item $L$ is definable in first-order logic with linear order, $\mathrm{FO}[{<}]$.
-\end{enumerate}
+(i)~$M(L)$ is aperiodic;
+(ii)~$L$ is \emph{star-free}---definable from $\Sigma$, $\emptyset$,
+$\{\varepsilon\}$, and single letters using Boolean operations and
+concatenation, without Kleene star;
+(iii)~$L$ is definable in first-order logic with linear order,
+$\mathrm{FO}[{<}]$.
 \end{theorem}
 
-Star-freeness and $\mathrm{FO}[{<}]$ definability are both ``counting-free'' in the
-sense that they can express positional and ordering constraints but cannot express
-modular periodicity.
-Theorem~\ref{thm:smp} makes this precise algebraically.
+Star-freeness and $\mathrm{FO}[{<}]$-definability are ``counting-free'':
+they express positional and ordering constraints but not modular periodicity.
 
 \subsection{Circuit Complexity and Modular Counting}\label{sec:circuit-complexity}
 
-A language $L$ is in $\mathrm{AC}^0$ if it is recognized by a family of
-constant-depth, polynomial-size Boolean circuits with unbounded fan-in AND/OR gates.
-The class $\mathrm{AC}^0$ is the circuit-complexity analogue of ``polynomial time
-with limited depth,'' capturing exactly the computations that can be massively
-parallelized without counting.
+$\mathrm{AC}^0$ is the class of languages recognized by families of
+constant-depth, polynomial-size Boolean circuits with unbounded fan-in AND/OR
+gates---the computations that parallelize without counting.
 
 \begin{theorem}[Barrington--Compton--Straubing--Th\'{e}rien 1992~{\cite{barrington1992}}]\label{thm:bcst}
-A regular language is in $\mathrm{AC}^0$ if and only if its syntactic monoid is
-aperiodic.
+A regular language is in $\mathrm{AC}^0$ iff its syntactic monoid is aperiodic.
 \end{theorem}
 
 \begin{theorem}[Furst--Saxe--Sipser 1981, H\r{a}stad 1987~{\cite{furst1981,hastad1987}}]\label{thm:fss}
-$\mathrm{PARITY} \notin \mathrm{AC}^0$.
-More generally, $\mathrm{MOD}_p \notin \mathrm{AC}^0$ for any prime $p$, where
-$\mathrm{MOD}_p = \{w \in \{0,1\}^* : |w|_1 \equiv 0 \pmod{p}\}$.
+$\mathrm{PARITY} \notin \mathrm{AC}^0$; more generally, $\mathrm{MOD}_p \notin
+\mathrm{AC}^0$ for any prime $p$, where $\mathrm{MOD}_p = \{w \in \{0,1\}^* :
+|w|_1 \equiv 0 \pmod{p}\}$.
 \end{theorem}
 
-The chain Theorem~\ref{thm:smp} $\to$ Theorem~\ref{thm:bcst} $\to$
-Theorem~\ref{thm:fss} forms the backbone of the algebraic impossibility argument
-in \S\ref{sec:blindness-theorem}: aperiodic monoid $\Rightarrow$ language in
-$\mathrm{AC}^0$ $\Rightarrow$ language cannot compute $\mathrm{MOD}_p$ $\Rightarrow$
-language is blind to any payload encoding requiring modular counting to decode.
+Chaining Theorems~\ref{thm:smp}--\ref{thm:fss}: aperiodic $M(L_G) \Rightarrow
+L_G \in \mathrm{AC}^0 \Rightarrow L_G$ cannot compute $\mathrm{MOD}_p$, making
+the guardrail blind to any payload encoding whose decoder requires modular
+counting.
 
 \subsection{Krohn--Rhodes Decomposition}\label{sec:krohn-rhodes}
 
 \begin{theorem}[Krohn--Rhodes 1965~{\cite{krohnrhodes1965}}]\label{thm:kr-classical}
-Every finite monoid $M$ divides a wreath product of simple groups and aperiodic
-semigroups.
-The simple groups appearing in the decomposition (the \emph{group components} of
-$M$) are uniquely determined up to isomorphism.
+Every finite monoid divides a wreath product of simple groups and aperiodic
+semigroups; the simple groups appearing in the decomposition (the
+\emph{group components}) are uniquely determined up to isomorphism.
 \end{theorem}
 
-The group components of $M(L)$ determine precisely which modular predicates $L$ can
-express.
-Formally, by the variety-theoretic characterization of Eilenberg~\cite{eilenberg1976}
-and Straubing~\cite{straubing1994}: a language $L$ can express the modular predicate
-$\mathrm{MOD}_p$ only if $M(L)$ contains a subgroup whose order is divisible by $p$,
-which requires $\mathbb{Z}/p\mathbb{Z}$ to divide some group component.
-The Krohn--Rhodes decomposition therefore gives a \emph{complete spectrum of
-algebraic blind spots}: for any guardrail with syntactic monoid $M(L_G)$, the primes
-$p$ for which $G$ is potentially sensitive to $\mathrm{MOD}_p$ are precisely those
-dividing the order of some group component, and the guardrail is provably blind to
-all other primes.
-
-When $M(L_G)$ is aperiodic (no group components), the guardrail is blind to
-$\mathrm{MOD}_p$ for every prime $p$---the blindness is total.
-This is the case for all substring-matching regex guardrails (Theorem~\ref{thm:substring-aperiodic},
-proved in \S\ref{sec:blindness-theorem}).
+The group components of $M(L_G)$ form a \emph{complete spectrum of algebraic
+blind spots}: by the variety-theoretic characterization of
+Eilenberg~\cite{eilenberg1976} and Straubing~\cite{straubing1994}, $L_G$ can
+potentially express $\mathrm{MOD}_p$ only if some group component has order
+divisible by $p$; the guardrail is provably blind to all other primes.
+When $M(L_G)$ is aperiodic (no group components) blindness is total---the
+case for every substring-matching regex guardrail, as established by
+Theorem~\ref{thm:substring-aperiodic}.
 
 % ============================================================
 \section{Impossibility Results}\label{sec:blindness-theorem}
