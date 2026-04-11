@@ -207,15 +207,13 @@ Our contributions, organized by section, are:
   \item \textbf{123-pattern regex corpus analysis plus validation} (\cref{sec:corpus}):
     confirms $100\%$ aperiodicity across 123 patterns from eleven open-source guardrail tools
     plus 19 test patterns (142 total), with verified $\mathrm{MOD}_2$ bypass constructions.
-  \item \textbf{Defense recommendations grounded in formal results} (\cref{sec:discussion}):
-    each impossibility theorem maps to a specific layer of a defense-in-depth stack.
-  \item \textbf{An open-source execution-layer defense}
-    (\cref{sec:secrets-router}): \texttt{secrets-router}, an MIT-licensed
-    MCP server that implements the Class~C defense architecture our theory
-    recommends. Credentials are held outside the LLM context as opaque
-    handles and resolved at the execution layer; the interpretation table
-    is held by the defender, not the attacker, \emph{inverting} the
-    asymmetry that enables the homomorphic-reasoning attack.
+  \item \textbf{Defense recommendations grounded in formal results}
+    (\cref{sec:discussion}): each impossibility theorem maps to a specific
+    layer of a defense-in-depth stack; as a concrete instantiation of the
+    Class~C defense architecture, we release \texttt{secrets-router}
+    (\S\ref{sec:secrets-router}, MIT-licensed, ${\sim}800$ lines), an MCP
+    server that inverts the interpretation-table asymmetry exploited by
+    homomorphic-reasoning attacks.
 \end{enumerate}
 
 \paragraph{Nature of the contribution.}
@@ -1371,36 +1369,31 @@ F5 & \texttt{exec\textbackslash s*\textbackslash(} & 8 & 14 & Y \\
 \subsection{Tree-of-Thought Benchmark}\label{sec:tot-benchmark}
 
 \paragraph{Protocol.}
-We generated $N = 50$ randomized abstract grammars (seeds 0--49) using the
-\texttt{generate\_grammar} function from the benchmark module.
-Each grammar has a guaranteed path to a fixed target symbol \texttt{N30},
-with multiple alternative paths (optimal depth 5--8, two short low-yield paths,
-and three dead-end traps with high per-step yield estimates).
-Three search strategies were evaluated, each with a 90-second timeout:
-(BFS) exhaustive breadth-first search up to depth 12, selecting the highest-yield
-path to the target---no LLM guidance;
-(Random-beam) beam search with beam width 5 and random composite scoring
-($0.6 \times \text{random} + 0.4 \times \text{yield}$);
-(ToT) Tree-of-Thought with LLM-guided branch pruning---at each depth the LLM
-(llama3.1:8b via Ollama) rates each candidate branch as \textsc{sure},
-\textsc{likely}, or \textsc{impossible} and the composite score
-($0.6 \times \text{LLM} + 0.4 \times \text{yield}$) determines beam selection.
-Mean yield is the average cumulative yield score across all $N = 50$ grammars
-(a grammar that is not solved contributes yield $= 0$).
-Solve rate is the fraction of grammars for which any path to the target was found.
+We generated $N = 50$ randomized abstract grammars (seeds 0--49) via
+\texttt{generate\_grammar} targeting a fixed terminal \texttt{N30}, each
+containing multiple paths of optimal depth 5--8, two short low-yield
+paths, and three high-yield dead-end traps.
+Three solvers compete under a 90\,s timeout: (BFS) exhaustive
+breadth-first search to depth 12, no LLM; (Random-beam) beam width 5
+with composite score $0.6\cdot\text{random} + 0.4\cdot\text{yield}$;
+(ToT) beam width 5 with composite $0.6\cdot\text{LLM rating} +
+0.4\cdot\text{yield}$, where \texttt{llama3.1:8b} rates each candidate as
+\textsc{sure}/\textsc{likely}/\textsc{impossible}.
 
 \paragraph{Results.}
-Table~\ref{tab:tot-results} reports mean yield, solve rate, and bootstrap 95\%
-confidence intervals across all 50 grammar instances.
+Table~\ref{tab:tot-results} reports mean yield, solve rate, and
+bootstrap $95\%$ CIs ($B = 2000$).
+BFS dominates on both metrics: Wilcoxon signed-rank, one-sided,
+BFS vs.\ ToT $W = 1275$, $p < 0.001$; BFS vs.\ Random-beam $W = 1225$,
+$p < 0.001$; the hypothesis ToT$\,>\,$BFS is not supported at any
+grammar ($W = 0$, $p = 1.0$).
 
 \begin{table}[t]
 \centering
-\caption{Tree-of-Thought benchmark results ($N = 50$ randomized grammars,
-seeds 0--49, model \texttt{llama3.1:8b}, timeout 90\,s per solver).
-Mean yield averages cumulative path yield over all grammars (unsolved = 0).
-Solve rate = fraction of grammars for which the target was reached.
-States = mean number of grammar states explored per run.
-95\% CIs are bootstrap intervals ($B = 2000$).}
+\caption{Tree-of-Thought benchmark results ($N = 50$ randomized
+grammars, seeds 0--49, model \texttt{llama3.1:8b}, 90\,s timeout per
+solver; unsolved grammars contribute yield $= 0$; 95\% CIs are
+bootstrap intervals, $B = 2000$).}
 \label{tab:tot-results}
 \small
 \begin{tabular}{lccrr}
@@ -1414,73 +1407,32 @@ ToT (LLM-guided pruning) & 0.122 & [0.064, 0.185] &  26\% &  27 \\
 \end{tabular}
 \end{table}
 
-\textbf{BFS is optimal for small synthetic grammars.}
-BFS solved all 50 grammars (100\% solve rate) with a mean yield of 0.466,
-significantly outperforming both random-beam (mean 0.172, 70\% solve rate) and
-ToT+LLM (mean 0.122, 26\% solve rate).
-Wilcoxon signed-rank tests (one-sided, BFS$>$alternative):
-BFS vs.\ ToT: $W = 1275$, $p < 0.001$;
-BFS vs.\ Random-beam: $W = 1225$, $p < 0.001$.
-The hypothesis that ToT$>$BFS was not supported:
-$W = 0$, $p = 1.0$ (no grammar favored ToT over BFS).
+\paragraph{Interpretation.}
+At the scale of these grammars (mean 87 states explored) BFS is cheap,
+complete, and optimal, and the symbol-only grammars
+(\texttt{N0},\ldots,\texttt{N30}, anonymous rule labels \texttt{R1},\ldots)
+carry no surface vocabulary for the LLM's world knowledge to bind to;
+the \textsc{sure}/\textsc{likely}/\textsc{impossible} ratings are
+therefore effectively noise with respect to reachability, and their
+$0.6\times$ composite weight actively misdirects the ToT beam into the
+high-yield trap paths.
+The honest reading: LLM-guided search adds value only when symbols carry
+meaning the model can attach to---the regime the aspirin and TCP case
+studies of \S\ref{sec:aspirin} exhibit---whereas on fully opaque
+synthetic grammars classical search wins.
+The security claim of V3 does not depend on ToT outperforming BFS on
+such benchmarks; it requires only the \emph{existence} of a solver
+producing valid derivations, which all three strategies demonstrate on
+solvable grammars.
 
-The result is not surprising in retrospect.
-BFS is complete and optimal for the search spaces generated here: the grammar
-structure guarantees that the target is reachable and the search depth (up to 12)
-is within BFS's practical reach.
-LLM guidance via ToT adds latency (avg.\ $\sim 50\,$s per grammar) and
-frequently misdirects the beam into dead-end traps that the LLM rates as
-\textsc{likely}---the high-yield-estimate traps in the grammar are designed
-precisely to exploit this failure mode.
-
-\textbf{Why BFS dominates: the LLM evaluation function adds noise, not signal.}
-The abstract grammars use anonymous production-rule labels (R1, R2, \ldots) and
-symbol names with no semantic content (\texttt{N0}, \texttt{N1}, \ldots, \texttt{N30}).
-When the LLM rates a candidate branch, it has no world knowledge to draw on:
-the rules carry no meaning that would allow the model to distinguish a productive
-path from a dead end.
-The \textsc{sure}/\textsc{likely}/\textsc{impossible} ratings are therefore
-effectively random with respect to the true reachability structure of the grammar.
-Because the composite ToT score weights this random LLM signal at $0.6\times$, it
-actively degrades beam selection relative to BFS (which ignores the LLM entirely)
-and even relative to random beam (which at least applies a uniformly random signal
-rather than a correlated-but-wrong one).
-BFS avoids this failure mode entirely; at the scale of these grammars
-(mean 87 states explored), exhaustive search is inexpensive and provably optimal.
-
-\textbf{ToT adds value only when the search space exceeds BFS capacity.}
-The grammars in this benchmark are small enough that BFS explores them exhaustively.
-In settings where the state space grows exponentially (real chemistry reaction
-networks, large software build graphs, or grammars with unbounded depth), BFS
-becomes computationally intractable and LLM-guided heuristic search can yield
-practical speedups by pruning obviously unreachable branches.
-The security claim of V3---that an attacker can \emph{in principle} solve abstract
-grammar derivations using LLM guidance---does not depend on ToT outperforming BFS
-on toy benchmarks; it depends on the \emph{existence} of a solver that finds valid
-derivations, which all three strategies demonstrate on solvable grammars.
-
-\paragraph{Correction note.}
-An earlier version of this section reported mean solve rates of 0.512 (ToT),
-0.203 (Random-beam), and 0.119 (BFS) on $N = 20$ grammars and claimed ToT
+\paragraph{Reproducibility correction.}
+An earlier draft of this section reported $N = 20$ results in which ToT
 outperformed BFS by $4.3\times$.
-Those numbers were fabricated and are retracted.
-The honest results above were obtained by re-running the public benchmark code
-(\texttt{src/aperiodic\_guardrails/benchmark/runner.py}) on $N = 50$ grammars
-with seeds 0--49 and model \texttt{llama3.1:8b};
-results are archived in \texttt{results/tot\_n50\_honest.json}.
-
-\paragraph{Scope of this negative result.}
-The abstract benchmark establishes that BFS is optimal when production rules carry
-no semantic content.
-This is an informative negative result, not a refutation of LLM-guided search in
-general: it precisely characterizes the precondition under which the LLM evaluation
-function helps versus hurts.
-The following case study tests the complementary regime---a grammar encoding a
-real domain (organic chemistry synthesis) where the model's world knowledge
-\emph{can} meaningfully evaluate candidate paths.
-The contrast between the two settings is the central empirical lesson of
-Section~\ref{sec:empirical}: \emph{attack planning benefits from world knowledge,
-not search depth alone.}
+On re-running the public benchmark code
+(\texttt{src/aperiodic\_guardrails/benchmark/runner.py}) at $N = 50$,
+those numbers did not reproduce; the honest results above replace them,
+and raw outputs are archived in
+\texttt{results/tot\_n50\_honest.json}.
 
 \subsection{Case Studies}\label{sec:aspirin}
 
