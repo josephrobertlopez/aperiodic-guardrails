@@ -93,129 +93,43 @@ become observable.
 % ============================================================
 \section{Prelude: The Guardrail Problem}\label{sec:prelude}
 
-\emph{This section requires no prior knowledge of formal language theory,
-circuit complexity, or abstract algebra. Every concept used in the technical
-sections is introduced here informally; the formal definitions follow in
+\emph{This section assumes no prior knowledge of formal language theory,
+circuit complexity, or abstract algebra; formal definitions follow in
 \S\ref{sec:algebraic-foundations}.}
 
-\subsection{The Gate}
+Every major AI deployment protects itself at the first layer with a regex
+gate: a list of patterns scanned against the user's message before the model
+sees it.
+For the threats these gates were designed to catch---known keywords, obvious
+phrasings, copy-pasted attack strings---they work.
+The question this paper asks is: what are they \emph{structurally} unable to
+see?
 
-A content filter reads a message and decides: safe or dangerous.
-The filter has a list of patterns.
-If the message matches any pattern, it is blocked.
-This is how every major AI deployment protects itself at the first layer---a
-pattern-matching gate between the user and the model.
+Each pattern compiles to a finite-state machine (DFA) with a bounded state
+space and no external memory.
+Such a machine carries a mathematical fingerprint---its \emph{syntactic monoid}
+(\S\ref{sec:syntactic-monoids})---that captures every distinction the machine
+can make; two inputs the monoid identifies are, from the gate's perspective,
+the same string, and this identification is a structural consequence of the
+fixed state space rather than a bug.
+For substring-matching guardrails the syntactic monoid is \emph{aperiodic}:
+the machine can match but cannot count.
 
-Patterns are fast.
-A single pass over the input, linear time, runs before the model processes
-the request.
-For the threats they were designed for---known keywords, obvious phrasings,
-copy-pasted attack strings---they work.
-The question this paper asks is: what are they \emph{structurally} unable to see?
-
-\subsection{Inside the Machine}
-
-A pattern like \texttt{bomb} compiles to a small machine that reads input one
-character at a time, following arrows between states:
-
-\begin{center}
-$\bullet \xrightarrow{b} \circ \xrightarrow{o} \circ
-\xrightarrow{m} \circ \xrightarrow{b} \bigstar$
-\end{center}
-
-If the machine reaches $\bigstar$, the message is blocked.
-Otherwise it passes.
-This machine is a \emph{deterministic finite automaton} (DFA).
-It has a fixed number of states and no external memory---it knows where it
-\emph{is}, but not where it has \emph{been}.
-
-\subsection{The Fingerprint}
-
-Every such machine has a mathematical fingerprint---a compact object that
-captures everything the machine can and cannot distinguish.
-Two messages that cause the machine to follow the same path are, from its
-perspective, \emph{identical}.
-It cannot tell them apart.
-Not because it is poorly designed, but because the information needed to
-distinguish them does not exist within its state space.
-
-This fingerprint is the \emph{syntactic monoid}
-(\S\ref{sec:syntactic-monoids})---the algebraic structure formed by
-collapsing all indistinguishable inputs.
-
-\subsection{The Lock That Never Unlocks}
-
-Once a keyword machine matches \texttt{bomb} and reaches $\bigstar$,
-it stays there forever:
-
-\begin{center}
-$\bigstar \xrightarrow{\text{any}} \bigstar
-\xrightarrow{\text{any}} \bigstar
-\xrightarrow{\text{any}} \bigstar \cdots$
-\end{center}
-
-Applying the same operation twice produces the same result as applying it once.
-This property is called \emph{aperiodicity}: the machine reaches a fixed point
-rather than cycling.
-It is the algebraic signature of a machine that can match but cannot count.
-
-A machine that \emph{can} count---such as one recognizing strings with an even
-number of \texttt{a}'s---cycles between states:
-
-\begin{center}
-$\text{EVEN} \xrightarrow{a} \text{ODD} \xrightarrow{a} \text{EVEN}
-\xrightarrow{a} \text{ODD} \cdots$
-\end{center}
-
-This machine loops.
-Its fingerprint is \emph{periodic}---it has a cycle, and it can track parity.
-Keyword filters have no such cycle.
-They are deadbolts, not light switches.
-
-\subsection{The Ceiling}
-
-Three classical theorems, proved between 1965 and 1992, chain together to
-establish the ceiling:
-
-\begin{enumerate}
-\item \textbf{Sch\"{u}tzenberger (1965):} A machine with an aperiodic
-  fingerprint recognizes a \emph{star-free} language---one that can be defined
-  using only AND, OR, NOT, and concatenation, without repetition counting.
-
-\item \textbf{Barrington--Straubing--Th\'{e}rien (1992):} Star-free languages
-  correspond exactly to $\mathrm{AC}^0$ circuits---constant-depth Boolean
-  circuits with unbounded fan-in AND and OR gates.
-
-\item \textbf{Furst--Saxe--Sipser (1981); H\aa{}stad (1987):} $\mathrm{AC}^0$
-  circuits \emph{cannot compute parity}---they cannot determine whether a
-  count is even or odd, regardless of circuit size.
-\end{enumerate}
-
-The chain:
-keyword pattern $\to$ aperiodic fingerprint $\to$ star-free language $\to$
-$\mathrm{AC}^0$ circuit $\to$ cannot count.
-Each link is a published theorem.
-The conclusion is not a conjecture; it is settled mathematics.
-
-\subsection{The Interleaving Attack}
-
-An attacker who knows the gate cannot count hides the payload using counting:
-
-\begin{center}
-\begin{tabular}{cccccccc}
-\texttt{b} & \texttt{x} & \texttt{o} & \texttt{q} &
-\texttt{m} & \texttt{w} & \texttt{b} & \texttt{k} \\
-$\uparrow$ & & $\uparrow$ & & $\uparrow$ & & $\uparrow$ & \\
-b & & o & & m & & b & \\
-\end{tabular}
-\end{center}
-
-The payload occupies odd positions; the filler is random.
-To decode, take every other character---a parity operation.
-The gate operates in $\mathrm{AC}^0$.
-$\mathrm{AC}^0$ cannot compute parity.
-The gate passes the message.
-It is algebraically blind.
+Three classical theorems chain this observation into a hard ceiling.
+Sch\"{u}tzenberger~(1965) shows that aperiodic monoids recognize exactly the
+\emph{star-free} languages~\cite{schutzenberger1965}.
+Barrington, Compton, Straubing, and Th\'{e}rien~(1992) show that star-free
+languages correspond exactly to $\mathrm{AC}^0$
+circuits~\cite{barrington1992}.
+Furst, Saxe, and Sipser~(1981) and H\aa{}stad~(1987) show that $\mathrm{AC}^0$
+cannot compute parity~\cite{furst1981,hastad1987}.
+Composing the chain: keyword gates provably cannot decide whether a count is
+even or odd, regardless of how they are tuned.
+An attacker who hides a payload across alternating positions---the filler
+on even indices, the payload on odd---slips past the gate unharmed; the
+decoded payload is algebraically invisible because decoding it is a parity
+operation the gate cannot perform.
+The conclusion is not a conjecture.
 
 This paper characterizes this blind spot precisely
 (\S\ref{sec:blindness-theorem}), measures it across 142 production patterns
