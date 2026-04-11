@@ -38,6 +38,7 @@
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{example}[theorem]{Example}
+\newtheorem{observation}[theorem]{Observation}
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
 \newtheorem{assumption}[theorem]{Assumption}
@@ -63,12 +64,14 @@
 % ============================================================
 \begin{abstract}
 LLM guardrails face four structurally distinct barriers:
-algebraic blindness arising from syntactic monoid aperiodicity (unconditional);
+algebraic blindness arising from syntactic monoid aperiodicity
+(unconditional);
 an illustrative information-theoretic lower bound (Fano-type, under a
 uniformity assumption);
 NP-hardness of instantiation verification;
-and structural transfer via functorial homomorphism combined with syntactic
-indistinguishability.
+and structural transfer via free-category functoriality (unconditional)
+combined with string-level indistinguishability under a semantic-opacity
+assumption on symbol naming.
 Together these results characterize why inference-layer defenses are necessary but insufficient.
 
 We operationalize these barriers through five attack vectors.
@@ -186,11 +189,19 @@ Our contributions, organized by section, are:
   \item \textbf{Computational impossibility} (\cref{sec:np}):
     verifying whether an abstract program has a dangerous instantiation is
     NP-complete (Proposition~\ref{thm:np}).
-  \item \textbf{Structural impossibility} (\cref{sec:functor,sec:indistinguish}):
-    abstract derivations transfer faithfully to real domains via free-category
-    functoriality (Proposition~\ref{thm:transfer}), and adversarial formal reasoning
-    tasks are syntactically indistinguishable from legitimate ones
-    (Proposition~\ref{thm:indistinguish}).
+  \item \textbf{Structural transfer and string-level indistinguishability}
+    (\cref{sec:functor,sec:indistinguish}): abstract derivations transfer
+    faithfully to real domains via free-category functoriality
+    (Proposition~\ref{thm:transfer}, unconditional); and under a
+    semantic-opacity assumption on symbol naming, the homomorphic-reasoning
+    attack's prompts are string-level indistinguishable from legitimate
+    formal-reasoning exercises
+    (Observation~\ref{thm:indistinguish}).
+    We present the indistinguishability result as a structural observation
+    rather than an independent impossibility: it closes the argument
+    \emph{once} opacity holds and an attack of this form exists (empirically
+    demonstrated in \S\ref{sec:v3}--\ref{sec:v4} and visualized in
+    Table~\ref{tab:visibility-trace}).
   \item \textbf{Five attack vectors validated empirically} (\cref{sec:vectors}):
     V1--V4 demonstrate homomorphic reasoning; V5 demonstrates modular counting bypass.
   \item \textbf{123-pattern regex corpus analysis plus validation} (\cref{sec:corpus}):
@@ -313,13 +324,16 @@ Ball et al.~\cite{ball2025impossibility} prove that under standard cryptographic
 assumptions, adversarial prompts can be computationally indistinguishable from
 benign ones for any efficient filter.
 Our results are complementary.
-We establish \emph{syntactic} (perfect, unconditional) indistinguishability for
-formal reasoning attacks (Proposition~\ref{thm:indistinguish}) and \emph{algebraic}
-(unconditional) blindness for modular counting attacks
-(Theorem~\ref{thm:blindness}).
-Ball et al.\ give a more general but assumption-dependent result over a broader
-attack class; our results apply to specific attack constructions and carry no
-computational hardness assumption.
+We establish \emph{algebraic} (unconditional) blindness for modular
+counting attacks (Theorem~\ref{thm:blindness}), and---under an explicit
+semantic-opacity assumption on symbol naming---\emph{string-level}
+indistinguishability for the homomorphic-reasoning construction
+(Observation~\ref{thm:indistinguish}).
+Ball et al.\ give a more general computational result under cryptographic
+assumptions; our algebraic result is assumption-free but applies to the
+specific regex-guardrail setting, and our indistinguishability observation
+is assumption-light (symbol opacity only) but applies to the specific
+homomorphic-reasoning construction.
 Kumar et al.~\cite{certifying_safety2023} propose certified defenses via randomized
 smoothing applied to LLM inputs, establishing provable safety radii around benign
 inputs under $\ell_p$-bounded perturbations; our results identify a complementary
@@ -344,10 +358,12 @@ Hopper, Langford, and von Ahn~\cite{hopper2002steganography} formalize perfect
 steganographic security as the requirement that no polynomial-time distinguisher
 achieves better than negligible advantage in separating channel transmissions from
 covertext.
-Proposition~\ref{thm:indistinguish} can be viewed as establishing \emph{perfect}
-steganographic security for the homomorphic reasoning channel: the distinguisher
-advantage is exactly zero (not merely negligible) because the LLM-visible content
-of the attack is syntactically equal to a legitimate reasoning task, making the
+Observation~\ref{thm:indistinguish} can be viewed as establishing
+\emph{perfect} steganographic security for the homomorphic reasoning
+channel \emph{under Assumption~\ref{ass:opacity}}: any distinguisher
+operating on strings has exactly zero advantage (not merely negligible),
+because the attack's LLM-visible content lies as a string set inside the
+legitimate formal-reasoning task set, making the
 distinguisher's task information-theoretically impossible rather than merely
 computationally hard.
 
@@ -1010,59 +1026,88 @@ equivalent} with respect to a guardrail $G$ if for every $p_A \in \mathcal{P}_A$
 there exists $p_B \in \mathcal{P}_B$ such that $p_A = p_B$ as strings, and vice versa.
 \end{definition}
 
-\begin{proposition}[Indistinguishability]\label{thm:indistinguish}
-Let $\mathcal{P}_{\mathsf{harm}}$ be the class of adversarial prompts that instantiate
-(via offline interpretation) to harmful operation sequences, and let
-$\mathcal{P}_{\mathsf{legit}}$ be the class of legitimate formal reasoning prompts
-(e.g., theorem proving, grammar completion) over the same abstract symbol set $M$.
-Under the homomorphic reasoning construction, $\mathcal{P}_{\mathsf{harm}} = \mathcal{P}_{\mathsf{legit}}$
-as sets of strings.
-Therefore, for any guardrail $G$ operating on prompt content, the adversarial
-advantage in distinguishing $\mathcal{P}_{\mathsf{harm}}$ from $\mathcal{P}_{\mathsf{legit}}$
-is exactly zero.
-\end{proposition}
-
-\begin{proof}
-By construction, the homomorphic reasoning prompt $p \in \mathcal{P}_{\mathsf{harm}}$
-contains only the abstract grammar $\mathcal{G}$ and an instruction to produce a
-derivation.
-Both the symbols and the grammatical structure are drawn from a symbol set $M$ that
-carries no harmful semantics; the interpretation function $I\colon M \to R$ is
-held offline by the attacker and never appears in any inference call.
-Therefore, $p$ is syntactically identical to a legitimate formal reasoning prompt
-over the same grammar.
-The set of all such prompts is exactly $\mathcal{P}_{\mathsf{legit}}$.
-\end{proof}
-
 \begin{assumption}[Semantic opacity of abstract symbols]\label{ass:opacity}
-The abstract grammar $\mathcal{G}$ uses symbol names drawn from a domain-neutral
-vocabulary (e.g., $A, B, C$ or arbitrary identifiers) such that no symbol name
-reveals the interpretation $I(m)$.
+The abstract grammar $\mathcal{G}$ uses symbol names drawn from a
+domain-neutral vocabulary (e.g., $A, B, C$ or arbitrary identifiers) such
+that no symbol name reveals the interpretation $I(m)$.
 \end{assumption}
 
-Proposition~\ref{thm:indistinguish} is unconditional given Assumption~\ref{ass:opacity}.
-If Assumption~\ref{ass:opacity} fails---for example, if the attacker carelessly
-names symbols after their real-world referents---the theorem does not apply, and a
-sufficiently informed guardrail might detect the attack through symbolic name
-inspection.
-A weakened version holds without Assumption~\ref{ass:opacity}: the adversarial
-prompt class is computationally indistinguishable from the legitimate class under
-any efficient guardrail, by the argument of Ball et al.~\cite{ball2025impossibility};
-but Proposition~\ref{thm:indistinguish} gives the stronger information-theoretic result
-under the stated assumption.
+\begin{observation}[String-level indistinguishability under opacity]\label{thm:indistinguish}
+Let $\mathcal{G}$ be an abstract grammar over a symbol set $M$ satisfying
+Assumption~\ref{ass:opacity}.
+Let $\mathcal{P}_{\mathsf{harm}}(\mathcal{G}, I)$ be the set of prompts
+issued by the homomorphic-reasoning pipeline of \S\ref{sec:v3} under some
+offline interpretation $I\colon M \to R$, and let
+$\mathcal{P}_{\mathsf{legit}}(\mathcal{G})$ be the set of prompts a
+legitimate user could issue to the same LLM as formal-reasoning exercises
+over $\mathcal{G}$ (grammar completion, derivation search,
+well-formedness checking).
+Then for every $I$,
+\[
+  \mathcal{P}_{\mathsf{harm}}(\mathcal{G}, I)
+  \;\subseteq\;
+  \mathcal{P}_{\mathsf{legit}}(\mathcal{G})
+\]
+as sets of strings, with the inclusion independent of the choice of $I$.
+Any guardrail that inspects only prompt content therefore has zero
+distinguishing advantage between the two classes.
+\end{observation}
+
+\begin{proof}
+By Assumption~\ref{ass:opacity}, names in $M$ carry no
+interpretation-revealing information.
+A homomorphic-reasoning prompt $p \in \mathcal{P}_{\mathsf{harm}}
+(\mathcal{G}, I)$ consists of the grammar $\mathcal{G}$ (a string over $M$
+and production symbols) together with a formal-reasoning instruction
+(``find a derivation of target $t$''); it contains no part of $I$, whose
+role is entirely offline.
+Such a prompt is syntactically identical, as a string, to a prompt a
+legitimate user could issue as a grammar-completion exercise over
+$\mathcal{G}$; the set of all such legitimate prompts is, by definition,
+$\mathcal{P}_{\mathsf{legit}}(\mathcal{G})$.
+The inclusion holds for every $I$ because $I$ does not appear in $p$.
+A guardrail operating on $p$ therefore sees the same string distribution
+in both the adversarial and legitimate cases and has zero distinguishing
+advantage.
+\end{proof}
+
+\paragraph{What the observation does and does not say.}
+The substantive content lives in Assumption~\ref{ass:opacity} and in the
+\emph{existence} of useful attacks whose prompts satisfy it---demonstrated
+by the V3/V4 pipeline (\S\ref{sec:v3}--\ref{sec:v4}) and directly
+visualized by the visibility trace (Table~\ref{tab:visibility-trace}).
+What Observation~\ref{thm:indistinguish} contributes is the formal closure:
+\emph{once} opacity holds and an attack of this form exists, the guardrail
+boundary cannot distinguish the adversarial prompt stream from a
+legitimate-reasoning prompt stream by looking at strings alone.
+The observation is deliberately stated at the level of string sets, not at
+the level of ``harmful vs.\ benign semantics,'' because the latter would
+require a semantic notion we explicitly do not assume: the construction is
+correct regardless of whether the LLM is performing symbolic reasoning or
+retrieving memorized sequences, provided the LLM-visible surface is
+opaque.
+If Assumption~\ref{ass:opacity} fails---for example, if the attacker
+carelessly names symbols after their real-world referents---the inclusion
+does not hold, and a sufficiently informed guardrail may detect the attack
+through symbol-name inspection.
 
 \paragraph{Relation to Ball et al.}
-Ball et al.~\cite{ball2025impossibility} prove computational indistinguishability
-under standard cryptographic assumptions, establishing that no efficient guardrail
-can distinguish adversarial from benign prompts with non-negligible advantage.
-Our Proposition~\ref{thm:indistinguish} is complementary: it establishes \emph{perfect}
-(information-theoretic, unconditional) indistinguishability for the specific
-construction of homomorphic reasoning, with the trade-off that it applies to this
-construction specifically rather than to the general attack class.
-Together, the two results cover the full distinguishability landscape: Ball et al.\
-handle general attacks under computational assumptions; Proposition~\ref{thm:indistinguish}
-handles the homomorphic reasoning construction without any assumption beyond
-Assumption~\ref{ass:opacity}.
+Ball et al.~\cite{ball2025impossibility} prove computational
+indistinguishability under standard cryptographic assumptions,
+establishing that no efficient guardrail can distinguish a broad class of
+adversarial prompts from benign ones with non-negligible advantage.
+Observation~\ref{thm:indistinguish} is complementary: it establishes
+string-level inclusion (a stronger form of indistinguishability, though
+only at the string-set level) for the specific construction of
+homomorphic reasoning, under an explicit opacity assumption rather than
+under cryptographic assumptions.
+The trade-off is that the observation applies to this construction
+specifically, whereas Ball et al.\ handle a more general attack class.
+Together, the two results cover the indistinguishability landscape for
+prompt-level inspection; neither supplies the ``impossibility theorem'' of
+the four barriers on its own, and we present Observation~\ref{thm:indistinguish}
+as a structural characterization of the homomorphic-reasoning
+construction rather than as an independent impossibility result.
 
 % ============================================================
 \section{Attack Vectors}\label{sec:vectors}
@@ -1522,7 +1567,7 @@ artifact---held only by the attacker, applied offline---is the actual
 synthesis procedure or protocol run.
 No content inspection at the LLM boundary can distinguish the two runs,
 because at the LLM boundary the two runs \emph{are} the same run.
-This is Proposition~\ref{thm:indistinguish} made visible: the guardrail is
+This is Observation~\ref{thm:indistinguish} made visible: the guardrail is
 not poorly configured, it is looking in the only place the dangerous content
 can never appear.
 
@@ -1557,7 +1602,7 @@ The aspirin case study is a canonical Class~C attack
 never the chemical names or procedures.
 No inference-layer filter---regex, neural, or any composition
 thereof---can detect the attack because the prompts are syntactically identical to
-legitimate grammar exercises (Proposition~\ref{thm:indistinguish}).
+legitimate grammar exercises (Observation~\ref{thm:indistinguish}).
 The interpretation table $I\colon M_{\mathsf{chem}} \to R_{\mathsf{chem}}$ is
 held offline by the attacker and never appears in any LLM-visible content.
 
@@ -1983,7 +2028,7 @@ Attacks cluster into three classes by the minimum defense layer required:
 \item \textbf{Class~C (semantic):} V1--V4 homomorphic reasoning.
   \emph{Cannot} be defended at any inference layer, regardless of computational
   class.
-  By Proposition~\ref{thm:indistinguish}, these prompts are syntactically
+  By Observation~\ref{thm:indistinguish}, these prompts are syntactically
   identical to legitimate formal reasoning; any filter that blocks them must
   also block legitimate use.
   Defense \emph{requires} execution-layer monitoring (inspect what the LLM
@@ -2102,11 +2147,13 @@ In practice, no guardrail pattern in our corpus used backreferences.
 \subsection{Limitations}\label{sec:limitations-list}
 
 \paragraph{1. Test case severity.}
-The empirical validation uses the aspirin synthesis case study, chosen for its
-minimal harm risk.
-The formal results (Theorems~\ref{thm:substring-aperiodic}--\ref{thm:indistinguish})
-are domain-independent; their applicability to high-severity domains is implied by
-the theory but not empirically demonstrated here by design.
+The empirical validation uses the aspirin synthesis case study, chosen for
+its minimal harm risk.
+The formal results (Theorems~\ref{thm:substring-aperiodic} and
+\ref{thm:blindness}, Proposition~\ref{thm:transfer}, and
+Observation~\ref{thm:indistinguish}) are domain-independent; their
+applicability to high-severity domains is implied by the theory but not
+empirically demonstrated here by design.
 
 \paragraph{2. ToT scope.}
 The Tree-of-Thought benchmark evaluates 50 randomized grammars (seeds 0--49).
@@ -2157,7 +2204,7 @@ The formal contribution, however, does not depend on the LLM actually
 performing symbolic reasoning in an interpretive sense: the functoriality
 of the quotient interpretation map (Proposition~\ref{thm:transfer}) and
 the structural indistinguishability observation
-(Proposition~\ref{thm:indistinguish}) require only that the LLM-visible
+(Observation~\ref{thm:indistinguish}) require only that the LLM-visible
 surface of the attack---the abstract grammar, its derivations, and the
 solver's outputs---be syntactically indistinguishable from a legitimate
 formal-reasoning workload.
@@ -2337,14 +2384,24 @@ Verifying whether an abstract program has a harmful instantiation is NP-complete
 Exhaustive checking is therefore infeasible, and heuristic checking inherits the
 false-negative rate implied by the combinatorial search space.
 
-\paragraph{Structural impossibility (functor + indistinguishability).}
-Abstract derivations transfer faithfully to real-domain operation sequences via
-free-category functoriality (Proposition~\ref{thm:transfer}), meaning that LLM
-reasoning over abstract grammars produces correct real-world procedures after
-offline instantiation.
-Adversarial formal reasoning tasks are syntactically identical to legitimate ones
-under Assumption~\ref{ass:opacity} (Proposition~\ref{thm:indistinguish}), giving
-information-theoretically perfect steganographic security for the attack channel.
+\paragraph{Structural transfer and indistinguishability.}
+Abstract derivations transfer faithfully to real-domain operation sequences
+via free-category functoriality (Proposition~\ref{thm:transfer},
+unconditional): LLM reasoning over abstract grammars produces correct
+real-world procedures after offline instantiation, regardless of whether
+the LLM's internal process is interpretive reasoning or memorized
+retrieval.
+Under Assumption~\ref{ass:opacity} on symbol naming, the set of adversarial
+prompts issued by the homomorphic-reasoning pipeline is contained
+(as strings) in the set of legitimate formal-reasoning prompts over the
+same grammar (Observation~\ref{thm:indistinguish}); a guardrail
+inspecting only prompt content therefore has zero distinguishing
+advantage between the two classes.
+We present the indistinguishability result as a structural closure of
+the attack construction under opacity, not as an independent impossibility
+theorem---the work is done by the opacity assumption and by the
+\emph{existence} of attacks satisfying it, demonstrated empirically in
+\S\ref{sec:v3}--\ref{sec:v4}.
 
 \paragraph{Empirical grounding.}
 Five attack vectors demonstrate both barrier classes.
