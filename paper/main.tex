@@ -1688,27 +1688,16 @@ the concrete artifacts that carry harmful intent.
 
 \subsection{Neural Guardrails and $\mathrm{TC}^0$}\label{sec:neural-tc0}
 
-The algebraic blindness established in Theorem~\ref{thm:blindness} is a property
-of $\mathrm{AC}^0$ circuits, the complexity class that contains all aperiodic
-regular languages (Theorem~\ref{thm:bcst}).
-Regex guardrails are, by construction, $\mathrm{AC}^0$ devices: they recognize
-star-free languages, whose syntactic monoids are aperiodic, and
-the Barrington--Compton--Straubing--Th\'{e}rien theorem places every such language
-in $\mathrm{AC}^0$.
-The Furst--Saxe--Sipser theorem (Theorem~\ref{thm:fss}) then seals the impossibility:
-$\mathrm{PARITY} \notin \mathrm{AC}^0$, so no regex guardrail can detect modular
-counting encodings.
-Transformer-based (neural) guardrails occupy a strictly higher complexity class.
-Merrill and Sabharwal~\cite{merrill2023saturated} establish that log-precision
-transformers are contained in $\mathrm{TC}^0$, the class of constant-depth threshold
-circuits, and Chiang et al.~\cite{chiang2024tighter} sharpen these bounds.
-Since $\mathrm{AC}^0 \subsetneq \mathrm{TC}^0$~\cite{furst1981,hastad1987}, neural
-guardrails are \emph{strictly more expressive} than regex guardrails: they can
-compute functions---including all $\mathrm{MOD}_p$ predicates---that no regex
-guardrail can compute.
-This means the modular-counting blind spot identified in \S\ref{sec:blindness-proof}
-does \emph{not} transfer to neural guardrails; a sufficiently trained transformer
-can in principle detect $\phi_p$-encoded payloads for every prime $p$.
+Regex guardrails recognize aperiodic languages, placing them in
+$\mathrm{AC}^0$ via Theorems~\ref{thm:smp}--\ref{thm:fss}; the algebraic
+blindness of Theorem~\ref{thm:blindness} is the direct consequence.
+Transformer-based guardrails occupy a strictly higher class: log-precision
+transformers sit in $\mathrm{TC}^0$~\cite{merrill2023saturated,chiang2024tighter},
+and $\mathrm{AC}^0 \subsetneq \mathrm{TC}^0$~\cite{furst1981,hastad1987}.
+Neural guardrails can therefore compute $\mathrm{MOD}_p$ predicates that
+no regex guardrail can; the modular-counting blind spot of
+\S\ref{sec:blindness-proof} does not transfer to them, and a sufficiently
+trained transformer can in principle detect $\phi_p$-encoded payloads.
 
 \begin{table}[h]
 \centering
@@ -1729,58 +1718,45 @@ Full production LLM & Unknown (in $\mathrm{TC}^0$?) & Empirically yes \\
 \end{table}
 
 \paragraph{What $\mathrm{TC}^0$ can detect that $\mathrm{AC}^0$ cannot.}
-The threshold gates that separate $\mathrm{TC}^0$ from $\mathrm{AC}^0$ allow
-circuits to compute majority, parity, and iterated addition.
-Concretely, a single attention head can compute parity over a binary sequence:
-the head attends uniformly to all positions and accumulates a weighted sum that
-crosses a threshold if and only if the number of attended tokens is odd.
-This computation is provably \emph{impossible} for $\mathrm{AC}^0$ circuits by
-Furst--Saxe--Sipser~\cite{furst1981,hastad1987}: no constant-depth circuit with
-unbounded fan-in AND/OR gates can compute PARITY, regardless of circuit size.
-The practical consequence is direct.
-The canonical $\mathrm{MOD}_2$ bypass of Corollary~\ref{cor:parity}---an interleaved
-payload $w = a_1 b_1 a_2 b_2 \cdots a_n b_n$ where $\{a_i\}$ is the harmful
-sequence and $\{b_i\}$ is innocuous filler---requires only counting whether an
-even or odd number of ``$a$''-characters appear.
-No regex guardrail can perform this check (the syntax monoid of any aperiodic pattern
-cannot distinguish even from odd occurrences), but a one-layer transformer with
-a single uniform attention head can detect it exactly: the head's output sum is
-$> n/2$ if and only if more than half the attended positions are ``$a$''-tokens,
-from which parity is recoverable by a linear threshold.
-Strobl et al.~\cite{strobl2024formal} give tight bounds on exactly which formal
-languages hard-attention transformers of each depth recognize, including explicit
-inclusion of all regular languages with non-aperiodic syntactic monoids.
-Hahn~\cite{hahn2020limitations} establishes that soft-attention mechanisms
-saturate on periodic languages in ways that directly parallel the algebraic
-distinction formalized here: periodic structures force attention weights to
-be non-uniform in a way that constant-depth circuits cannot fully exploit,
-providing circuit-theoretic grounding for the qualitative boundary our algebraic
-results formalize in terms of syntactic monoids.
+The threshold gates separating $\mathrm{TC}^0$ from $\mathrm{AC}^0$ compute
+majority, parity, and iterated addition.
+A single uniform attention head computes parity on a binary sequence
+directly: it attends to all positions and accumulates a weighted sum
+whose threshold distinguishes odd from even counts---the computation
+$\mathrm{AC}^0$ circuits provably cannot
+perform~\cite{furst1981,hastad1987}.
+The canonical $\mathrm{MOD}_2$ bypass of Corollary~\ref{cor:parity}
+(interleaved payload $w = a_1 b_1 a_2 b_2 \cdots a_n b_n$) therefore
+collapses against a one-layer transformer guardrail while provably
+evading any aperiodic regex.
+Strobl et al.~\cite{strobl2024formal} give tight formal-language
+expressivity bounds for hard-attention transformers of each depth,
+including recognition of non-aperiodic regular languages;
+Hahn~\cite{hahn2020limitations} gives parallel circuit-theoretic grounding
+for the algebraic boundary via soft-attention saturation on periodic
+languages.
 
 \paragraph{What even $\mathrm{TC}^0$ cannot detect.}
-Expressivity gains come at a cost: $\mathrm{TC}^0$ has its own ceiling.
-$\mathrm{NC}^1$-complete problems---such as evaluating an arbitrary Boolean formula
-(formula evaluation is $\mathrm{NC}^1$-complete under $\mathrm{AC}^0$
-reductions~\cite{barrington1992})---are conjectured to lie outside $\mathrm{TC}^0$.
-A guardrail that must evaluate an arbitrary Boolean formula over its input tokens,
-for example to check whether a candidate response satisfies a complex logical
-safety policy, is conjectured to require $\mathrm{NC}^1$ or higher.
-Neural guardrails thus have their own blind spot: they sit above $\mathrm{AC}^0$
-but below $\mathrm{NC}^1$, and attackers who can force the detection problem into
-the $\mathrm{NC}^1 \setminus \mathrm{TC}^0$ gap---should that separation hold---can
-evade transformer guardrails by an analogous complexity argument.
-Whether $\mathrm{TC}^0 \subsetneq \mathrm{NC}^1$ is a major open problem in
-circuit complexity~\cite{sipser2012}; the separation is strongly believed but
-not proved.
-This means the same structural argument that gives us an unconditional algebraic
-impossibility for regex guardrails (Theorem~\ref{thm:blindness}) yields only a
-\emph{conditional} limitation for neural guardrails---conditioned on a complexity
-separation that has resisted proof for four decades.
-The information-theoretic barrier (Proposition~\ref{prop:fano}) and the
-computational barrier (Proposition~\ref{thm:np}), by contrast, apply to \emph{any}
-guardrail architecture that inspects only LLM-visible content, because those
-barriers arise from the fiber structure of the abstraction function rather than
-from the guardrail's circuit class.
+$\mathrm{TC}^0$ has its own conjectured
+ceiling~\cite{sipser2012,barrington1992}: $\mathrm{NC}^1$-complete problems
+such as arbitrary Boolean formula evaluation are believed to lie outside
+$\mathrm{TC}^0$, though the separation has resisted proof for four decades.
+A guardrail that must evaluate a complex logical safety policy over its
+input tokens is conjectured to require $\mathrm{NC}^1$ or higher, and
+attackers who can force the detection problem into the
+$\mathrm{NC}^1 \setminus \mathrm{TC}^0$ gap---conditionally on that
+separation holding---can evade transformer guardrails by the analogous
+complexity argument.
+The algebraic impossibility for regex guardrails
+(Theorem~\ref{thm:blindness}) is therefore unconditional, while the
+analogous statement for neural guardrails is conditional on an open
+complexity separation.
+The Fano-type lower bound (Proposition~\ref{prop:fano}) and the NP-hardness
+of instantiation (Proposition~\ref{thm:np}) apply to any guardrail
+architecture inspecting only LLM-visible content, independently of its
+circuit class, because both barriers arise from the fiber structure of
+the abstraction function rather than from the guardrail's computational
+complexity.
 
 \paragraph{Empirical $\mathrm{TC}^0$ validation.}
 We trained a minimal transformer classifier---one layer, one attention head,
@@ -1796,47 +1772,32 @@ empirically confirming the $\mathrm{AC}^0 \subsetneq \mathrm{TC}^0$
 separation in the guardrail domain.
 
 \paragraph{Practical implications.}
-The circuit-complexity hierarchy suggests a concrete layered defense strategy.
-Regex guardrails should be understood as $\mathrm{AC}^0$ filters: they are
-extremely fast (linear in input length, highly parallelizable) but provably blind
-to modular-counting encodings.
-Neural guardrails---shallow transformers trained specifically to detect
-structure-based bypass patterns---can close this gap in principle, because
-$\mathrm{TC}^0$ contains all $\mathrm{MOD}_p$ functions.
-The practical recommendation is therefore to \emph{stack} both: use regex for
-low-latency first-pass filtering and add a lightweight neural classifier for
-second-pass detection of encoding-diversity attacks that exploit the $\mathrm{AC}^0$
-blindness~\cite{strobl2024formal,merrill2024survey}.
-This recommendation is supported by recent empirical work:
-Zhu et al.~\cite{mathprompt2024} achieve a 73.6\% attack success rate via
-symbolic mathematical encoding across 13 production LLMs---an empirical
-manifestation of the algebraic blindness our Theorem~\ref{thm:blindness} explains.
-Separately, cryptographic approaches~\cite{proofofguardrail2026} can
-\emph{prove} that a guardrail ran, but cannot address the guardrail's algebraic
-blindness; our results show that proof of execution is orthogonal to proof of
-capability.
-The filter composition laws of \S\ref{sec:filter-composition} formalize the correct
-multi-layer architecture.
-
-This recommendation, however, carries its own caveats.
-Neural guardrails are substantially slower and more expensive than regex: a
-transformer inference pass over a 1\,000-token prompt is three to four orders
-of magnitude more computationally intensive than DFA traversal over the same input.
-In high-throughput deployments, inserting a neural classifier at the guardrail
-layer adds significant latency and cost.
-More critically, transformer guardrails are subject to gradient-based adversarial
-attacks~\cite{zou2023universal}: an attacker with white-box access can craft inputs
-that preserve semantic content while minimizing the neural guardrail's detection
-score, bypassing the second-pass filter entirely.
-These attacks operate in weight space rather than in the algebraic structure of the
-input language, so they are orthogonal to the impossibility results in this paper
-but represent an independent and serious threat to neural guardrail deployments.
-The conclusion is that neural guardrails address the $\mathrm{AC}^0$ blind
-spot at a price---both economic and security-theoretic---and the defense
-stack remains incomplete: the illustrative Fano-type lower bound of
-Proposition~\ref{prop:fano} still applies (under its uniformity assumption)
-regardless of the guardrail's computational class, and adversarial
-robustness of neural filters is a separate unsolved problem.
+The hierarchy recommends stacking: regex provides an $\mathrm{AC}^0$
+first-pass filter (linear time, parallelizable, provably blind to modular
+encodings), and a lightweight neural classifier trained specifically for
+structure-based bypasses~\cite{strobl2024formal,merrill2024survey} closes
+the $\mathrm{MOD}_p$ gap in principle.
+Recent empirical work confirms the gap exists in production: Zhu et
+al.~\cite{mathprompt2024} report $73.6\%$ attack success via symbolic
+mathematical encoding across 13 production LLMs, an observable
+manifestation of the algebraic blindness that Theorem~\ref{thm:blindness}
+explains; cryptographic execution
+proofs~\cite{proofofguardrail2026} demonstrate a guardrail \emph{ran} but
+do not address the underlying blindness.
+Two caveats limit the recommendation.
+Neural guardrails are three to four orders of magnitude more expensive
+than DFA traversal, adding non-trivial latency in high-throughput
+deployments, and transformer guardrails are themselves subject to
+gradient-based adversarial attacks~\cite{zou2023universal} that operate in
+weight space rather than in the input language's algebraic structure---a
+threat orthogonal to the impossibility results here but independently
+serious.
+The illustrative Fano lower bound (Proposition~\ref{prop:fano}, under its
+uniformity assumption) continues to apply at the inference layer
+regardless of the guardrail's circuit class; adversarial robustness of
+neural filters is a separate unsolved problem.
+Section~\ref{sec:filter-composition} formalizes the correct multi-layer
+composition as filter composition laws.
 
 \subsection{Filter Composition Laws}\label{sec:filter-composition}
 
