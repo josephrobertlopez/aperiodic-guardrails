@@ -657,20 +657,29 @@ Therefore $L_r$ is star-free, and by Theorem~\ref{thm:smp} its syntactic
 monoid $M(L_r)$ is aperiodic.
 \end{proof}
 
-\begin{remark}[Guardrail patterns vs.\ $(aa)^*$]
-A pattern such as $(aa)^*$ recognizes strings of even $a$-count, requiring
-$\mathbb{Z}/2\mathbb{Z}$ in its syntactic monoid, so it is \emph{not} aperiodic.
-However, $(aa)^*$ is not a substring-matching guardrail pattern: it is a
-character-class Kleene iteration over a two-character literal, not a single
-character class.
-The guardrail patterns in our corpus---keyword blocklists, domain
-patterns, toxicity keywords---are constructed precisely as described in the
-theorem: Kleene star and plus are applied to character classes, not to
-multi-character sequences.
-The syntactic monoid of the representative guardrail pattern $(ab)^*$ is the
-six-element monoid $B_2 = \{1, a, b, ab, ba, 0\}$ where multiplication follows
-from string concatenation modulo the syntactic congruence; this monoid has no
-nontrivial subgroups, confirmed by our monoid extractor (Section~\ref{sec:corpus}).
+\begin{remark}[Theorem scope versus the empirical corpus]
+Theorem~\ref{thm:substring-aperiodic} provides a sufficient
+\emph{syntactic} condition for aperiodicity: regular expressions whose
+Kleene iterators are applied only to character classes.
+A pattern such as $(aa)^*$, which recognizes strings of even $a$-count,
+requires $\mathbb{Z}/2\mathbb{Z}$ in its syntactic monoid and falls
+outside this syntactic scope.
+The empirical corpus result of \S\ref{sec:corpus} does not rely on the
+theorem's syntactic template: we verify aperiodicity by \emph{computational
+monoid enumeration} on each pattern (\S\ref{sec:corpus}, methodology
+steps~3--4), which decides the conclusion $M(L_r)$ aperiodic directly
+regardless of how the pattern is syntactically written.
+The representative patterns in Table~\ref{tab:corpus} all use Kleene
+iterators applied to character classes
+(\texttt{\textbackslash s*}, \texttt{\textbackslash s+}, \texttt{.*},
+\texttt{.+}), consistent with the theorem's syntactic scope; to the
+extent any corpus pattern falls outside that scope the empirical result
+still holds, because aperiodicity is checked from the enumerated monoid
+rather than by template matching against the theorem.
+Additionally, substring wrapping $\Sigma^* \cdot L(r) \cdot \Sigma^*$
+frequently collapses Kleene-over-group constructions when $\varepsilon
+\in L(r)$, reducing the wrapped language to a union of simple substring
+matches on the base alternatives---which are within the theorem's scope.
 \end{remark}
 
 \subsection{The Guardrail Blindness Theorem}\label{sec:blindness-proof}
@@ -1270,6 +1279,11 @@ For each pattern $r$, we:
     sequence $m, m^2, m^3, \ldots$ stabilizes (i.e., $m^n = m^{n+1}$ for some
     computable $n \leq |M(L_r)|^2$).
 \end{enumerate}
+Step~4 verifies aperiodicity directly from the enumerated monoid and does
+\emph{not} rely on syntactic matching against
+Theorem~\ref{thm:substring-aperiodic}; the corpus result therefore holds
+as an empirical claim even for patterns whose regex source falls outside
+the theorem's syntactic scope (see the Remark following the theorem).
 The monoid extractor tool (858 lines of Python) is an artifact contribution of
 this paper, enabling other researchers to audit their own guardrail corpora.
 
