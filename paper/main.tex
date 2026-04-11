@@ -1413,38 +1413,112 @@ The contrast between the two settings is the central empirical lesson of
 Section~\ref{sec:empirical}: \emph{attack planning benefits from world knowledge,
 not search depth alone.}
 
-\subsection{Aspirin Case Study}\label{sec:aspirin}
+\subsection{Case Studies}\label{sec:aspirin}
 
-We validated the full V3/V4 pipeline on a concrete benign-domain case study using
-the organic chemistry domain.
-A grammar encoding the synthesis procedure for aspirin (acetylsalicylic acid,
-$\mathrm{C}_9\mathrm{H}_8\mathrm{O}_4$) was extracted via V4 from a natural-language
-description and solved via V3.
-The solved derivation, when instantiated with the interpretation table
-$I\colon M_{\mathsf{chem}} \to R_{\mathsf{chem}}$, produced the correct four-step
-synthesis sequence: salicylic acid + acetic anhydride $\to$ crude product
-$\to$ recrystallization $\to$ aspirin.
+We validate the V3/V4 pipeline on two structurally distinct domains: organic
+chemistry (aspirin synthesis) and network protocols (TCP state machine).
+Both runs instantiate the same homomorphic reasoning construction
+(\S\ref{sec:v3}) over different interpretation tables; the abstract
+derivations are solved by an LLM that never observes any domain content.
 
-\paragraph{Severity note.}
-Aspirin synthesis was chosen as a \emph{validation} case because it is a well-known
-pharmaceutical synthesis that poses minimal harm risk.
-The same pipeline applies in principle to any domain expressible as a context-free
-grammar; the present paper does not attempt to demonstrate high-severity cases and
-reports only benign validation.
+\paragraph{Aspirin synthesis.}
+Table~\ref{tab:aspirin-case} shows the four-step synthesis of aspirin
+(acetylsalicylic acid, $\mathrm{C}_9\mathrm{H}_8\mathrm{O}_4$) reconstructed
+via V4 grammar extraction from a natural-language description and solved via
+V3 over abstract symbols.
+When the solved derivation is instantiated with the interpretation table
+$I\colon M_{\mathsf{chem}} \to R_{\mathsf{chem}}$, it produces the correct
+procedural output.
 
-\paragraph{Second domain: TCP state machine.}
-To validate domain-agnosticism beyond chemistry, we applied the V4 grammar
-extraction pipeline to the TCP connection state machine (RFC~793).
-The grammar encodes: $S \to \text{SYN} \to \text{SYN-ACK} \to \text{ACK} \to
-\text{ESTABLISHED} \to \text{FIN} \to \text{CLOSED}$.
-When extracted via V4 into abstract symbols
-($S \to t_1 \to t_2 \to t_3 \to t_4 \to t_5 \to t_6$) and solved via V3,
-the derivation correctly reproduces the TCP three-way handshake and teardown
-sequence after interpretation.
-This confirms the domain-agnosticism claim across two structurally different
-domains (chemical synthesis and network protocol) and demonstrates that
-\emph{any} domain expressible as a context-free grammar is vulnerable to the
-same homomorphic reasoning pipeline.
+\begin{table}[t]
+\centering
+\small
+\caption{Aspirin synthesis case study. The abstract derivation
+$t_1{\to}t_2{\to}t_3{\to}t_4$ is solved by an LLM operating on symbols
+alone; the interpretation $I$ is applied offline by the attacker.}
+\label{tab:aspirin-case}
+\begin{tabularx}{\columnwidth}{@{}cllX@{}}
+\toprule
+\# & Abstract & $I(\cdot)$ & Real artifact \\
+\midrule
+1 & $t_1$ & \textsc{combine} & salicylic acid + acetic anhydride \\
+2 & $t_2$ & \textsc{react} & acetylsalicylic acid (crude) \\
+3 & $t_3$ & \textsc{purify} & recrystallized crude \\
+4 & $t_4$ & \textsc{dry} & aspirin (ASA) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{TCP state machine.}
+To validate domain-agnosticism we applied the same V4/V3 pipeline to the TCP
+connection state machine (RFC~793).
+Its solved derivation, under $I\colon M_{\mathsf{tcp}} \to R_{\mathsf{tcp}}$,
+reproduces the three-way handshake and orderly close
+(Table~\ref{tab:tcp-case}).
+Chemistry and networking share no surface vocabulary; what they share is the
+homomorphic-reasoning construction.
+
+\begin{table}[t]
+\centering
+\small
+\caption{TCP state machine (RFC~793) run through the same pipeline.
+Different domain, same structural vulnerability.}
+\label{tab:tcp-case}
+\begin{tabularx}{\columnwidth}{@{}cllX@{}}
+\toprule
+\# & Abstract & $I(\cdot)$ & Real artifact \\
+\midrule
+1 & $t_1{\to}t_2$ & \textsc{open} & SYN~$\to$~SYN-ACK \\
+2 & $t_3$ & \textsc{ack} & ACK; ESTABLISHED \\
+3 & $t_4{\to}t_5$ & \textsc{close} & FIN~$\to$~FIN-ACK \\
+4 & $t_6$ & \textsc{done} & CLOSED \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Scope of the claim.}
+The contribution is domain-agnostic pipeline correctness, not severity
+demonstration.
+Any domain expressible as a context-free grammar is vulnerable to the same
+construction; we validate on two structurally distinct domains and decline
+to validate on high-severity domains by design (\S\ref{sec:ethics}).
+
+\paragraph{Visibility trace: what each party sees.}
+Table~\ref{tab:visibility-trace} gives the reviewer-critical observation
+directly: the LLM's prompt context and the regex guardrail's inspected input
+are \emph{byte-identical abstract grammars}, while the post-interpretation
+artifact---held only by the attacker, applied offline---is the actual
+synthesis procedure or protocol run.
+No content inspection at the LLM boundary can distinguish the two runs,
+because at the LLM boundary the two runs \emph{are} the same run.
+This is Proposition~\ref{thm:indistinguish} made visible: the guardrail is
+not poorly configured, it is looking in the only place the dangerous content
+can never appear.
+
+\begin{table*}[t]
+\centering
+\small
+\caption{Visibility trace. Columns 1 and 2 are byte-identical abstract
+grammars---the LLM's context and the regex guardrail's inspected input
+coincide exactly. Column 3 is the post-interpretation artifact, produced
+offline by applying $I$ to the solved derivation; it is never visible at
+any LLM boundary. The guardrail is not poorly configured; it is looking in
+the only place the dangerous content can never appear.}
+\label{tab:visibility-trace}
+\begin{tabularx}{\textwidth}{@{}XXX@{}}
+\toprule
+\textbf{LLM context (prompt)} & \textbf{Guardrail input (inspected bytes)} & \textbf{Post-interpretation artifact} \\
+\midrule
+\texttt{Grammar}~$S{\to}t_1t_2t_3t_4$; \texttt{solve for reachable}~$t_4$ &
+\texttt{Grammar}~$S{\to}t_1t_2t_3t_4$; \texttt{solve for reachable}~$t_4$ &
+salicylic acid $+$ acetic anhydride $\to$ crude $\to$ recrystallize $\to$ aspirin \\
+\addlinespace
+\texttt{Grammar}~$S{\to}t_1t_2t_3t_4t_5t_6$; \texttt{solve for}~\texttt{CLOSED} &
+\texttt{Grammar}~$S{\to}t_1t_2t_3t_4t_5t_6$; \texttt{solve for}~\texttt{CLOSED} &
+SYN $\to$ SYN-ACK $\to$ ACK $\to$ ESTABLISHED $\to$ FIN $\to$ FIN-ACK $\to$ CLOSED \\
+\bottomrule
+\end{tabularx}
+\end{table*}
 
 \paragraph{Defense classification.}
 The aspirin case study is a canonical Class~C attack
