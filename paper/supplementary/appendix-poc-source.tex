@@ -1,0 +1,360 @@
+\documentclass[letterpaper,11pt]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\lstset{
+  basicstyle=\small\ttfamily,
+  breaklines=true,
+  frame=single,
+  framesep=3pt,
+  xleftmargin=6pt,
+  xrightmargin=6pt,
+  aboveskip=8pt,
+  belowskip=8pt,
+  columns=fullflexible,
+  keepspaces=true,
+}
+
+\title{Supplementary Material: Proof-of-Concept Source Code\\
+  \large for ``Aperiodic Guardrails: Algebraic Impossibility Results for
+  Content-Based LLM Safety Filters''}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent This supplementary document contains the full source code of the
+proof-of-concept implementation referenced in \S9 of the main paper.
+The content was originally included as Appendix~A and has been moved here
+unmodified to meet conference page budgets; all line counts, file names,
+and structural claims in the main paper refer to the code below.
+
+\bigskip
+
+\section{Proof-of-Concept Source Code}\label{app:poc}
+
+The complete PoC consists of 376 lines across six files.
+The monoid extractor (858 lines) and benchmark harness (619 lines) are provided
+as supplementary material at the project repository.
+Below we summarize the architecture; full source is available online.
+
+\subsection{Engine: Zero-Knowledge Recurrent Executor}\label{app:engine}
+
+\texttt{engine.py} (63 lines) decodes a base64-encoded configuration, selects an AST medium,
+compiles it via \texttt{exec(compile(...))}, and loops until a termination condition.
+No LLM sees the configuration contents.
+
+\begin{lstlisting}[language=Python,caption={engine.py (63 lines)}]
+"""ZK Recurrent Executor. Decodes b64 config, selects
+AST medium, compiles, injects params at runtime, loops
+until termination. No LLM sees the config contents."""
+import base64, json, sys, time
+from mediums import get_medium
+
+def decode_config(path):
+    with open(path, 'rb') as f:
+        return json.loads(base64.b64decode(f.read()))
+
+def check_termination(results, iteration, config):
+    term = config.get('termination',
+                      {'type': 'count', 'value': 1})
+    t = term['type']
+    if t == 'count':
+        return iteration >= term.get('value', 1)
+    if t == 'has_results':
+        return bool(results)
+    if t == 'min_results':
+        if isinstance(results, dict) and 'path' in results:
+            return len(results['path']) > 0
+        return bool(results) \
+            and len(results) >= term.get('value', 1)
+    if t == 'score_threshold':
+        return isinstance(results, dict) \
+            and results.get('score', 0) >= term['value']
+    return True
+
+def mutate_params(params, iteration, config):
+    m = config.get('mutation', {})
+    if m.get('type') == 'paginate':
+        k = m.get('key', 'page')
+        params[k] = params.get(k, 1) + 1
+    elif m.get('type') == 'backoff':
+        time.sleep(min(2 ** iteration, 30))
+    return params
+
+def main():
+    config = decode_config(
+        sys.argv[1] if len(sys.argv) > 1 else 'config.b64')
+    params = config['params']
+    build_ast = get_medium(config['medium'])
+
+    ns = {}
+    exec(compile(build_ast(),
+         f'<{config["medium"]}>', 'exec'), ns)
+    run = ns['run']
+
+    max_iter = config.get('max_iterations', 10)
+    results = None
+    for i in range(1, max_iter + 1):
+        print(f"[engine] iteration {i}/{max_iter}")
+        try:
+            results = run(**params)
+        except Exception as e:
+            print(f"[engine] error: {e}")
+        if check_termination(results, i, config):
+            break
+        params = mutate_params(params, i, config)
+
+    print(f"\n[engine] RESULTS:")
+    if isinstance(results, list):
+        for j, item in enumerate(results, 1):
+            t = item.strip() if isinstance(item, str) \
+                else str(item)
+            if t:
+                print(f"  {j}. {t}")
+    elif isinstance(results, dict):
+        print(json.dumps(results, indent=2))
+    else:
+        print(results)
+
+if __name__ == '__main__':
+    main()
+\end{lstlisting}
+
+\subsection{Medium: BFS Graph Solver}\label{app:graph-solver}
+
+\texttt{graph\_solver.py} implements BFS over an abstract state space.
+States are sets of opaque symbols; rules define valid transitions.
+Zero domain content --- all semantics injected at runtime.
+
+\begin{lstlisting}[language=Python,caption={graph\_solver.py (43 lines)}]
+"""AST template: BFS state-space solver.
+Zero domain content."""
+import ast
+
+def build_graph_solver_ast() -> ast.Module:
+    source = '''
+from collections import deque
+
+def applicable_rules(state, rules):
+    return [r for r in rules
+            if all(i in state for i in r["inputs"])]
+
+def apply_rule(state, rule):
+    new = [s for s in state
+           if s not in rule["inputs"]]
+    new.extend(rule["outputs"])
+    return sorted(set(new))
+
+def check_constraints(state, constraints):
+    for c in constraints:
+        if c["type"] == "forbidden_pair":
+            if c["params"][0] in state \
+               and c["params"][1] in state:
+                return False
+    return True
+
+def run(initial_state, target, rules, constraints):
+    queue = deque([(initial_state, [], 1.0)])
+    visited = set()
+    best = None
+    while queue:
+        state, path, score = queue.popleft()
+        key = tuple(state)
+        if target in state:
+            if best is None or score > best["score"]:
+                best = {"path": path, "score": score,
+                        "final_state": state}
+            continue
+        if key in visited:
+            continue
+        visited.add(key)
+        if len(path) >= 10:
+            continue
+        for rule in applicable_rules(state, rules):
+            new_state = apply_rule(state, rule)
+            if check_constraints(new_state, constraints):
+                new_score = score * rule["yield_est"]
+                queue.append((new_state,
+                    path + [rule["id"]], new_score))
+    return best or {"path": [], "score": 0,
+                    "final_state": initial_state}
+'''
+    tree = ast.parse(source)
+    ast.fix_missing_locations(tree)
+    return tree
+\end{lstlisting}
+
+\subsection{Medium: Tree-of-Thought Solver with LLM Evaluation}\label{app:tot-solver}
+
+\texttt{tot\_solver.py} implements beam search with LLM-guided branch pruning.
+The LLM sees \emph{only} abstract symbols (\texttt{N1}, \texttt{R7}, etc.)
+and rates branches as \textsc{sure}, \textsc{likely}, or \textsc{impossible}.
+Composite scoring: yield weight $0.4$ + LLM viability $0.6$.
+Beam width~5, max depth~8.
+
+\begin{lstlisting}[language=Python,caption={tot\_solver.py --- core evaluation and search (abbreviated; 158 lines full)}]
+def ollama_evaluate(state, target, rules, model):
+    """Ask LLM: is this state viable toward target?
+    Returns 0.0-1.0. LLM sees ONLY abstract symbols."""
+    system_ctx = _build_system_context(target, rules)
+    applicable = [
+        f'{r["id"]}: {r["inputs"]} -> {r["outputs"]}'
+        f' (yield {r["yield_est"]})'
+        for r in rules
+        if all(i in state for i in r["inputs"])]
+    user_prompt = (
+        f"CURRENT STATE: {state}\n"
+        f"APPLICABLE NOW:\n"
+        + ("\n".join(applicable)
+           if applicable else "(none)")
+        + f"\n\nCan {target} be reached? "
+        f"Trace forward briefly, then rate.\n"
+        f"RATING: SURE / LIKELY / IMPOSSIBLE")
+    try:
+        data = json.dumps({
+            "model": model,
+            "messages": [
+                {"role": "system",
+                 "content": system_ctx},
+                {"role": "user",
+                 "content": user_prompt}],
+            "stream": False}).encode()
+        req = urllib.request.Request(
+            "http://localhost:11434/api/chat",
+            data=data,
+            headers={"Content-Type":
+                      "application/json"})
+        with urllib.request.urlopen(req,
+                timeout=15) as resp:
+            result = json.loads(resp.read())
+        content = result["message"]["content"]
+        lines = [l.strip()
+                 for l in content.strip().split("\n")
+                 if l.strip()]
+        last_line = lines[-1].upper() if lines else ""
+        if "IMPOSSIBLE" in last_line: return 0.0
+        if "SURE" in last_line: return 1.0
+        if "LIKELY" in last_line: return 0.6
+        return 0.5
+    except Exception:
+        return 0.5
+
+def run(initial_state, target, rules, constraints,
+        model="llama3.2:3b"):
+    """Tree-of-Thought search: generate branches,
+    LLM evaluates, prune, expand."""
+    beam_width, max_depth = 5, 8
+    frontier = [(initial_state, [], 1.0, 1.0)]
+    visited = set()
+    best = None
+    for depth in range(max_depth):
+        if not frontier: break
+        candidates = []
+        for state, path, cum_yield, _ in frontier:
+            key = tuple(state)
+            if target in state:
+                if best is None \
+                   or cum_yield > best["score"]:
+                    best = {"path": path,
+                            "score": cum_yield,
+                            "final_state": state}
+                continue
+            if key in visited: continue
+            visited.add(key)
+            for rule in applicable_rules(state, rules):
+                new_state = apply_rule(state, rule)
+                if not check_constraints(
+                        new_state, constraints):
+                    continue
+                new_yield = cum_yield*rule["yield_est"]
+                new_path = path + [rule["id"]]
+                candidates.append((new_state,
+                    new_path, new_yield, rule))
+        if not candidates: break
+        scored = []
+        for ns, np, ny, rule in candidates:
+            llm = ollama_evaluate(
+                ns, target, rules, model)
+            composite = ny * 0.4 + llm * 0.6
+            scored.append((ns, np, ny, composite))
+        scored.sort(key=lambda x: x[3], reverse=True)
+        frontier = [f for f in scored[:beam_width]
+                    if f[3] > 0.1]
+    return best or {"path": [], "score": 0.0,
+                    "final_state": initial_state}
+\end{lstlisting}
+
+\subsection{Config Encoder}\label{app:encode}
+
+\begin{lstlisting}[language=Python,caption={encode.py (22 lines)}]
+"""Encode a JSON config to b64.
+No LLM sees plaintext values."""
+import base64, json, sys
+
+def main():
+    if sys.argv[1] == '--stdin':
+        config = json.loads(sys.stdin.read())
+    else:
+        with open(sys.argv[1]) as f:
+            config = json.load(f)
+    out = sys.argv[2] if len(sys.argv) > 2 \
+        else 'config.b64'
+    encoded = base64.b64encode(
+        json.dumps(config).encode())
+    with open(out, 'wb') as f:
+        f.write(encoded)
+    print(f"[encode] {out} ({len(encoded)}B) "
+          f"medium={config.get('medium','?')} "
+          f"keys={list(config.get('params',{}).keys())}")
+
+if __name__ == '__main__':
+    main()
+\end{lstlisting}
+
+\subsection{Medium Registry}\label{app:registry}
+
+\begin{lstlisting}[language=Python,caption={mediums/\_\_init\_\_.py (13 lines)}]
+"""Medium registry."""
+from mediums.web_scraper import build_web_scraper_ast
+from mediums.graph_solver import build_graph_solver_ast
+from mediums.tot_solver import build_tot_solver_ast
+
+REGISTRY = {
+    "web_scraper": build_web_scraper_ast,
+    "graph_solver": build_graph_solver_ast,
+    "tot_solver": build_tot_solver_ast,
+}
+
+def get_medium(name: str):
+    if name not in REGISTRY:
+        raise ValueError(
+            f"Unknown medium '{name}'. "
+            f"Available: {list(REGISTRY.keys())}")
+    return REGISTRY[name]
+\end{lstlisting}
+
+\subsection{Supplementary Material}\label{app:supplementary}
+
+The following artifacts are provided as supplementary material and are not
+included inline due to length:
+\begin{itemize}
+  \item \texttt{monoid\_extractor.py} (858 lines): Thompson NFA construction,
+    powerset DFA conversion, Hopcroft minimization, transition monoid
+    enumeration, aperiodicity test, Krohn--Rhodes group component extraction,
+    and $\mathrm{MOD}_2$ bypass witness generation.
+  \item \texttt{benchmark.py} (619 lines): Grammar generator with guaranteed
+    reachability, dead-end traps, noise rules, and constraint variation;
+    BFS, random-beam, and ToT+LLM solvers; Wilcoxon signed-rank test
+    computation; JSON result serialization.
+  \item \texttt{web\_scraper.py} (77 lines): AST-based web scraper medium
+    with zero string literals.
+\end{itemize}
+
+% ============================================================
+
+\end{document}
