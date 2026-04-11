@@ -1801,16 +1801,13 @@ composition as filter composition laws.
 
 \subsection{Filter Composition Laws}\label{sec:filter-composition}
 
-The layered defense recommendation of Table~\ref{tab:defense} raises a natural
-question: how does \emph{composing} guardrail layers affect the algebraic blindness
-established in \S\ref{sec:blindness-proof}?
-We prove five composition laws governing the interaction of $\mathrm{AC}^0$ (regex)
-and $\mathrm{TC}^0$ (neural) filters.
-
-Let $f_r$ denote a regex filter (recognizing a star-free language with aperiodic
-syntactic monoid) and $f_n$ denote a neural filter (a threshold circuit in
-$\mathrm{TC}^0$).
-Write $f_r(x) = 1$ if filter $f$ \emph{blocks} input $x$, and $0$ otherwise.
+We prove five composition laws governing the interaction of
+$\mathrm{AC}^0$ (regex) and $\mathrm{TC}^0$ (neural) filters, answering
+whether composing guardrail layers can repair the algebraic blindness of
+\S\ref{sec:blindness-proof}.
+Let $f_r$ denote a regex filter (star-free language, aperiodic syntactic
+monoid), $f_n$ a neural filter ($\mathrm{TC}^0$ threshold circuit), and
+write $f(x) = 1$ if $f$ \emph{blocks} $x$.
 
 \begin{proposition}[Composition ceiling]\label{prop:filter-composition}
 Let $\phi_p$ denote $\mathrm{MOD}_p$ encoding.
@@ -1850,25 +1847,23 @@ Let $\phi_p$ denote $\mathrm{MOD}_p$ encoding.
 \end{proposition}
 
 \paragraph{Practical consequence.}
-Items~(1)--(2) confirm that stacking multiple regex filters (e.g., combining a
-keyword blocklist with a domain filter) does \emph{not} repair blindness:
-the composed system remains provably blind to all modular encodings.
-Item~(3) shows that a ``confirm with neural'' architecture, in which the regex
-filter must first flag a candidate before the neural classifier examines it,
-inherits the regex layer's blindness to encoded payloads---the dangerous case is
-precisely the one where the regex does not flag.
-Item~(4) provides the correct architecture: run both filters and block if
-\emph{either} detects, so that the neural classifier covers the algebraic blind
+Items~(1)--(2) confirm that stacking multiple regex filters cannot repair
+blindness.
+Item~(3) shows that a ``regex confirm, neural inspect'' architecture
+inherits the regex layer's blindness, because the dangerous case is
+precisely the one the regex does not flag.
+Item~(4) gives the correct composition: run both in parallel, block if
+\emph{either} flags, so the neural classifier covers the algebraic blind
 spot.
-Item~(5) quantifies the tradeoff: the blend weight $\alpha$ must be kept below
-the critical threshold $\alpha^* = 1 - \tau/c$ for the neural filter to
-contribute meaningfully against encoded attacks.
+Item~(5) quantifies the trade-off: soft-score blends must keep
+$\alpha < \alpha^* = 1 - \tau/c$ or the regex weight dominates and
+reimports $\mathrm{AC}^0$ blindness.
 
 \paragraph{Empirical validation.}
-We validated all five composition laws on 20 guardrail-style regex patterns, 20
-$\mathrm{MOD}_2$-encoded payloads, and 20 clean text samples.
-A character-bigram centroid classifier served as the neural filter.
-Table~\ref{tab:composition-empirical} summarizes the results.
+We validated all five laws on 20 guardrail-style regex patterns, 20
+$\mathrm{MOD}_2$-encoded payloads, and 20 clean-text samples, using a
+character-bigram centroid classifier as the neural filter
+(Table~\ref{tab:composition-empirical}).
 
 \begin{table}[h]
 \centering
@@ -1893,18 +1888,17 @@ Blend $\alpha{=}0.7$ & $0\%$ & $0\%$ & Above $\alpha^*$ \\
 \end{tabular}
 \end{table}
 
-The theoretical critical weight $\alpha^* = 1 - \tau/c = 1 - 0.3/0.69 = 0.57$
-predicts that the blend transitions from detecting to blind between
-$\alpha = 0.5$ and $\alpha = 0.6$, matching the empirical observation that
-detection drops from $95\%$ at $\alpha{=}0.5$ to $5\%$ at $\alpha{=}0.6$.
-The serial-confirm result ($0\%$) empirically validates Proposition~\ref{prop:filter-composition}(3):
-the regex veto kills the neural signal on every encoded payload.
+The theoretical critical weight $\alpha^* = 1 - 0.3/0.69 \approx 0.57$
+predicts the detect-to-blind transition between $\alpha = 0.5$ and
+$\alpha = 0.6$, matching the empirical drop from $95\%$ detection to
+$5\%$; the serial-confirm row validates
+Proposition~\ref{prop:filter-composition}(3) at zero detection.
 
 \paragraph{Neural evasion analysis.}
-The parallel composition of regex and neural filters closes the $\mathrm{AC}^0$
-blind spot but does not close all attack vectors.
-We tested the neural filter (trained on $\mathrm{MOD}_2$) against encoding
-schemes it was \emph{not} trained on (Table~\ref{tab:neural-evasion}).
+Parallel regex~$\vee$~neural closes the $\mathrm{AC}^0$ blind spot but
+not every attack vector.
+We tested the neural filter (trained on $\mathrm{MOD}_2$ only) against
+encoding schemes it had not seen (Table~\ref{tab:neural-evasion}).
 
 \begin{table}[h]
 \centering
@@ -1962,43 +1956,22 @@ monitoring for semantic attacks.
 
 \subsection{The Monoid Extractor as Audit Tool}\label{sec:monoid-extractor}
 
-The 858-line Python monoid extractor produced as part of this work provides
-a practical audit capability.
-Given a guardrail regex, the tool outputs:
-(1) the minimal DFA state count;
-(2) the full transition monoid with multiplication table;
-(3) all group components identified via semigroup algorithms;
-(4) the complete blindness spectrum (set of primes $p$ for which the guardrail is
-potentially sensitive, and all others for which it is provably blind);
-(5) a concrete $\mathrm{MOD}_2$ bypass witness string for each aperiodic pattern.
-
-This tool enables organizations to perform a \emph{formal algebraic audit} of their
-regex guardrail corpus without any manual reasoning about individual patterns.
-The audit result is provably correct: the blindness spectrum is not a heuristic but
-a theorem-backed characterization.
-
-\paragraph{Production deployment workflow.}
-An organization deploying regex-based guardrails can run the extractor on their
-pattern corpus to obtain a complete blindness report.
-For each pattern, the tool outputs: (1) the minimal DFA, (2) the syntactic monoid
-with multiplication table, (3) the blindness spectrum---the set of primes $p$ for
-which the guardrail is provably blind to $\mathrm{MOD}_p$ encodings.
-Our analysis of 142 production patterns across 11 tools (Section~\ref{sec:corpus})
-completed in under 60 seconds with zero false positives, demonstrating practical
-scalability for large guardrail inventories.
-
-\paragraph{CI/CD integration.}
-The extractor integrates naturally into continuous integration pipelines as a
-pre-commit or pre-deployment verification step.
-A guard can analyze any new or modified regex pattern, flagging non-aperiodic
-patterns before production deployment.
-Since the analysis is theorem-backed rather than heuristic---resting on the Krohn--Rhodes
-decomposition (Proposition~\ref{prop:krohn-rhodes}) and algebraic classification of
-star-free languages---a clean audit report is a formal guarantee of blindness, not
-an approximation or empirical estimate.
-This shifts guardrail verification from a confidence-based assertion to a mathematical
-proof, enabling security teams to reason about regex safety with the same rigor
-applied to cryptographic algorithms.
+The 858-line Python monoid extractor released as an artifact of this
+work takes a guardrail regex and outputs (i)~the minimal DFA, (ii)~the
+transition monoid with multiplication table, (iii)~all group components
+identified via standard semigroup algorithms, (iv)~the complete
+blindness spectrum---the set of primes $p$ for which the guardrail is
+provably $\mathrm{MOD}_p$-blind (Proposition~\ref{prop:krohn-rhodes}),
+and (v)~a concrete $\mathrm{MOD}_2$ bypass witness for each aperiodic
+pattern.
+Analysis of the 142 production patterns of \S\ref{sec:corpus} completes
+in under 60 seconds with zero false positives, demonstrating practical
+scalability; the tool integrates naturally into CI/CD as a pre-commit
+verification step, flagging non-aperiodic patterns before deployment.
+Because the analysis is theorem-backed rather than heuristic, a clean
+audit report is a formal guarantee of blindness (to the stated primes),
+shifting regex-guardrail verification from a confidence-based assertion
+to a mathematical proof.
 
 \paragraph{Composition safety guarantee.}
 By Proposition~\ref{prop:composition}, organizations can verify that their composed
