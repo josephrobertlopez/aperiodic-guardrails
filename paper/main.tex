@@ -271,9 +271,12 @@ Our contributions, organized by section, are:
     substring-matching regex guardrails have aperiodic syntactic monoids
     (Theorem~\ref{thm:substring-aperiodic}) and are therefore provably blind to all
     modular counting encodings (Theorem~\ref{thm:blindness}; Corollary~\ref{cor:parity}).
-  \item \textbf{Information-theoretic impossibility} (\cref{sec:fano}):
-    abstraction functions destroy safety-critical information; the Fano bound
-    (Proposition~\ref{prop:fano}) gives an irreducible error floor for any lifted guardrail.
+  \item \textbf{Information-theoretic lower bound} (\cref{sec:fano}):
+    abstraction functions destroy safety-critical information; under a uniform
+    prior over concrete artifacts, Fano's inequality (Proposition~\ref{prop:fano})
+    yields an illustrative error floor for any lifted guardrail. We present this as
+    a motivating lower bound under simplifying assumptions, not as an unconditional
+    impossibility; the algebraic results below are the core contribution.
   \item \textbf{Computational impossibility} (\cref{sec:np}):
     verifying whether an abstract program has a dangerous instantiation is
     NP-complete (Proposition~\ref{thm:np}).
@@ -938,7 +941,15 @@ For $100\%$ of patterns in our corpus, the component list is empty and blindness
 is total.
 \end{remark}
 
-\subsection{Information Destruction (Fano Bound)}\label{sec:fano}
+\subsection{An Illustrative Lower Bound (Fano)}\label{sec:fano}
+
+We include an information-theoretic lower bound as a secondary, illustrative
+result---presented under a simplifying uniformity assumption, and intended to
+motivate rather than to match the force of the algebraic blindness theorems of
+\S\ref{sec:blindness-proof}.
+The bound is of independent interest but should not be read as an unconditional
+impossibility: a distribution-aware version would require modeling the
+attacker's prompt distribution (see \S\ref{sec:limitations-list}, item~3).
 
 \begin{proposition}[Information destruction]\label{prop:fano}
 Let $U\colon R \to M$ be an abstraction function and $G\colon R \to \{0,1\}$
@@ -972,15 +983,18 @@ gives $P_e \geq h^{-1}(H(G(R) \mid U(R)))$.
 \paragraph{Interpretation.}
 The conditional entropy $H(G(R) \mid U(R))$ is positive precisely when mixed fibers
 exist (Definition~\ref{def:fiber}).
-If $30\%$ of probability mass falls in mixed fibers with ${\sim}50/50$ safe/unsafe
-split, then $H(G(R) \mid U(R)) \approx 0.3$ bits, forcing
+As an illustrative calculation under the uniformity assumption: if $30\%$ of
+probability mass falls in mixed fibers with ${\sim}50/50$ safe/unsafe split, then
+$H(G(R) \mid U(R)) \approx 0.3$ bits, yielding
 $P_e \ge h^{-1}(0.3) \approx 0.048$ (about $5\%$).
-This floor is irreducible: no lifted guardrail, regardless of its internal
-complexity, can reduce the error below $h^{-1}(H(G(R) \mid U(R)))$ when the
-abstraction function $U$ has mixed fibers.
-The only remedy is to reduce the abstraction---move inspection closer to the
-concrete artifact level---but this makes the guardrail more brittle to novel
-formulations.
+Under uniformity the floor is a genuine information-theoretic limit, but the
+quantitative bound is sensitive to the prior: real prompt distributions are
+highly non-uniform, and the floor may tighten or loosen substantially depending
+on how adversarial mass is distributed across fibers (see
+\S\ref{sec:limitations-list}, item~3).
+The qualitative message---reducing abstraction to restore fidelity makes the
+guardrail brittle to novel formulations---is robust to the distributional
+caveat, but the numerical floor should be read illustratively.
 
 \subsection{Computational Intractability (NP-Completeness)}\label{sec:np}
 
