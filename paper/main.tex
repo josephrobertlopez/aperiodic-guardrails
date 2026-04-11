@@ -236,23 +236,13 @@ We show that each layer has a structural limitation provable from first principl
 and that together these limitations leave a systematic gap an adversary can exploit
 without model access, fine-tuning, or gradient computation.
 
-\subsection{The Chinese Room Inversion}\label{sec:chinese-room}
-
-Searle's Chinese Room~\cite{searle1980minds} argues that symbol manipulation
-without understanding is not intelligence.
-We observe that for the purposes of producing operationally correct procedures,
-it does not matter---the room produces correct answers regardless.
-An LLM operating as a theorem prover over an uninterpreted formal system
-produces derivations that, when instantiated via an external interpretation
-function held by the attacker, constitute valid operation sequences in real domains.
-The LLM never crosses the abstraction boundary.
-Understanding is unnecessary; structural fidelity is sufficient.
-
-This inverts the usual framing: the Chinese Room is not a weakness of AI but a
-\emph{weapon}.
-If an LLM can solve formal reasoning problems without understanding what they mean,
-it can solve harmful problems encoded as formal systems without triggering
-content-based guardrails---because the content visible to the guardrail is
+\paragraph{The core observation.}
+We observe that an LLM solving abstract formal systems produces correct
+real-world procedures after offline instantiation, without the guardrail ever
+observing harmful content.
+The gap between symbolic manipulation and semantic grounding---often cited as
+a limitation of language models---becomes precisely the mechanism by which
+content-based guardrails are bypassed: the content visible to the guardrail is
 indistinguishable from legitimate formal reasoning.
 
 \subsection{Overview of Results and Paper Organization}\label{sec:contributions}
