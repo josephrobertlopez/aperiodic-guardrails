@@ -1492,6 +1492,13 @@ demonstration.
 Any domain expressible as a context-free grammar is vulnerable to the same
 construction; we validate on two structurally distinct domains and decline
 to validate on high-severity domains by design (\S\ref{sec:ethics}).
+Both case-study domains are public knowledge in LLM pre-training data, so
+these runs cannot empirically separate homomorphic reasoning from memorized
+retrieval; the formal argument (functoriality and structural
+indistinguishability) does not require such a separation, and the
+visibility trace (Table~\ref{tab:visibility-trace}) demonstrates the
+inference-layer blindness property directly under either interpretation.
+\S\ref{sec:limitations-list}, item~6 discusses this confound in detail.
 
 \paragraph{Visibility trace: what each party sees.}
 Table~\ref{tab:visibility-trace} gives the reviewer-critical observation
@@ -2124,6 +2131,31 @@ guardrails}.
 They do not apply to all regular expression uses, to neural guardrails (which
 operate in $\mathrm{TC}^0$), or to guardrails that perform semantic analysis
 beyond pattern matching.
+
+\paragraph{6. Case-study memorization confound.}
+Both end-to-end case studies (aspirin synthesis, TCP state machine) are
+public-knowledge domains extensively represented in LLM pre-training data.
+This creates a legitimate confound: our experimental runs cannot empirically
+distinguish genuine homomorphic reasoning over abstract grammars from
+retrieval of memorized concrete sequences keyed off symbolic patterns.
+We flag this disclosure explicitly.
+The formal contribution, however, does not depend on the LLM actually
+performing symbolic reasoning in an interpretive sense: the functoriality
+of the quotient interpretation map (Proposition~\ref{thm:transfer}) and
+the structural indistinguishability observation
+(Proposition~\ref{thm:indistinguish}) require only that the LLM-visible
+surface of the attack---the abstract grammar, its derivations, and the
+solver's outputs---be syntactically indistinguishable from a legitimate
+formal-reasoning workload.
+Table~\ref{tab:visibility-trace} demonstrates that property directly,
+independently of whether the LLM reaches its outputs via symbolic
+manipulation or pattern retrieval; the inference-layer guardrail sees only
+abstract grammar symbols under either interpretation and is unable to
+determine which concrete domain is being instantiated offline.
+A stronger empirical separation of reasoning from retrieval would require
+evaluating the pipeline on a genuinely novel synthetic context-free
+grammar the LLM could not have seen in training; we leave this to future
+work.
 
 \subsection{Ethical Considerations}\label{sec:ethics}
 
