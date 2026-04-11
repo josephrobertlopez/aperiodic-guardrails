@@ -62,11 +62,13 @@
 
 % ============================================================
 \begin{abstract}
-LLM guardrails face four structurally distinct and independently provable barriers:
-algebraic blindness arising from syntactic monoid aperiodicity,
-information-theoretic loss formalized by the Fano bound,
-NP-hardness of instantiation verification,
-and structural transfer via functorial homomorphism combined with syntactic indistinguishability.
+LLM guardrails face four structurally distinct barriers:
+algebraic blindness arising from syntactic monoid aperiodicity (unconditional);
+an illustrative information-theoretic lower bound (Fano-type, under a
+uniformity assumption);
+NP-hardness of instantiation verification;
+and structural transfer via functorial homomorphism combined with syntactic
+indistinguishability.
 Together these results characterize why inference-layer defenses are necessary but insufficient.
 
 We operationalize these barriers through five attack vectors.
@@ -1071,8 +1073,9 @@ constitutes the concrete fiber element $r \in U^{-1}(m)$.
 The guardrail evaluates $G'(m) = \mathsf{allow}$ because the function signature is
 benign; the ground truth $G(r)$ for the runtime-instantiated version may be
 $\mathsf{block}$.
-The mixed fiber is the mechanism, and the Fano bound (Proposition~\ref{prop:fano})
-gives the irreducible misclassification floor.
+The mixed fiber is the mechanism, and the Fano-type lower bound
+(Proposition~\ref{prop:fano}) quantifies the misclassification floor under
+the uniformity assumption of \S\ref{sec:fano}.
 
 The novelty of this paper's contribution is not the injection technique but the
 algebraic and information-theoretic \emph{proof} that no modification within the
@@ -1644,7 +1647,7 @@ the threats it can address, and the formal limitation established in this paper.
 Layer & Mechanism & Formal limitation \\
 \midrule
 Regex & Substring patterns, blocklists & Provably blind to $\mathrm{MOD}_p$ encodings (\S\ref{sec:substring-aperiodic}--\ref{sec:blindness-proof}); $100\%$ of corpus aperiodic \\
-Inference & Content filters, RLHF & Fano error floor for abstracted requests (\S\ref{sec:fano}); direct requests and obvious encodings caught \\
+Inference & Content filters, RLHF & Illustrative Fano-type lower bound under a uniformity assumption (\S\ref{sec:fano}); direct requests and obvious encodings caught \\
 Schema & Domain-aware validation & Catches some homomorphic reasoning (high false-positive rate, NP-hard to verify, \S\ref{sec:np}) \\
 Execution & Runtime payload inspection, allowlists & Catches ZK pipelines (V2) and instantiated procedures; best defense against V1 \\
 OS & Sandboxing, network ACLs & Catches all execution-layer attacks; limits legitimate functionality \\
@@ -1654,8 +1657,10 @@ Provenance & End-to-end pipeline monitoring & Catches full pipeline attacks; req
 \end{table}
 
 The key structural insight is that no single layer is sufficient.
-The Regex layer is algebraically blind; the Inference layer has an irreducible Fano
-floor; the Schema layer is NP-hard; and the Execution/OS layers limit functionality.
+The Regex layer is algebraically blind (unconditional); the Inference layer
+faces an illustrative Fano-type lower bound when abstraction fibers are
+mixed (under the uniformity assumption of \S\ref{sec:fano}); the Schema
+layer is NP-hard; and the Execution/OS layers limit functionality.
 Effective defense requires all layers operating in concert, with particular emphasis
 on the Execution and Provenance layers, which are the only ones capable of observing
 the concrete artifacts that carry harmful intent.
@@ -1805,11 +1810,12 @@ score, bypassing the second-pass filter entirely.
 These attacks operate in weight space rather than in the algebraic structure of the
 input language, so they are orthogonal to the impossibility results in this paper
 but represent an independent and serious threat to neural guardrail deployments.
-The conclusion is that neural guardrails address the $\mathrm{AC}^0$ blind spot at
-a price---both economic and security-theoretic---and the defense stack remains
-incomplete: the information-theoretic floor of Proposition~\ref{prop:fano} persists
-regardless of the guardrail's computational class, and adversarial robustness of
-neural filters is a separate unsolved problem.
+The conclusion is that neural guardrails address the $\mathrm{AC}^0$ blind
+spot at a price---both economic and security-theoretic---and the defense
+stack remains incomplete: the illustrative Fano-type lower bound of
+Proposition~\ref{prop:fano} still applies (under its uniformity assumption)
+regardless of the guardrail's computational class, and adversarial
+robustness of neural filters is a separate unsolved problem.
 
 \subsection{Filter Composition Laws}\label{sec:filter-composition}
 
@@ -2267,14 +2273,17 @@ spectrum of any guardrail is computable from its syntactic monoid's group compon
 (Proposition~\ref{prop:krohn-rhodes}).
 Our corpus study confirms $100\%$ aperiodicity in practice.
 
-\paragraph{Information-theoretic impossibility (inference layer).}
-Abstraction functions that map concrete artifacts to abstract types inevitably
-create mixed fibers.
-The Fano inequality gives an irreducible misclassification floor for any lifted
-guardrail: with $30\%$ of mass in mixed fibers, the floor is approximately $5\%$
+\paragraph{Information-theoretic lower bound (inference layer).}
+Abstraction functions that map concrete artifacts to abstract types
+inevitably create mixed fibers.
+Under a uniform prior over concrete artifacts, Fano's inequality yields an
+illustrative misclassification floor for any lifted guardrail: with
+$30\%$ of mass in mixed fibers, the floor is approximately $5\%$
 (Proposition~\ref{prop:fano}).
-This floor cannot be reduced by improving the guardrail's classifier---it can only
-be reduced by reducing the abstraction.
+This is an illustrative bound, not an unconditional impossibility; the
+algebraic blindness result above is the core contribution, and the Fano
+bound quantifies an intuition about mixed fibers under simplifying
+assumptions.
 
 \paragraph{Computational impossibility (schema layer).}
 Verifying whether an abstract program has a harmful instantiation is NP-complete
