@@ -19,3 +19,4 @@ build/
 benchmark_results.json
 config.b64
 .env
+.gitnexus
