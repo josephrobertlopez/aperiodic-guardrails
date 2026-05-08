@@ -2,17 +2,17 @@
 
 **Joseph Robert Lopez** | Paper (arXiv — pending endorsement) | [Paper (PDF)](paper/main.pdf)
 
-LLM guardrails face four structurally distinct barriers: algebraic blindness (syntactic monoid aperiodicity), information-theoretic loss (Fano bound), computational intractability (NP-completeness), and structural transfer (functorial homomorphism + syntactic indistinguishability). This repository contains the proof-of-concept code, monoid extractor tool, and benchmark harness accompanying the paper.
+LLM guardrails face four structurally distinct barriers: algebraic blindness (syntactic monoid aperiodicity, unconditional), an information-theoretic lower bound (Fano-type, illustrative under uniformity), computational intractability (NP-hardness via 3-SAT), and structural transfer (functorial homomorphism + syntactic indistinguishability under opacity). This repository contains the proof-of-concept code, monoid extractor tool, and benchmark harness accompanying the paper.
 
 ## Key Results
 
 | Barrier | Layer | Formal Result | Section |
 |---------|-------|--------------|---------|
-| Algebraic blindness | Regex | Substring guardrails are aperiodic → blind to MOD_p (Thm 1-2) | §5.1-5.2 |
-| Information destruction | Inference | Fano bound gives irreducible error floor (Prop 4) | §5.4 |
-| Computational intractability | Schema | Verifying abstract program danger is NP-complete (Thm 5) | §5.5 |
-| Faithful transfer | All | Abstract derivations map to valid domain operations (Thm 6) | §5.6 |
-| Indistinguishability | All | Adversarial ≡ legitimate formal reasoning tasks (Thm 7) | §5.7 |
+| Algebraic blindness (unconditional) | Regex | Substring guardrails are aperiodic → blind to MOD_p encodings | §6.1–6.2 |
+| Information destruction (illustrative) | Inference | Fano bound under uniform prior on concrete artifacts | §6.5 |
+| Computational intractability | Schema | Verifying abstract program danger is NP-complete | §6.6 |
+| Faithful transfer (unconditional) | All | Abstract derivations map to valid domain operations | §6.7 |
+| Indistinguishability (under opacity) | All | Adversarial prompts ⊆ legitimate formal-reasoning prompts as string sets | §6.8 |
 
 ## Installation
 
@@ -44,8 +44,8 @@ monoid-extract "(eval|exec)\s*\("
 ### Benchmark (BFS vs Random-Beam vs ToT+LLM)
 
 ```bash
-# Run N=20 benchmark (requires Ollama with qwen2.5-coder:7b)
-guardrail-benchmark --n 20 --model qwen2.5-coder:7b
+# Run N=50 benchmark (requires Ollama with llama3.1:8b)
+guardrail-benchmark --n 50 --model llama3.1:8b
 ```
 
 ## Repository Structure
@@ -64,7 +64,7 @@ guardrail-benchmark --n 20 --model qwen2.5-coder:7b
 │   ├── monoid/         # Syntactic monoid analysis
 │   │   └── extractor.py     # NFA→DFA→monoid→aperiodicity pipeline
 │   └── benchmark/      # Empirical validation
-│       ├── runner.py        # N=20 benchmark harness
+│       ├── runner.py        # N=50 benchmark harness
 │       └── grammar.py       # Randomized grammar generator
 ├── skills/             # Claude Code skills used in research
 │   ├── gen-medium.md        # /gen-medium skill
@@ -85,13 +85,13 @@ guardrail-benchmark --n 20 --model qwen2.5-coder:7b
 
 ## Empirical Results
 
-| Method | Mean Yield | Std | vs BFS |
-|--------|-----------|-----|--------|
-| BFS (exhaustive) | 0.119 | 0.07 | — |
-| Random-beam (beam=5) | 0.203 | 0.12 | 1.7× |
-| **ToT + LLM (beam=5)** | **0.512** | **0.18** | **4.3×** |
+| Method | Mean Yield | 95% CI | vs BFS |
+|--------|-----------|--------|--------|
+| **BFS (exhaustive)** | **0.466** | [0.448, 0.483] | — |
+| Random-beam (beam=5) | 0.172 | [0.131, 0.220] | 0.37× |
+| ToT + LLM (beam=5) | 0.122 | [0.064, 0.185] | 0.26× |
 
-*N=20 randomized grammars, Wilcoxon signed-rank p<0.001*
+*N=50 randomized grammars, seeds 0–49, llama3.1:8b, 90 s timeout per solver. Wilcoxon signed-rank, one-sided: BFS vs. ToT W=1275, p<0.001; BFS vs. Random-beam W=1225, p<0.001. BFS dominates: exhaustive search over small synthetic grammars outperforms LLM-heuristic pruning at this scale. The security claim of V3 (homomorphic-reasoning attack) does not depend on ToT outperforming BFS — it requires only the existence of a solver that produces valid derivations, which all three strategies demonstrate. An earlier N=20 ordering with ToT > BFS did not reproduce at N=50 and was retracted; see paper §8.2 for the reproducibility note.*
 
 ## Citation
 
