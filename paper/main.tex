@@ -51,6 +51,11 @@
 \usepackage{xspace}
 \newcommand{\ie}{i.e.,\xspace}
 \newcommand{\eg}{e.g.,\xspace}
+% PCRE word-boundary anchor (typeset literally as \b in math mode)
+\newcommand{\wb}{\ensuremath{\backslash\mathrm{b}}}
+% PCRE word/non-word character class shorthands (in math mode)
+\newcommand{\wbw}{\ensuremath{\backslash\mathrm{w}}}
+\newcommand{\wbW}{\ensuremath{\backslash\mathrm{W}}}
 
 \begin{document}
 
@@ -85,8 +90,10 @@ Empirically, V3 yields a mean yield of $0.466$ for BFS, $0.172$ for random-beam,
 and $0.122$ for LLM-guided Tree-of-Thought ($N{=}50$, seeds 0--49, $p{<}0.001$);
 BFS dominates, as exhaustive search over small synthetic grammars outperforms
 LLM heuristic pruning.
-We extracted syntactic monoids from a corpus of 123 patterns from eleven
-open-source guardrail tools and 19 additional author-generated test patterns (142 total);
+We extracted syntactic monoids from a corpus of 142 patterns drawn from
+twelve sources --- 100 patterns shipped by nine third-party open-source
+guardrail projects and 42 patterns assembled from three author-curated
+pattern sets;
 $100\%$ are aperiodic, and the $\mathrm{MOD}_2$ bypass construction succeeds against
 all aperiodic patterns.
 A 376-line proof-of-concept with three execution mediums validates all five vectors.
@@ -204,9 +211,11 @@ Our contributions, organized by section, are:
     Table~\ref{tab:visibility-trace}).
   \item \textbf{Five attack vectors validated empirically} (\cref{sec:vectors}):
     V1--V4 demonstrate homomorphic reasoning; V5 demonstrates modular counting bypass.
-  \item \textbf{123-pattern regex corpus analysis plus validation} (\cref{sec:corpus}):
-    confirms $100\%$ aperiodicity across 123 patterns from eleven open-source guardrail tools
-    plus 19 test patterns (142 total), with verified $\mathrm{MOD}_2$ bypass constructions.
+  \item \textbf{142-pattern regex corpus analysis plus validation} (\cref{sec:corpus}):
+    confirms $100\%$ aperiodicity across 142 patterns drawn from twelve sources --- 100
+    patterns shipped by nine third-party open-source guardrail projects and 42
+    patterns from three author-assembled sets, matching the breakdown in CACM
+    v14 Appendix~B.1 --- with verified $\mathrm{MOD}_2$ bypass constructions.
   \item \textbf{Defense recommendations grounded in formal results}
     (\cref{sec:discussion}): each impossibility theorem maps to a specific
     layer of a defense-in-depth stack; as a concrete instantiation of the
@@ -231,7 +240,7 @@ paper.
 \paragraph{Scope.}
 The algebraic blindness result (\S\ref{sec:algebraic-foundations}) applies
 specifically to regex guardrails and is unconditional.
-Transformer-based (neural) guardrails operate in $\mathrm{TC}^0$~\cite{merrill2023saturated,chiang2024tighter},
+Transformer-based (neural) guardrails operate in $\mathrm{TC}^0$~\cite{merrill2023saturated,chiang2023tighter},
 which \emph{can} compute $\mathrm{MOD}_p$, so the modular counting blind spot does
 not transfer.
 However, neural guardrails face the information-theoretic and computational barriers
@@ -352,7 +361,7 @@ information-theoretically impossible rather than computationally hard.
 \subsection{Formal Languages and Neural Networks}\label{sec:related-formal}
 
 The transformer complexity-theoretic literature places log-precision
-transformers in $\mathrm{TC}^0$~\cite{merrill2023saturated,chiang2024tighter,merrill2024survey},
+transformers in $\mathrm{TC}^0$~\cite{merrill2023saturated,chiang2023tighter,merrill2024survey},
 which \emph{can} compute modular predicates---hence neural guardrails are
 not subject to the aperiodic blindness of the regex layer but remain
 subject to the other barriers (\S\ref{sec:neural-tc0}).
@@ -661,9 +670,14 @@ monoid $M(L_r)$ is aperiodic.
 Theorem~\ref{thm:substring-aperiodic} provides a sufficient
 \emph{syntactic} condition for aperiodicity: regular expressions whose
 Kleene iterators are applied only to character classes.
-A pattern such as $(aa)^*$, which recognizes strings of even $a$-count,
-requires $\mathbb{Z}/2\mathbb{Z}$ in its syntactic monoid and falls
-outside this syntactic scope.
+The Kleene-restriction to character classes is essential here: the
+canonical counterexample is $(ab)^*$ (Kleene star applied to a
+two-letter \emph{group} rather than to a character class), which
+recognizes strings of the form $(ab)^n$ and requires
+$\mathbb{Z}/2\mathbb{Z}$ in its syntactic monoid and falls outside this
+syntactic scope (cf.\ CACM v14 Appendix~A.1).
+A second pattern of this type is $(aa)^*$, which recognizes strings of
+even $a$-count and is likewise non-aperiodic.
 The empirical corpus result of \S\ref{sec:corpus} does not rely on the
 theorem's syntactic template: we verify aperiodicity by \emph{computational
 monoid enumeration} on each pattern (\S\ref{sec:corpus}, methodology
@@ -684,25 +698,27 @@ matches on the base alternatives---which are within the theorem's scope.
 
 \begin{lemma}[Word-boundary anchors preserve aperiodicity]\label{lem:word-boundary}
 Let $r$ be a regular expression in the grammar of Theorem~\ref{thm:substring-aperiodic},
-and let $\b$ denote the word-boundary anchor whose semantics, as a position predicate
-on $\Sigma^*$, expand to $(?{<}{=}\W)\cup(?{<}{!}\w)$ at the start position and the
-mirror condition at the end (where $\w = [\mathrm{A\text{-}Za\text{-}z0\text{-}9\_}]$ and
-$\W = \Sigma \setminus \w$).
-Then $L_r' := \Sigma^* \cdot \b \cdot L(r) \cdot \b \cdot \Sigma^*$ has aperiodic
+and let \wb{} denote the PCRE word-boundary anchor whose semantics, as a
+position predicate on $\Sigma^*$, expand to ``the previous character is in
+\wbW{} (or position is the start) and the next character is in \wbw{}, or
+vice versa,'' where \wbw{} denotes the word character class
+$[\mathrm{A\text{-}Za\text{-}z0\text{-}9\_}]$ and \wbW{} denotes
+$\Sigma \setminus \wbw$.
+Then $L_r' := \Sigma^* \cdot \wb \cdot L(r) \cdot \wb \cdot \Sigma^*$ has aperiodic
 syntactic monoid.
 \end{lemma}
 \begin{proof}
 Define the auxiliary languages
-$B_L = \{w x : x \in L(r),\, w \in \Sigma^*\,\text{and the last character of}\ w
-\text{is in}\ \W\ \text{or}\ w = \varepsilon\}$ and analogously
+$B_L = \{w x : x \in L(r),\ w \in \Sigma^*$ and the last character of $w$
+is in \wbW{} or $w = \varepsilon\}$ and analogously
 $B_R$ for the right anchor.
 Each is a finite intersection of $\Sigma^* \cdot L(r) \cdot \Sigma^*$ with a
-two-character context predicate (``character at position $|w|$ is in $\W$ or
+two-character context predicate (``character at position $|w|$ is in \wbW{} or
 position $|w|$ is the start''), and these context predicates are themselves
 star-free (each is a finite Boolean combination of length-bounded substrings
 fixed at a position, which is realized as a finite union of two-letter
 context tests evaluated by a constant-state DFA).
-$L_r' = \Sigma^* \cdot \b \cdot L(r) \cdot \b \cdot \Sigma^*$ is the
+$L_r' = \Sigma^* \cdot \wb \cdot L(r) \cdot \wb \cdot \Sigma^*$ is the
 intersection of two such star-free constraints with $\Sigma^* \cdot L(r) \cdot \Sigma^*$,
 which is star-free by Theorem~\ref{thm:substring-aperiodic}.
 Star-free is closed under finite intersection, so $L_r'$ is star-free, and by
@@ -711,11 +727,11 @@ Theorem~\ref{thm:smp} its syntactic monoid is aperiodic.
 
 This lemma covers the corpus patterns whose substring-aperiodicity status is
 established only by enumeration in \S\ref{sec:corpus} due to the presence of
-$\b$ anchors that fall outside the syntactic grammar of
+\wb{} anchors that fall outside the syntactic grammar of
 Theorem~\ref{thm:substring-aperiodic}.
 In particular, the single timeout pattern in our corpus that lies outside the
 theorem's grammar---a Presidio IBAN regex of the form
-$\b[\mathrm{A\text{-}Z}]{2}\d{2}[\mathrm{A\text{-}Z0\text{-}9}]{4}\d{7}([\mathrm{A\text{-}Z0\text{-}9}]?){0,16}\b$---is
+\texttt{\textbackslash{}b[A-Z]\{2\}\textbackslash{}d\{2\}[A-Z0-9]\{4\}\textbackslash{}d\{7\}([A-Z0-9]?)\{0,16\}\textbackslash{}b}---is
 aperiodic by Lemma~\ref{lem:word-boundary} applied to its inner regex,
 which is itself in the grammar of Theorem~\ref{thm:substring-aperiodic}.
 
@@ -1493,8 +1509,14 @@ monoid, i.e., a non-$\mathrm{AC}^0$ language recognizer.
 \subsection{Regex Corpus Analysis}\label{sec:corpus}
 
 \paragraph{Methodology.}
-We collected 142 regex patterns from eleven open-source guardrail tools (LLM Guard,
-Rebuff, NeMo Guardrails, Guardrails AI, llm-guard-py, Presidio, GitLeaks, OWASP-LLM, WAF-generic, LangKit, and BodAIGuard).
+We collected 142 regex patterns from twelve sources, partitioned as in
+CACM v14 Appendix~B.1: \emph{nine third-party open-source guardrail
+projects} contribute 100 patterns (LLM-Guard, llm-guard-py, Rebuff,
+Guardrails-AI, Presidio, GitLeaks, LangKit, BodAIGuard, and the regex
+subset of NeMo Guardrails' content rails), and \emph{three
+author-assembled sets} contribute 42 patterns (8 inspired by the OWASP
+Top~10 for LLMs taxonomy, 15 from a curated WAF-generic pattern set, and
+19 author-constructed adversarial test patterns).
 For each pattern $r$, we:
 \begin{enumerate}
   \item Compiled $r$ to a Thompson NFA using the standard construction.
@@ -1531,7 +1553,8 @@ count, monoid size, and aperiodicity verdict.
 
 \begin{table}[t]
 \centering
-\caption{Representative guardrail regex patterns from 11 tools.
+\caption{Representative guardrail regex patterns from the 142-pattern corpus
+(twelve sources: nine third-party projects and three author-assembled sets).
 DFA states and monoid sizes are for the substring-matching version
 $L_r = \Sigma^* L(r) \Sigma^*$.
 AP: aperiodic (Y/N). All 5 shown are aperiodic; all 142 patterns in the
@@ -1941,7 +1964,7 @@ Regex guardrails recognize aperiodic languages, placing them in
 $\mathrm{AC}^0$ via Theorems~\ref{thm:smp}--\ref{thm:fss}; the algebraic
 blindness of Theorem~\ref{thm:blindness} is the direct consequence.
 Transformer-based guardrails occupy a strictly higher class: log-precision
-transformers sit in $\mathrm{TC}^0$~\cite{merrill2023saturated,chiang2024tighter},
+transformers sit in $\mathrm{TC}^0$~\cite{merrill2023saturated,chiang2023tighter},
 and $\mathrm{AC}^0 \subsetneq \mathrm{TC}^0$~\cite{furst1981,hastad1987}.
 Neural guardrails can therefore compute $\mathrm{MOD}_p$ predicates that
 no regex guardrail can; the modular-counting blind spot of
@@ -2235,8 +2258,9 @@ This compositional safety is essential for practical systems, which routinely co
 blocklists, domain filters, and toxicity detectors.
 
 \paragraph{Empirical validation on 142 patterns.}
-We validated this audit pipeline on the 142 patterns from 11 open-source tools
-(LLM Guard, Guardrails, etc.; full inventory in Table~\ref{tab:corpus}).
+We validated this audit pipeline on the 142 patterns from twelve sources
+(nine third-party open-source projects plus three author-assembled sets,
+per CACM v14 Appendix~B.1; full inventory in Table~\ref{tab:corpus}).
 All 142 patterns ($100\%$) were aperiodic and therefore provably blind to
 $\mathrm{MOD}_p$ encodings for all primes $p$.
 This confirms the conjecture (Section~\ref{sec:conjecture}) that semantic guardrail
@@ -2253,7 +2277,8 @@ blocklists, domain filters, toxicity patterns) has an aperiodic syntactic monoid
 
 \paragraph{Evidence.}
 $100\%$ of the 142-pattern corpus is aperiodic.
-No non-aperiodic patterns were found across any of the eleven tools.
+No non-aperiodic patterns were found across any of the twelve sources
+(nine third-party projects plus three author-assembled sets).
 All 142 patterns are semantic content filters, consistent with the structural
 argument that such patterns are aperiodic by construction.
 
@@ -2318,7 +2343,9 @@ prompt distribution; we leave this as future work, noting that the
 are unconditional and do not depend on any distributional assumption.
 
 \paragraph{4. Regex corpus size.}
-The corpus of 142 patterns from 11 tools is representative but not exhaustive.
+The corpus of 142 patterns from twelve sources (nine third-party projects
+plus three author-assembled sets, per CACM v14 Appendix~B.1) is
+representative but not exhaustive.
 A larger corpus would strengthen the aperiodicity conjecture
 (Section~\ref{sec:conjecture}).
 We make the monoid extractor available to enable independent extension of the corpus.
