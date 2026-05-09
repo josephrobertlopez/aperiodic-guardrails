@@ -467,8 +467,8 @@ defined by a finite set of regular expression patterns $\{r_1, \ldots, r_k\}$
 applied via substring search:
 \[
   G(w) = \begin{cases}
-    \mathsf{block} & \text{if } \exists\, i,\; \exists\, u,v \in \Sigma^*:
-                      w = u \cdot x \cdot v,\; x \in L(r_i), \\
+    \mathsf{block} & \text{if } \exists\, i,\, u,v,x:\\
+                   & \quad w = u x v,\; x \in L(r_i), \\
     \mathsf{allow} & \text{otherwise.}
   \end{cases}
 \]
@@ -731,8 +731,10 @@ established only by enumeration in \S\ref{sec:corpus} due to the presence of
 Theorem~\ref{thm:substring-aperiodic}.
 In particular, the single timeout pattern in our corpus that lies outside the
 theorem's grammar---a Presidio IBAN regex of the form
-\texttt{\textbackslash{}b[A-Z]\{2\}\textbackslash{}d\{2\}[A-Z0-9]\{4\}\textbackslash{}d\{7\}([A-Z0-9]?)\{0,16\}\textbackslash{}b}---is
-aperiodic by Lemma~\ref{lem:word-boundary} applied to its inner regex,
+\begin{center}
+\small\texttt{\textbackslash{}b[A-Z]\{2\}\textbackslash{}d\{2\}[A-Z0-9]\{4\}\-\textbackslash{}d\{7\}([A-Z0-9]?)\{0,16\}\textbackslash{}b}
+\end{center}
+is aperiodic by Lemma~\ref{lem:word-boundary} applied to its inner regex,
 which is itself in the grammar of Theorem~\ref{thm:substring-aperiodic}.
 
 \subsection{The Guardrail Blindness Theorem}\label{sec:blindness-proof}
@@ -856,18 +858,26 @@ of $\phi_2$ and are therefore provably undetectable by any current regex guardra
 Let $L_{\mathsf{blocked}} = \Sigma^* \cdot L(r) \cdot \Sigma^*$ be a substring-matched
 language, where $L(r)$ is regular and contains at least two distinct strings
 $h_+, h_- \in \Sigma^k$ of equal length $k \ge 1$ that differ at some position
-$s \in \{0, 1, \ldots, k-1\}$ with $\gcd(p, k) \mid s$ but $s \not\equiv 0 \pmod{k/\gcd(p,k)}$
-(equivalently: the differing position survives the modular periodic decimation by $p$).
+$s \in \{0, 1, \ldots, k-1\}$. Assume the alignment $(p, k, s)$ is
+\emph{non-degenerate}, in the sense that the periodic decimation by $p$ of the
+witness strings $h_+^N, h_-^N$ preserves the inequality at position $s$ across
+some pair of offsets $j \neq j' \in \{0,1,\ldots,p-1\}$ for sufficiently large
+$N$ (made precise in the proof below).
 Then $M_{\Sigma}(L_{\mathsf{decode}}(p))$ contains $\mathbb{Z}/p\mathbb{Z}$ as a
 subgroup, with no requirement that any character of $\Sigma$ be outside
 $\mathrm{alphabet}(L_{\mathsf{blocked}})$.
 
-The strengthened hypothesis is satisfied by every nontrivial production guardrail we
-have surveyed: in practice $L(r)$ contains witness strings that differ at multiple
-positions, so the gcd-and-position condition holds for the prime $p$ of any practical
-bypass. Patterns where $L(r)$'s accepted/rejected strings differ only at positions
-periodic mod $k/\gcd(p,k)$ are pathological corner cases (e.g., $L(r) = a^k \cup b^k$
-for $\gcd(p, k) = k$); we do not claim the theorem covers these.
+\emph{Remarks.} The non-degenerate-alignment hypothesis is satisfied by every
+nontrivial production guardrail we have surveyed: in practice $L(r)$ contains
+witness strings that differ at multiple positions, so the inequality at $s$
+survives the periodic decimation for the prime $p$ of any practical bypass. The
+proof's inequivalence-via-periodic-decimation argument requires this
+non-degenerate alignment; pathological corner cases where $L(r)$'s
+accepted/rejected witness strings differ only at degenerate positions modulo
+$\gcd(p, k)$ (e.g., $L(r) = a^k \cup b^k$ for $\gcd(p, k) = k$) are explicitly
+carved out as out-of-scope for this article. See
+\cref{sec:discussion}'s ``what we leave open'' paragraph, item~(e), and the
+per-pattern audit of the corpus is acknowledged as future work.
 \end{theorem}
 
 \begin{proof}
@@ -911,12 +921,17 @@ suffix length) into a periodic sequence over the characters of $h$, with the
 period determined by $\gcd(p, k)$ and the offset by $j \bmod p$.
 
 \emph{Explicit context construction.}
-Let $h_+, h_- \in L(r)$ of equal length $k$ differ at position $s$ satisfying
-the gcd hypothesis of the theorem statement.
-Choose $N$ such that $Nk \ge p \cdot \mathrm{lcm}(p, k)$; this guarantees both
-$\sigma_j(h_+^N)$ and $\sigma_j(h_-^N)$ each contain the position-$s$ character
-of their respective $h$ at some decoded index, and the periodic decimation by
-$p$ preserves the inequality at position $s$ across $\sigma_0, \sigma_1, \ldots, \sigma_{p-1}$.
+Let $h_+, h_- \in L(r)$ of equal length $k$ differ at position $s$, and assume the
+non-degenerate-alignment hypothesis of the theorem statement: namely, that for
+sufficiently large $N$ and some pair of offsets $j \neq j' \in
+\{0,1,\ldots,p-1\}$, the periodic decimation by $p$ surfaces the position-$s$
+character of $h_+$ (resp.\ $h_-$) at distinct decoded indices in
+$\sigma_j(h_+^N)$ vs.\ $\sigma_{j'}(h_+^N)$. Choose $N$ such that
+$Nk \ge p \cdot \mathrm{lcm}(p, k)$; this guarantees both $\sigma_j(h_+^N)$ and
+$\sigma_j(h_-^N)$ each contain the position-$s$ character of their respective
+$h$ at some decoded index, and (under non-degenerate alignment) the periodic
+decimation by $p$ preserves the inequality at position $s$ across
+$\sigma_0, \sigma_1, \ldots, \sigma_{p-1}$.
 
 Construct two contexts $(x_+, y_+) = (\varepsilon, h_+^N)$ and
 $(x_-, y_-) = (\varepsilon, h_-^N)$.
@@ -924,8 +939,9 @@ For each pair $j, k \in \{0, 1, \ldots, p-1\}$ with $j \neq k$:
 the decoded sequence $(u_j h_+^N)[0::p]$ extracts characters of $h_+^N$ at
 positions $\{p \cdot t - j : t \ge 1\} \cap \{0, 1, \ldots, Nk-1\}$, indexed
 modulo $k$ as $\{(p t - j) \bmod k : t \ge 1\}$.
-By the gcd hypothesis on $s$, the position $s$ appears in this index set for
-some $t$ with $\sigma_j$, and at a different index $t'$ with $\sigma_k$.
+By the non-degenerate-alignment hypothesis on $(p, k, s)$, the position $s$
+appears in this index set for some $t$ with $\sigma_j$, and at a different
+index $t'$ with $\sigma_k$.
 The character at position $s$ in $h_+^N$ is $h_+[s]$; the character at the
 same decoded-index position in $h_-^N$ is $h_-[s] \neq h_+[s]$.
 
@@ -1659,20 +1675,28 @@ Artifact: \texttt{results/non\_llm\_defense\_bypass.json}
 
 \paragraph{Empirical-artifact scope.}
 The paper covers a strict subset of the empirical artifacts released with
-this work. Pilots whose detail belongs to the companion CACM v14 article
-(\S\ref{sec:corpus} and Pilot~6 above are the paper-side empirical legs)
-are archived but not reproduced here in float-table form: Pilot~B
-(filler-diversity bypass; same 14 instances $\times$ 4 primes $\times$ 7
-fillers $\to$ 392/392 bypass) is in
-\texttt{results/printable\_filler\_bypass.json} and reported in CACM v14
-Appendix~B.3; Pilot~C (LLM decode reliability with random-character
-control; 4 open-weight models $\times$ 60 decode cells $\times$ 20
-control cells $\to$ 91.7\,pp lift) is in
-\texttt{results/llm\_decode\_pilot\_v2.json} (its earlier control-free
-version \texttt{results/llm\_decode\_pilot.json} is superseded and
-retained only for diff inspection); Pilot~D (third-party library bypass;
-100 library-shipped patterns $\to$ 48 baseline-matched $\to$ 48/48 bypass
-across 8 of 9 libraries) is in \texttt{results/library\_pattern\_bypass.json}.
+this work. Three additional pilots whose detail belongs to the companion CACM v14
+article are archived but not reproduced here in float-table form, and we summarize
+their headline results so this section stands on its own.
+Pilot~B (filler-diversity bypass) ran the same 14 baseline-matched instances against
+4 primes $p \in \{2,3,5,7\}$ and 7 distinct printable fillers
+(spaces, ZWSP, NBSP, asterisks, dots, dashes, underscores), yielding 392/392 bypass:
+the modular-counting blind spot is filler-agnostic, not an artifact of any
+single non-printable character.
+Pilot~C (LLM decode reliability with a random-character control) used 4 open-weight
+models across 60 decode cells (legitimate $\phi_p$-encoded payloads) and 20 control
+cells (random-character interleavings) and measured a 91.7\,pp lift in decode
+success on the legitimate cells over controls, ruling out spurious-pattern
+recovery as an explanation for V5 efficacy.
+Pilot~D (third-party library bypass) screened 100 library-shipped guardrail
+patterns from nine libraries, of which 48 matched a baseline harmful payload, and
+all 48 were bypassed by $\phi_2$ across 8 of 9 libraries (the ninth library
+shipped only patterns that did not match the baseline).
+Pilot~B is in \texttt{results/printable\_filler\_bypass.json} (CACM v14 Appendix~B.3);
+Pilot~C is in \texttt{results/llm\_decode\_pilot\_v2.json} (its earlier
+control-free version \texttt{results/llm\_decode\_pilot.json} is superseded and
+retained only for diff inspection); Pilot~D is in
+\texttt{results/library\_pattern\_bypass.json}.
 Readers seeking the full per-pilot pipeline, payload synthesizer details,
 and library normalization survey should consult CACM v14 Appendix~B; the
 paper retains the full algebraic apparatus, the corpus aperiodicity
@@ -2092,7 +2116,14 @@ remain by algebraic argument only and are listed as future work.
 (rate-limited fallback, ensemble voting with a neural majority,
 sampled-routing, multi-stage agentic pipelines with mixed AC$^0$/TC$^0$
 arbiters) are discussed informally in CACM v14 \S5 and are not formalized
-here.
+here. (e)~\cref{thm:regime2} covers nontrivial substring-matched
+$L_{\mathsf{blocked}}$ under non-degenerate period alignment $(p, k, s)$ between
+the witness strings of $L(r)$ and the bypass prime $p$. The corner case where
+$L(r)$'s witness strings differ only at degenerate positions modulo
+$\gcd(p, k)$ (e.g., $L(r) = a^k \cup b^k$ when $\gcd(p,k) = k$) is conjectured
+to admit the same conclusion but is not proved here; a per-pattern audit of
+the corpus to certify which patterns satisfy non-degenerate alignment for
+relevant primes $p$ is acknowledged as future work.
 
 \subsection{Defense Layer Mapping}\label{sec:defense-table}
 
@@ -2129,7 +2160,7 @@ Effective defense requires all layers operating in concert, with particular emph
 on the Execution and Provenance layers, which are the only ones capable of observing
 the concrete artifacts that carry harmful intent.
 
-\subsection{Neural Guardrails and $\mathrm{TC}^0$}\label{sec:neural-tc0}
+\subsection[Neural Guardrails and TC0]{Neural Guardrails and $\mathrm{TC}^0$}\label{sec:neural-tc0}
 
 Regex guardrails recognize aperiodic languages, placing them in
 $\mathrm{AC}^0$ via Theorems~\ref{thm:smp}--\ref{thm:fss}; the algebraic
@@ -2142,7 +2173,7 @@ no regex guardrail can; the modular-counting blind spot of
 \S\ref{sec:blindness-proof} does not transfer to them, and a sufficiently
 trained transformer can in principle detect $\phi_p$-encoded payloads.
 
-\begin{table}[h]
+\begin{table}[!htbp]
 \centering
 \caption{Circuit complexity of guardrail architectures. $\mathrm{AC}^0 \subsetneq
 \mathrm{TC}^0$; both are conjectured to be strictly contained in $\mathrm{NC}^1$.}
@@ -2212,7 +2243,9 @@ Regex detection: $0\%$ across all encodings.
 A single attention head with threshold activation detects the interleaving
 pattern that $\mathrm{AC}^0$ circuits provably cannot compute,
 empirically confirming the $\mathrm{AC}^0 \subsetneq \mathrm{TC}^0$
-separation in the guardrail domain.
+separation in the guardrail domain. Full training metrics, held-out evaluation
+on $\mathrm{MOD}_p$ for $p \in \{2,3,5,7\}$, and clean-text false-positive
+rates are released in the artifact \texttt{results/transformer\_tc0\_validation.json}.
 
 \paragraph{Practical implications.}
 The hierarchy recommends stacking: regex provides an $\mathrm{AC}^0$
@@ -2335,6 +2368,9 @@ constituent and SpamAssassin \texttt{20\_phrases.cf} as the spam-filter
 constituent); the remaining classes named in CACM v14 \S2 are by
 algebraic argument only and are listed under ``what we leave open'' in
 \S\ref{sec:discussion}'s scope paragraph.
+Compositions involving a non-star-free constituent (e.g., a $\mathrm{TC}^0$
+neural arbiter in parallel-OR) are addressed by
+\cref{prop:filter-composition}(4) and lie outside this remark's scope.
 \end{remark}
 
 \paragraph{Assumption (model of composition).}
@@ -2357,7 +2393,7 @@ $\mathrm{MOD}_2$-encoded payloads, and 20 clean-text samples, using a
 character-bigram centroid classifier as the neural filter
 (Table~\ref{tab:composition-empirical}).
 
-\begin{table}[h]
+\begin{table}[!htbp]
 \centering
 \caption{Empirical validation of composition laws on 20 encoded payloads.
 Regex detection rate is $0\%$ on encoded payloads, confirming algebraic blindness.
@@ -2396,7 +2432,7 @@ not every attack vector.
 We tested the neural filter (trained on $\mathrm{MOD}_2$ only) against
 encoding schemes it had not seen (Table~\ref{tab:neural-evasion}).
 
-\begin{table}[h]
+\begin{table}[!htbp]
 \centering
 \caption{Neural filter evasion by attack type.
 The filter is trained on $\mathrm{MOD}_2$ encoded text only.
@@ -2660,7 +2696,7 @@ guardrail library maintained by ProtectAI.
 Table~\ref{tab:e2e} compares four defense configurations across 8 encoding types
 on 20 payloads spanning prompt injection, code injection, SQLi, and XSS.
 
-\begin{table}[h]
+\begin{table}[!htbp]
 \centering
 \caption{End-to-end detection rates (\%) against real LLM Guard patterns.
 ``Regex Only'' is the current production configuration. ``Full Stack'' adds
@@ -2702,7 +2738,9 @@ The three-class attack taxonomy (\S\ref{sec:filter-composition}) establishes tha
 Class~C (semantic/homomorphic reasoning) attacks \emph{cannot} be defended at any
 inference layer.
 We present \texttt{secrets-router}\footnote{\url{https://jrlopez.dev/p/secrets-router.html},
-MIT license, ${\sim}800$ lines.}, an open-source MCP server that implements the
+MIT license, ${\sim}800$ lines. \emph{Disclosure: this implementation was developed
+by the author as part of this project. Readers should verify its properties
+against their own threat model.}}, an open-source MCP server that implements the
 execution-layer defense our theory recommends.
 
 \paragraph{Architecture.}
