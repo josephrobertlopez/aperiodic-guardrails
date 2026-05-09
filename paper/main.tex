@@ -1463,7 +1463,10 @@ $p$: the interleaving modulus used to construct the encoding
 would block if seen in plaintext.
 \emph{Encoded ($p{=}2$)}: the string $\phi_2(h)$ actually sent to the guardrail,
 which passes because no contiguous harmful substring is present.
-F-labels (F1--F5) are pattern IDs from Table~\ref{tab:corpus}; F5 is \texttt{exec\textbackslash s*\textbackslash(}.}
+F-labels (F1--F5) are pattern IDs from Table~\ref{tab:corpus}; F5 is \texttt{exec\textbackslash s*\textbackslash(}.
+The full $14 \times 4$ payload-pattern $\times$ prime bypass matrix
+backing this table (Pilot~A; cf.\ CACM v14 Appendix~B.3) is archived in
+\texttt{results/mod\_p\_bypass\_matrix.json} (56/56 bypass).}
 \label{tab:v5-attacks}
 \small
 \begin{tabularx}{\columnwidth}{llX}
@@ -1558,7 +1561,10 @@ count, monoid size, and aperiodicity verdict.
 DFA states and monoid sizes are for the substring-matching version
 $L_r = \Sigma^* L(r) \Sigma^*$.
 AP: aperiodic (Y/N). All 5 shown are aperiodic; all 142 patterns in the
-full corpus are aperiodic.}
+full corpus are aperiodic. Corpus-wide aperiodicity statistics
+(per-source counts, monoid-size histogram, category breakdown) are
+archived in \texttt{results/monoid\_distribution.json}, and the per-pattern
+$\mathrm{MOD}_p$ bypass matrix is in \texttt{results/mod\_p\_bypass\_matrix.json}.}
 \label{tab:corpus}
 \small
 \begin{tabularx}{\columnwidth}{lXrrr}
@@ -1573,6 +1579,79 @@ F5 & \texttt{exec\textbackslash s*\textbackslash(} & 8 & 14 & Y \\
 \bottomrule
 \end{tabularx}
 \end{table}
+
+\subsection{Non-LLM Defense-Class Bypass (Pilot~6)}\label{sec:non-llm-pilot}
+
+The corpus analysis above measures the $\mathrm{MOD}_p$ bypass against the
+LLM-guardrail class only. To extend the empirical coverage to two of the
+non-LLM defensive classes named in the unification of CACM v14 \S2 (web
+application firewalls and spam filters), we ran the same $\mathrm{MOD}_2$
+bypass against representative real patterns from each class. The pilot is
+documented in CACM v14 Appendix~B as Pilot~6 and the headline number
+appears in CACM table row~6; we report the same numbers here for
+completeness so that the algebraic argument has a paper-side empirical
+leg in two non-LLM classes.
+
+\paragraph{Setup.}
+Sources: 6 ModSecurity OWASP CRS 4.27 SQL-injection patterns and 6
+SpamAssassin \texttt{20\_phrases.cf} patterns (12 patterns total). 20
+synthesized payloads (10 per class). $\mathrm{MOD}_2$ bypass tested with
+three filler choices: NULL byte, ASCII space, and U+200B (zero-width
+space). Same $\phi_2$ construction as the LLM pilot
+(\S\ref{sec:v5}).
+
+\paragraph{Results.}
+\emph{ModSecurity:} 10/10 baseline-matched; 8/10 NULL bypass, 10/10
+ASCII-space bypass, 10/10 ZWSP bypass. The two NULL-byte failures are
+SQL-comment patterns whose alphabet \emph{includes} \verb|\x00| by design
+(CRS catches NULL-byte injection explicitly); both bypass under
+printable-space and zero-width-space fillers, exactly as the algebraic
+argument predicts (no single-filler patch closes the bypass class).
+\emph{SpamAssassin:} 9/10 baseline-matched (one synthesizer artifact);
+9/9 NULL bypass, 9/9 ASCII-space bypass, 9/9 ZWSP bypass.
+
+\paragraph{Reading.}
+Across 12 patterns and 20 synthesized payloads from two defensive classes
+distinct from the LLM-guardrail class that motivated the work, every
+baseline-matched payload bypasses under at least one of the three filler
+choices. The single-filler-resistant patterns (ModSec's two SQL-comment
+patterns) are themselves bypassed by the other two filler choices. This
+empirically confirms, in two non-LLM classes, the algebraic prediction
+that no finite collection of single-filler patches covers the
+modular-counting bypass class. The remaining defensive classes named in
+CACM v14 \S2 (literal-string AV signatures, IDS regex tiers, code/secret
+scanners) remain by algebraic argument only; the unification claim is
+therefore \emph{empirical for three classes (LLM guardrails, WAF, spam
+filter), algebraic for the rest}, in agreement with CACM v14 \S7.
+
+Artifact: \texttt{results/non\_llm\_defense\_bypass.json}
+(\texttt{by\_pattern}, \texttt{summary\_by\_class}, \texttt{sources},
+\texttt{fillers} keys).
+
+\paragraph{Empirical-artifact scope.}
+The paper covers a strict subset of the empirical artifacts released with
+this work. Pilots whose detail belongs to the companion CACM v14 article
+(\S\ref{sec:corpus} and Pilot~6 above are the paper-side empirical legs)
+are archived but not reproduced here in float-table form: Pilot~B
+(filler-diversity bypass; same 14 instances $\times$ 4 primes $\times$ 7
+fillers $\to$ 392/392 bypass) is in
+\texttt{results/printable\_filler\_bypass.json} and reported in CACM v14
+Appendix~B.3; Pilot~C (LLM decode reliability with random-character
+control; 4 open-weight models $\times$ 60 decode cells $\times$ 20
+control cells $\to$ 91.7\,pp lift) is in
+\texttt{results/llm\_decode\_pilot\_v2.json} (its earlier control-free
+version \texttt{results/llm\_decode\_pilot.json} is superseded and
+retained only for diff inspection); Pilot~D (third-party library bypass;
+100 library-shipped patterns $\to$ 48 baseline-matched $\to$ 48/48 bypass
+across 8 of 9 libraries) is in \texttt{results/library\_pattern\_bypass.json}.
+Readers seeking the full per-pilot pipeline, payload synthesizer details,
+and library normalization survey should consult CACM v14 Appendix~B; the
+paper retains the full algebraic apparatus, the corpus aperiodicity
+result (\S\ref{sec:corpus}), the non-LLM defense-class extension
+(\S\ref{sec:non-llm-pilot}), the Tree-of-Thought benchmark
+(\S\ref{sec:tot-benchmark}), and the case studies and end-to-end
+production-pattern validation (\S\ref{sec:aspirin},
+\S\ref{sec:e2e}) that anchor the formal claims.
 
 \subsection{Tree-of-Thought Benchmark}\label{sec:tot-benchmark}
 
@@ -2142,7 +2221,11 @@ character-bigram centroid classifier as the neural filter
 \caption{Empirical validation of composition laws on 20 encoded payloads.
 Regex detection rate is $0\%$ on encoded payloads, confirming algebraic blindness.
 The neural filter achieves $100\%$ detection with $0\%$ FPR.
-All four composition predictions are confirmed.}
+All four composition predictions are confirmed.
+Per-row detection rates and the per-encoding/per-stack breakdown are
+archived in \texttt{results/comprehensive\_empirical\_validation.json}
+(\texttt{encoding\_results}, \texttt{semantic\_attacks}, and
+\texttt{preprocessing} keys).}
 \label{tab:composition-empirical}
 \small
 \begin{tabular}{lccl}
@@ -2176,7 +2259,13 @@ encoding schemes it had not seen (Table~\ref{tab:neural-evasion}).
 \centering
 \caption{Neural filter evasion by attack type.
 The filter is trained on $\mathrm{MOD}_2$ encoded text only.
-``Evades Both'' indicates attacks that evade the regex~$\vee$~neural composition.}
+``Evades Both'' indicates attacks that evade the regex~$\vee$~neural composition.
+Per-attack detection rates for the encoding-class rows
+($\mathrm{MOD}_p$, Base64, ROT13) are in
+\texttt{results/comprehensive\_empirical\_validation.json}; the V1 / V3
+adaptive-adversary rows (100\% evasion of both regex and neural) are
+backed by \texttt{results/class\_c\_adaptive\_adversary.json}
+(\texttt{adaptive\_evasion\_rate}, \texttt{techniques} keys).}
 \label{tab:neural-evasion}
 \small
 \begin{tabular}{lccl}
@@ -2434,7 +2523,10 @@ on 20 payloads spanning prompt injection, code injection, SQLi, and XSS.
 \centering
 \caption{End-to-end detection rates (\%) against real LLM Guard patterns.
 ``Regex Only'' is the current production configuration. ``Full Stack'' adds
-preprocessing (strip, decode, normalize) and a bigram neural filter in parallel.}
+preprocessing (strip, decode, normalize) and a bigram neural filter in parallel.
+Source: \texttt{results/e2e\_llmguard\_validation.json}
+(\texttt{n\_patterns}=23, \texttt{n\_payloads}=20, \texttt{patterns\_source}
+= LLM-Guard \texttt{BanSubstrings}).}
 \label{tab:e2e}
 \small
 \begin{tabular}{lcccc}
