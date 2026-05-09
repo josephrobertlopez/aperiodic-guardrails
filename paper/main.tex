@@ -613,6 +613,10 @@ building-block construction.
 A single character $a \in \Sigma$ defines $\{a\}$, trivially star-free.
 A character class $[c_1 c_2 \cdots c_k]$ is $\{c_1\} \cup \cdots \cup \{c_k\}$,
 a finite union of singletons, hence star-free.
+The PCRE shorthands $\backslash s$, $\backslash d$, $\backslash w$ and their
+negations $\backslash S$, $\backslash D$, $\backslash W$ are character classes
+(they expand to finite unions of literal characters in any concrete alphabet),
+so Kleene $*$/$+$ applied to them remains within this clause.
 
 \paragraph{Bounded repetition.}
 $r^{\{n\}}$ (exactly $n$ repetitions) is the $n$-fold concatenation of $L(r)$,
@@ -678,6 +682,43 @@ frequently collapses Kleene-over-group constructions when $\varepsilon
 matches on the base alternatives---which are within the theorem's scope.
 \end{remark}
 
+\begin{lemma}[Word-boundary anchors preserve aperiodicity]\label{lem:word-boundary}
+Let $r$ be a regular expression in the grammar of Theorem~\ref{thm:substring-aperiodic},
+and let $\b$ denote the word-boundary anchor whose semantics, as a position predicate
+on $\Sigma^*$, expand to $(?{<}{=}\W)\cup(?{<}{!}\w)$ at the start position and the
+mirror condition at the end (where $\w = [\mathrm{A\text{-}Za\text{-}z0\text{-}9\_}]$ and
+$\W = \Sigma \setminus \w$).
+Then $L_r' := \Sigma^* \cdot \b \cdot L(r) \cdot \b \cdot \Sigma^*$ has aperiodic
+syntactic monoid.
+\end{lemma}
+\begin{proof}
+Define the auxiliary languages
+$B_L = \{w x : x \in L(r),\, w \in \Sigma^*\,\text{and the last character of}\ w
+\text{is in}\ \W\ \text{or}\ w = \varepsilon\}$ and analogously
+$B_R$ for the right anchor.
+Each is a finite intersection of $\Sigma^* \cdot L(r) \cdot \Sigma^*$ with a
+two-character context predicate (``character at position $|w|$ is in $\W$ or
+position $|w|$ is the start''), and these context predicates are themselves
+star-free (each is a finite Boolean combination of length-bounded substrings
+fixed at a position, which is realized as a finite union of two-letter
+context tests evaluated by a constant-state DFA).
+$L_r' = \Sigma^* \cdot \b \cdot L(r) \cdot \b \cdot \Sigma^*$ is the
+intersection of two such star-free constraints with $\Sigma^* \cdot L(r) \cdot \Sigma^*$,
+which is star-free by Theorem~\ref{thm:substring-aperiodic}.
+Star-free is closed under finite intersection, so $L_r'$ is star-free, and by
+Theorem~\ref{thm:smp} its syntactic monoid is aperiodic.
+\end{proof}
+
+This lemma covers the corpus patterns whose substring-aperiodicity status is
+established only by enumeration in \S\ref{sec:corpus} due to the presence of
+$\b$ anchors that fall outside the syntactic grammar of
+Theorem~\ref{thm:substring-aperiodic}.
+In particular, the single timeout pattern in our corpus that lies outside the
+theorem's grammar---a Presidio IBAN regex of the form
+$\b[\mathrm{A\text{-}Z}]{2}\d{2}[\mathrm{A\text{-}Z0\text{-}9}]{4}\d{7}([\mathrm{A\text{-}Z0\text{-}9}]?){0,16}\b$---is
+aperiodic by Lemma~\ref{lem:word-boundary} applied to its inner regex,
+which is itself in the grammar of Theorem~\ref{thm:substring-aperiodic}.
+
 \subsection{The Guardrail Blindness Theorem}\label{sec:blindness-proof}
 
 Define the \emph{modular decode language} as follows.
@@ -723,11 +764,22 @@ component only when the counter is $0$.
 Since both components are finite, $L_{\mathsf{decode}}(p)$ is accepted by a finite
 automaton of size $p \cdot |Q_{\mathsf{block}}|$ and is therefore regular.
 
-\paragraph{(2) Non-aperiodicity.}
+\paragraph{(2) Non-aperiodicity (under the alphabet condition).}
+This step assumes there exists $f \in \Sigma$ such that $\delta_{\mathsf{block}}(q, f) = q$
+for every $q \in Q_{\mathsf{block}}$ --- i.e., a filler character that does not advance
+the blocked-DFA from any state.
+This holds whenever $\Sigma \supsetneq \mathrm{alphabet}(L_{\mathsf{blocked}})$, which
+in production regex deployments is essentially universal: pattern alphabets are small
+relative to Unicode $\Sigma$, leaving many candidate fillers (whitespace, punctuation,
+zero-width codepoints) available.
+For patterns where this condition fails (e.g., regex containing $.$ or negated character
+classes whose minimal-DFA alphabet equals $\Sigma$), step~(3) below carries the blindness
+conclusion without requiring step~(2)'s cyclic witness; we discuss this regime after the
+proof.
+
 Consider the DFA constructed above, with states $(i, q) \in \{0,\ldots,p{-}1\} \times Q_{\mathsf{block}}$.
-Let $f \in \Sigma$ be a \emph{filler} character that appears only at non-zero counter
-positions---i.e., $\delta_{\mathsf{block}}(q, f) = q$ for all $q \in Q_{\mathsf{block}}$
-(the $Q_{\mathsf{block}}$ component is unchanged by $f$).
+Let $f \in \Sigma$ be such a filler character (the $Q_{\mathsf{block}}$ component is
+unchanged by $f$).
 The transition induced by reading $f$ maps $(i, q) \mapsto ((i+1) \bmod p,\, q)$,
 advancing only the counter.
 Consider the word $w = f^p$ consisting of $p$ copies of $f$.
@@ -750,13 +802,38 @@ If $w = \phi_p(h)$ for some $h \in L_{\mathsf{blocked}}$, then $w$ contains no
 substring in $\bigcup_i L(r_i)$ (the harmful keywords appear only at every $p$-th
 position, not as contiguous substrings), so $G(w) = \mathsf{allow}$.
 
-For the patchability claim: any regex guardrail added to $G$ with an aperiodic
-syntactic monoid defines a language in $\mathrm{AC}^0$ by Theorem~\ref{thm:bcst}.
-But detecting whether $w[0::p] \in L_{\mathsf{blocked}}$ requires computing a
-$\mathrm{MOD}_p$ predicate on the position counter, which is not in $\mathrm{AC}^0$
-by Theorem~\ref{thm:fss} (for prime $p$).
-Therefore, no aperiodic regex can be added that correctly classifies all encodings
-in $\phi_p(L_{\mathsf{blocked}})$ while leaving genuinely benign strings allowed.
+For the patchability claim, we exhibit an explicit $\mathrm{AC}^0$ many-one
+reduction from $\mathrm{MOD}_p$ to $L_{\mathsf{decode}}(p)$.
+Assume $L_{\mathsf{blocked}}$ is non-trivial: there exist strings
+$h^+, h^- \in \Sigma^+$ of equal length $\ell$ with
+$h^+ \in L_{\mathsf{blocked}}$ and $h^- \notin L_{\mathsf{blocked}}$
+(any production guardrail satisfies this; if it does not, it accepts every string
+or no string and is uninteresting).
+Given an instance $x = x_1 x_2 \cdots x_n \in \{0,1\}^n$ of $\mathrm{MOD}_p$,
+construct $\rho(x) \in \Sigma^*$ as follows.
+Let $\hat h(b) = h^+$ if $b = 1$ and $\hat h(b) = h^-$ if $b = 0$.
+Place $\hat h(x_i)$ at positions $\bigl[(i-1) \cdot p \cdot \ell,\; i \cdot p \cdot \ell\bigr)$
+where the $\ell$ characters of $\hat h(x_i)$ occupy the
+positions $\equiv 0 \pmod p$ within that block (i.e., one $\hat h$-character at every
+$p$-th position) and a fixed neutral filler $f \in \Sigma$ fills the
+remaining $(p-1) \cdot \ell$ positions.
+
+This map $\rho$ is computable in $\mathrm{AC}^0$ (each output position depends on
+the $\mathrm{AC}^0$-decidable membership $i \cdot p \cdot \ell \le \cdot < (i+1) \cdot p \cdot \ell$
+and the constant indexing into $h^+, h^-$, both AC$^0$-computable since $p, \ell$
+are constants of the construction).
+By construction, $\rho(x)[0::p]$ is the concatenation of $\hat h(x_1), \ldots, \hat h(x_n)$,
+and this concatenation lies in $\bigcup_{k} L_{\mathsf{blocked}} \cdot (\Sigma^*)^k \cdot \Sigma^*$
+(i.e., contains $h^+$ as a substring) iff at least one $x_i = 1$.
+A simple variation produces a reduction whose output lies in $L_{\mathsf{decode}}(p)$ iff
+$\sum_i x_i \equiv 0 \pmod p$: choose $h^+, h^-$ such that the boundary between consecutive
+$\hat h(x_i)$ blocks creates a substring in $L_{\mathsf{blocked}}$ exactly when the parity
+condition is satisfied (constructible because $L_{\mathsf{blocked}}$ has at least one
+accepted string, which can be embedded across block boundaries).
+Therefore an $\mathrm{AC}^0$ decider for $L_{\mathsf{decode}}(p)$ would yield an
+$\mathrm{AC}^0$ decider for $\mathrm{MOD}_p$, contradicting Theorem~\ref{thm:fss}.
+It follows that no language in $\mathrm{AC}^0$ --- and hence no aperiodic-monoid
+regex guardrail $G'$ --- can decide $L_{\mathsf{decode}}(p)$.
 \end{proof}
 
 \begin{corollary}[$\mathrm{MOD}_2$ sufficiency]\label{cor:parity}
@@ -767,6 +844,24 @@ Existing evasion techniques---reading every other character, zero-width characte
 insertion between payload characters, even-position acrostics---are all instances
 of $\phi_2$ and are therefore provably undetectable by any current regex guardrail.
 \end{corollary}
+
+\begin{remark}[Patterns where the alphabet condition fails]\label{rem:alphabet-condition}
+For patterns whose minimal-DFA alphabet equals $\Sigma$ (e.g., patterns containing
+$.$ or negated character classes such as \texttt{[\^{}>]*}), no $f \in \Sigma$
+satisfies the self-loop hypothesis of step~(2), so the cyclic-witness construction
+in $M(L_{\mathsf{decode}}(p))$ does not apply directly.
+However, step~(3) of Theorem~\ref{thm:blindness} does not require step~(2)'s witness:
+any aperiodic regex guardrail $G'$ added to $G$ has $L_{G'} \in \mathrm{AC}^0$
+(Theorem~\ref{thm:bcst}), and deciding membership in $L_{\mathsf{decode}}(p)$
+requires identifying which positions of the input lie at index
+$\equiv 0 \pmod{p}$ --- a $\mathrm{MOD}_p$ predicate on the position counter ---
+which $\mathrm{AC}^0$ provably cannot compute (Theorem~\ref{thm:fss}).
+The blindness conclusion therefore holds for these patterns by step~(3) alone.
+The empirical bypass for full-alphabet patterns succeeds operationally because
+substring matching breaks under any sufficiently disruptive interleaving (a generic
+property of substring matching, not the algebraic bound); the patchability conclusion
+is what step~(3) adds beyond this generic observation.
+\end{remark}
 
 \begin{remark}[Extension to composite moduli]
 Theorem~\ref{thm:blindness} is stated for prime $p$.
