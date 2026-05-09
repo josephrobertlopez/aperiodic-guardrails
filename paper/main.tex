@@ -992,6 +992,35 @@ This means that applying multiple guardrail patterns in sequence (intersection) 
 in parallel (union) preserves the blindness property.
 A guardrail system composed of aperiodic components remains blind to all modular encodings.
 
+\begin{corollary}[Closure across the broader star-free string-matcher class]\label{cor:starfree-class-closure}
+The blindness inheritance of \cref{prop:composition} extends from regex to
+the broader class of star-free string-matchers:
+\begin{itemize}
+  \item \emph{Finite-language matchers (tries, DFA-based blocklists).}
+    Every finite language $F \subseteq \Sigma^*$ is star-free
+    ($F = \bigcup_{w \in F} \{w\}$, a finite union of singletons, each
+    star-free), so trie- and DFA-based blocklists matching against
+    finite literal sets inherit \cref{thm:blindness} directly.
+  \item \emph{Bloom-filter blocklists.} A Bloom filter implementing
+    membership in a finite literal set $F$ recognizes $F$ exactly when no
+    false positives occur and a superset $F \cup F_{\mathsf{FP}}$
+    otherwise. The substring-aperiodicity argument applies to $F$;
+    bypass behavior matches that of a trie-based matcher of $F$, modulo
+    false-positive contamination. The bound applies to the Bloom
+    filter's \emph{intended} literal set.
+  \item \emph{Any finite Boolean composition of the above.} Any union /
+    intersection / complement of finitely many star-free string-matchers
+    (regex, trie, DFA blocklist, Bloom filter on its intended set) is
+    star-free, by the same syntactic-monoid divisibility argument as
+    \cref{prop:composition} (cf.\ Pin~\cite{pin1986} \S I.4); the
+    composed system is in $\mathrm{AC}^0$ and inherits blindness to
+    $L_{\mathsf{decode}}(p)$.
+\end{itemize}
+Patch-resistance therefore extends from ``no further regex closes the
+modular-counting bypass class'' to ``no further star-free
+string-matcher of any kind closes it.''
+\end{corollary}
+
 \subsection{Krohn--Rhodes Attack Taxonomy}\label{sec:kr-taxonomy}
 
 \begin{proposition}[Blindness spectrum, after Straubing~\cite{straubing1994}]\label{prop:krohn-rhodes}
@@ -2002,6 +2031,69 @@ sequence without executing it, enabling human review before any execution step.
 % ============================================================
 \section{Defense Recommendations}\label{sec:discussion}
 
+\paragraph{Scope of this section (closure under composition).}
+The defense recommendations below rest on a closure-under-composition
+argument that combines \cref{prop:composition,cor:starfree-class-closure}
+(for the regex/star-free side) with the empirical and capacity-bound
+behavior of $\mathrm{TC}^0$-class neural filters
+(\cref{prop:filter-composition}). To make the load-bearing claims
+explicit:
+
+\emph{What we prove.} (i)~Boolean closure of star-free / aperiodic
+languages: any finite intersection, union, or complement of aperiodic
+substring-matching guardrails remains aperiodic, hence remains in
+$\mathrm{AC}^0$, hence remains blind to $\mathrm{MOD}_p$ encodings
+(\cref{prop:composition}, this section's
+\cref{cor:starfree-class-closure}). (ii)~The closure extends \emph{across
+defensive-class boundaries}: any composition of star-free string-matchers
+(regex tier, trie blocklist, finite DFA, Bloom-filter blocklist on its
+intended literal set) is itself star-free, regardless of which defensive
+class each constituent comes from
+(\cref{rem:cross-class-composition}). (iii)~In the regex/neural mixed
+setting, the four serial/parallel/blend cases of
+\cref{prop:filter-composition} characterize when the regex tier's
+$\mathrm{AC}^0$ blindness propagates to the composed system and when the
+neural tier's $\mathrm{TC}^0$ capacity recovers it.
+
+\emph{What we assume.} The Boolean-closure model of composition treats a
+multi-tier defense as a Boolean function of its constituents'
+block-decisions (item~(3) of \cref{prop:filter-composition}); soft-score
+serial pipelines are addressed only via the parallel and blend cases.
+For \cref{prop:filter-composition}(5) we assume the filter score functions
+$s_r, s_n\colon \Sigma^* \to [0,1]$ are calibrated such that
+$f(x) = 1 \iff s(x) > \tau_f$ for some threshold $\tau_f$. The neural
+tier is assumed to be a log-precision transformer, so by
+Merrill--Sabharwal~\cite{merrill2023saturated} and
+Chiang--Cholak--Pillay~\cite{chiang2023tighter} its decision language
+lies in $\mathrm{TC}^0$. The Bloom-filter inheritance argument
+(\cref{cor:starfree-class-closure}, third bullet) applies to the filter's
+\emph{intended} literal set, not to the false-positive superset that the
+filter actually accepts.
+
+\emph{What we leave open.} (a)~The capacity bound $\mathrm{MOD}_p \in
+\mathrm{TC}^0$ used in \cref{prop:filter-composition}(4) is a capacity
+claim about what a $\mathrm{TC}^0$ circuit \emph{could in principle}
+compute; it is \emph{not} a guarantee that a specific trained
+fixed-architecture transformer reliably realises $\mathrm{MOD}_p$ on
+unboundedly long inputs. Hahn~\cite{hahn2020limitations} shows this gap is
+real for fixed-architecture self-attention without depth or head scaling;
+the proposition's caveat now reflects this. We do not prove that any
+particular production transformer guardrail closes the bypass class in
+practice. (b)~\cref{tab:composition-empirical} is keyed to items (3), (4),
+and (5) of \cref{prop:filter-composition}; items (1)--(2) (parallel
+regex and serial regex) follow algebraically from
+\cref{prop:composition} and are not reproduced as table rows. (c)~Pilot~6
+(\cref{sec:non-llm-pilot}) supplies the empirical leg of
+\cref{rem:cross-class-composition} for two non-LLM defensive classes (WAF
+and spam filter); the remaining classes named in CACM v14 \S2
+(literal-string AV signatures, IDS regex tiers, code/secret scanners)
+remain by algebraic argument only and are listed as future work.
+(d)~Hybrid topologies beyond plain parallel-OR / serial-AND
+(rate-limited fallback, ensemble voting with a neural majority,
+sampled-routing, multi-stage agentic pipelines with mixed AC$^0$/TC$^0$
+arbiters) are discussed informally in CACM v14 \S5 and are not formalized
+here.
+
 \subsection{Defense Layer Mapping}\label{sec:defense-table}
 
 Table~\ref{tab:defense} maps each impossibility result to the defense layer it
@@ -2179,12 +2271,25 @@ Let $\phi_p$ denote $\mathrm{MOD}_p$ encoding.
   The regex filter's inability to detect the encoded payload vetoes the neural
   filter's detection, regardless of the neural filter's accuracy.
 
-\item \textbf{Parallel with neural breaks the ceiling:}
+\item \textbf{Parallel with neural breaks the ceiling (capacity claim):}
   $(f_r \vee f_n)(\phi_p(x)) = \max(f_r(\phi_p(x)),\; f_n(\phi_p(x)))
   = \max(0,\; f_n(\phi_p(x))) = f_n(\phi_p(x))$.
   The composed filter detects if and only if the neural filter detects.
   Since $f_n \in \mathrm{TC}^0$ and $\mathrm{MOD}_p \in \mathrm{TC}^0$,
-  this composition escapes the $\mathrm{AC}^0$ ceiling.
+  this composition \emph{can in principle} escape the $\mathrm{AC}^0$
+  ceiling. \emph{Capacity-vs-realization caveat (Hahn~\cite{hahn2020limitations}).}
+  This is a capacity claim about what some $\mathrm{TC}^0$ circuit
+  could compute, not a guarantee that a specific trained
+  fixed-architecture transformer reliably realises $\mathrm{MOD}_p$ on
+  unboundedly long inputs: Hahn~2020 establishes that fixed-architecture
+  self-attention cannot model parity for unboundedly long inputs unless
+  depth or attention heads scale with sequence length. The empirical
+  TC$^0$ validation of \S\ref{sec:neural-tc0} confirms that the capacity
+  is achievable in the small-payload regime relevant to deployed
+  guardrails (a 14{,}753-parameter one-layer-one-head transformer detects
+  $\mathrm{MOD}_2$ on the corpus payload distribution at $90\%$); the
+  unbounded-length realization remains conditional on architecture
+  scaling.
 
 \item \textbf{Critical blend weight.}
   For a soft-score blend $g_\alpha(x) = 1$ iff
@@ -2205,10 +2310,46 @@ inherits the regex layer's blindness, because the dangerous case is
 precisely the one the regex does not flag.
 Item~(4) gives the correct composition: run both in parallel, block if
 \emph{either} flags, so the neural classifier covers the algebraic blind
-spot.
+spot (subject to the capacity-vs-realization caveat above).
 Item~(5) quantifies the trade-off: soft-score blends must keep
 $\alpha < \alpha^* = 1 - \tau/c$ or the regex weight dominates and
 reimports $\mathrm{AC}^0$ blindness.
+
+\begin{remark}[Cross-class composition: WAF $\circ$ IDS $\circ$ LLM-guardrail]\label{rem:cross-class-composition}
+Items~(1)--(2) and \cref{prop:composition,cor:starfree-class-closure}
+extend across defensive-class boundaries. A multi-tier pipeline
+composing a WAF rule set, an IDS signature set, and an LLM guardrail
+--- \emph{all} star-free / aperiodic --- is itself star-free, by the
+same Boolean-closure argument (Pin~\cite{pin1986} \S I.4): the
+composed system's syntactic monoid divides the direct product of the
+three constituents' syntactic monoids, all of which are aperiodic, so
+the product is aperiodic and the composition is in $\mathrm{AC}^0$.
+The composed system therefore inherits blindness to $L_{\mathsf{decode}}(p)$.
+The composition trap is the same mathematical object across the
+defensive-security landscape: serial-AND propagates the most
+algebraically-constrained tier's blindness to the system, regardless of
+which defensive class that tier comes from. Pilot~6
+(\S\ref{sec:non-llm-pilot}) supplies the empirical leg of this cross-class
+claim for two non-LLM defensive classes (ModSecurity OWASP CRS as the WAF
+constituent and SpamAssassin \texttt{20\_phrases.cf} as the spam-filter
+constituent); the remaining classes named in CACM v14 \S2 are by
+algebraic argument only and are listed under ``what we leave open'' in
+\S\ref{sec:discussion}'s scope paragraph.
+\end{remark}
+
+\paragraph{Assumption (model of composition).}
+Items~(1)--(4) of \cref{prop:filter-composition} model multi-tier
+composition as a \emph{Boolean} function of the constituent filters'
+block-decisions ($\wedge$ for serial-AND, $\vee$ for parallel-OR), with
+$f(x) \in \{0, 1\}$. Item~(5) is the soft-score generalisation, with
+calibrated score functions $s_r, s_n\colon \Sigma^* \to [0,1]$ such that
+$f(x) = 1 \iff s(x) > \tau_f$; the $s_r(\phi_p(x)) \approx 0$ claim used
+in item~(5) follows from \cref{thm:blindness} applied to a thresholded
+star-free language. Pipelines outside this Boolean-or-linear-blend
+model (e.g.\ neural rerankers conditioning on regex confidence as a
+feature, or learned routing policies that train on the regex tier's
+output distribution) are not covered by \cref{prop:filter-composition}
+and are listed under ``what we leave open'' in \S\ref{sec:discussion}.
 
 \paragraph{Empirical validation.}
 We validated all five laws on 20 guardrail-style regex patterns, 20
