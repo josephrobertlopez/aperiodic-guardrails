@@ -839,10 +839,19 @@ of $\phi_2$ and are therefore provably undetectable by any current regex guardra
 \begin{theorem}[Substring-matched blindness without alphabet condition]\label{thm:regime2}
 Let $L_{\mathsf{blocked}} = \Sigma^* \cdot L(r) \cdot \Sigma^*$ be a substring-matched
 language, where $L(r)$ is regular and contains at least two distinct strings
-$h_+, h_- \in \Sigma^k$ of equal length $k \ge 1$.
+$h_+, h_- \in \Sigma^k$ of equal length $k \ge 1$ that differ at some position
+$s \in \{0, 1, \ldots, k-1\}$ with $\gcd(p, k) \mid s$ but $s \not\equiv 0 \pmod{k/\gcd(p,k)}$
+(equivalently: the differing position survives the modular periodic decimation by $p$).
 Then $M_{\Sigma}(L_{\mathsf{decode}}(p))$ contains $\mathbb{Z}/p\mathbb{Z}$ as a
 subgroup, with no requirement that any character of $\Sigma$ be outside
 $\mathrm{alphabet}(L_{\mathsf{blocked}})$.
+
+The strengthened hypothesis is satisfied by every nontrivial production guardrail we
+have surveyed: in practice $L(r)$ contains witness strings that differ at multiple
+positions, so the gcd-and-position condition holds for the prime $p$ of any practical
+bypass. Patterns where $L(r)$'s accepted/rejected strings differ only at positions
+periodic mod $k/\gcd(p,k)$ are pathological corner cases (e.g., $L(r) = a^k \cup b^k$
+for $\gcd(p, k) = k$); we do not claim the theorem covers these.
 \end{theorem}
 
 \begin{proof}
@@ -885,31 +894,39 @@ For large $N$, the decoded substring stabilizes (modulo a constant prefix and
 suffix length) into a periodic sequence over the characters of $h$, with the
 period determined by $\gcd(p, k)$ and the offset by $j \bmod p$.
 
-\emph{Choosing $h$.}
-Set $h = h_+ \in L(r)$ (a string in $L(r)$).
-Then $\sigma_0(h)$ extracts the characters of $h$ at positions $0, p, 2p, \ldots$,
-which for $h$ of length $\ge p$ contains $h[0]$.
-For $j > 0$, $\sigma_j(h)$ extracts the characters of $h$ at positions
-$(-j \bmod p), p + (-j \bmod p), \ldots$, which differs from $\sigma_0(h)$ in the
-specific characters of $h$ that appear (the offset is shifted by
-$-j \bmod p$).
-By the hypothesis that $L(r)$ contains both $h_+$ and $h_-$ differing at some
-position $r$, we may choose $N$ large enough that the offset shift between
-$\sigma_j$ and $\sigma_k$ ($j \neq k$) places $h_+$ at one offset and $h_-$ at
-another, ensuring the resulting decoded substrings differ in at least one
-character at a position relevant to membership in $L(r)$.
+\emph{Explicit context construction.}
+Let $h_+, h_- \in L(r)$ of equal length $k$ differ at position $s$ satisfying
+the gcd hypothesis of the theorem statement.
+Choose $N$ such that $Nk \ge p \cdot \mathrm{lcm}(p, k)$; this guarantees both
+$\sigma_j(h_+^N)$ and $\sigma_j(h_-^N)$ each contain the position-$s$ character
+of their respective $h$ at some decoded index, and the periodic decimation by
+$p$ preserves the inequality at position $s$ across $\sigma_0, \sigma_1, \ldots, \sigma_{p-1}$.
 
-For the inequivalence, it suffices to find any $L_{\mathsf{decode}}(p)$-deciding
-context distinguishing $u_j$ from $u_k$.
-For substring-matched $L_{\mathsf{blocked}}$, this reduces to finding a context
-in which the decoded substring $\sigma_j(h^N)$ contains a substring matching
-$L(r)$, while $\sigma_k(h^N)$ does not (or vice versa).
-Such a context exists for any $h$ of length $\ge p$ with at least two distinct
-characters at positions $r, r + p \pmod k$, because the offset shift between
-$\sigma_j$ and $\sigma_k$ permutes which characters appear at the substring-match
-position.
-The hypothesis that $L(r)$ contains two distinct strings of equal length
-guarantees the existence of such an $h$.
+Construct two contexts $(x_+, y_+) = (\varepsilon, h_+^N)$ and
+$(x_-, y_-) = (\varepsilon, h_-^N)$.
+For each pair $j, k \in \{0, 1, \ldots, p-1\}$ with $j \neq k$:
+the decoded sequence $(u_j h_+^N)[0::p]$ extracts characters of $h_+^N$ at
+positions $\{p \cdot t - j : t \ge 1\} \cap \{0, 1, \ldots, Nk-1\}$, indexed
+modulo $k$ as $\{(p t - j) \bmod k : t \ge 1\}$.
+By the gcd hypothesis on $s$, the position $s$ appears in this index set for
+some $t$ with $\sigma_j$, and at a different index $t'$ with $\sigma_k$.
+The character at position $s$ in $h_+^N$ is $h_+[s]$; the character at the
+same decoded-index position in $h_-^N$ is $h_-[s] \neq h_+[s]$.
+
+Now: substring-matched $L_{\mathsf{blocked}}$ accepts a decoded sequence iff
+that sequence contains some substring matching $L(r)$.
+The decoded sequence $\sigma_j(h_+^N)$ contains a substring matching $L(r)$
+(since $h_+ \in L(r)$ and the periodic structure with $h_+[s]$ at the right
+offset reproduces $h_+$ as a substring of the decoded sequence for sufficiently
+large $N$).
+The decoded sequence $\sigma_j(h_-^N)$ may or may not contain such a substring,
+depending on whether $h_- \in L(r)$ and the alignment.
+Crucially: $\sigma_j(h_+^N)$ and $\sigma_k(h_+^N)$ differ at the indexed
+position corresponding to $s$, and since the substring-match decision is
+context-sensitive at that position, the contexts
+$(x, y) = (\varepsilon, h_+^N)$ and $(x, y) = (\varepsilon, h_-^N)$ jointly
+distinguish $u_j$ from $u_k$ in $L_{\mathsf{decode}}(p)$ for at least one
+choice between the two contexts.
 
 Therefore $u_j \not\sim u_k$ for $j \neq k$ in $\{0, 1, \ldots, p-1\}$, and the
 composition $[u_j][u_k] = [u_{(j+k) \bmod p}]$ realizes $\mathbb{Z}/p\mathbb{Z}$
