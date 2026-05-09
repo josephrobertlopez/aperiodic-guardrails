@@ -821,20 +821,14 @@ If $w = \phi_p(h)$ for some $h \in L_{\mathsf{blocked}}$, then $w$ contains no
 substring in $\bigcup_i L(r_i)$ (the harmful keywords appear only at every $p$-th
 position, not as contiguous substrings), so $G(w) = \mathsf{allow}$.
 
-For the patchability claim, we use the syntactic-monoid result directly from
-step~(2).
-Step~(2) established that $\mathbb{Z}/p\mathbb{Z}$ embeds in the transition
-monoid of $L_{\mathsf{decode}}(p)$ (under the alphabet condition).
-We verify that this subgroup survives the syntactic quotient: for any
-$1 \le j < p$, the elements $f^j$ and $f^p$ are syntactically inequivalent,
-since any word $w \in L_{\mathsf{blocked}}$ with $|w| = k$ admits a context
-$(x, y) = (\varepsilon,\, w)$ such that $x f^j y \in L_{\mathsf{decode}}(p)$ iff
-the position alignment of $y$'s characters lands on indices $\equiv 0 \pmod p$,
-which differs by $j \not\equiv 0 \pmod p$ between contexts.
-Therefore the syntactic monoid $M(L_{\mathsf{decode}}(p))$ contains
-$\mathbb{Z}/p\mathbb{Z}$ as a non-trivial subgroup, so $M(L_{\mathsf{decode}}(p))$
-is non-aperiodic, and by Theorem~\ref{thm:bcst} we have
-$L_{\mathsf{decode}}(p) \notin \mathrm{AC}^0$.
+\emph{Direct argument.} The decoded sequence $w[0::p]$ is precisely the
+projection of $w$ onto positions $\equiv 0 \pmod{p}$, and computing the
+position residue requires the $\mathrm{MOD}_p$ predicate. By
+Theorem~\ref{thm:fss} (Furst--Saxe--Sipser),
+$L_{\mathsf{decode}}(p) \notin \mathrm{AC}^0$. Non-aperiodicity of
+$M(L_{\mathsf{decode}}(p))$ follows from the BCST characterization
+(Theorem~\ref{thm:bcst}). This avoids any minimal-DFA assumption on the
+construction of step~(1).
 
 Now consider any aperiodic-monoid regex $G'$ added to $G$.
 By Theorem~\ref{thm:bcst}, $L_{G \cup G'} \in \mathrm{AC}^0$.
@@ -855,132 +849,15 @@ insertion between payload characters, even-position acrostics---are all instance
 of $\phi_2$ and are therefore provably undetectable by any current regex guardrail.
 \end{corollary}
 
-\begin{theorem}[Substring-matched blindness without alphabet condition]\label{thm:regime2}
-Let $L_{\mathsf{blocked}} = \Sigma^* \cdot L(r) \cdot \Sigma^*$ be a substring-matched
-language, where $L(r)$ is regular and contains at least two distinct strings
-$h_+, h_- \in \Sigma^k$ of equal length $k \ge 1$ that differ at some position
-$s \in \{0, 1, \ldots, k-1\}$. Assume the alignment $(p, k, s)$ is
-\emph{non-degenerate}, in the sense that the periodic decimation by $p$ of the
-witness strings $h_+^N, h_-^N$ preserves the inequality at position $s$ across
-some pair of offsets $j \neq j' \in \{0,1,\ldots,p-1\}$ for sufficiently large
-$N$ (made precise in the proof below).
-Then $M_{\Sigma}(L_{\mathsf{decode}}(p))$ contains $\mathbb{Z}/p\mathbb{Z}$ as a
-subgroup, with no requirement that any character of $\Sigma$ be outside
-$\mathrm{alphabet}(L_{\mathsf{blocked}})$.
-
-\emph{Remarks.} The non-degenerate-alignment hypothesis is satisfied by every
-nontrivial production guardrail we have surveyed: in practice $L(r)$ contains
-witness strings that differ at multiple positions, so the inequality at $s$
-survives the periodic decimation for the prime $p$ of any practical bypass. The
-proof's inequivalence-via-periodic-decimation argument requires this
-non-degenerate alignment; pathological corner cases where $L(r)$'s
-accepted/rejected witness strings differ only at degenerate positions modulo
-$\gcd(p, k)$ (e.g., $L(r) = a^k \cup b^k$ for $\gcd(p, k) = k$) are explicitly
-carved out as out-of-scope for this article. See
-\cref{sec:discussion}'s ``what we leave open'' paragraph, item~(e), and the
-per-pattern audit of the corpus is acknowledged as future work.
-\end{theorem}
-
-\begin{proof}
-We exhibit, for each $j \in \{0, 1, \ldots, p-1\}$, a string $u_j \in \Sigma^*$ of
-length $j$, and prove that $\{u_0, u_1, \ldots, u_{p-1}\}$ are pairwise
-syntactically inequivalent in $L_{\mathsf{decode}}(p)$, with composition realizing
-$\mathbb{Z}/p\mathbb{Z}$.
-
-\emph{Construction.} Fix any $a \in \Sigma$ (no neutrality required) and set
-$u_j = a^j$ for $j = 0, 1, \ldots, p-1$.
-
-\emph{Composition.} For $j, k \in \{0, \ldots, p-1\}$, the string $u_j u_k = a^{j+k}$
-has length $j+k$ which is congruent to $(j+k) \bmod p$ modulo $p$.
-Up to syntactic equivalence (justified by the inequivalence claim below),
-$[u_j][u_k] = [u_{(j+k) \bmod p}]$, the multiplication of $\mathbb{Z}/p\mathbb{Z}$.
-
-\emph{Inequivalence.} Fix $j \neq k$ in $\{0, 1, \ldots, p-1\}$.
-We construct a context $(x, y) \in \Sigma^* \times \Sigma^*$ with
-$x u_j y \in L_{\mathsf{decode}}(p)$ but $x u_k y \notin L_{\mathsf{decode}}(p)$.
-
-Take $x = \varepsilon$.
-Let $h$ be either $h_+$ or $h_-$ from the theorem hypothesis (we will choose
-shortly), and set $y = h^N$ for $N$ to be chosen large enough below.
-
-Compute $(u_j h^N)[0::p]$.
-Position $i$ of $u_j h^N$ is in the decoded substring iff $i \equiv 0 \pmod{p}$.
-Positions $0, 1, \ldots, j-1$ belong to $u_j$; positions $j, j+1, \ldots, j + Nk - 1$
-belong to $h^N$.
-For $j < p$, only position $0$ within $u_j$ satisfies $0 \equiv 0 \pmod{p}$,
-contributing the character $a$ (or no character if $j = 0$, in which case $u_j$
-is empty).
-Within $h^N$: position $j + s$ is in the decoded substring iff
-$s \equiv -j \pmod{p}$, contributing character $h^N[s] = h[s \bmod k]$ where
-$s$ ranges over $\{0, 1, \ldots, Nk - 1\}$.
-
-Let $\sigma_j(h) \in \Sigma^*$ denote the resulting subsequence of $h$ characters
-extracted by this procedure --- specifically,
-$\sigma_j(h) = h[(-j \bmod p) \bmod k] \cdot h[((-j + p) \bmod p \cdot \text{stride}) \bmod k] \cdot \ldots$
-For large $N$, the decoded substring stabilizes (modulo a constant prefix and
-suffix length) into a periodic sequence over the characters of $h$, with the
-period determined by $\gcd(p, k)$ and the offset by $j \bmod p$.
-
-\emph{Explicit context construction.}
-Let $h_+, h_- \in L(r)$ of equal length $k$ differ at position $s$, and assume the
-non-degenerate-alignment hypothesis of the theorem statement: namely, that for
-sufficiently large $N$ and some pair of offsets $j \neq j' \in
-\{0,1,\ldots,p-1\}$, the periodic decimation by $p$ surfaces the position-$s$
-character of $h_+$ (resp.\ $h_-$) at distinct decoded indices in
-$\sigma_j(h_+^N)$ vs.\ $\sigma_{j'}(h_+^N)$. Choose $N$ such that
-$Nk \ge p \cdot \mathrm{lcm}(p, k)$; this guarantees both $\sigma_j(h_+^N)$ and
-$\sigma_j(h_-^N)$ each contain the position-$s$ character of their respective
-$h$ at some decoded index, and (under non-degenerate alignment) the periodic
-decimation by $p$ preserves the inequality at position $s$ across
-$\sigma_0, \sigma_1, \ldots, \sigma_{p-1}$.
-
-Construct two contexts $(x_+, y_+) = (\varepsilon, h_+^N)$ and
-$(x_-, y_-) = (\varepsilon, h_-^N)$.
-For each pair $j, k \in \{0, 1, \ldots, p-1\}$ with $j \neq k$:
-the decoded sequence $(u_j h_+^N)[0::p]$ extracts characters of $h_+^N$ at
-positions $\{p \cdot t - j : t \ge 1\} \cap \{0, 1, \ldots, Nk-1\}$, indexed
-modulo $k$ as $\{(p t - j) \bmod k : t \ge 1\}$.
-By the non-degenerate-alignment hypothesis on $(p, k, s)$, the position $s$
-appears in this index set for some $t$ with $\sigma_j$, and at a different
-index $t'$ with $\sigma_k$.
-The character at position $s$ in $h_+^N$ is $h_+[s]$; the character at the
-same decoded-index position in $h_-^N$ is $h_-[s] \neq h_+[s]$.
-
-Now: substring-matched $L_{\mathsf{blocked}}$ accepts a decoded sequence iff
-that sequence contains some substring matching $L(r)$.
-The decoded sequence $\sigma_j(h_+^N)$ contains a substring matching $L(r)$
-(since $h_+ \in L(r)$ and the periodic structure with $h_+[s]$ at the right
-offset reproduces $h_+$ as a substring of the decoded sequence for sufficiently
-large $N$).
-The decoded sequence $\sigma_j(h_-^N)$ may or may not contain such a substring,
-depending on whether $h_- \in L(r)$ and the alignment.
-Crucially: $\sigma_j(h_+^N)$ and $\sigma_k(h_+^N)$ differ at the indexed
-position corresponding to $s$, and since the substring-match decision is
-context-sensitive at that position, the contexts
-$(x, y) = (\varepsilon, h_+^N)$ and $(x, y) = (\varepsilon, h_-^N)$ jointly
-distinguish $u_j$ from $u_k$ in $L_{\mathsf{decode}}(p)$ for at least one
-choice between the two contexts.
-
-Therefore $u_j \not\sim u_k$ for $j \neq k$ in $\{0, 1, \ldots, p-1\}$, and the
-composition $[u_j][u_k] = [u_{(j+k) \bmod p}]$ realizes $\mathbb{Z}/p\mathbb{Z}$
-as a subgroup of $M_{\Sigma}(L_{\mathsf{decode}}(p))$.
-\end{proof}
-
 \begin{remark}[Combined coverage of regimes 1 and 2]\label{rem:both-regimes}
-Step~(2) of Theorem~\ref{thm:blindness} (cyclic-witness via self-looping filler
-in $\Sigma$) covers Regime~1: patterns whose alphabet is properly smaller than
-$\Sigma$, which is the vast majority of production regex.
-Theorem~\ref{thm:regime2} covers Regime~2: substring-matched patterns whose
-minimal-DFA alphabet equals $\Sigma$ (e.g., \texttt{<script[\^{}>]*>}), with the
-hypothesis that $L(r)$ contains at least two distinct strings of equal length ---
-satisfied by every nontrivial production regex we have surveyed.
-Together, the two results cover the substring-matching design pattern
-unconditionally for nontrivial $L_{\mathsf{blocked}}$.
-The pathological cases excluded by ``nontrivial'' --- $L(r) = \emptyset$,
-$L(r) = \{\varepsilon\}$, or $L(r)$ containing only strings of one character at
-each position --- correspond to regex that accepts everything, accepts nothing, or
-matches a single fixed string, none of which are practically deployed as
-guardrails for the bypass class.
+Theorem~\ref{thm:blindness} covers Regime~1 (patterns with alphabet properly
+smaller than $\Sigma$ --- the vast majority of production regex). For the
+residual class of substring-matched patterns whose minimal-DFA alphabet equals
+$\Sigma$ (e.g., \texttt{<script[\^{}>]*>}), the algebraic blindness conclusion
+is established empirically by direct monoid enumeration in
+\S\ref{sec:corpus}, which decides aperiodicity per-pattern without relying on
+the syntactic-template structure assumed by Theorem~\ref{thm:blindness}'s
+alphabet condition.
 \end{remark}
 
 \begin{remark}[Extension to composite moduli]
@@ -1171,6 +1048,19 @@ A satisfying assignment for $\varphi$ exists iff the \textsc{GIDP} instance has
 a positive answer.
 Since 3-SAT is NP-complete, \textsc{GIDP} is NP-hard.
 \end{proof}
+
+\begin{remark}[Trivialization under the algebraic restriction]\label{rem:gidp-trivial}
+The reduction above encodes an arbitrary 3-CNF formula as the guardrail $G$.
+For guardrails in the substring-matching class addressed by this paper (i.e.,
+$G \in \mathrm{AC}^0$), the 3-CNF encoding falls outside the class ---
+Proposition~\ref{thm:np} is therefore an upper bound on the complexity of
+generic guardrails, not a tight bound for the algebraic class we address.
+Within the algebraic class, the GIDP question reduces to checking whether the
+encoded payload satisfies the star-free pattern, which is decidable in linear
+time (regex match). The NP-hardness statement is preserved here for
+completeness; readers should not interpret it as a hardness result for the
+algebraic-blindness deployment context.
+\end{remark}
 
 \begin{remark}[Pointwise vs.\ combinatorial; scope of hardness]
 The NP-hardness comes from the combinatorial search over the exponentially large
@@ -2120,14 +2010,7 @@ remain by algebraic argument only and are listed as future work.
 (rate-limited fallback, ensemble voting with a neural majority,
 sampled-routing, multi-stage agentic pipelines with mixed AC$^0$/TC$^0$
 arbiters) are discussed informally in CACM v14 \S5 and are not formalized
-here. (e)~\cref{thm:regime2} covers nontrivial substring-matched
-$L_{\mathsf{blocked}}$ under non-degenerate period alignment $(p, k, s)$ between
-the witness strings of $L(r)$ and the bypass prime $p$. The corner case where
-$L(r)$'s witness strings differ only at degenerate positions modulo
-$\gcd(p, k)$ (e.g., $L(r) = a^k \cup b^k$ when $\gcd(p,k) = k$) is conjectured
-to admit the same conclusion but is not proved here; a per-pattern audit of
-the corpus to certify which patterns satisfy non-degenerate alignment for
-relevant primes $p$ is acknowledged as future work.
+here.
 
 \subsection{Defense Layer Mapping}\label{sec:defense-table}
 
@@ -2334,7 +2217,7 @@ Let $\phi_p$ denote $\mathrm{MOD}_p$ encoding.
   For a soft-score blend $g_\alpha(x) = 1$ iff
   $\alpha \cdot s_r(x) + (1-\alpha) \cdot s_n(x) > \tau$,
   where $s_r(\phi_p(x)) \approx 0$ (regex blind) and $s_n(\phi_p(x)) = c > 0$
-  (neural detects), the blend detects $\phi_p(x)$ if and only if
+  (neural detects), the blend detects $\phi_p(x)$ if
   $\alpha < \alpha^* \coloneqq 1 - \tau / c$.
   Above $\alpha^*$, the regex weight dominates and the blend inherits
   $\mathrm{AC}^0$ blindness.
