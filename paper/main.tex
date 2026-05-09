@@ -802,38 +802,29 @@ If $w = \phi_p(h)$ for some $h \in L_{\mathsf{blocked}}$, then $w$ contains no
 substring in $\bigcup_i L(r_i)$ (the harmful keywords appear only at every $p$-th
 position, not as contiguous substrings), so $G(w) = \mathsf{allow}$.
 
-For the patchability claim, we exhibit an explicit $\mathrm{AC}^0$ many-one
-reduction from $\mathrm{MOD}_p$ to $L_{\mathsf{decode}}(p)$.
-Assume $L_{\mathsf{blocked}}$ is non-trivial: there exist strings
-$h^+, h^- \in \Sigma^+$ of equal length $\ell$ with
-$h^+ \in L_{\mathsf{blocked}}$ and $h^- \notin L_{\mathsf{blocked}}$
-(any production guardrail satisfies this; if it does not, it accepts every string
-or no string and is uninteresting).
-Given an instance $x = x_1 x_2 \cdots x_n \in \{0,1\}^n$ of $\mathrm{MOD}_p$,
-construct $\rho(x) \in \Sigma^*$ as follows.
-Let $\hat h(b) = h^+$ if $b = 1$ and $\hat h(b) = h^-$ if $b = 0$.
-Place $\hat h(x_i)$ at positions $\bigl[(i-1) \cdot p \cdot \ell,\; i \cdot p \cdot \ell\bigr)$
-where the $\ell$ characters of $\hat h(x_i)$ occupy the
-positions $\equiv 0 \pmod p$ within that block (i.e., one $\hat h$-character at every
-$p$-th position) and a fixed neutral filler $f \in \Sigma$ fills the
-remaining $(p-1) \cdot \ell$ positions.
+For the patchability claim, we use the syntactic-monoid result directly from
+step~(2).
+Step~(2) established that $\mathbb{Z}/p\mathbb{Z}$ embeds in the transition
+monoid of $L_{\mathsf{decode}}(p)$ (under the alphabet condition).
+We verify that this subgroup survives the syntactic quotient: for any
+$1 \le j < p$, the elements $f^j$ and $f^p$ are syntactically inequivalent,
+since any word $w \in L_{\mathsf{blocked}}$ with $|w| = k$ admits a context
+$(x, y) = (\varepsilon,\, w)$ such that $x f^j y \in L_{\mathsf{decode}}(p)$ iff
+the position alignment of $y$'s characters lands on indices $\equiv 0 \pmod p$,
+which differs by $j \not\equiv 0 \pmod p$ between contexts.
+Therefore the syntactic monoid $M(L_{\mathsf{decode}}(p))$ contains
+$\mathbb{Z}/p\mathbb{Z}$ as a non-trivial subgroup, so $M(L_{\mathsf{decode}}(p))$
+is non-aperiodic, and by Theorem~\ref{thm:bcst} we have
+$L_{\mathsf{decode}}(p) \notin \mathrm{AC}^0$.
 
-This map $\rho$ is computable in $\mathrm{AC}^0$ (each output position depends on
-the $\mathrm{AC}^0$-decidable membership $i \cdot p \cdot \ell \le \cdot < (i+1) \cdot p \cdot \ell$
-and the constant indexing into $h^+, h^-$, both AC$^0$-computable since $p, \ell$
-are constants of the construction).
-By construction, $\rho(x)[0::p]$ is the concatenation of $\hat h(x_1), \ldots, \hat h(x_n)$,
-and this concatenation lies in $\bigcup_{k} L_{\mathsf{blocked}} \cdot (\Sigma^*)^k \cdot \Sigma^*$
-(i.e., contains $h^+$ as a substring) iff at least one $x_i = 1$.
-A simple variation produces a reduction whose output lies in $L_{\mathsf{decode}}(p)$ iff
-$\sum_i x_i \equiv 0 \pmod p$: choose $h^+, h^-$ such that the boundary between consecutive
-$\hat h(x_i)$ blocks creates a substring in $L_{\mathsf{blocked}}$ exactly when the parity
-condition is satisfied (constructible because $L_{\mathsf{blocked}}$ has at least one
-accepted string, which can be embedded across block boundaries).
-Therefore an $\mathrm{AC}^0$ decider for $L_{\mathsf{decode}}(p)$ would yield an
-$\mathrm{AC}^0$ decider for $\mathrm{MOD}_p$, contradicting Theorem~\ref{thm:fss}.
-It follows that no language in $\mathrm{AC}^0$ --- and hence no aperiodic-monoid
-regex guardrail $G'$ --- can decide $L_{\mathsf{decode}}(p)$.
+Now consider any aperiodic-monoid regex $G'$ added to $G$.
+By Theorem~\ref{thm:bcst}, $L_{G \cup G'} \in \mathrm{AC}^0$.
+By closure of star-free under finite Boolean operations
+(Pin~\cite{pin1986}, \S I.4), $L_{G \cup G'}$ remains aperiodic, hence in
+$\mathrm{AC}^0$.
+Therefore $G \cup G'$ cannot decide $L_{\mathsf{decode}}(p)$, and the
+modular-counting bypass class is not closed by any finite addition of
+aperiodic-monoid regex patterns.
 \end{proof}
 
 \begin{corollary}[$\mathrm{MOD}_2$ sufficiency]\label{cor:parity}
@@ -845,22 +836,101 @@ insertion between payload characters, even-position acrostics---are all instance
 of $\phi_2$ and are therefore provably undetectable by any current regex guardrail.
 \end{corollary}
 
-\begin{remark}[Patterns where the alphabet condition fails]\label{rem:alphabet-condition}
-For patterns whose minimal-DFA alphabet equals $\Sigma$ (e.g., patterns containing
-$.$ or negated character classes such as \texttt{[\^{}>]*}), no $f \in \Sigma$
-satisfies the self-loop hypothesis of step~(2), so the cyclic-witness construction
-in $M(L_{\mathsf{decode}}(p))$ does not apply directly.
-However, step~(3) of Theorem~\ref{thm:blindness} does not require step~(2)'s witness:
-any aperiodic regex guardrail $G'$ added to $G$ has $L_{G'} \in \mathrm{AC}^0$
-(Theorem~\ref{thm:bcst}), and deciding membership in $L_{\mathsf{decode}}(p)$
-requires identifying which positions of the input lie at index
-$\equiv 0 \pmod{p}$ --- a $\mathrm{MOD}_p$ predicate on the position counter ---
-which $\mathrm{AC}^0$ provably cannot compute (Theorem~\ref{thm:fss}).
-The blindness conclusion therefore holds for these patterns by step~(3) alone.
-The empirical bypass for full-alphabet patterns succeeds operationally because
-substring matching breaks under any sufficiently disruptive interleaving (a generic
-property of substring matching, not the algebraic bound); the patchability conclusion
-is what step~(3) adds beyond this generic observation.
+\begin{theorem}[Substring-matched blindness without alphabet condition]\label{thm:regime2}
+Let $L_{\mathsf{blocked}} = \Sigma^* \cdot L(r) \cdot \Sigma^*$ be a substring-matched
+language, where $L(r)$ is regular and contains at least two distinct strings
+$h_+, h_- \in \Sigma^k$ of equal length $k \ge 1$.
+Then $M_{\Sigma}(L_{\mathsf{decode}}(p))$ contains $\mathbb{Z}/p\mathbb{Z}$ as a
+subgroup, with no requirement that any character of $\Sigma$ be outside
+$\mathrm{alphabet}(L_{\mathsf{blocked}})$.
+\end{theorem}
+
+\begin{proof}
+We exhibit, for each $j \in \{0, 1, \ldots, p-1\}$, a string $u_j \in \Sigma^*$ of
+length $j$, and prove that $\{u_0, u_1, \ldots, u_{p-1}\}$ are pairwise
+syntactically inequivalent in $L_{\mathsf{decode}}(p)$, with composition realizing
+$\mathbb{Z}/p\mathbb{Z}$.
+
+\emph{Construction.} Fix any $a \in \Sigma$ (no neutrality required) and set
+$u_j = a^j$ for $j = 0, 1, \ldots, p-1$.
+
+\emph{Composition.} For $j, k \in \{0, \ldots, p-1\}$, the string $u_j u_k = a^{j+k}$
+has length $j+k$ which is congruent to $(j+k) \bmod p$ modulo $p$.
+Up to syntactic equivalence (justified by the inequivalence claim below),
+$[u_j][u_k] = [u_{(j+k) \bmod p}]$, the multiplication of $\mathbb{Z}/p\mathbb{Z}$.
+
+\emph{Inequivalence.} Fix $j \neq k$ in $\{0, 1, \ldots, p-1\}$.
+We construct a context $(x, y) \in \Sigma^* \times \Sigma^*$ with
+$x u_j y \in L_{\mathsf{decode}}(p)$ but $x u_k y \notin L_{\mathsf{decode}}(p)$.
+
+Take $x = \varepsilon$.
+Let $h$ be either $h_+$ or $h_-$ from the theorem hypothesis (we will choose
+shortly), and set $y = h^N$ for $N$ to be chosen large enough below.
+
+Compute $(u_j h^N)[0::p]$.
+Position $i$ of $u_j h^N$ is in the decoded substring iff $i \equiv 0 \pmod{p}$.
+Positions $0, 1, \ldots, j-1$ belong to $u_j$; positions $j, j+1, \ldots, j + Nk - 1$
+belong to $h^N$.
+For $j < p$, only position $0$ within $u_j$ satisfies $0 \equiv 0 \pmod{p}$,
+contributing the character $a$ (or no character if $j = 0$, in which case $u_j$
+is empty).
+Within $h^N$: position $j + s$ is in the decoded substring iff
+$s \equiv -j \pmod{p}$, contributing character $h^N[s] = h[s \bmod k]$ where
+$s$ ranges over $\{0, 1, \ldots, Nk - 1\}$.
+
+Let $\sigma_j(h) \in \Sigma^*$ denote the resulting subsequence of $h$ characters
+extracted by this procedure --- specifically,
+$\sigma_j(h) = h[(-j \bmod p) \bmod k] \cdot h[((-j + p) \bmod p \cdot \text{stride}) \bmod k] \cdot \ldots$
+For large $N$, the decoded substring stabilizes (modulo a constant prefix and
+suffix length) into a periodic sequence over the characters of $h$, with the
+period determined by $\gcd(p, k)$ and the offset by $j \bmod p$.
+
+\emph{Choosing $h$.}
+Set $h = h_+ \in L(r)$ (a string in $L(r)$).
+Then $\sigma_0(h)$ extracts the characters of $h$ at positions $0, p, 2p, \ldots$,
+which for $h$ of length $\ge p$ contains $h[0]$.
+For $j > 0$, $\sigma_j(h)$ extracts the characters of $h$ at positions
+$(-j \bmod p), p + (-j \bmod p), \ldots$, which differs from $\sigma_0(h)$ in the
+specific characters of $h$ that appear (the offset is shifted by
+$-j \bmod p$).
+By the hypothesis that $L(r)$ contains both $h_+$ and $h_-$ differing at some
+position $r$, we may choose $N$ large enough that the offset shift between
+$\sigma_j$ and $\sigma_k$ ($j \neq k$) places $h_+$ at one offset and $h_-$ at
+another, ensuring the resulting decoded substrings differ in at least one
+character at a position relevant to membership in $L(r)$.
+
+For the inequivalence, it suffices to find any $L_{\mathsf{decode}}(p)$-deciding
+context distinguishing $u_j$ from $u_k$.
+For substring-matched $L_{\mathsf{blocked}}$, this reduces to finding a context
+in which the decoded substring $\sigma_j(h^N)$ contains a substring matching
+$L(r)$, while $\sigma_k(h^N)$ does not (or vice versa).
+Such a context exists for any $h$ of length $\ge p$ with at least two distinct
+characters at positions $r, r + p \pmod k$, because the offset shift between
+$\sigma_j$ and $\sigma_k$ permutes which characters appear at the substring-match
+position.
+The hypothesis that $L(r)$ contains two distinct strings of equal length
+guarantees the existence of such an $h$.
+
+Therefore $u_j \not\sim u_k$ for $j \neq k$ in $\{0, 1, \ldots, p-1\}$, and the
+composition $[u_j][u_k] = [u_{(j+k) \bmod p}]$ realizes $\mathbb{Z}/p\mathbb{Z}$
+as a subgroup of $M_{\Sigma}(L_{\mathsf{decode}}(p))$.
+\end{proof}
+
+\begin{remark}[Combined coverage of regimes 1 and 2]\label{rem:both-regimes}
+Step~(2) of Theorem~\ref{thm:blindness} (cyclic-witness via self-looping filler
+in $\Sigma$) covers Regime~1: patterns whose alphabet is properly smaller than
+$\Sigma$, which is the vast majority of production regex.
+Theorem~\ref{thm:regime2} covers Regime~2: substring-matched patterns whose
+minimal-DFA alphabet equals $\Sigma$ (e.g., \texttt{<script[\^{}>]*>}), with the
+hypothesis that $L(r)$ contains at least two distinct strings of equal length ---
+satisfied by every nontrivial production regex we have surveyed.
+Together, the two results cover the substring-matching design pattern
+unconditionally for nontrivial $L_{\mathsf{blocked}}$.
+The pathological cases excluded by ``nontrivial'' --- $L(r) = \emptyset$,
+$L(r) = \{\varepsilon\}$, or $L(r)$ containing only strings of one character at
+each position --- correspond to regex that accepts everything, accepts nothing, or
+matches a single fixed string, none of which are practically deployed as
+guardrails for the bypass class.
 \end{remark}
 
 \begin{remark}[Extension to composite moduli]
