@@ -8,6 +8,8 @@ build/
 *.egg
 .pytest_cache/
 .mypy_cache/
+
+# LaTeX build artifacts
 *.aux
 *.log
 *.out
@@ -16,7 +18,21 @@ build/
 *.synctex.gz
 *.fdb_latexmk
 *.fls
+paper/main.aux
+paper/main.bbl
+paper/main.blg
+paper/main.log
+paper/main.out
+
+# Local tooling
+.claude/
+.ldd/
+.playwright-mcp/
+.prompts/
+.gitnexus
+.gitnexus/
+
+# Local config / runtime
 benchmark_results.json
 config.b64
 .env
-.gitnexus
