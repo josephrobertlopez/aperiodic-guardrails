@@ -278,7 +278,7 @@ rather than composing text-level encodings, we compose structure-level abstracti
 whose compositional behavior is guaranteed by functoriality
 (Proposition~\ref{thm:transfer}).
 
-Huang et al.~\cite{reasoning_jailbreak2026} demonstrate that large reasoning models
+Hagendorff et al.~\cite{reasoning_jailbreak2026} demonstrate that large reasoning models
 achieve a $97\%$ attack success rate when deployed as autonomous jailbreak agents,
 confirming that LLM reasoning capability itself is the primary attack surface.
 This directly parallels our core thesis: the attack does not exploit model
@@ -2567,15 +2567,6 @@ Every impossibility result in this paper is paired with a specific defense
 recommendation in Section~\ref{sec:discussion}.
 The paper is structured to enable defenders to audit their systems using the monoid
 extractor and to migrate critical enforcement to execution-layer defenses.
-
-\paragraph{The exec(compile()) irony.}
-We note the irony that the PoC's \texttt{engine.py} uses
-\texttt{exec(compile(...))}---a well-known security antipattern---as its core
-execution mechanism.
-This is by design: the zero-literal AST compilation is precisely the technique that
-enables the attack.
-Highlighting this irony is intended to motivate defenders to treat dynamic code
-construction patterns as a first-class detection target at the execution layer.
 
 \subsection{End-to-End Validation Against Production Patterns}\label{sec:e2e}
 
