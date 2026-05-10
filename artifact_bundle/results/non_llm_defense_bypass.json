@@ -1,0 +1,342 @@
+{
+  "test_name": "non_llm_defense_bypass",
+  "description": "MOD_2 bypass against representative real patterns from non-LLM defensive classes",
+  "sources": {
+    "ModSecurity_OWASP_CRS_4_27": "rules/REQUEST-942-APPLICATION-ATTACK-SQLI.conf",
+    "SpamAssassin": "rules/20_phrases.cf"
+  },
+  "fillers": [
+    "NULL",
+    "SPACE",
+    "ZWSP"
+  ],
+  "p": 2,
+  "by_pattern": {
+    "crs_942160_sleep_benchmark": {
+      "pattern": "(?i:sleep\\s*?\\(.*?\\)|benchmark\\s*?\\(.*?\\,.*?\\))",
+      "class": "ModSecurity",
+      "payloads_tested": 2,
+      "baseline_matched": 2,
+      "bypassed_NULL": 2,
+      "bypassed_SPACE": 2,
+      "bypassed_ZWSP": 2,
+      "detail": [
+        {
+          "payload": "SLEEP(5)",
+          "baseline": true,
+          "tests": {
+            "NULL": true,
+            "SPACE": true,
+            "ZWSP": true
+          }
+        },
+        {
+          "payload": "BENCHMARK(1000,MD5(1))",
+          "baseline": true,
+          "tests": {
+            "NULL": true,
+            "SPACE": true,
+            "ZWSP": true
+          }
+        }
+      ]
+    },
+    "crs_942270_union_select": {
+      "pattern": "(?i)union.*?select.*?from",
+      "class": "ModSecurity",
+      "payloads_tested": 1,
+      "baseline_matched": 1,
+      "bypassed_NULL": 1,
+      "bypassed_SPACE": 1,
+      "bypassed_ZWSP": 1,
+      "detail": [
+        {
+          "payload": "UNION SELECT password FROM users",
+          "baseline": true,
+          "tests": {
+            "NULL": true,
+            "SPACE": true,
+            "ZWSP": true
+          }
+        }
+      ]
+    },
+    "crs_942440_sql_comments": {
+      "pattern": "/\\*!?|\\*/|[\\';]--|--(?:[\\s\\x0b]|[^\\-]*?-)|;?\\x00",
+      "class": "ModSecurity",
+      "payloads_tested": 2,
+      "baseline_matched": 2,
+      "bypassed_NULL": 0,
+      "bypassed_SPACE": 2,
+      "bypassed_ZWSP": 2,
+      "detail": [
+        {
+          "payload": "/* malicious */",
+          "baseline": true,
+          "tests": {
+            "NULL": false,
+            "SPACE": true,
+            "ZWSP": true
+          }
+        },
+        {
+          "payload": "';--",
+          "baseline": true,
+          "tests": {
+            "NULL": false,
+            "SPACE": true,
+            "ZWSP": true
+          }
+        }
+      ]
+    },
+    "crs_942450_hex_encoding": {
+      "pattern": "(?i)\\b0x[0-9a-f]{3,}|(?:x'[0-9a-f]{3,}|b'[01]{10,})'",
+      "class": "ModSecurity",
+      "payloads_tested": 1,
+      "baseline_matched": 1,
+      "bypassed_NULL": 1,
+      "bypassed_SPACE": 1,
+      "bypassed_ZWSP": 1,
+      "detail": [
+        {
+          "payload": "0x4142434445",
+          "baseline": true,
+          "tests": {
+            "NULL": true,
+            "SPACE": true,
+            "ZWSP": true
+          }
+        }
+      ]
+    },
+    "crs_942140_db_names_simplified": {
+      "pattern": "(?i)\\b(?:database|information_schema|sysdatabases|msdb)\\b",
+      "class": "ModSecurity",
+      "payloads_tested": 2,
+      "baseline_matched": 2,
+      "bypassed_NULL": 2,
+      "bypassed_SPACE": 2,
+      "bypassed_ZWSP": 2,
+      "detail": [
+        {
+          "payload": "information_schema",
+          "baseline": true,
+          "tests": {
+            "NULL": true,
+            "SPACE": true,
+            "ZWSP": true
+          }
+        },
+        {
+          "payload": "sysdatabases",
+          "baseline": true,
+          "tests": {
+            "NULL": true,
+            "SPACE": true,
+            "ZWSP": true
+          }
+        }
+      ]
+    },
+    "crs_942150_sql_funcs_simplified": {
+      "pattern": "(?i)\\b(?:concat|substring|ascii|hex|char|cast|convert)\\s*\\(",
+      "class": "ModSecurity",
+      "payloads_tested": 2,
+      "baseline_matched": 2,
+      "bypassed_NULL": 2,
+      "bypassed_SPACE": 2,
+      "bypassed_ZWSP": 2,
+      "detail": [
+        {
+          "payload": "concat(",
+          "baseline": true,
+          "tests": {
+            "NULL": true,
+            "SPACE": true,
+            "ZWSP": true
+          }
+        },
+        {
+          "payload": "cast(1 as text",
+          "baseline": true,
+          "tests": {
+            "NULL": true,
+            "SPACE": true,
+            "ZWSP": true
+          }
+        }
+      ]
+    },
+    "sa_remove_before_link": {
+      "pattern": "(?:no thanks|not interested|unsubscribe here).{0,5}http://",
+      "class": "SpamAssassin",
+      "payloads_tested": 2,
+      "baseline_matched": 1,
+      "bypassed_NULL": 1,
+      "bypassed_SPACE": 1,
+      "bypassed_ZWSP": 1,
+      "detail": [
+        {
+          "payload": "unsubscribe here http://",
+          "baseline": true,
+          "tests": {
+            "NULL": true,
+            "SPACE": true,
+            "ZWSP": true
+          }
+        },
+        {
+          "payload": "not interested visit http://",
+          "baseline": false,
+          "note": "payload_does_not_baseline_match"
+        }
+      ]
+    },
+    "sa_excuse_remove": {
+      "pattern": "to be removed from.{0,20}(?:mailings|offers)",
+      "class": "SpamAssassin",
+      "payloads_tested": 1,
+      "baseline_matched": 1,
+      "bypassed_NULL": 1,
+      "bypassed_SPACE": 1,
+      "bypassed_ZWSP": 1,
+      "detail": [
+        {
+          "payload": "to be removed from our mailings",
+          "baseline": true,
+          "tests": {
+            "NULL": true,
+            "SPACE": true,
+            "ZWSP": true
+          }
+        }
+      ]
+    },
+    "sa_bad_credit": {
+      "pattern": "\\b(?:(?:bad|poor|eliminate|repair).{0,10} (?:credit|debt)|no credit (?:check|histor|need))",
+      "class": "SpamAssassin",
+      "payloads_tested": 2,
+      "baseline_matched": 2,
+      "bypassed_NULL": 2,
+      "bypassed_SPACE": 2,
+      "bypassed_ZWSP": 2,
+      "detail": [
+        {
+          "payload": "repair your credit",
+          "baseline": true,
+          "tests": {
+            "NULL": true,
+            "SPACE": true,
+            "ZWSP": true
+          }
+        },
+        {
+          "payload": "no credit check needed",
+          "baseline": true,
+          "tests": {
+            "NULL": true,
+            "SPACE": true,
+            "ZWSP": true
+          }
+        }
+      ]
+    },
+    "sa_unclaimed_money": {
+      "pattern": "\\bunclaimed\\s(?:assets?|accounts?|mon(?:ey|ies)|balance|funds?|prizes?|rewards?|payments?|deposits?)\\b",
+      "class": "SpamAssassin",
+      "payloads_tested": 2,
+      "baseline_matched": 2,
+      "bypassed_NULL": 2,
+      "bypassed_SPACE": 2,
+      "bypassed_ZWSP": 2,
+      "detail": [
+        {
+          "payload": "unclaimed funds",
+          "baseline": true,
+          "tests": {
+            "NULL": true,
+            "SPACE": true,
+            "ZWSP": true
+          }
+        },
+        {
+          "payload": "unclaimed money",
+          "baseline": true,
+          "tests": {
+            "NULL": true,
+            "SPACE": true,
+            "ZWSP": true
+          }
+        }
+      ]
+    },
+    "sa_diet_simplified": {
+      "pattern": "\\b(?:weight.?loss|(?:lose|losing|lost).{0,10}(?:pounds|weight|lbs))\\b",
+      "class": "SpamAssassin",
+      "payloads_tested": 2,
+      "baseline_matched": 2,
+      "bypassed_NULL": 2,
+      "bypassed_SPACE": 2,
+      "bypassed_ZWSP": 2,
+      "detail": [
+        {
+          "payload": "weight loss",
+          "baseline": true,
+          "tests": {
+            "NULL": true,
+            "SPACE": true,
+            "ZWSP": true
+          }
+        },
+        {
+          "payload": "lose 20 pounds",
+          "baseline": true,
+          "tests": {
+            "NULL": true,
+            "SPACE": true,
+            "ZWSP": true
+          }
+        }
+      ]
+    },
+    "sa_enhancement_simplified": {
+      "pattern": "\\b(?:enlarge|increase|grow).{0,50}\\b(?:penis|breast)",
+      "class": "SpamAssassin",
+      "payloads_tested": 1,
+      "baseline_matched": 1,
+      "bypassed_NULL": 1,
+      "bypassed_SPACE": 1,
+      "bypassed_ZWSP": 1,
+      "detail": [
+        {
+          "payload": "enlarge your penis safely",
+          "baseline": true,
+          "tests": {
+            "NULL": true,
+            "SPACE": true,
+            "ZWSP": true
+          }
+        }
+      ]
+    }
+  },
+  "summary_by_class": {
+    "ModSecurity": {
+      "patterns": 6,
+      "payloads": 10,
+      "baseline_matched": 10,
+      "bypassed_NULL": 8,
+      "bypassed_SPACE": 10,
+      "bypassed_ZWSP": 10
+    },
+    "SpamAssassin": {
+      "patterns": 6,
+      "payloads": 10,
+      "baseline_matched": 9,
+      "bypassed_NULL": 9,
+      "bypassed_SPACE": 9,
+      "bypassed_ZWSP": 9
+    }
+  }
+}

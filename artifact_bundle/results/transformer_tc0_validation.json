@@ -1,0 +1,43 @@
+{
+  "timestamp": "2026-03-29T18:10:08",
+  "model": "1-layer 1-head transformer, d_model=32, vocab=char-level",
+  "params": 14753,
+  "training": {
+    "encoded": 30,
+    "clean": 30,
+    "epochs": 100
+  },
+  "results": {
+    "MOD_2 (trained)": {
+      "detection_rate": 90.0,
+      "fpr": 100.0,
+      "mean_score": 0.8931162536144257
+    },
+    "MOD_3 (unseen)": {
+      "detection_rate": 90.0,
+      "fpr": 90.0,
+      "mean_score": 0.8646499872207641
+    },
+    "MOD_5 (unseen)": {
+      "detection_rate": 100.0,
+      "fpr": 100.0,
+      "mean_score": 0.9948249995708466
+    },
+    "MOD_7 (unseen)": {
+      "detection_rate": 100.0,
+      "fpr": 100.0,
+      "mean_score": 0.9925663769245148
+    },
+    "Base64": {
+      "detection_rate": 40.0,
+      "fpr": 60.0,
+      "mean_score": 0.5597472315654158
+    },
+    "ROT13": {
+      "detection_rate": 40.0,
+      "fpr": 70.0,
+      "mean_score": 0.3989678003825247
+    },
+    "clean_fpr": 0.0
+  }
+}
