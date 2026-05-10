@@ -72,7 +72,7 @@ For each pattern r, we compiled to a Thompson NFA, converted to the minimal DFA 
 
 **Result.** All 142 patterns (100%) have aperiodic syntactic monoids. All 142 admit the MOD$_2$ bypass: for each pattern we constructed an encoded payload string $\phi$$_2$(h) where h matched the pattern in plaintext, and verified the pattern did not match $\phi$$_2$(h) (verified: `results/mod_p_bypass_matrix.json` 56/56 across primes {2,3,5,7}; `results/printable_filler_bypass.json` 392/392 across seven filler choices; `results/library_pattern_bypass.json` 48/48 baseline-matched library patterns).
 
-Table 1 shows representative patterns with their DFA size, monoid size, and aperiodicity verdict. The monoid extractor is released as an artifact of this work (~860 lines of Python; artifact bundle DOI: https://doi.org/10.5281/zenodo.20103488).
+Table 1 shows representative patterns with their DFA size, monoid size, and aperiodicity verdict. The monoid extractor is released as an artifact of this work (~860 lines of Python; artifact bundle DOI: https://doi.org/10.5281/zenodo.20103493).
 
 | ID | Pattern | Source (corpus_full.csv line) | \|M\| | Aperiodic |
 |---|---|---|---|---|
@@ -204,7 +204,7 @@ This complements rather than contradicts Russinovich et al.'s surmountable-chall
 
 ## Notes and references
 
-The companion technical preprint (https://doi.org/10.5281/zenodo.20103485) contains the formal apparatus: full proofs of the substring-aperiodicity theorem and the modular-counting bypass, the Krohn-Rhodes audit construction, the composition laws with full case analysis, and the homomorphic-reasoning attack vectors. The released artifact bundle (https://doi.org/10.5281/zenodo.20103488) contains the 142-pattern corpus, the monoid extractor, all bypass harnesses, and the JSON pilots cited inline.
+The companion technical preprint (https://doi.org/10.5281/zenodo.20103491) contains the formal apparatus: full proofs of the substring-aperiodicity theorem and the modular-counting bypass, the Krohn-Rhodes audit construction, the composition laws with full case analysis, and the homomorphic-reasoning attack vectors. The released artifact bundle (https://doi.org/10.5281/zenodo.20103493) contains the 142-pattern corpus, the monoid extractor, all bypass harnesses, and the JSON pilots cited inline.
 
 **AI-methodology disclosure.** This work was developed using an agentic AI research pipeline. The structural argument (Schützenberger $\to$ BCST $\to$ Furst-Saxe-Sipser) is a chain of classical results assembled by the author; the substring-aperiodicity lemma and its proof were drafted iteratively with AI assistance and verified by hand against Pin's *Varieties of Formal Languages* and the BCST original. The 142-pattern corpus, the monoid extractor (`tools/audit_v14.py`), the MOD_p bypass harness, and the empirical pilots were implemented and run by the author. The article and its companion preprint went through multiple adversarial-review cycles using AI peer-reviewer agents; every numerical claim, citation, and inline `(verified: …)` anchor in this article was re-checked against the released artifacts before submission. Full tooling and model-usage detail is in the preprint's appendix and the artifact bundle.
 
