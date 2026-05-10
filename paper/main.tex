@@ -2231,7 +2231,8 @@ Let $\phi_p$ denote $\mathrm{MOD}_p$ encoding.
   fixed-architecture transformer reliably realises $\mathrm{MOD}_p$ on
   unboundedly long inputs: Hahn~2020 establishes that fixed-architecture
   self-attention cannot model parity for unboundedly long inputs unless
-  depth or attention heads scale with sequence length. The empirical
+  depth or precision scales with sequence length (the precision angle
+  is sharpened in Chiang-Cholak-Pillay~\cite{chiang2023tighter}). The empirical
   TC$^0$ validation of \S\ref{sec:neural-tc0} confirms that the capacity
   is achievable in the small-payload regime relevant to deployed
   guardrails (a 14{,}753-parameter one-layer-one-head transformer detects
