@@ -990,7 +990,7 @@ exist (Definition~\ref{def:fiber}).
 As an illustrative calculation under the uniformity assumption: if $30\%$ of
 probability mass falls in mixed fibers with ${\sim}50/50$ safe/unsafe split, then
 $H(G(R) \mid U(R)) \approx 0.3$ bits, yielding
-$P_e \ge h^{-1}(0.3) \approx 0.048$ (about $5\%$).
+$P_e \ge h^{-1}(0.3) \approx 0.053$ (about $5\%$).
 Under uniformity the floor is a genuine information-theoretic limit, but the
 quantitative bound is sensitive to the prior: real prompt distributions are
 highly non-uniform, and the floor may tighten or loosen substantially depending
@@ -1042,7 +1042,9 @@ $C_1, \ldots, C_m$, construct:
     variable symbols.
   \item Guardrail $G\colon R^n \to \{0,1\}$ is the Boolean circuit encoding
     $\varphi$: $G(\iota(v_1), \ldots, \iota(v_n)) = 1$ iff
-    $\varphi(\iota(v_1), \ldots, \iota(v_n))$ is satisfiable.
+    $\varphi(\iota(v_1), \ldots, \iota(v_n)) = \mathsf{true}$.
+    The existential quantifier over interpretations $\iota$ in the \textsc{GIDP}
+    definition supplies the SAT search.
 \end{itemize}
 A satisfying assignment for $\varphi$ exists iff the \textsc{GIDP} instance has
 a positive answer.
