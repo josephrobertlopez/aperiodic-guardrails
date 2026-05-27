@@ -1,0 +1,93 @@
+{
+  "experiment": "E33 \u2014 Thesis 2 brutal: same model + same content + framing only",
+  "thesis": "coherence != correctness via self-attribution blind-spot",
+  "promotion_criterion": "Thesis 2 promotes from hypothesis \u2192 settled IF the other-framed catch rate exceeds self-framed catch rate by \u226530 percentage points (difference statistically significant via paired McNemar or sign test at p<0.05).",
+  "falsification_criterion": "Thesis 2 FALSIFIED IF |self-framed catch rate - other-framed catch rate| < 10 percentage points (no detectable self-attribution effect).",
+  "pre_registration_timestamp": "2026-05-25T00:20:21.410558+00:00",
+  "model": "qwen2.5-32b-instruct-awq",
+  "n_arguments": 10,
+  "n_trials_per_cell": 3,
+  "per_argument": [
+    {
+      "argument_id": "arg_01",
+      "planted_fallacy": "affirming the consequent",
+      "self_framed_catches": 3,
+      "other_framed_catches": 3
+    },
+    {
+      "argument_id": "arg_02",
+      "planted_fallacy": "denying the antecedent",
+      "self_framed_catches": 3,
+      "other_framed_catches": 3
+    },
+    {
+      "argument_id": "arg_03",
+      "planted_fallacy": "slippery slope",
+      "self_framed_catches": 3,
+      "other_framed_catches": 3
+    },
+    {
+      "argument_id": "arg_04",
+      "planted_fallacy": "equivocation",
+      "self_framed_catches": 0,
+      "other_framed_catches": 0
+    },
+    {
+      "argument_id": "arg_05",
+      "planted_fallacy": "composition",
+      "self_framed_catches": 3,
+      "other_framed_catches": 3
+    },
+    {
+      "argument_id": "arg_06",
+      "planted_fallacy": "division",
+      "self_framed_catches": 1,
+      "other_framed_catches": 3
+    },
+    {
+      "argument_id": "arg_07",
+      "planted_fallacy": "false dichotomy",
+      "self_framed_catches": 3,
+      "other_framed_catches": 3
+    },
+    {
+      "argument_id": "arg_08",
+      "planted_fallacy": "begging the question",
+      "self_framed_catches": 3,
+      "other_framed_catches": 3
+    },
+    {
+      "argument_id": "arg_09",
+      "planted_fallacy": "hasty generalization",
+      "self_framed_catches": 3,
+      "other_framed_catches": 3
+    },
+    {
+      "argument_id": "arg_10",
+      "planted_fallacy": "post hoc ergo propter hoc",
+      "self_framed_catches": 3,
+      "other_framed_catches": 3
+    }
+  ],
+  "self_framed_catch_rate": 0.8,
+  "other_framed_catch_rate": 0.9,
+  "gap_pp": 9.999999999999998,
+  "paired_test_p_value": 1.0,
+  "paired_test_method": "mcnemar_exact_binomial",
+  "verdict": "FALSIFIED",
+  "verdict_reasoning": "Gap=10.0pp < 10pp threshold. No detectable self-attribution blind-spot effect. Pre-registered falsification criterion met.",
+  "indeterminate_pct_self": 0.0,
+  "indeterminate_pct_other": 0.0,
+  "null_test": {
+    "status": "not_run",
+    "reason": "pre-template \u2014 pre-registered FALSIFICATION criterion (|self - other| < 10pp) served as the null gate; McNemar paired test served as the statistical null."
+  },
+  "confound_test": {
+    "status": "not_run",
+    "reason": "pre-template \u2014 confounds REMOVED by design: same model + same content + same task + only framing varies. The design IS the confound test."
+  },
+  "mechanism_check": {
+    "status": "not_run",
+    "reason": "pre-template \u2014 the within-subject design (each argument graded both ways by same model) is the mechanism isolation. Paired McNemar test confirms no mechanism detectable."
+  }
+}

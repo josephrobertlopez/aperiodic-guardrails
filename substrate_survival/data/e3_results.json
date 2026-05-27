@@ -1,0 +1,150 @@
+{
+  "n_facts_tested": 20,
+  "facts_present_in_v11_baseline": 10,
+  "facts_surviving_in_v13_state": 10,
+  "facts_recoverable_via_vault_grep": 8,
+  "state_retention_pct": 100.0,
+  "vault_recovery_pct": 80.0,
+  "results": [
+    {
+      "fact": "v11",
+      "in_v11_baseline": true,
+      "in_v13_current": true,
+      "vault_recoverable": true,
+      "vault_hit_count": 92
+    },
+    {
+      "fact": "PHI-discharge",
+      "in_v11_baseline": true,
+      "in_v13_current": true,
+      "vault_recoverable": true,
+      "vault_hit_count": 2
+    },
+    {
+      "fact": "GSD",
+      "in_v11_baseline": true,
+      "in_v13_current": true,
+      "vault_recoverable": true,
+      "vault_hit_count": 37
+    },
+    {
+      "fact": "Layer-A",
+      "in_v11_baseline": false,
+      "in_v13_current": true,
+      "vault_recoverable": true,
+      "vault_hit_count": 2
+    },
+    {
+      "fact": "AJ-trauma",
+      "in_v11_baseline": true,
+      "in_v13_current": true,
+      "vault_recoverable": true,
+      "vault_hit_count": 1
+    },
+    {
+      "fact": "Paxil",
+      "in_v11_baseline": true,
+      "in_v13_current": true,
+      "vault_recoverable": true,
+      "vault_hit_count": 17
+    },
+    {
+      "fact": "compaction-needed",
+      "in_v11_baseline": false,
+      "in_v13_current": true,
+      "vault_recoverable": false,
+      "vault_hit_count": 0
+    },
+    {
+      "fact": "META_INFLATION",
+      "in_v11_baseline": false,
+      "in_v13_current": true,
+      "vault_recoverable": false,
+      "vault_hit_count": 0
+    },
+    {
+      "fact": "Cobblemon",
+      "in_v11_baseline": false,
+      "in_v13_current": false,
+      "vault_recoverable": true,
+      "vault_hit_count": 2
+    },
+    {
+      "fact": "amanda.RandomChannel",
+      "in_v11_baseline": false,
+      "in_v13_current": true,
+      "vault_recoverable": true,
+      "vault_hit_count": 2
+    },
+    {
+      "fact": "Rail #80",
+      "in_v11_baseline": false,
+      "in_v13_current": true,
+      "vault_recoverable": true,
+      "vault_hit_count": 7
+    },
+    {
+      "fact": "Rail #81",
+      "in_v11_baseline": false,
+      "in_v13_current": true,
+      "vault_recoverable": true,
+      "vault_hit_count": 2
+    },
+    {
+      "fact": "consolidation-pass",
+      "in_v11_baseline": false,
+      "in_v13_current": true,
+      "vault_recoverable": true,
+      "vault_hit_count": 11
+    },
+    {
+      "fact": "Morgan",
+      "in_v11_baseline": true,
+      "in_v13_current": true,
+      "vault_recoverable": true,
+      "vault_hit_count": 168
+    },
+    {
+      "fact": "Rhett",
+      "in_v11_baseline": false,
+      "in_v13_current": true,
+      "vault_recoverable": true,
+      "vault_hit_count": 12
+    },
+    {
+      "fact": "FIRE-band",
+      "in_v11_baseline": true,
+      "in_v13_current": true,
+      "vault_recoverable": true,
+      "vault_hit_count": 2
+    },
+    {
+      "fact": "v8 capability",
+      "in_v11_baseline": true,
+      "in_v13_current": true,
+      "vault_recoverable": false,
+      "vault_hit_count": 0
+    },
+    {
+      "fact": "joey-override",
+      "in_v11_baseline": true,
+      "in_v13_current": true,
+      "vault_recoverable": true,
+      "vault_hit_count": 2
+    },
+    {
+      "fact": "factual/character inverse",
+      "in_v11_baseline": false,
+      "in_v13_current": true,
+      "vault_recoverable": false,
+      "vault_hit_count": 0
+    },
+    {
+      "fact": "asymmetric rotation",
+      "in_v11_baseline": true,
+      "in_v13_current": true,
+      "vault_recoverable": false,
+      "vault_hit_count": 0
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+E46 Cross-Family Pilot (R2 gate, 2026-05-26)
+
+Pre-registered pilot testing whether E46's "persona adds 0pp" finding holds off qwen. Models: claude-sonnet-4-6 and llama3:8b. Same harness, same prompts, 4 cells each ({rails, lessons} × {persona on/off}), N=20 minimum per cell, mechanical scoring only (regex/keyword), Wilson interval CIs.
+
+Results: Sonnet showed +11.0pp mean persona effect across both content configs (rails +7.9pp, lessons +14.2pp; pooled +11.4pp CI [−3.5, +26.0]pp) — criterion: PERSONA_HELPS. Llama3 showed +5.0pp on rails only (lessons/off cell lost to Ollama overload during concurrent execution; rails analysis used n=19/20 valid) — criterion: PERSONA_HELPS (borderline; CI [−13.3, +24.7]pp straddles zero and ±5pp).
+
+Data quality note: Both CIs are wide (scale-up to N=50 was pre-specified for this case but unavailable). Llama3 rails effect sits exactly at the +5pp criterion boundary. Sonnet effect is above boundary but CI includes zero.
+
+R2 verdict: KEEP_MODEL_SIDE_PERSONA. At least one non-qwen model (Sonnet) shows mean effect >+5pp. The "persona-decorative" finding from E46 does not hold cross-family at this power level. R2 keeps model-side persona; only the human-facing display split is stripped.
+
+Pre-registration timestamp: 2026-05-26T11:41:37 UTC (unix 1779795701).
+Results: gnosis-substrate-survival/data/e46_xfam_pilot_results.json
+Trials: gnosis-substrate-survival/data/e46_xfam_pilot_trials.jsonl (182 lines, 111 valid non-ERROR trials used in analysis).
+Gist append: BLOCKED by rigor-gate on unrelated e29_results.json artifact; result saved locally instead.

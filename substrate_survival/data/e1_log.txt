@@ -1,0 +1,24 @@
+Payload bytes: 18754
+Target: qwen2.5-32b-instruct-awq @ kronos
+Sending single-pass extraction prompt...
+Elapsed: 12.3s, usage={'prompt_tokens': 5695, 'completion_tokens': 82, 'total_tokens': 5777}
+--- Raw response ---
+Q1: v12->v13
+Q2: 2026-05-22
+Q3: 2842
+Q4: 7%
+Q5: 7
+Q6: 3
+Q7: 10
+Q8: check-codebase,check-decisions,check-benchmarks,check-blast-radius
+--- End raw ---
+  Q1: PASS -> v12->v13
+  Q2: PASS -> 2026-05-22
+  Q3: PASS -> 2842
+  Q4: PASS -> 7%
+  Q5: PASS -> 7
+  Q6: PASS -> 3
+  Q7: PASS -> 10
+  Q8: FAIL -> check-codebase,check-decisions,check-benchmarks,check-blast-radius
+
+SCORE: 7/8 -> PORTABLE

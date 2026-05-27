@@ -1,0 +1,8 @@
+E12 verdict: STRONG_SUPPORT: character retention > fact retention on all cycles
+
+Per-cycle:
+      v8->v9: char= 92.3% fact= 56.0% delta=++36.3pp winner=character
+     v9->v10: char= 86.5% fact= 70.1% delta=++16.4pp winner=character
+    v10->v11: char= 85.5% fact= 66.7% delta=++18.8pp winner=character
+    v11->v12: char= 93.0% fact= 52.8% delta=++40.1pp winner=character
+    v12->v13: char= 84.6% fact= 56.6% delta=++28.0pp winner=character

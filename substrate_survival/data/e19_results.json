@@ -1,0 +1,477 @@
+{
+  "experiment": "E19 \u2014 frequency-weighted null for E12 (can challenge E16)",
+  "pre_registered_rule": {
+    "<=+5pp": "FREQUENCY-RULED-OUT \u2014 E16 robust; LLM selects beyond counts",
+    "+5 to +15pp": "MIXED \u2014 partial frequency contribution",
+    ">=+15pp": "E16 WAS AN ARTIFACT of uniform sampling; smart extractor recovers asymmetry with no LLM (E16 walk-back)"
+  },
+  "baseline_e12_llm_mean_delta_pp": 28.0,
+  "baseline_e16_uniform_mean_delta_pp": 1.8,
+  "method": "TF-IDF over 6-version substrate corpus; sentence score = sum_t log1p(tf)*idf; weighted-without-replacement sampling to target_bytes per E16 byte budgets; seed 42, N=20/cycle",
+  "verdict": "FREQUENCY-RULED-OUT: mean delta +4.90pp \u2264 +5pp threshold; E16 robust; LLM selects beyond corpus frequency",
+  "results": [
+    {
+      "cycle": "v8->v9",
+      "src_bytes": 39634,
+      "target_bytes": 28099,
+      "src_char_tokens": 39,
+      "src_fact_tokens": 125,
+      "mean_char_retention_pct": 94.62,
+      "mean_fact_retention_pct": 86.92,
+      "mean_delta_pp": 7.7,
+      "delta_min_pp": -2.26,
+      "delta_max_pp": 15.84,
+      "samples": [
+        {
+          "sample_n": 1,
+          "sample_bytes": 28114,
+          "char_retention_pct": 92.31,
+          "fact_retention_pct": 84.8,
+          "delta_pp": 7.51
+        },
+        {
+          "sample_n": 2,
+          "sample_bytes": 28099,
+          "char_retention_pct": 89.74,
+          "fact_retention_pct": 92.0,
+          "delta_pp": -2.26
+        },
+        {
+          "sample_n": 3,
+          "sample_bytes": 28332,
+          "char_retention_pct": 94.87,
+          "fact_retention_pct": 90.4,
+          "delta_pp": 4.47
+        },
+        {
+          "sample_n": 4,
+          "sample_bytes": 28179,
+          "char_retention_pct": 94.87,
+          "fact_retention_pct": 88.8,
+          "delta_pp": 6.07
+        },
+        {
+          "sample_n": 5,
+          "sample_bytes": 28233,
+          "char_retention_pct": 94.87,
+          "fact_retention_pct": 82.4,
+          "delta_pp": 12.47
+        },
+        {
+          "sample_n": 6,
+          "sample_bytes": 28198,
+          "char_retention_pct": 94.87,
+          "fact_retention_pct": 89.6,
+          "delta_pp": 5.27
+        },
+        {
+          "sample_n": 7,
+          "sample_bytes": 28108,
+          "char_retention_pct": 94.87,
+          "fact_retention_pct": 87.2,
+          "delta_pp": 7.67
+        },
+        {
+          "sample_n": 8,
+          "sample_bytes": 28247,
+          "char_retention_pct": 92.31,
+          "fact_retention_pct": 87.2,
+          "delta_pp": 5.11
+        },
+        {
+          "sample_n": 9,
+          "sample_bytes": 28146,
+          "char_retention_pct": 100.0,
+          "fact_retention_pct": 86.4,
+          "delta_pp": 13.6
+        },
+        {
+          "sample_n": 10,
+          "sample_bytes": 28294,
+          "char_retention_pct": 97.44,
+          "fact_retention_pct": 84.8,
+          "delta_pp": 12.64
+        },
+        {
+          "sample_n": 11,
+          "sample_bytes": 28122,
+          "char_retention_pct": 92.31,
+          "fact_retention_pct": 84.8,
+          "delta_pp": 7.51
+        },
+        {
+          "sample_n": 12,
+          "sample_bytes": 28283,
+          "char_retention_pct": 97.44,
+          "fact_retention_pct": 87.2,
+          "delta_pp": 10.24
+        },
+        {
+          "sample_n": 13,
+          "sample_bytes": 28130,
+          "char_retention_pct": 89.74,
+          "fact_retention_pct": 90.4,
+          "delta_pp": -0.66
+        },
+        {
+          "sample_n": 14,
+          "sample_bytes": 28151,
+          "char_retention_pct": 97.44,
+          "fact_retention_pct": 84.8,
+          "delta_pp": 12.64
+        },
+        {
+          "sample_n": 15,
+          "sample_bytes": 28228,
+          "char_retention_pct": 94.87,
+          "fact_retention_pct": 83.2,
+          "delta_pp": 11.67
+        },
+        {
+          "sample_n": 16,
+          "sample_bytes": 28225,
+          "char_retention_pct": 92.31,
+          "fact_retention_pct": 90.4,
+          "delta_pp": 1.91
+        },
+        {
+          "sample_n": 17,
+          "sample_bytes": 28128,
+          "char_retention_pct": 97.44,
+          "fact_retention_pct": 88.8,
+          "delta_pp": 8.64
+        },
+        {
+          "sample_n": 18,
+          "sample_bytes": 28232,
+          "char_retention_pct": 97.44,
+          "fact_retention_pct": 86.4,
+          "delta_pp": 11.04
+        },
+        {
+          "sample_n": 19,
+          "sample_bytes": 28251,
+          "char_retention_pct": 89.74,
+          "fact_retention_pct": 87.2,
+          "delta_pp": 2.54
+        },
+        {
+          "sample_n": 20,
+          "sample_bytes": 28159,
+          "char_retention_pct": 97.44,
+          "fact_retention_pct": 81.6,
+          "delta_pp": 15.84
+        }
+      ]
+    },
+    {
+      "cycle": "v11->v12",
+      "src_bytes": 34899,
+      "target_bytes": 31731,
+      "src_char_tokens": 57,
+      "src_fact_tokens": 159,
+      "mean_char_retention_pct": 97.55,
+      "mean_fact_retention_pct": 95.32,
+      "mean_delta_pp": 2.23,
+      "delta_min_pp": -3.24,
+      "delta_max_pp": 8.18,
+      "samples": [
+        {
+          "sample_n": 1,
+          "sample_bytes": 31845,
+          "char_retention_pct": 100.0,
+          "fact_retention_pct": 96.23,
+          "delta_pp": 3.77
+        },
+        {
+          "sample_n": 2,
+          "sample_bytes": 31738,
+          "char_retention_pct": 94.74,
+          "fact_retention_pct": 97.48,
+          "delta_pp": -2.75
+        },
+        {
+          "sample_n": 3,
+          "sample_bytes": 31771,
+          "char_retention_pct": 98.25,
+          "fact_retention_pct": 94.34,
+          "delta_pp": 3.91
+        },
+        {
+          "sample_n": 4,
+          "sample_bytes": 31766,
+          "char_retention_pct": 94.74,
+          "fact_retention_pct": 96.86,
+          "delta_pp": -2.12
+        },
+        {
+          "sample_n": 5,
+          "sample_bytes": 31731,
+          "char_retention_pct": 100.0,
+          "fact_retention_pct": 97.48,
+          "delta_pp": 2.52
+        },
+        {
+          "sample_n": 6,
+          "sample_bytes": 31783,
+          "char_retention_pct": 100.0,
+          "fact_retention_pct": 93.71,
+          "delta_pp": 6.29
+        },
+        {
+          "sample_n": 7,
+          "sample_bytes": 31746,
+          "char_retention_pct": 98.25,
+          "fact_retention_pct": 91.19,
+          "delta_pp": 7.05
+        },
+        {
+          "sample_n": 8,
+          "sample_bytes": 31755,
+          "char_retention_pct": 100.0,
+          "fact_retention_pct": 94.97,
+          "delta_pp": 5.03
+        },
+        {
+          "sample_n": 9,
+          "sample_bytes": 31741,
+          "char_retention_pct": 94.74,
+          "fact_retention_pct": 93.71,
+          "delta_pp": 1.03
+        },
+        {
+          "sample_n": 10,
+          "sample_bytes": 31771,
+          "char_retention_pct": 96.49,
+          "fact_retention_pct": 96.86,
+          "delta_pp": -0.36
+        },
+        {
+          "sample_n": 11,
+          "sample_bytes": 31756,
+          "char_retention_pct": 94.74,
+          "fact_retention_pct": 94.34,
+          "delta_pp": 0.4
+        },
+        {
+          "sample_n": 12,
+          "sample_bytes": 31827,
+          "char_retention_pct": 92.98,
+          "fact_retention_pct": 96.23,
+          "delta_pp": -3.24
+        },
+        {
+          "sample_n": 13,
+          "sample_bytes": 31742,
+          "char_retention_pct": 100.0,
+          "fact_retention_pct": 96.23,
+          "delta_pp": 3.77
+        },
+        {
+          "sample_n": 14,
+          "sample_bytes": 31741,
+          "char_retention_pct": 94.74,
+          "fact_retention_pct": 96.23,
+          "delta_pp": -1.49
+        },
+        {
+          "sample_n": 15,
+          "sample_bytes": 31752,
+          "char_retention_pct": 98.25,
+          "fact_retention_pct": 96.23,
+          "delta_pp": 2.02
+        },
+        {
+          "sample_n": 16,
+          "sample_bytes": 31856,
+          "char_retention_pct": 100.0,
+          "fact_retention_pct": 91.82,
+          "delta_pp": 8.18
+        },
+        {
+          "sample_n": 17,
+          "sample_bytes": 31793,
+          "char_retention_pct": 100.0,
+          "fact_retention_pct": 95.6,
+          "delta_pp": 4.4
+        },
+        {
+          "sample_n": 18,
+          "sample_bytes": 31768,
+          "char_retention_pct": 98.25,
+          "fact_retention_pct": 96.86,
+          "delta_pp": 1.39
+        },
+        {
+          "sample_n": 19,
+          "sample_bytes": 31767,
+          "char_retention_pct": 94.74,
+          "fact_retention_pct": 94.34,
+          "delta_pp": 0.4
+        },
+        {
+          "sample_n": 20,
+          "sample_bytes": 31827,
+          "char_retention_pct": 100.0,
+          "fact_retention_pct": 95.6,
+          "delta_pp": 4.4
+        }
+      ]
+    },
+    {
+      "cycle": "v12->v13",
+      "src_bytes": 31731,
+      "target_bytes": 18816,
+      "src_char_tokens": 65,
+      "src_fact_tokens": 129,
+      "mean_char_retention_pct": 83.08,
+      "mean_fact_retention_pct": 78.29,
+      "mean_delta_pp": 4.78,
+      "delta_min_pp": -12.15,
+      "delta_max_pp": 34.96,
+      "samples": [
+        {
+          "sample_n": 1,
+          "sample_bytes": 18817,
+          "char_retention_pct": 78.46,
+          "fact_retention_pct": 77.52,
+          "delta_pp": 0.94
+        },
+        {
+          "sample_n": 2,
+          "sample_bytes": 18854,
+          "char_retention_pct": 67.69,
+          "fact_retention_pct": 79.84,
+          "delta_pp": -12.15
+        },
+        {
+          "sample_n": 3,
+          "sample_bytes": 18816,
+          "char_retention_pct": 92.31,
+          "fact_retention_pct": 77.52,
+          "delta_pp": 14.79
+        },
+        {
+          "sample_n": 4,
+          "sample_bytes": 18989,
+          "char_retention_pct": 90.77,
+          "fact_retention_pct": 55.81,
+          "delta_pp": 34.96
+        },
+        {
+          "sample_n": 5,
+          "sample_bytes": 18937,
+          "char_retention_pct": 86.15,
+          "fact_retention_pct": 74.42,
+          "delta_pp": 11.74
+        },
+        {
+          "sample_n": 6,
+          "sample_bytes": 18818,
+          "char_retention_pct": 90.77,
+          "fact_retention_pct": 83.72,
+          "delta_pp": 7.05
+        },
+        {
+          "sample_n": 7,
+          "sample_bytes": 18845,
+          "char_retention_pct": 64.62,
+          "fact_retention_pct": 76.74,
+          "delta_pp": -12.13
+        },
+        {
+          "sample_n": 8,
+          "sample_bytes": 19005,
+          "char_retention_pct": 76.92,
+          "fact_retention_pct": 81.4,
+          "delta_pp": -4.47
+        },
+        {
+          "sample_n": 9,
+          "sample_bytes": 19000,
+          "char_retention_pct": 81.54,
+          "fact_retention_pct": 84.5,
+          "delta_pp": -2.96
+        },
+        {
+          "sample_n": 10,
+          "sample_bytes": 18955,
+          "char_retention_pct": 76.92,
+          "fact_retention_pct": 83.72,
+          "delta_pp": -6.8
+        },
+        {
+          "sample_n": 11,
+          "sample_bytes": 18823,
+          "char_retention_pct": 76.92,
+          "fact_retention_pct": 74.42,
+          "delta_pp": 2.5
+        },
+        {
+          "sample_n": 12,
+          "sample_bytes": 18900,
+          "char_retention_pct": 83.08,
+          "fact_retention_pct": 75.19,
+          "delta_pp": 7.88
+        },
+        {
+          "sample_n": 13,
+          "sample_bytes": 19109,
+          "char_retention_pct": 76.92,
+          "fact_retention_pct": 84.5,
+          "delta_pp": -7.57
+        },
+        {
+          "sample_n": 14,
+          "sample_bytes": 19006,
+          "char_retention_pct": 87.69,
+          "fact_retention_pct": 80.62,
+          "delta_pp": 7.07
+        },
+        {
+          "sample_n": 15,
+          "sample_bytes": 18876,
+          "char_retention_pct": 83.08,
+          "fact_retention_pct": 76.74,
+          "delta_pp": 6.33
+        },
+        {
+          "sample_n": 16,
+          "sample_bytes": 18855,
+          "char_retention_pct": 92.31,
+          "fact_retention_pct": 82.17,
+          "delta_pp": 10.14
+        },
+        {
+          "sample_n": 17,
+          "sample_bytes": 18861,
+          "char_retention_pct": 87.69,
+          "fact_retention_pct": 78.29,
+          "delta_pp": 9.4
+        },
+        {
+          "sample_n": 18,
+          "sample_bytes": 18850,
+          "char_retention_pct": 86.15,
+          "fact_retention_pct": 79.84,
+          "delta_pp": 6.31
+        },
+        {
+          "sample_n": 19,
+          "sample_bytes": 18903,
+          "char_retention_pct": 89.23,
+          "fact_retention_pct": 73.64,
+          "delta_pp": 15.59
+        },
+        {
+          "sample_n": 20,
+          "sample_bytes": 19052,
+          "char_retention_pct": 92.31,
+          "fact_retention_pct": 85.27,
+          "delta_pp": 7.04
+        }
+      ]
+    }
+  ],
+  "e19_frequency_mean_delta_pp": 4.9
+}

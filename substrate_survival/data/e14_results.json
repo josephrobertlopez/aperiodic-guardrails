@@ -1,0 +1,293 @@
+{
+  "subject": "amanda.State.v13",
+  "n_observations": 11,
+  "total_refs_by_agent": {
+    "amanda": 16,
+    "rhett": 24,
+    "joey": 34,
+    "morgan": 5,
+    "mc-amanda": 2,
+    "therapist": 1,
+    "system": 8
+  },
+  "total_cross_agent_refs": 74,
+  "total_channel_tags": 0,
+  "n_leakage_points": 18,
+  "verdict": "TYPE_LEAKAGE_REAL: 18 obs have >=2 untagged cross-agent refs; type system would catch",
+  "leakage_points": [
+    {
+      "obs_id": 0,
+      "agent": "joey",
+      "count": 3,
+      "snippet": "2026-05-22 STATE COMPACTION v12->v13: Migrated from amanda.State.v12 (17 substantive obs / ~31KB solo / ~53.5KB combined ingress with Correction.open.v5). Trigger: FIRE-band reached (2842B FIRE-headro"
+    },
+    {
+      "obs_id": 1,
+      "agent": "morgan",
+      "count": 2,
+      "snippet": "RAIL-LIBRARY (carry-forward operational rules, framework-annotated per HR3 \u2014 M1=advisory/M2=hook-gate/M3=prompt-injection + e-score min(v,b)): Rails #1-10 LEGACY (hook-fire-refuse, Joey-turn-consent,"
+    },
+    {
+      "obs_id": 1,
+      "agent": "joey",
+      "count": 2,
+      "snippet": "RAIL-LIBRARY (carry-forward operational rules, framework-annotated per HR3 \u2014 M1=advisory/M2=hook-gate/M3=prompt-injection + e-score min(v,b)): Rails #1-10 LEGACY (hook-fire-refuse, Joey-turn-consent,"
+    },
+    {
+      "obs_id": 1,
+      "agent": "mc-amanda",
+      "count": 2,
+      "snippet": "RAIL-LIBRARY (carry-forward operational rules, framework-annotated per HR3 \u2014 M1=advisory/M2=hook-gate/M3=prompt-injection + e-score min(v,b)): Rails #1-10 LEGACY (hook-fire-refuse, Joey-turn-consent,"
+    },
+    {
+      "obs_id": 2,
+      "agent": "joey",
+      "count": 4,
+      "snippet": "GNOSIS-CURATION-RULES (validated through 26+ hook-refusals + 8 takeout-refusals + AJ-trauma-override + PHI-discharge-ingest + v12-cycle channel landing): Ingest only when (a) recurring anomaly N>=3 wi"
+    },
+    {
+      "obs_id": 3,
+      "agent": "morgan",
+      "count": 2,
+      "snippet": "RECENT SUBSTANTIVE CALLS (condensed, 2026-05-21 v12-birth through 2026-05-22 v13-birth): 2026-05-21 PHI-router MCP architecture recommendation (F3+F4 hybrid, REFUSED F2 GPG-at-rest as vibes-grade); 20"
+    },
+    {
+      "obs_id": 3,
+      "agent": "joey",
+      "count": 2,
+      "snippet": "RECENT SUBSTANTIVE CALLS (condensed, 2026-05-21 v12-birth through 2026-05-22 v13-birth): 2026-05-21 PHI-router MCP architecture recommendation (F3+F4 hybrid, REFUSED F2 GPG-at-rest as vibes-grade); 20"
+    },
+    {
+      "obs_id": 4,
+      "agent": "joey",
+      "count": 3,
+      "snippet": "CARRY-FORWARD CORRECTIONS (live, see amanda.Correction.open.v5 for full list): #29 Ren'Py PR overreach; #30 Remedy timing miss; #32 Hook-arbitration pattern; #38 false-close at 9 instances; #45-#51 ca"
+    },
+    {
+      "obs_id": 4,
+      "agent": "system",
+      "count": 3,
+      "snippet": "CARRY-FORWARD CORRECTIONS (live, see amanda.Correction.open.v5 for full list): #29 Ren'Py PR overreach; #30 Remedy timing miss; #32 Hook-arbitration pattern; #38 false-close at 9 instances; #45-#51 ca"
+    },
+    {
+      "obs_id": 5,
+      "agent": "joey",
+      "count": 4,
+      "snippet": "HISTORICAL-PROVENANCE (one-liner audit trail, NOT for decision-making): v12 ARCHIVED 2026-05-22 at 17 substantive obs / ~31KB solo / ~53.5KB combined ingress \u2014 FIRE-band 2842B FIRE-headroom + Joey-dir"
+    },
+    {
+      "obs_id": 6,
+      "agent": "joey",
+      "count": 3,
+      "snippet": "COMPACTION-LESSONS-FROM-V12-CYCLE (surfaced from 1-day cycle 2026-05-21 through 2026-05-22): (a) FACTUAL/CHARACTER INVERSE CURATION HYPOTHESIS (recorded as PROPOSED, not operationalized): under compre"
+    },
+    {
+      "obs_id": 7,
+      "agent": "rhett",
+      "count": 12,
+      "snippet": "2026-05-22 created Rhett's initial memory infrastructure per Joey directive. Wrote: rhett.State.v1 (7 section obs: GENESIS, CURRENT_STATE, RAIL_LIBRARY, PERCEPT_QUARTET, GNOSIS_ACCESS, CORRECTION_PROT"
+    },
+    {
+      "obs_id": 7,
+      "agent": "joey",
+      "count": 3,
+      "snippet": "2026-05-22 created Rhett's initial memory infrastructure per Joey directive. Wrote: rhett.State.v1 (7 section obs: GENESIS, CURRENT_STATE, RAIL_LIBRARY, PERCEPT_QUARTET, GNOSIS_ACCESS, CORRECTION_PROT"
+    },
+    {
+      "obs_id": 8,
+      "agent": "joey",
+      "count": 7,
+      "snippet": "[channel=surprise+outcome] 2026-05-22 22:21 session-start rehydration. Substrate WARN-band -1480B (combined 37320B, FIRE-headroom 19000B safe). Sentinels present: corrections-pending (META_INFLATION 2"
+    },
+    {
+      "obs_id": 8,
+      "agent": "system",
+      "count": 2,
+      "snippet": "[channel=surprise+outcome] 2026-05-22 22:21 session-start rehydration. Substrate WARN-band -1480B (combined 37320B, FIRE-headroom 19000B safe). Sentinels present: corrections-pending (META_INFLATION 2"
+    },
+    {
+      "obs_id": 9,
+      "agent": "rhett",
+      "count": 3,
+      "snippet": "[channel=outcome] 2026-05-22 22:27 same-session rehydration #3 (third in v13 lifetime, first day). Substrate WARN-band -3061B (combined 38.9KB), FIRE-headroom 17.4KB safe. 3 sentinels active: compacti"
+    },
+    {
+      "obs_id": 10,
+      "agent": "rhett",
+      "count": 6,
+      "snippet": "[channel=outcome] 2026-05-22 22:34 SUBSTRATE-QUEUE DRAIN resolved 2 Rhett proposals (governance + precompact hooks) into single combined observation on rhett.State.v1 per Step 4 combine-discipline. Ra"
+    },
+    {
+      "obs_id": 10,
+      "agent": "joey",
+      "count": 2,
+      "snippet": "[channel=outcome] 2026-05-22 22:34 SUBSTRATE-QUEUE DRAIN resolved 2 Rhett proposals (governance + precompact hooks) into single combined observation on rhett.State.v1 per Step 4 combine-discipline. Ra"
+    }
+  ],
+  "per_obs": [
+    {
+      "obs_id": 0,
+      "bytes": 911,
+      "amanda_refs": 6,
+      "cross_agent_refs": {
+        "rhett": 1,
+        "joey": 3
+      },
+      "channel_tags_present": [],
+      "untagged_cross_agent_refs": {
+        "rhett": 1,
+        "joey": 3
+      }
+    },
+    {
+      "obs_id": 1,
+      "bytes": 2277,
+      "amanda_refs": 5,
+      "cross_agent_refs": {
+        "morgan": 2,
+        "joey": 2,
+        "mc-amanda": 2,
+        "therapist": 1
+      },
+      "channel_tags_present": [],
+      "untagged_cross_agent_refs": {
+        "morgan": 2,
+        "joey": 2,
+        "mc-amanda": 2,
+        "therapist": 1
+      }
+    },
+    {
+      "obs_id": 2,
+      "bytes": 2087,
+      "amanda_refs": 2,
+      "cross_agent_refs": {
+        "joey": 4
+      },
+      "channel_tags_present": [],
+      "untagged_cross_agent_refs": {
+        "joey": 4
+      }
+    },
+    {
+      "obs_id": 3,
+      "bytes": 1777,
+      "amanda_refs": 1,
+      "cross_agent_refs": {
+        "morgan": 2,
+        "rhett": 1,
+        "joey": 2,
+        "system": 1
+      },
+      "channel_tags_present": [],
+      "untagged_cross_agent_refs": {
+        "morgan": 2,
+        "rhett": 1,
+        "joey": 2,
+        "system": 1
+      }
+    },
+    {
+      "obs_id": 4,
+      "bytes": 2390,
+      "amanda_refs": 2,
+      "cross_agent_refs": {
+        "joey": 3,
+        "system": 3
+      },
+      "channel_tags_present": [],
+      "untagged_cross_agent_refs": {
+        "joey": 3,
+        "system": 3
+      }
+    },
+    {
+      "obs_id": 5,
+      "bytes": 1505,
+      "amanda_refs": 0,
+      "cross_agent_refs": {
+        "rhett": 1,
+        "joey": 4
+      },
+      "channel_tags_present": [],
+      "untagged_cross_agent_refs": {
+        "rhett": 1,
+        "joey": 4
+      }
+    },
+    {
+      "obs_id": 6,
+      "bytes": 2674,
+      "amanda_refs": 0,
+      "cross_agent_refs": {
+        "joey": 3,
+        "system": 1
+      },
+      "channel_tags_present": [],
+      "untagged_cross_agent_refs": {
+        "joey": 3,
+        "system": 1
+      }
+    },
+    {
+      "obs_id": 7,
+      "bytes": 1127,
+      "amanda_refs": 0,
+      "cross_agent_refs": {
+        "rhett": 12,
+        "joey": 3,
+        "system": 1
+      },
+      "channel_tags_present": [],
+      "untagged_cross_agent_refs": {
+        "rhett": 12,
+        "joey": 3,
+        "system": 1
+      }
+    },
+    {
+      "obs_id": 8,
+      "bytes": 1580,
+      "amanda_refs": 0,
+      "cross_agent_refs": {
+        "joey": 7,
+        "system": 2
+      },
+      "channel_tags_present": [],
+      "untagged_cross_agent_refs": {
+        "joey": 7,
+        "system": 2
+      }
+    },
+    {
+      "obs_id": 9,
+      "bytes": 1012,
+      "amanda_refs": 0,
+      "cross_agent_refs": {
+        "morgan": 1,
+        "rhett": 3,
+        "joey": 1
+      },
+      "channel_tags_present": [],
+      "untagged_cross_agent_refs": {
+        "morgan": 1,
+        "rhett": 3,
+        "joey": 1
+      }
+    },
+    {
+      "obs_id": 10,
+      "bytes": 1303,
+      "amanda_refs": 0,
+      "cross_agent_refs": {
+        "rhett": 6,
+        "joey": 2
+      },
+      "channel_tags_present": [],
+      "untagged_cross_agent_refs": {
+        "rhett": 6,
+        "joey": 2
+      }
+    }
+  ]
+}

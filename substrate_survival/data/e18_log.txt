@@ -1,0 +1,65 @@
+
+=== SELF (amanda v13) (target 11289B, N=20) ===
+  src_char=56 src_fact=90 balance=-11.6pp
+  resumed from checkpoint: 10 trials already done
+  trial 11: raw=-20.7 norm= -9.1 bytes=4207 (125.2s)
+  trial 12: raw= -9.6 norm= +2.0 bytes=3787 (100.1s)
+  trial 13: raw= -1.5 norm=+10.1 bytes=2399 (58.6s)
+  trial 14: raw=-32.1 norm=-20.5 bytes=2973 (86.2s)
+  trial 15: raw=-29.4 norm=-17.8 bytes=3706 (98.5s)
+  trial 16: raw=-23.4 norm=-11.8 bytes=4124 (117.8s)
+  trial 17: raw= +6.1 norm=+17.7 bytes=2151 (46.1s)
+  trial 18: raw=-36.0 norm=-24.3 bytes=2471 (67.8s)
+  trial 19: raw=+18.8 norm=+30.4 bytes=2956 (71.7s)
+  trial 20: raw=+20.6 norm=+32.2 bytes=2459 (58.3s)
+
+=== OTHER (rhett v1) (target 2517B, N=20) ===
+  src_char=15 src_fact=21 balance=-8.3pp
+  trial 1: raw=+17.1 norm=+25.5 bytes=958 (19.1s)
+  trial 2: raw=+14.3 norm=+22.6 bytes=1207 (23.9s)
+  trial 3: raw=+14.3 norm=+22.6 bytes=1264 (24.2s)
+  trial 4: raw=+23.8 norm=+32.1 bytes=1125 (22.1s)
+  trial 5: raw=+25.7 norm=+34.0 bytes=1007 (21.0s)
+  trial 6: raw=+20.9 norm=+29.3 bytes=1409 (26.3s)
+  trial 7: raw=+21.9 norm=+30.2 bytes=901 (18.8s)
+  trial 8: raw= +3.8 norm=+12.1 bytes=955 (18.9s)
+  trial 9: raw=+18.1 norm=+26.4 bytes=1491 (30.7s)
+  trial 10: raw=+14.3 norm=+22.6 bytes=1479 (28.4s)
+  trial 11: raw=+25.7 norm=+34.0 bytes=1098 (22.0s)
+  trial 12: raw=+17.1 norm=+25.5 bytes=1035 (20.6s)
+  trial 13: raw=+17.1 norm=+25.5 bytes=1120 (21.4s)
+  trial 14: raw=+23.8 norm=+32.1 bytes=1017 (20.7s)
+  trial 15: raw=+30.5 norm=+38.8 bytes=1305 (23.7s)
+  trial 16: raw=+20.9 norm=+29.3 bytes=1409 (26.0s)
+  trial 17: raw=+26.7 norm=+35.0 bytes=977 (19.2s)
+  trial 18: raw=+17.1 norm=+25.5 bytes=860 (18.0s)
+  trial 19: raw=+17.1 norm=+25.5 bytes=1373 (26.0s)
+  trial 20: raw=+28.6 norm=+36.9 bytes=963 (19.7s)
+
+=== SCRAMBLED (v13 shuffled + name-swap) (target 11352B, N=20) ===
+  src_char=56 src_fact=90 balance=-11.6pp
+  trial 1: raw= +6.1 norm=+17.7 bytes=1997 (45.0s)
+  trial 2: raw= -0.4 norm=+11.2 bytes=1852 (41.7s)
+  trial 3: raw=+14.6 norm=+26.2 bytes=2275 (58.9s)
+  trial 4: raw= +2.9 norm=+14.6 bytes=1550 (35.4s)
+  trial 5: raw= -1.5 norm=+10.1 bytes=1815 (43.1s)
+  trial 6: raw=+12.1 norm=+23.8 bytes=1969 (49.5s)
+  trial 7: raw= +3.6 norm=+15.2 bytes=1608 (37.2s)
+  trial 8: raw=+25.3 norm=+36.9 bytes=2222 (54.2s)
+  trial 9: raw=+22.4 norm=+34.0 bytes=2527 (63.3s)
+  trial 10: raw= -0.4 norm=+11.2 bytes=1965 (44.1s)
+  trial 11: raw= -5.5 norm= +6.1 bytes=1501 (37.3s)
+  trial 12: raw= -7.3 norm= +4.3 bytes=1816 (46.1s)
+  trial 13: raw=+13.0 norm=+24.6 bytes=1582 (38.1s)
+  trial 14: raw=+17.7 norm=+29.3 bytes=2088 (50.8s)
+  trial 15: raw=+26.8 norm=+38.5 bytes=1982 (46.7s)
+  trial 16: raw=+11.7 norm=+23.3 bytes=2134 (52.3s)
+  trial 17: raw=+16.4 norm=+28.0 bytes=2098 (53.5s)
+  trial 18: raw= +5.8 norm=+17.5 bytes=2130 (45.1s)
+  trial 19: raw=+14.6 norm=+26.2 bytes=1996 (49.5s)
+  trial 20: raw=+11.2 norm=+22.9 bytes=2451 (62.1s)
+
+E18 verdict: LEXICAL: SCRAMBLED normalized delta +21.09pp ≥+20pp — token-class base rates survive any LLM pass (weakest reading)
+  SELF      normalized:  +0.1pp
+  OTHER     normalized: +28.3pp
+  SCRAMBLED normalized: +21.1pp

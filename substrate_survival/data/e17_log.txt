@@ -1,0 +1,31 @@
+
+=== A: SCHEMA (7 named sections) (target 11289B, N=20) ===
+  trial 1: raw=-26.8 norm=-15.1 bytes=3274 (88.0s)
+  trial 2: raw= +2.5 norm=+14.1 bytes=1951 (45.6s)
+  trial 3: raw=+12.3 norm=+23.9 bytes=1685 (41.8s)
+  trial 4: raw=-18.3 norm= -6.7 bytes=3013 (90.7s)
+  trial 5: raw=-19.6 norm= -8.0 bytes=5077 (140.2s)
+  trial 6: raw= -4.4 norm= +7.2 bytes=2699 (62.5s)
+  trial 7: raw= -1.5 norm=+10.1 bytes=1997 (51.1s)
+  trial 8: raw=-35.5 norm=-23.8 bytes=3405 (91.3s)
+  trial 9: raw=-28.1 norm=-16.5 bytes=2525 (78.2s)
+  trial 10: raw=-29.0 norm=-17.4 bytes=3585 (104.3s)
+  trial 11: raw=-25.6 norm=-13.9 bytes=4713 (135.9s)
+  trial 12: raw=-29.1 norm=-17.4 bytes=2428 (67.8s)
+  trial 13: raw=-13.6 norm= -2.0 bytes=4447 (117.4s)
+  trial 14: raw=-16.5 norm= -4.8 bytes=5182 (137.3s)
+  trial 15: raw=-20.0 norm= -8.4 bytes=4234 (121.4s)
+  trial 16: raw=-18.2 norm= -6.6 bytes=4359 (121.8s)
+  trial 17: raw=-23.7 norm=-12.1 bytes=3563 (81.9s)
+  trial 18: raw=-27.9 norm=-16.2 bytes=3022 (92.1s)
+  trial 19: raw= +5.2 norm=+16.8 bytes=2572 (59.1s)
+  trial 20: raw=-32.1 norm=-20.5 bytes=3089 (83.2s)
+
+=== B: FREEFORM (compress to ~X bytes) (target 11289B, N=20) ===
+  trial 1: [ERROR: Expecting value: line 1 column 1 (char 0); raw=]
+  trial 2: [ERROR: Expecting value: line 1 column 1 (char 0); raw=]
+  trial 3: [ERROR: Expecting value: line 1 column 1 (char 0); raw=]
+  trial 4: [ERROR: Expecting value: line 1 column 1 (char 0); raw=]
+  trial 5: [ERROR: Expecting value: line 1 column 1 (char 0); raw=]
+  trial 6: [ERROR: Expecting value: line 1 column 1 (char 0); raw=]
+  trial 7: [ERROR: Expecting value: line 1 column 1 (char 0); raw=]

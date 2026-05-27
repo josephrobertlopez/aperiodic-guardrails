@@ -1,0 +1,346 @@
+{
+  "v12_bytes": 31561,
+  "v13_bytes": 18754,
+  "compression_pct": 40.58,
+  "v12_unique_tokens": 1677,
+  "v13_unique_tokens": 1076,
+  "tokens_dropped": 911,
+  "tokens_added": 310,
+  "tokens_kept": 766,
+  "retention_pct": 45.68,
+  "dropped_by_class": {
+    "prose": 848,
+    "date": 4,
+    "numeric": 57,
+    "rail": 2
+  },
+  "added_by_class": {
+    "prose": 295,
+    "numeric": 14,
+    "rail": 1
+  },
+  "kept_by_class": {
+    "rail": 31,
+    "prose": 665,
+    "numeric": 44,
+    "version": 13,
+    "date": 13
+  },
+  "load_bearing_dropped_sample": [
+    "#11",
+    "#25",
+    "-1.6kb",
+    "00",
+    "003",
+    "004",
+    "005",
+    "005b",
+    "007",
+    "008",
+    "009",
+    "011",
+    "015",
+    "0700",
+    "08",
+    "09",
+    "10.4kb",
+    "10kb",
+    "11",
+    "112",
+    "11964b",
+    "12",
+    "12.6kb",
+    "1208563",
+    "126k",
+    "13724b",
+    "14b",
+    "15",
+    "16366b",
+    "17.9kb",
+    "18",
+    "189",
+    "19.5kb",
+    "2026-04-17",
+    "2026-04-22",
+    "2026-04-23",
+    "2026-04-25",
+    "22478b",
+    "23548",
+    "23550",
+    "23553",
+    "2kb",
+    "3.9kb",
+    "300",
+    "34004b",
+    "35",
+    "36.4kb",
+    "38.4kb",
+    "39954b",
+    "4.7kb",
+    "42",
+    "42596b",
+    "43.7kb",
+    "50kb",
+    "51.6kb",
+    "52.3kb",
+    "54kb",
+    "56482b",
+    "58",
+    "6.9kb",
+    "614",
+    "8384b",
+    "95"
+  ],
+  "top_dropped_by_v12_frequency": [
+    {
+      "tok": "discharge",
+      "v12_count": 11,
+      "class": "prose"
+    },
+    {
+      "tok": "promotion",
+      "v12_count": 8,
+      "class": "prose"
+    },
+    {
+      "tok": "phi",
+      "v12_count": 8,
+      "class": "prose"
+    },
+    {
+      "tok": "own",
+      "v12_count": 5,
+      "class": "prose"
+    },
+    {
+      "tok": "propose",
+      "v12_count": 5,
+      "class": "prose"
+    },
+    {
+      "tok": "v11-",
+      "v12_count": 4,
+      "class": "prose"
+    },
+    {
+      "tok": "because",
+      "v12_count": 4,
+      "class": "prose"
+    },
+    {
+      "tok": "claim",
+      "v12_count": 4,
+      "class": "prose"
+    },
+    {
+      "tok": "threat-model",
+      "v12_count": 4,
+      "class": "prose"
+    },
+    {
+      "tok": "2-3",
+      "v12_count": 4,
+      "class": "prose"
+    },
+    {
+      "tok": "prototype",
+      "v12_count": 4,
+      "class": "prose"
+    },
+    {
+      "tok": "fail-mode-b",
+      "v12_count": 4,
+      "class": "prose"
+    },
+    {
+      "tok": "exit-1",
+      "v12_count": 4,
+      "class": "prose"
+    },
+    {
+      "tok": "file",
+      "v12_count": 4,
+      "class": "prose"
+    },
+    {
+      "tok": "therapist",
+      "v12_count": 4,
+      "class": "prose"
+    },
+    {
+      "tok": "warn",
+      "v12_count": 4,
+      "class": "prose"
+    },
+    {
+      "tok": "answers",
+      "v12_count": 4,
+      "class": "prose"
+    },
+    {
+      "tok": "newest",
+      "v12_count": 4,
+      "class": "prose"
+    },
+    {
+      "tok": "blind",
+      "v12_count": 4,
+      "class": "prose"
+    },
+    {
+      "tok": "awaiting",
+      "v12_count": 4,
+      "class": "prose"
+    },
+    {
+      "tok": "window",
+      "v12_count": 4,
+      "class": "prose"
+    },
+    {
+      "tok": "11",
+      "v12_count": 4,
+      "class": "numeric"
+    },
+    {
+      "tok": "different",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "wave-2",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "half",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "validation-week1",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "v10-",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "agent_recorder",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "feature",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "four",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "status",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "isolation",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "leak",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "property",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "thread",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "dedupe",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "spec",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "wave-1",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "overrides",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "covered",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "design",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "structurally",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "18",
+      "v12_count": 3,
+      "class": "numeric"
+    },
+    {
+      "tok": "yew",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "count",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "any",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "evening",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "deferred",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "recommended",
+      "v12_count": 3,
+      "class": "prose"
+    },
+    {
+      "tok": "conversation-derived",
+      "v12_count": 3,
+      "class": "prose"
+    }
+  ]
+}

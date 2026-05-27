@@ -1,0 +1,609 @@
+{
+  "n_unique_signatures": 92,
+  "n_notes_analyzed": 23156,
+  "uniqueness_ratio": 0.004,
+  "top_20_signatures_by_note_count": [
+    {
+      "field_count": 12,
+      "fields": [
+        "content_hash",
+        "date",
+        "date_parsed",
+        "from",
+        "ingest_version",
+        "service",
+        "source_md5",
+        "source_path",
+        "subject",
+        "tags",
+        "to",
+        "type"
+      ],
+      "note_count": 13255,
+      "examples": [
+        "takeout/mail/2026/b0f92a82.md",
+        "takeout/mail/2026/ded557e0.md",
+        "takeout/mail/2026/02bee3c4.md"
+      ]
+    },
+    {
+      "field_count": 14,
+      "fields": [
+        "content_hash",
+        "date",
+        "date_parsed",
+        "from",
+        "inferred_at",
+        "inferred_tags",
+        "ingest_version",
+        "service",
+        "source_md5",
+        "source_path",
+        "subject",
+        "tags",
+        "to",
+        "type"
+      ],
+      "note_count": 2343,
+      "examples": [
+        "takeout/mail/2026/67af8537.md",
+        "takeout/mail/2026/6ce5fd28.md",
+        "takeout/mail/2026/cb967b12.md"
+      ]
+    },
+    {
+      "field_count": 11,
+      "fields": [
+        "aliases",
+        "date",
+        "event_count",
+        "fitness_sleep_mins",
+        "fitness_steps",
+        "generated_by",
+        "generated_content",
+        "natural_date",
+        "photo_count",
+        "tags",
+        "type"
+      ],
+      "note_count": 1725,
+      "examples": [
+        "timeline/2017/2017-02-18.md",
+        "timeline/2017/2017-02-24.md",
+        "timeline/2017/2017-03-06.md"
+      ]
+    },
+    {
+      "field_count": 5,
+      "fields": [
+        "date",
+        "service",
+        "summary",
+        "tags",
+        "type"
+      ],
+      "note_count": 1294,
+      "examples": [
+        "takeout/calendar/2025/2025-02-13-d800faa1.md",
+        "takeout/calendar/2025/2025-02-15-a1b7bacd.md",
+        "takeout/calendar/2025/2025-02-24-c35bf873.md"
+      ]
+    },
+    {
+      "field_count": 8,
+      "fields": [
+        "captured_at",
+        "content_sha1",
+        "inferred_at",
+        "inferred_tags",
+        "ingest_version",
+        "length_chars",
+        "source",
+        "type"
+      ],
+      "note_count": 742,
+      "examples": [
+        "raw_prompts/2026-05-10/190312-6ae5e4b7.md",
+        "raw_prompts/2026-05-11/062423-5fa7f5b2.md",
+        "raw_prompts/2026-05-11/064015-f750318d.md"
+      ]
+    },
+    {
+      "field_count": 11,
+      "fields": [
+        "content_hash",
+        "inferred_at",
+        "inferred_tags",
+        "ingest_version",
+        "service",
+        "source_file",
+        "source_md5",
+        "source_path",
+        "tags",
+        "title",
+        "type"
+      ],
+      "note_count": 686,
+      "examples": [
+        "takeout/saved/2026/fab43b5e.md",
+        "takeout/saved/2026/62127214.md",
+        "takeout/saved/2026/05002386.md"
+      ]
+    },
+    {
+      "field_count": 4,
+      "fields": [
+        "date",
+        "tags",
+        "title",
+        "type"
+      ],
+      "note_count": 512,
+      "examples": [
+        "agents/parasocial/feeds/202603161359_anki-daily.md",
+        "agents/parasocial/feeds/202603161412_hn-top3.md",
+        "agents/parasocial/feeds/202603161430_reddit-top3.md"
+      ]
+    },
+    {
+      "field_count": 13,
+      "fields": [
+        "content_hash",
+        "emails",
+        "inferred_at",
+        "inferred_tags",
+        "ingest_version",
+        "name",
+        "phones",
+        "service",
+        "source_file",
+        "source_md5",
+        "source_path",
+        "tags",
+        "type"
+      ],
+      "note_count": 440,
+      "examples": [
+        "takeout/contacts/2026/1a3b65b6.md",
+        "takeout/contacts/2026/9bf4a39a.md",
+        "takeout/contacts/2026/69e054bc.md"
+      ]
+    },
+    {
+      "field_count": 7,
+      "fields": [
+        "created",
+        "domains",
+        "id",
+        "migrated_from",
+        "note_type",
+        "salience",
+        "tags"
+      ],
+      "note_count": 427,
+      "examples": [
+        "capture/fleeting/202603161530_insight_joeys_youtube_subscription_categories_39_channels.md",
+        "capture/observations/202602240743_fy26_priorities_-_delivered_work.md",
+        "capture/observations/202602240744_capital_one_-_onestream_convergence.md"
+      ]
+    },
+    {
+      "field_count": 8,
+      "fields": [
+        "created",
+        "entity_type",
+        "id",
+        "last_accessed",
+        "relationships",
+        "tags",
+        "title",
+        "updated"
+      ],
+      "note_count": 259,
+      "examples": [
+        "reference/legacy/202602250934_luca_handler_system.md",
+        "reference/legacy/202602250935_luca_sentience_system.md",
+        "reference/legacy/202602250936_luca_cognition_layers.md"
+      ]
+    },
+    {
+      "field_count": 15,
+      "fields": [
+        "content_hash",
+        "filename",
+        "inferred_at",
+        "inferred_tags",
+        "ingest_version",
+        "mime_type",
+        "modified",
+        "rel_path",
+        "service",
+        "size_bytes",
+        "source_md5",
+        "source_path",
+        "tags",
+        "title",
+        "type"
+      ],
+      "note_count": 233,
+      "examples": [
+        "takeout/drive/2026/3017dc1b.md",
+        "takeout/drive/2026/a7eabdf4.md",
+        "takeout/drive/2026/82331423.md"
+      ]
+    },
+    {
+      "field_count": 6,
+      "fields": [
+        "created",
+        "domains",
+        "id",
+        "migrated_from",
+        "note_type",
+        "salience"
+      ],
+      "note_count": 212,
+      "examples": [
+        "capture/fleeting/754d50d1-e10_media_stack_agent.md",
+        "capture/fleeting/414983e5-e96_rememberer_agent.md",
+        "capture/fleeting/a6248053-dab_therapist_agent.md"
+      ]
+    },
+    {
+      "field_count": 8,
+      "fields": [
+        "basin",
+        "created",
+        "domains",
+        "id",
+        "migrated_from",
+        "note_type",
+        "salience",
+        "tags"
+      ],
+      "note_count": 174,
+      "examples": [
+        "capture/fleeting/202603021960_session_march_2_2026_origin_mapping.md",
+        "capture/observations/202603261512_eric_merrill_financial_impact_model_signal-to-pl_cascade_wi.md",
+        "capture/observations/202603261528_dw_investment_advisor_productizing_should_we_invest_in_a_da.md"
+      ]
+    },
+    {
+      "field_count": 7,
+      "fields": [
+        "basin",
+        "created",
+        "domains",
+        "id",
+        "migrated_from",
+        "note_type",
+        "salience"
+      ],
+      "note_count": 173,
+      "examples": [
+        "capture/fleeting/1a4fe223-bed_consolidate_knowledge_skill.md",
+        "capture/fleeting/4cc2038c-58c_read_input_file_path_or_glob_passed_as_sysargv1.md",
+        "capture/fleeting/fd4d6f3e-1e1_video_title.md"
+      ]
+    },
+    {
+      "field_count": 6,
+      "fields": [
+        "color",
+        "date",
+        "service",
+        "tags",
+        "title",
+        "type"
+      ],
+      "note_count": 118,
+      "examples": [
+        "takeout/keep/2026/2026-04-12-ccf6268b.md",
+        "takeout/keep/2026/2026-04-07-223233f2.md",
+        "takeout/keep/2026/2026-03-29-d2bc58ad.md"
+      ]
+    },
+    {
+      "field_count": 5,
+      "fields": [
+        "basin",
+        "created_at",
+        "domains",
+        "note_type",
+        "tags"
+      ],
+      "note_count": 110,
+      "examples": [
+        "capture/capture_20260511_195615.md",
+        "capture/capture_20260511_203813.md",
+        "journal/journal_20260519_200401.md"
+      ]
+    },
+    {
+      "field_count": 6,
+      "fields": [
+        "date",
+        "service",
+        "status",
+        "tags",
+        "title",
+        "type"
+      ],
+      "note_count": 56,
+      "examples": [
+        "takeout/tasks/2018/2018-05-28-050e7afe.md",
+        "takeout/tasks/2018/2018-06-29-51ff7df2.md",
+        "takeout/tasks/2018/2018-07-06-2777c587.md"
+      ]
+    },
+    {
+      "field_count": 9,
+      "fields": [
+        "content_hash",
+        "ingest_version",
+        "service",
+        "source_file",
+        "source_md5",
+        "source_path",
+        "tags",
+        "title",
+        "type"
+      ],
+      "note_count": 38,
+      "examples": [
+        "takeout/tasks_v2/2019/8028568d.md",
+        "takeout/youtube/2026/f43925b3.md",
+        "takeout/youtube/2026/967e031f.md"
+      ]
+    },
+    {
+      "field_count": 4,
+      "fields": [
+        "file",
+        "service",
+        "tags",
+        "type"
+      ],
+      "note_count": 33,
+      "examples": [
+        "takeout/access-log-activity/2026/2026-04-18-d1b8393c.md",
+        "takeout/access-log-activity/2026/2026-04-18-0c3ed768.md",
+        "takeout/android-device-configuration-service/2026/2026-04-18-0bf8f917.md"
+      ]
+    },
+    {
+      "field_count": 7,
+      "fields": [
+        "created",
+        "entity_type",
+        "id",
+        "relationships",
+        "tags",
+        "title",
+        "updated"
+      ],
+      "note_count": 32,
+      "examples": [
+        "journal/01-daily/202603031815_daily_march_3_2026.md",
+        "journal/01-daily/202603031933_daily_march_3_2026_evening.md",
+        "reference/legacy/202602250530_luca_framework_architecture.md"
+      ]
+    }
+  ],
+  "near_duplicate_clusters_jac08": [
+    {
+      "members": 2,
+      "total_notes": 15598,
+      "anchor_fields": [
+        "content_hash",
+        "date",
+        "date_parsed",
+        "from",
+        "ingest_version",
+        "service",
+        "source_md5",
+        "source_path",
+        "subject",
+        "tags",
+        "to",
+        "type"
+      ]
+    },
+    {
+      "members": 2,
+      "total_notes": 724,
+      "anchor_fields": [
+        "content_hash",
+        "inferred_at",
+        "inferred_tags",
+        "ingest_version",
+        "service",
+        "source_file",
+        "source_md5",
+        "source_path",
+        "tags",
+        "title",
+        "type"
+      ]
+    },
+    {
+      "members": 2,
+      "total_notes": 461,
+      "anchor_fields": [
+        "content_hash",
+        "emails",
+        "inferred_at",
+        "inferred_tags",
+        "ingest_version",
+        "name",
+        "phones",
+        "service",
+        "source_file",
+        "source_md5",
+        "source_path",
+        "tags",
+        "type"
+      ]
+    },
+    {
+      "members": 4,
+      "total_notes": 837,
+      "anchor_fields": [
+        "created",
+        "domains",
+        "id",
+        "migrated_from",
+        "note_type",
+        "salience",
+        "tags"
+      ]
+    },
+    {
+      "members": 8,
+      "total_notes": 320,
+      "anchor_fields": [
+        "created",
+        "entity_type",
+        "id",
+        "last_accessed",
+        "relationships",
+        "tags",
+        "title",
+        "updated"
+      ]
+    },
+    {
+      "members": 2,
+      "total_notes": 111,
+      "anchor_fields": [
+        "basin",
+        "created_at",
+        "domains",
+        "note_type",
+        "tags"
+      ]
+    },
+    {
+      "members": 2,
+      "total_notes": 15,
+      "anchor_fields": [
+        "agent_source",
+        "created",
+        "domains",
+        "id",
+        "note_type",
+        "salience",
+        "tags"
+      ]
+    },
+    {
+      "members": 2,
+      "total_notes": 10,
+      "anchor_fields": [
+        "created",
+        "domains",
+        "id",
+        "note_type"
+      ]
+    },
+    {
+      "members": 2,
+      "total_notes": 7,
+      "anchor_fields": [
+        "audio_md5",
+        "audio_path",
+        "content_hash",
+        "ingest_version",
+        "service",
+        "source_md5",
+        "source_path",
+        "tags",
+        "title",
+        "type"
+      ]
+    },
+    {
+      "members": 2,
+      "total_notes": 7,
+      "anchor_fields": [
+        "cluster_id",
+        "cluster_size",
+        "created",
+        "model_reduction_verdict",
+        "non_trivial",
+        "ratification_reason",
+        "ratified",
+        "source_obs",
+        "status",
+        "tags"
+      ]
+    },
+    {
+      "members": 2,
+      "total_notes": 6,
+      "anchor_fields": [
+        "approach",
+        "blockers",
+        "created",
+        "domain",
+        "entity_type",
+        "goal",
+        "id",
+        "key_files",
+        "last_accessed",
+        "next_steps",
+        "project",
+        "relationships",
+        "status",
+        "tags",
+        "title",
+        "updated",
+        "working_on"
+      ]
+    },
+    {
+      "members": 2,
+      "total_notes": 5,
+      "anchor_fields": [
+        "created",
+        "entity_type",
+        "id",
+        "related",
+        "tags",
+        "title"
+      ]
+    },
+    {
+      "members": 2,
+      "total_notes": 4,
+      "anchor_fields": [
+        "content_hash",
+        "group_id",
+        "inferred_at",
+        "inferred_tags",
+        "ingest_version",
+        "members",
+        "message_count",
+        "service",
+        "source_file",
+        "source_md5",
+        "source_path",
+        "tags",
+        "title",
+        "type"
+      ]
+    },
+    {
+      "members": 3,
+      "total_notes": 4,
+      "anchor_fields": [
+        "date",
+        "related",
+        "status",
+        "tags",
+        "title"
+      ]
+    }
+  ],
+  "n_clusters_found": 14
+}

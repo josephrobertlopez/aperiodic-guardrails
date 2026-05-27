@@ -1,0 +1,68 @@
+{
+  "n_files": 23578,
+  "concept_match_counts": {
+    "rail_install": 44,
+    "compaction": 43,
+    "amanda_state": 9,
+    "rhett": 15,
+    "schema_ratify": 7,
+    "phi_discharge": 4,
+    "consolidation": 15,
+    "percept_quartet": 16,
+    "random_channel": 4
+  },
+  "mean_cluster_size": 17.4,
+  "concepts_with_revisit_gt_3": 9,
+  "top_5_revisit_concepts": [
+    [
+      "rail_install",
+      44
+    ],
+    [
+      "compaction",
+      43
+    ],
+    [
+      "percept_quartet",
+      16
+    ],
+    [
+      "rhett",
+      15
+    ],
+    [
+      "consolidation",
+      15
+    ]
+  ],
+  "sample_rail_install": [
+    "capture/capture_20260511_195615.md",
+    "lesson/lesson_20260507_194636.md",
+    "lesson/lesson_20260516_211220.md",
+    "lesson/lesson_20260521_220122.md",
+    "lesson/lesson_20260522_194258.md",
+    "lesson/lesson_20260522_213302.md",
+    "lesson/lesson_20260522_213322.md",
+    "raw_prompts/2026-05-12/182642-468a8058.md"
+  ],
+  "sample_compaction": [
+    "journal/journal_20260419_163659.md",
+    "therapy/breakthroughs/8e106f59-64a_daily_study_cards.md",
+    "plan/daily/d67016c5-f1a_daily_study_cards.md",
+    "plan/daily/bbb646bc-4f5_daily_study_cards.md",
+    "takeout/mail/2026/87d1111d.md",
+    "takeout/mail/2026/acb42e1b.md",
+    "takeout/mail/2026/a50dd853.md",
+    "takeout/mail/2026/2d04ed06.md"
+  ],
+  "sample_percept_quartet": [
+    "raw_prompts/2026-05-16/130054-237838e2.md",
+    "raw_prompts/2026-05-16/130109-41b8506d.md",
+    "raw_prompts/2026-05-16/131312-14945b2a.md",
+    "raw_prompts/2026-05-16/131617-cb4e6f61.md",
+    "raw_prompts/2026-05-16/131648-152da36b.md",
+    "raw_prompts/2026-05-19/200813-5c2902ad.md",
+    "raw_prompts/2026-05-19/200915-abb3b374.md",
+    "raw_prompts/2026-05-21/124507-e00f2dc9.md"
+  ]
+}

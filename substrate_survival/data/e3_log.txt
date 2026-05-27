@@ -1,0 +1,8 @@
+{
+  "n_facts_tested": 20,
+  "facts_present_in_v11_baseline": 10,
+  "facts_surviving_in_v13_state": 10,
+  "facts_recoverable_via_vault_grep": 8,
+  "state_retention_pct": 100.0,
+  "vault_recovery_pct": 80.0
+}

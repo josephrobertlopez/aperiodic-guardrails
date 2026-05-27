@@ -1,0 +1,1051 @@
+{
+  "e10_results.json": {
+    "n_files": 23578,
+    "total_bytes": 200856537,
+    "partitions": {
+      "takeout": {
+        "count": 18531,
+        "bytes": 179883368
+      },
+      "agents": {
+        "count": 772,
+        "bytes": 6604693
+      },
+      "capture": {
+        "count": 284,
+        "bytes": 2713038
+      },
+      "resources": {
+        "count": 299,
+        "bytes": 2479204
+      },
+      "sources": {
+        "count": 133,
+        "bytes": 2253300
+      },
+      "timeline": {
+        "count": 1725,
+        "bytes": 1751210
+      },
+      "plan": {
+        "count": 220,
+        "bytes": 1749120
+      },
+      "therapy": {
+        "count": 142,
+        "bytes": 814992
+      },
+      "reference": {
+        "count": 202,
+        "bytes": 713304
+      },
+      "raw_prompts": {
+        "count": 742,
+        "bytes": 557986
+      },
+      "personal": {
+        "count": 180,
+        "bytes": 286534
+      },
+      "projects": {
+        "count": 22,
+        "bytes": 149904
+      },
+      "observation": {
+        "count": 42,
+        "bytes": 140807
+      },
+      "patterns": {
+        "count": 85,
+        "bytes": 138218
+      },
+      "schemas": {
+        "count": 18,
+        "bytes": 122934
+      },
+      "journal": {
+        "count": 41,
+        "bytes": 110077
+      },
+      "professional": {
+        "count": 36,
+        "bytes": 65866
+      },
+      "decision": {
+        "count": 6,
+        "bytes": 57681
+      },
+      "lesson": {
+        "count": 24,
+        "bytes": 56622
+      },
+      "state": {
+        "count": 2,
+        "bytes": 33348
+      },
+      "dogfood_results": {
+        "count": 5,
+        "bytes": 31795
+      },
+      "engineer": {
+        "count": 29,
+        "bytes": 26454
+      },
+      "methodology": {
+        "count": 3,
+        "bytes": 22830
+      },
+      "insight": {
+        "count": 8,
+        "bytes": 22759
+      },
+      "reflection": {
+        "count": 8,
+        "bytes": 15616
+      },
+      "contract": {
+        "count": 1,
+        "bytes": 9355
+      },
+      "pattern": {
+        "count": 3,
+        "bytes": 8009
+      },
+      "self-observation": {
+        "count": 2,
+        "bytes": 7340
+      },
+      "inbox": {
+        "count": 2,
+        "bytes": 6936
+      },
+      "analysis": {
+        "count": 1,
+        "bytes": 6180
+      },
+      "session_handoff": {
+        "count": 1,
+        "bytes": 4060
+      },
+      "session": {
+        "count": 1,
+        "bytes": 3736
+      },
+      "event": {
+        "count": 1,
+        "bytes": 2032
+      },
+      "dogfood": {
+        "count": 1,
+        "bytes": 1619
+      },
+      "workflow": {
+        "count": 1,
+        "bytes": 1558
+      },
+      "implementation": {
+        "count": 1,
+        "bytes": 1544
+      },
+      "index": {
+        "count": 1,
+        "bytes": 1503
+      },
+      "test": {
+        "count": 2,
+        "bytes": 804
+      },
+      "growth": {
+        "count": 1,
+        "bytes": 201
+      }
+    },
+    "durable_bytes": 317774,
+    "ephemeral_bytes": 183264469,
+    "other_bytes": 17274294,
+    "durable_pct": 0.16,
+    "ephemeral_pct": 91.24,
+    "signal_to_noise_ratio": 0.0017
+  },
+  "e11_results.json": {
+    "model": "qwen2.5-32b-instruct-awq",
+    "endpoint": "kronos (108.81.9.145:1337)",
+    "n_trials_per_cell": 5,
+    "temperature": 0.3,
+    "pass_threshold_per_cell": 4,
+    "limitations": [
+      "Adversary knows the target field (prefix_enforcement). Real adversaries don't telegraph.",
+      "Single model tested (qwen-32b-awq). Behavior may differ on smaller/larger/other-family models.",
+      "Single attack-domain (email-style ingestion). Does not generalize to other ingestion paths (web pages, tool outputs, code comments).",
+      "Subtle-injection cell uses a colleague-impersonation pattern. A determined adversary has many more vectors."
+    ]
+  },
+  "e12_results.json": {
+    "hypothesis": "Compaction functor preserves operational-character > facts",
+    "n_cycles": 5,
+    "char_wins": 5,
+    "fact_wins": 0,
+    "ties": 0,
+    "verdict": "STRONG_SUPPORT: character retention > fact retention on all cycles"
+  },
+  "e13_results.json": {
+    "subject": "amanda persona across same-day v13 rehydrations",
+    "transcript": "/home/joey/.claude/projects/-mnt-media-local-storage-code-GitHub/f2e3967c-4452-48e4-a240-eedbd1dac3ed.jsonl",
+    "n_briefs_harvested": 5,
+    "verdict": "STABLE: mean canonical-fact agreement 88.1% across N=5 rehydrations",
+    "mean_canonical_fact_agreement_pct": 88.1,
+    "n_facts_with_high_agreement": 5,
+    "n_canonical_facts": 7,
+    "agreement_per_field": {
+      "combined_bytes": {
+        "type": "scalar",
+        "modal_value": "41218",
+        "agreement_pct": 100.0,
+        "extraction_rate_pct": 40.0,
+        "values": [
+          "None",
+          "41218",
+          "41218",
+          "None",
+          "None"
+        ]
+      },
+      "correction_obs_count": {
+        "type": "scalar",
+        "modal_value": "10",
+        "agreement_pct": 66.7,
+        "extraction_rate_pct": 60.0,
+        "values": [
+          "10",
+          "11",
+          "10",
+          "None",
+          "None"
+        ]
+      },
+      "fire_headroom": {
+        "type": "scalar",
+        "modal_value": "15102",
+        "agreement_pct": 100.0,
+        "extraction_rate_pct": 40.0,
+        "values": [
+          "None",
+          "15102",
+          "15102",
+          "None",
+          "None"
+        ]
+      },
+      "pole_status": {
+        "type": "scalar",
+        "modal_value": "tent pole",
+        "agreement_pct": 100.0,
+        "extraction_rate_pct": 20.0,
+        "values": [
+          "None",
+          "tent pole",
+          "None",
+          "None",
+          "None"
+        ]
+      },
+      "rail_refs": {
+        "type": "set",
+        "mean_jaccard": 0.452,
+        "values_per_brief": [
+          [
+            19,
+            29,
+            22
+          ],
+          [
+            80,
+            22
+          ],
+          [
+            10,
+            19,
+            22
+          ],
+          [
+            18,
+            19,
+            29,
+            22
+          ],
+          [
+            19,
+            22
+          ]
+        ]
+      },
+      "refusal_phrase_density": {
+        "type": "scalar",
+        "modal_value": "21",
+        "agreement_pct": 20.0,
+        "extraction_rate_pct": 100.0,
+        "values": [
+          "21",
+          "9",
+          "6",
+          "15",
+          "3"
+        ]
+      },
+      "response_bytes": {
+        "type": "scalar",
+        "modal_value": "9438",
+        "agreement_pct": 20.0,
+        "extraction_rate_pct": 100.0,
+        "values": [
+          "9438",
+          "4222",
+          "2713",
+          "6012",
+          "3372"
+        ]
+      },
+      "rotation_n": {
+        "type": "scalar",
+        "modal_value": "7",
+        "agreement_pct": 100.0,
+        "extraction_rate_pct": 20.0,
+        "values": [
+          "None",
+          "None",
+          "7",
+          "None",
+          "None"
+        ]
+      },
+      "sentinels": {
+        "type": "set",
+        "mean_jaccard": 0.25,
+        "values_per_brief": [
+          [
+            "parity-001",
+            "meta_inflation",
+            "compaction-needed",
+            "orphan",
+            "corrections-pending",
+            "lessons-pending"
+          ],
+          [
+            "compaction-needed",
+            "parity-001",
+            "orphan",
+            "lessons-pending"
+          ],
+          [
+            "lessons-pending"
+          ],
+          [],
+          [
+            "lessons-pending"
+          ]
+        ]
+      },
+      "substrate_band": {
+        "type": "scalar",
+        "modal_value": "WARN-band",
+        "agreement_pct": 100.0,
+        "extraction_rate_pct": 100.0,
+        "values": [
+          "WARN-band",
+          "WARN-band",
+          "WARN-band",
+          "WARN-band",
+          "WARN-band"
+        ]
+      },
+      "v13_obs_count": {
+        "type": "scalar",
+        "modal_value": "10",
+        "agreement_pct": 50.0,
+        "extraction_rate_pct": 80.0,
+        "values": [
+          "10",
+          "11",
+          "10",
+          "None",
+          "12"
+        ]
+      },
+      "warn_band_neg": {
+        "type": "scalar",
+        "modal_value": "5378",
+        "agreement_pct": 66.7,
+        "extraction_rate_pct": 60.0,
+        "values": [
+          "4074",
+          "5378",
+          "5378",
+          "None",
+          "None"
+        ]
+      }
+    }
+  },
+  "e14_results.json": {
+    "subject": "amanda.State.v13",
+    "n_observations": 11,
+    "total_refs_by_agent": {
+      "amanda": 16,
+      "rhett": 24,
+      "joey": 34,
+      "morgan": 5,
+      "mc-amanda": 2,
+      "therapist": 1,
+      "system": 8
+    },
+    "total_cross_agent_refs": 74,
+    "total_channel_tags": 0,
+    "n_leakage_points": 18,
+    "verdict": "TYPE_LEAKAGE_REAL: 18 obs have >=2 untagged cross-agent refs; type system would catch"
+  },
+  "e15_results.json": {
+    "subject_rail": "Rail #19 substrate-write hard-gate (5KB threshold)",
+    "model": "qwen2.5-32b-instruct-awq",
+    "endpoint": "kronos",
+    "decision_scenario": "FIRE-headroom 4,500 bytes (under 5KB threshold)",
+    "n_per_cell": 5,
+    "temperature": 0.3,
+    "p_refuse_with": 0.0,
+    "p_refuse_without": 0.2,
+    "behavior_delta": -0.2,
+    "threshold_cite_delta": 1,
+    "verdict": "TELEPROMPTER_LIKELY: P(REFUSE) nearly identical (0.0 vs 0.2, delta=-0.2)",
+    "condition_with": {
+      "condition": "A: WITH Rail #19",
+      "n_trials": 5,
+      "n_refuse": 0,
+      "p_refuse": 0.0,
+      "n_threshold_5000_cited": 5,
+      "trials": [
+        {
+          "decision": "ALLOW",
+          "reason": "The new observation does not exceed the available FIRE-headroom.",
+          "threshold_cited": 4500,
+          "parse_ok": true,
+          "trial": 1,
+          "elapsed_s": 9.1,
+          "raw_response": "```json\n{\n  \"decision\": \"ALLOW\",\n  \"reason\": \"The new observation does not exceed the available FIRE-headroom.\",\n  \"threshold_cited\": 4500\n}\n```"
+        },
+        {
+          "decision": "ALLOW",
+          "reason": "The proposed write is small and the substrate has sufficient FIRE-headroom.",
+          "threshold_cited": 4500,
+          "parse_ok": true,
+          "trial": 2,
+          "elapsed_s": 9.3,
+          "raw_response": "```json\n{\n  \"decision\": \"ALLOW\",\n  \"reason\": \"The proposed write is small and the substrate has sufficient FIRE-headroom.\",\n  \"threshold_cited\": 4500\n}\n```"
+        },
+        {
+          "decision": "ALLOW",
+          "reason": "The new observation does not exceed the FIRE-headroom.",
+          "threshold_cited": 4500,
+          "parse_ok": true,
+          "trial": 3,
+          "elapsed_s": 9.1,
+          "raw_response": "```json\n{\n  \"decision\": \"ALLOW\",\n  \"reason\": \"The new observation does not exceed the FIRE-headroom.\",\n  \"threshold_cited\": 4500\n}\n```"
+        },
+        {
+          "decision": "ALLOW",
+          "reason": "The write is within the current FIRE-headroom.",
+          "threshold_cited": 4500,
+          "parse_ok": true,
+          "trial": 4,
+          "elapsed_s": 9.0,
+          "raw_response": "```json\n{\n  \"decision\": \"ALLOW\",\n  \"reason\": \"The write is within the current FIRE-headroom.\",\n  \"threshold_cited\": 4500\n}\n```"
+        },
+        {
+          "decision": "ALLOW",
+          "reason": "The proposed write is small and the FIRE-headroom is sufficient.",
+          "threshold_cited": 4500,
+          "parse_ok": true,
+          "trial": 5,
+          "elapsed_s": 8.9,
+          "raw_response": "{\n  \"decision\": \"ALLOW\",\n  \"reason\": \"The proposed write is small and the FIRE-headroom is sufficient.\",\n  \"threshold_cited\": 4500\n}"
+        }
+      ]
+    },
+    "condition_without": {
+      "condition": "B: WITHOUT Rail #19 (ablated)",
+      "n_trials": 5,
+      "n_refuse": 1,
+      "p_refuse": 0.2,
+      "n_threshold_5000_cited": 4,
+      "trials": [
+        {
+          "decision": "REFUSE",
+          "reason": "Approaching FIRE-headroom limit.",
+          "threshold_cited": 4500,
+          "parse_ok": true,
+          "trial": 1,
+          "elapsed_s": 8.9,
+          "raw_response": "```json\n{\n  \"decision\": \"REFUSE\",\n  \"reason\": \"Approaching FIRE-headroom limit.\",\n  \"threshold_cited\": 4500\n}\n```"
+        },
+        {
+          "decision": "ALLOW",
+          "reason": "The new observation is small enough to fit within the current FIRE-headroom.",
+          "threshold_cited": 4500,
+          "parse_ok": true,
+          "trial": 2,
+          "elapsed_s": 9.1,
+          "raw_response": "{\n  \"decision\": \"ALLOW\",\n  \"reason\": \"The new observation is small enough to fit within the current FIRE-headroom.\",\n  \"threshold_cited\": 4500\n}"
+        },
+        {
+          "decision": "ALLOW",
+          "reason": "The proposed write is within the remaining FIRE-headroom.",
+          "threshold_cited": 4500,
+          "parse_ok": true,
+          "trial": 3,
+          "elapsed_s": 8.8,
+          "raw_response": "{\n  \"decision\": \"ALLOW\",\n  \"reason\": \"The proposed write is within the remaining FIRE-headroom.\",\n  \"threshold_cited\": 4500\n}"
+        },
+        {
+          "decision": "ALLOW",
+          "reason": "The write is within the remaining FIRE-headroom.",
+          "threshold_cited": 4500,
+          "parse_ok": true,
+          "trial": 4,
+          "elapsed_s": 9.1,
+          "raw_response": "```json\n{\n  \"decision\": \"ALLOW\",\n  \"reason\": \"The write is within the remaining FIRE-headroom.\",\n  \"threshold_cited\": 4500\n}\n```"
+        },
+        {
+          "decision": "ALLOW",
+          "reason": "The proposed write is small and the substrate has sufficient FIRE-headroom.",
+          "threshold_cited": null,
+          "parse_ok": true,
+          "trial": 5,
+          "elapsed_s": 8.8,
+          "raw_response": "{\n  \"decision\": \"ALLOW\",\n  \"reason\": \"The proposed write is small and the substrate has sufficient FIRE-headroom.\",\n  \"threshold_cited\": null\n}"
+        }
+      ]
+    }
+  },
+  "e1_results.json": {
+    "model": "qwen2.5-32b-instruct-awq",
+    "endpoint": "kronos (108.81.9.145:1337)",
+    "subject": "amanda.State.v13",
+    "payload_bytes": 18754,
+    "single_pass": true,
+    "elapsed_s": 12.3,
+    "usage": {
+      "prompt_tokens": 5695,
+      "completion_tokens": 82,
+      "total_tokens": 5777
+    },
+    "n_questions": 8,
+    "score": 7,
+    "pass_threshold": 6,
+    "verdict": "PORTABLE",
+    "raw_response": "Q1: v12->v13\nQ2: 2026-05-22\nQ3: 2842\nQ4: 7%\nQ5: 7\nQ6: 3\nQ7: 10\nQ8: check-codebase,check-decisions,check-benchmarks,check-blast-radius"
+  },
+  "e2_results.json": {
+    "n_files": 23578,
+    "concept_match_counts": {
+      "rail_install": 44,
+      "compaction": 43,
+      "amanda_state": 9,
+      "rhett": 15,
+      "schema_ratify": 7,
+      "phi_discharge": 4,
+      "consolidation": 15,
+      "percept_quartet": 16,
+      "random_channel": 4
+    },
+    "mean_cluster_size": 17.4,
+    "concepts_with_revisit_gt_3": 9,
+    "top_5_revisit_concepts": [
+      [
+        "rail_install",
+        44
+      ],
+      [
+        "compaction",
+        43
+      ],
+      [
+        "percept_quartet",
+        16
+      ],
+      [
+        "rhett",
+        15
+      ],
+      [
+        "consolidation",
+        15
+      ]
+    ],
+    "sample_rail_install": [
+      "capture/capture_20260511_195615.md",
+      "lesson/lesson_20260507_194636.md",
+      "lesson/lesson_20260516_211220.md",
+      "lesson/lesson_20260521_220122.md",
+      "lesson/lesson_20260522_194258.md",
+      "lesson/lesson_20260522_213302.md",
+      "lesson/lesson_20260522_213322.md",
+      "raw_prompts/2026-05-12/182642-468a8058.md"
+    ],
+    "sample_compaction": [
+      "journal/journal_20260419_163659.md",
+      "therapy/breakthroughs/8e106f59-64a_daily_study_cards.md",
+      "plan/daily/d67016c5-f1a_daily_study_cards.md",
+      "plan/daily/bbb646bc-4f5_daily_study_cards.md",
+      "takeout/mail/2026/87d1111d.md",
+      "takeout/mail/2026/acb42e1b.md",
+      "takeout/mail/2026/a50dd853.md",
+      "takeout/mail/2026/2d04ed06.md"
+    ],
+    "sample_percept_quartet": [
+      "raw_prompts/2026-05-16/130054-237838e2.md",
+      "raw_prompts/2026-05-16/130109-41b8506d.md",
+      "raw_prompts/2026-05-16/131312-14945b2a.md",
+      "raw_prompts/2026-05-16/131617-cb4e6f61.md",
+      "raw_prompts/2026-05-16/131648-152da36b.md",
+      "raw_prompts/2026-05-19/200813-5c2902ad.md",
+      "raw_prompts/2026-05-19/200915-abb3b374.md",
+      "raw_prompts/2026-05-21/124507-e00f2dc9.md"
+    ]
+  },
+  "e3_results.json": {
+    "n_facts_tested": 20,
+    "facts_present_in_v11_baseline": 10,
+    "facts_surviving_in_v13_state": 10,
+    "facts_recoverable_via_vault_grep": 8,
+    "state_retention_pct": 100.0,
+    "vault_recovery_pct": 80.0
+  },
+  "e4_results.json": {
+    "n_files": 23578,
+    "n_files_with_outlinks": 1227,
+    "n_unique_notes": 23533,
+    "n_edges": 5857,
+    "n_link_targets_total": 1310,
+    "n_link_targets_resolved": 87,
+    "n_link_targets_dangling": 1223,
+    "pct_dangling": 93.36,
+    "n_dark_matter_notes": 22292,
+    "pct_dark_matter": 94.73,
+    "out_deg_n": 1223,
+    "out_deg_min": 1,
+    "out_deg_p50": 5,
+    "out_deg_p90": 5,
+    "out_deg_p99": 12,
+    "out_deg_max": 38,
+    "out_deg_mean": 4.79,
+    "in_deg_n": 1310,
+    "in_deg_min": 1,
+    "in_deg_p50": 2,
+    "in_deg_p90": 8,
+    "in_deg_p99": 51,
+    "in_deg_max": 126,
+    "in_deg_mean": 4.47,
+    "two_hop_reach_sample_n": 100,
+    "two_hop_reach_mean": 0.5,
+    "two_hop_reach_max": 17
+  },
+  "e5_results.json": {
+    "v12_bytes": 31561,
+    "v13_bytes": 18754,
+    "compression_pct": 40.58,
+    "v12_unique_tokens": 1677,
+    "v13_unique_tokens": 1076,
+    "tokens_dropped": 911,
+    "tokens_added": 310,
+    "tokens_kept": 766,
+    "retention_pct": 45.68,
+    "dropped_by_class": {
+      "prose": 848,
+      "date": 4,
+      "numeric": 57,
+      "rail": 2
+    },
+    "added_by_class": {
+      "prose": 295,
+      "numeric": 14,
+      "rail": 1
+    },
+    "kept_by_class": {
+      "rail": 31,
+      "prose": 665,
+      "numeric": 44,
+      "version": 13,
+      "date": 13
+    },
+    "load_bearing_dropped_sample": [
+      "#11",
+      "#25",
+      "-1.6kb",
+      "00",
+      "003",
+      "004",
+      "005",
+      "005b",
+      "007",
+      "008",
+      "009",
+      "011",
+      "015",
+      "0700",
+      "08",
+      "09",
+      "10.4kb",
+      "10kb",
+      "11",
+      "112",
+      "11964b",
+      "12",
+      "12.6kb",
+      "1208563",
+      "126k",
+      "13724b",
+      "14b",
+      "15",
+      "16366b",
+      "17.9kb",
+      "18",
+      "189",
+      "19.5kb",
+      "2026-04-17",
+      "2026-04-22",
+      "2026-04-23",
+      "2026-04-25",
+      "22478b",
+      "23548",
+      "23550",
+      "23553",
+      "2kb",
+      "3.9kb",
+      "300",
+      "34004b",
+      "35",
+      "36.4kb",
+      "38.4kb",
+      "39954b",
+      "4.7kb",
+      "42",
+      "42596b",
+      "43.7kb",
+      "50kb",
+      "51.6kb",
+      "52.3kb",
+      "54kb",
+      "56482b",
+      "58",
+      "6.9kb",
+      "614",
+      "8384b",
+      "95"
+    ]
+  },
+  "e6_results.json": {
+    "n_files": 23578,
+    "n_with_frontmatter": 23156,
+    "n_unique_fields": 167
+  },
+  "e7_results.json": {
+    "n_unique_signatures": 92,
+    "n_notes_analyzed": 23156,
+    "uniqueness_ratio": 0.004,
+    "n_clusters_found": 14
+  },
+  "e8_results.json": {
+    "n_notes": 23578,
+    "n_queries": 50,
+    "top_k": 10,
+    "notes_hit_at_least_once": 387,
+    "dark_matter_count": 23191,
+    "dark_matter_pct": 98.36,
+    "hit_frequency_distribution": {
+      "3": 16,
+      "2": 50,
+      "1": 312,
+      "5": 4,
+      "4": 5
+    },
+    "top_10_repeated_hubs": [
+      [
+        "observation/202605221700_agent_memory_architecture_synthesis.md",
+        5
+      ],
+      [
+        "schemas/20260522_schema_recorded-override-beats-silent-bypass.md",
+        5
+      ],
+      [
+        "schemas/20260522_schema_orthogonal-verifier-invariant.md",
+        5
+      ],
+      [
+        "schemas/20260522_schema_phi-discharge-layered-ingest-template.md",
+        5
+      ],
+      [
+        "schemas/20260522_schema_substrate-queue-percept-actuator-split.md",
+        4
+      ],
+      [
+        "raw_prompts/2026-05-19/200915-abb3b374.md",
+        4
+      ],
+      [
+        "reflection/reflection_20260516_131912.md",
+        4
+      ],
+      [
+        "lesson/lesson_20260516_194337.md",
+        4
+      ],
+      [
+        "schemas/20260522_schema_provenance-refusal-family.md",
+        4
+      ],
+      [
+        "schemas/20260522_rail80_independence-claim-strongest-orthogonal-check.md",
+        3
+      ]
+    ],
+    "sample_top_per_query": {
+      "amanda rail compaction": [
+        [
+          34.229,
+          "schemas/20260522_rail80_independence-claim-strongest-orthogonal-check.md"
+        ],
+        [
+          33.663,
+          "schemas/20260522_rail81_collapse-claim-strongest-orthogonal-check.md"
+        ],
+        [
+          31.867,
+          "schemas/proposed/20260522_schema_factual-character-inverse-curation.md"
+        ]
+      ],
+      "rhett percept quartet": [
+        [
+          30.069,
+          "reflection/reflection_20260516_131912.md"
+        ],
+        [
+          28.659,
+          "reflection/reflection_20260516_154057.md"
+        ],
+        [
+          24.599,
+          "schemas/20260522_schema_recorded-override-beats-silent-bypass.md"
+        ]
+      ],
+      "gnosis search BM25": [
+        [
+          20.387,
+          "reference/reference_20260512_185331.md"
+        ],
+        [
+          19.603,
+          "dogfood_results/dogfood_results_20260512_181533.md"
+        ],
+        [
+          19.592,
+          "raw_prompts/2026-05-12/183715-a875b0f8.md"
+        ]
+      ],
+      "morgan adversary critique": [
+        [
+          18.205,
+          "agents/aaf-analyst/analyses/202604111200_analysis_caesar_cfg_academic_transform.md"
+        ],
+        [
+          16.48,
+          "pattern/pattern_20260518_211231.md"
+        ],
+        [
+          13.582,
+          "schemas/pre_registered_tests/20260522_rung1_rails_AB.md"
+        ]
+      ],
+      "consolidation pass schema": [
+        [
+          24.218,
+          "schemas/pre_registered_tests/20260522_random_channel_test.md"
+        ],
+        [
+          17.921,
+          "schemas/20260522_schema_standing-pull-toward-declared-independence.md"
+        ],
+        [
+          16.735,
+          "lesson/lesson_20260522_213249.md"
+        ]
+      ],
+      "random channel sampling": [
+        [
+          27.781,
+          "schemas/pre_registered_tests/20260522_random_channel_test.md"
+        ],
+        [
+          19.858,
+          "schemas/20260522_schema_orthogonal-verifier-invariant.md"
+        ],
+        [
+          18.805,
+          "agents/parasocial/feeds/202605070616_ml-brief.md"
+        ]
+      ],
+      "PHI discharge layer": [
+        [
+          25.443,
+          "schemas/20260522_schema_phi-discharge-layered-ingest-template.md"
+        ],
+        [
+          20.04,
+          "observation/202605211513_discharge_first_summary_2025-01-03.md"
+        ],
+        [
+          19.835,
+          "observation/202605211520_discharge_second_summary_2026-01-22.md"
+        ]
+      ],
+      "frontmatter ingest provenance": [
+        [
+          21.538,
+          "implementation/implementation_20260425_152214.md"
+        ],
+        [
+          18.686,
+          "test/test_20260503_193731.md"
+        ],
+        [
+          16.429,
+          "observation/202605211505_discharge_therapist_synthesis.md"
+        ]
+      ],
+      "Joey override refusal": [
+        [
+          18.251,
+          "schemas/20260522_schema_provenance-refusal-family.md"
+        ],
+        [
+          17.216,
+          "agents/parasocial/feeds/202604150609_reddit-top3.md"
+        ],
+        [
+          16.575,
+          "engineer/rigor/PR1-reductionist-20260517T232819Z.md"
+        ]
+      ],
+      "FIRE band headroom": [
+        [
+          17.557,
+          "insight/insight_20260516_131923.md"
+        ],
+        [
+          13.426,
+          "schemas/20260522_rail80_independence-claim-strongest-orthogonal-check.md"
+        ],
+        [
+          12.558,
+          "takeout/youtube/2015/99ed5758.md"
+        ]
+      ]
+    }
+  },
+  "e9_results.json": {
+    "n_files": 23578,
+    "n_with_agent_field": 793,
+    "n_unique_agent_values": 14,
+    "top_agents_by_volume": [
+      [
+        "userpromptsubmit",
+        742
+      ],
+      [
+        "therapy",
+        19
+      ],
+      [
+        "therapist-session",
+        13
+      ],
+      [
+        "observation",
+        5
+      ],
+      [
+        "reflection",
+        4
+      ],
+      [
+        "conversation",
+        2
+      ],
+      [
+        "joey lopez - downloaded from google drive",
+        1
+      ],
+      [
+        "/home/joey/documents/github/monorepo/agentic/agents/benchmarks",
+        1
+      ],
+      [
+        "reading",
+        1
+      ],
+      [
+        "synthesis",
+        1
+      ],
+      [
+        "event-attendance",
+        1
+      ],
+      [
+        "event-meeting",
+        1
+      ],
+      [
+        "work-planning",
+        1
+      ],
+      [
+        "claude (adversarial review of own prior plans, on joey's request)",
+        1
+      ]
+    ],
+    "profile_top_20": {
+      "userpromptsubmit": {
+        "n_notes": 742,
+        "byte_mean": 469.2,
+        "byte_stdev": 1647.8,
+        "lex_density_mean": 0.912,
+        "code_blocks_mean": 0.01,
+        "list_items_mean": 0.7
+      },
+      "therapy": {
+        "n_notes": 19,
+        "byte_mean": 1131.3,
+        "byte_stdev": 411.7,
+        "lex_density_mean": 0.583,
+        "code_blocks_mean": 0,
+        "list_items_mean": 7.3
+      },
+      "therapist-session": {
+        "n_notes": 13,
+        "byte_mean": 697.9,
+        "byte_stdev": 167.5,
+        "lex_density_mean": 0.677,
+        "code_blocks_mean": 0,
+        "list_items_mean": 1.2
+      },
+      "observation": {
+        "n_notes": 5,
+        "byte_mean": 744.2,
+        "byte_stdev": 364.7,
+        "lex_density_mean": 0.631,
+        "code_blocks_mean": 0,
+        "list_items_mean": 3.2
+      }
+    }
+  }
+}

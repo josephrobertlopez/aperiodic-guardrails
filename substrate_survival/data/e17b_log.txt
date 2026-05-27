@@ -1,0 +1,9 @@
+E17 B-only on kronos, target=11289B, N=20
+loaded 20 A trials from recovered checkpoint
+loaded 0 B trials from checkpoint
+  B trial 1: [ERROR: Expecting value: line 1 column 1 (char 0); raw=]
+  B trial 2: [ERROR: Expecting value: line 1 column 1 (char 0); raw=]
+  B trial 3: [ERROR: Expecting value: line 1 column 1 (char 0); raw=]
+  B trial 4: [ERROR: Expecting value: line 1 column 1 (char 0); raw=]
+  B trial 5: [ERROR: Expecting value: line 1 column 1 (char 0); raw=]
+  B trial 6: [ERROR: Expecting value: line 1 column 1 (char 0); raw=]

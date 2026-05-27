@@ -1,0 +1,102 @@
+{
+  "experiment": "E44",
+  "description": "Supersession resolution \u2014 temporal-precedence semantics in substrate",
+  "model": "qwen2.5-32b-instruct-awq",
+  "n_rule_pairs": 5,
+  "n_conditions": 4,
+  "n_trials_per_cell": 8,
+  "total_new_design_trials": 160,
+  "errors": 0,
+  "pre_registered_criteria": {
+    "null_test_TEMPORAL_INVARIANT": "HONORS_R2 rates across all 4 conditions within 10pp",
+    "SUPERSESSION_HONORED": "EXPLICIT_SUPERSEDE > 70% HONORS_R2 AND > 25pp above IMPLICIT_R2_LATER",
+    "RECENCY_BIAS": "HONORS_R2 in IMPLICIT_R2_LATER > REVERSED_ORDER by > 20pp",
+    "AMBIGUITY_PARALYSIS": "AMBIGUOUS_BOTH_VALID > 50% HEDGES_BOTH or INVENTS_THIRD",
+    "INDETERMINATE": "none of the above fire",
+    "confound_test": "per-rule-pair HONORS_R2 rates between conditions",
+    "mechanism_check": "both rules acknowledged in >= 95% of trials"
+  },
+  "honors_r2_by_condition": {
+    "IMPLICIT_R2_LATER": 1.0,
+    "EXPLICIT_SUPERSEDE": 1.0,
+    "AMBIGUOUS_BOTH_VALID": 0.8,
+    "REVERSED_ORDER": 1.0
+  },
+  "honors_r1_by_condition": {
+    "IMPLICIT_R2_LATER": 0.0,
+    "EXPLICIT_SUPERSEDE": 0.0,
+    "AMBIGUOUS_BOTH_VALID": 0.0,
+    "REVERSED_ORDER": 0.0
+  },
+  "hedges_both_by_condition": {
+    "IMPLICIT_R2_LATER": 0.0,
+    "EXPLICIT_SUPERSEDE": 0.0,
+    "AMBIGUOUS_BOTH_VALID": 0.2,
+    "REVERSED_ORDER": 0.0
+  },
+  "invents_third_by_condition": {
+    "IMPLICIT_R2_LATER": 0.0,
+    "EXPLICIT_SUPERSEDE": 0.0,
+    "AMBIGUOUS_BOTH_VALID": 0.0,
+    "REVERSED_ORDER": 0.0
+  },
+  "ambig_non_r2_rate": 0.2,
+  "recency_bias_gap_pp": 0.0,
+  "ordering_spread_pp": 20.0,
+  "mechanism_check": {
+    "both_rules_mentioned_rate": 1.0,
+    "threshold": 0.95,
+    "passes": true
+  },
+  "verdicts_fired": [
+    "INDETERMINATE"
+  ],
+  "verdict_detail": {
+    "null_test_fires": false,
+    "spread_pp": 20.0,
+    "supersession_fires": false,
+    "EXPLICIT_SUPERSEDE_rate": 1.0,
+    "IMPLICIT_minus_EXPLICIT_gap_pp": 0.0,
+    "recency_bias_fires": false,
+    "IMPLICIT_minus_REVERSED_gap_pp": 0.0,
+    "ambiguity_paralysis_fires": false,
+    "AMBIGUOUS_non_r2_rate": 0.2
+  },
+  "confound_check": {
+    "per_pair_honors_r2": {
+      "RP01": {
+        "IMPLICIT_R2_LATER": 1.0,
+        "EXPLICIT_SUPERSEDE": 1.0,
+        "AMBIGUOUS_BOTH_VALID": 1.0,
+        "REVERSED_ORDER": 1.0
+      },
+      "RP02": {
+        "IMPLICIT_R2_LATER": 1.0,
+        "EXPLICIT_SUPERSEDE": 1.0,
+        "AMBIGUOUS_BOTH_VALID": 1.0,
+        "REVERSED_ORDER": 1.0
+      },
+      "RP03": {
+        "IMPLICIT_R2_LATER": 1.0,
+        "EXPLICIT_SUPERSEDE": 1.0,
+        "AMBIGUOUS_BOTH_VALID": 1.0,
+        "REVERSED_ORDER": 1.0
+      },
+      "RP04": {
+        "IMPLICIT_R2_LATER": 1.0,
+        "EXPLICIT_SUPERSEDE": 1.0,
+        "AMBIGUOUS_BOTH_VALID": 0.0,
+        "REVERSED_ORDER": 1.0
+      },
+      "RP05": {
+        "IMPLICIT_R2_LATER": 1.0,
+        "EXPLICIT_SUPERSEDE": 1.0,
+        "AMBIGUOUS_BOTH_VALID": 1.0,
+        "REVERSED_ORDER": 1.0
+      }
+    },
+    "note": "High within-pair variance across conditions = position confound"
+  },
+  "trials_path": "/mnt/media/local-storage/code/GitHub/gnosis-substrate-survival/data/e44_trials.jsonl",
+  "ts": "2026-05-25T15:50:17.451768+00:00"
+}

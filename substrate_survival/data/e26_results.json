@@ -1,0 +1,115 @@
+{
+  "experiment": "E26 (D1 \u2014 Rail #19 real-ambiguity sweep)",
+  "hypothesis": "Rail #19 (the 5KB substrate-write hard-gate) fires correctly when judged by a reviewer with full context. 'Correctly' = the gate's BLOCK/ALLOW matches what an informed reviewer would judge as the right call given the actual write contents and substrate-headroom state at fire time.",
+  "null_condition": "If reviewer-agreement rate is \u226580%, gate is judged WORKING; if <60%, NOT-WORKING; if 60-80%, MIXED/INDETERMINATE.",
+  "falsifier": "Reviewer-judgment disagrees with gate verdict on \u226540% of fires (i.e., gate is wrong nearly half the time).",
+  "pre_registration_timestamp": "2026-05-24T00:00:00Z",
+  "n_fires_found": 10,
+  "n_from_primary_log": 10,
+  "n_from_secondary_memory_jsonl": 0,
+  "secondary_note": "memory.jsonl contained one add_observations line (amanda.State.v5 entity body) \u2014 an entity payload, not a gate-fire event. No supplemental fire events available from secondary source.",
+  "per_fire": [
+    {
+      "timestamp": "2026-05-24T16:52:54Z",
+      "write_size_bytes": null,
+      "gate_verdict": "BLOCK",
+      "gate_reason": "FIRE-line crossed (combined ingress past 55KB ceiling)",
+      "reviewer_verdict": "BLOCK",
+      "match": true,
+      "reasoning": "Substrate was past the 55KB FIRE-line per check-substrate output. Spec (amanda.md:699-700) is unambiguous: headroom < 0KB means write is BLOCKED. No override sentinel present. Gate correctly refused."
+    },
+    {
+      "timestamp": "2026-05-24T16:52:54Z",
+      "write_size_bytes": null,
+      "gate_verdict": "ALLOW",
+      "gate_reason": "headroom=11397B (\u22655KB threshold)",
+      "reviewer_verdict": "ALLOW",
+      "match": true,
+      "reasoning": "11,397 bytes headroom is well above the 5,000-byte cutoff. Spec (amanda.md:697-698) requires refusal only below 5KB. Gate correctly allowed."
+    },
+    {
+      "timestamp": "2026-05-24T17:32:11Z",
+      "write_size_bytes": null,
+      "gate_verdict": "ALLOW",
+      "gate_reason": "headroom=11397B (\u22655KB threshold)",
+      "reviewer_verdict": "ALLOW",
+      "match": true,
+      "reasoning": "Same state as prior event. 11,397 > 5,000. Gate correctly allowed."
+    },
+    {
+      "timestamp": "2026-05-24T17:33:39Z",
+      "write_size_bytes": null,
+      "gate_verdict": "ALLOW",
+      "gate_reason": "headroom=9781B (\u22655KB threshold)",
+      "reviewer_verdict": "ALLOW",
+      "match": true,
+      "reasoning": "9,781 bytes headroom exceeds 5,000-byte threshold by nearly 2x. Gate correctly allowed."
+    },
+    {
+      "timestamp": "2026-05-24T17:36:07Z",
+      "write_size_bytes": null,
+      "gate_verdict": "ALLOW",
+      "gate_reason": "headroom=9781B (\u22655KB threshold)",
+      "reviewer_verdict": "ALLOW",
+      "match": true,
+      "reasoning": "Identical substrate state to prior event. Gate correctly allowed."
+    },
+    {
+      "timestamp": "2026-05-24T17:51:43Z",
+      "write_size_bytes": null,
+      "gate_verdict": "ALLOW",
+      "gate_reason": "headroom=24904B (\u22655KB threshold)",
+      "reviewer_verdict": "ALLOW",
+      "match": true,
+      "reasoning": "24,904 bytes headroom \u2014 likely a compaction ran between 17:36 and 17:51, explaining the jump from 9.8KB to 24.9KB headroom. Well above threshold. Gate correctly allowed."
+    },
+    {
+      "timestamp": "2026-05-24T18:06:00Z",
+      "write_size_bytes": null,
+      "gate_verdict": "ALLOW",
+      "gate_reason": "headroom=24904B (\u22655KB threshold)",
+      "reviewer_verdict": "ALLOW",
+      "match": true,
+      "reasoning": "Same state as prior. Gate correctly allowed."
+    },
+    {
+      "timestamp": "2026-05-24T18:25:10Z",
+      "write_size_bytes": null,
+      "gate_verdict": "ALLOW",
+      "gate_reason": "headroom=23301B (\u22655KB threshold)",
+      "reviewer_verdict": "ALLOW",
+      "match": true,
+      "reasoning": "23,301 bytes headroom. Slight decrease from prior event (normal write consumption). Well above 5KB. Gate correctly allowed."
+    },
+    {
+      "timestamp": "2026-05-24T18:57:37Z",
+      "write_size_bytes": null,
+      "gate_verdict": "ALLOW",
+      "gate_reason": "headroom=21919B (\u22655KB threshold)",
+      "reviewer_verdict": "ALLOW",
+      "match": true,
+      "reasoning": "21,919 bytes headroom. Gradual decrease consistent with substrate consumption. Well above 5KB. Gate correctly allowed."
+    },
+    {
+      "timestamp": "2026-05-24T19:01:53Z",
+      "write_size_bytes": null,
+      "gate_verdict": "ALLOW",
+      "gate_reason": "headroom=19880B (\u22655KB threshold)",
+      "reviewer_verdict": "ALLOW",
+      "match": true,
+      "reasoning": "19,880 bytes headroom. Continued gradual decrease. Still well above 5KB. Gate correctly allowed."
+    }
+  ],
+  "reviewer_agreement_rate": 1.0,
+  "verdict": "WORKING",
+  "verdict_reasoning": "All 10 gate decisions match reviewer judgment under the pre-registered spec. The single BLOCK at 16:52:54 was the only non-PASS event; it fired correctly on FIRE-line crossing. The 9 PASS events all had headroom comfortably above the 5KB cutoff (range: 9,781\u201324,904 bytes). No ambiguous edge cases appeared in this sample \u2014 no headroom values in the 5,000\u20138,000 byte borderline zone, and no FAIL-CLOSED events. The gate is behaviorally correct for the observed sample. Caveat: write_size_bytes is not recorded in the log (the hook discards stdin per line 28), so reviewer judgment was based solely on substrate headroom, not write-content risk. If a write were itself large (e.g., 8KB write with 9KB headroom), the gate would allow it while leaving <1KB headroom \u2014 a gap the current spec does not close. This is not a disagreement; it is a coverage limitation of the current gate design.",
+  "confound_test": {
+    "status": "not_run",
+    "reason": "pre-template \u2014 E26 was an audit experiment (reviewer-agreement against existing rail-19 log); the confound consideration was implicit (reviewer + log = the test). Verdict WORKING reflects 10/10 agreement with no observed confound."
+  },
+  "mechanism_check": {
+    "status": "not_run",
+    "reason": "pre-template \u2014 mechanism (the rail-19 gate firing correctly) was directly observed; the experiment IS the mechanism check."
+  },
+  "label_substance_alignment": "WORKING is positive-grammar AND positive-substance (10/10 reviewer agreement). No mismatch."
+}

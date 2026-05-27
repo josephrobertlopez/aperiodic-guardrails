@@ -1,0 +1,8 @@
+E19 verdict: FREQUENCY-RULED-OUT: mean delta +4.90pp ≤ +5pp threshold; E16 robust; LLM selects beyond corpus frequency
+  E12 LLM:      +28.0 pp
+  E16 uniform:  +1.8 pp
+  E19 freq-wt:  +4.90 pp
+
+      v8->v9: char= 94.6% fact= 86.9% delta= +7.7pp range [ -2.3, +15.8]
+    v11->v12: char= 97.5% fact= 95.3% delta= +2.2pp range [ -3.2,  +8.2]
+    v12->v13: char= 83.1% fact= 78.3% delta= +4.8pp range [-12.2, +35.0]

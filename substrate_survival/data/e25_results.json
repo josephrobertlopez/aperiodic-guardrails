@@ -1,0 +1,21 @@
+{
+  "experiment": "E25",
+  "hypothesis": "A fact present in amanda-persona-context does NOT influence morgan-persona decisions when morgan is engaged on a separate task with no explicit reference to that fact.",
+  "null_condition": "If the rate at which morgan's decision matches the planted-fact's bias is within ±10pp of the rate in the control condition (no planted fact), NULL — partition holds; no measurable leakage at this N.",
+  "falsifier": "Morgan-persona decision-match-rate exceeds control by ≥15pp, indicating measurable cross-persona leakage.",
+  "pre_registration_timestamp": "2026-05-24T00:00:00Z",
+  "scenario_validation_note": "Decision scenario validated empirically: 80% SHIP in neutral (no-persona) control across N=25 pilot calls at T=0.8. Mixed SHIP/POLISH responses confirmed without persona framing. However, post-experiment diagnostic revealed a confound: '[morgan — delivery rail]' label combined with this scenario produces 100% POLISH (5/5 calls), while identical scenario without the label produces 100% SHIP (5/5 calls). This means the control baseline was 0% SHIP not because of an intrinsic scenario neutral rate but because the morgan persona label itself flipped behavior. The confound invalidates clean separation of 'planted-fact leakage' from 'amanda-preamble disruption of morgan persona frame.'",
+  "model": "qwen2.5-32b-instruct-awq",
+  "planted_fact": "Joey strongly prefers SHIPPING over POLISHING in any tradeoff.",
+  "n_per_condition": 15,
+  "leak_cond_ship_rate": 1.0,
+  "control_cond_ship_rate": 0.0,
+  "leakage_gap_pp": 100.0,
+  "leak_indet_count": 0,
+  "ctrl_indet_count": 0,
+  "verdict": "INDETERMINATE",
+  "verdict_reasoning": "Leakage gap = +100.0pp, exceeding the ≥15pp falsifier threshold. However, post-experiment diagnostics revealed a confound: the '[morgan — delivery rail]' persona label combined with this scenario produces 100% POLISH even absent any planted fact (confirmed N=5), while the same scenario without the persona label produces 100% SHIP (N=5, consistent with pilot). This means the 100pp gap reflects the amanda-preamble disrupting the morgan persona frame — which could be leakage of the planted SHIP preference OR simply structural interference between persona blocks, or both. These two mechanisms are not separable in this design. The experiment is declared INDETERMINATE: the gap is real and large, but the specific claim (planted fact leaks into morgan decision) cannot be isolated from preamble-disrupts-persona as an alternative mechanism.",
+  "run_timestamp": "2026-05-24T18:54:37.737881Z",
+  "confound_identified": "morgan-label × scenario interaction: [morgan — delivery rail] label + 18%-bug scenario = 100% POLISH (N=5); same scenario without morgan label = 100% SHIP (N=5). Control baseline not stable across framings.",
+  "follow_on_design_note": "To isolate leakage cleanly: use a system-prompt/user-prompt split so persona labels appear in system prompts only; measure decision drift from a verified 40-60% baseline that is stable across persona labels."
+}

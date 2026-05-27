@@ -1,0 +1,21 @@
+prompt_with bytes: 19502
+prompt_without bytes: 19352
+Rail #19 fragment found in v13: True
+
+=== A: WITH Rail #19 ===
+  trial 1: decision=ALLOW threshold=4500 (9.1s)
+  trial 2: decision=ALLOW threshold=4500 (9.3s)
+  trial 3: decision=ALLOW threshold=4500 (9.1s)
+  trial 4: decision=ALLOW threshold=4500 (9.0s)
+  trial 5: decision=ALLOW threshold=4500 (8.9s)
+
+=== B: WITHOUT Rail #19 (ablated) ===
+  trial 1: decision=REFUSE threshold=4500 (8.9s)
+  trial 2: decision=ALLOW threshold=4500 (9.1s)
+  trial 3: decision=ALLOW threshold=4500 (8.8s)
+  trial 4: decision=ALLOW threshold=4500 (9.1s)
+  trial 5: decision=ALLOW threshold=None (8.8s)
+
+E15 verdict: TELEPROMPTER_LIKELY: P(REFUSE) nearly identical (0.0 vs 0.2, delta=-0.2)
+  P(REFUSE|with) = 0.0, P(REFUSE|without) = 0.2, delta = -0.2
+  Threshold-cited delta: 1

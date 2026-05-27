@@ -1,0 +1,547 @@
+{
+  "n_files": 23578,
+  "n_with_frontmatter": 23156,
+  "n_unique_fields": 167,
+  "field_profile": [
+    {
+      "field": "tags",
+      "occurrence": 21973,
+      "occurrence_pct": 94.9,
+      "value_cardinality": 14,
+      "cardinality_ratio": 0.014,
+      "value_mean_len_bytes": 18.4,
+      "value_total_bytes": 403227
+    },
+    {
+      "field": "type",
+      "occurrence": 21530,
+      "occurrence_pct": 93.0,
+      "value_cardinality": 2,
+      "cardinality_ratio": 0.002,
+      "value_mean_len_bytes": 13.6,
+      "value_total_bytes": 292574
+    },
+    {
+      "field": "date",
+      "occurrence": 19338,
+      "occurrence_pct": 83.5,
+      "value_cardinality": 916,
+      "cardinality_ratio": 0.916,
+      "value_mean_len_bytes": 31.5,
+      "value_total_bytes": 609300
+    },
+    {
+      "field": "service",
+      "occurrence": 18529,
+      "occurrence_pct": 80.0,
+      "value_cardinality": 3,
+      "cardinality_ratio": 0.003,
+      "value_mean_len_bytes": 6.9,
+      "value_total_bytes": 127387
+    },
+    {
+      "field": "ingest_version",
+      "occurrence": 17769,
+      "occurrence_pct": 76.7,
+      "value_cardinality": 1,
+      "cardinality_ratio": 0.001,
+      "value_mean_len_bytes": 1.0,
+      "value_total_bytes": 17769
+    },
+    {
+      "field": "source_path",
+      "occurrence": 17027,
+      "occurrence_pct": 73.5,
+      "value_cardinality": 234,
+      "cardinality_ratio": 0.234,
+      "value_mean_len_bytes": 106.0,
+      "value_total_bytes": 1805625
+    },
+    {
+      "field": "source_md5",
+      "occurrence": 17027,
+      "occurrence_pct": 73.5,
+      "value_cardinality": 2,
+      "cardinality_ratio": 0.002,
+      "value_mean_len_bytes": 33.8,
+      "value_total_bytes": 575656
+    },
+    {
+      "field": "content_hash",
+      "occurrence": 17027,
+      "occurrence_pct": 73.5,
+      "value_cardinality": 1000,
+      "cardinality_ratio": 1.0,
+      "value_mean_len_bytes": 10.0,
+      "value_total_bytes": 170270
+    },
+    {
+      "field": "from",
+      "occurrence": 15598,
+      "occurrence_pct": 67.4,
+      "value_cardinality": 304,
+      "cardinality_ratio": 0.304,
+      "value_mean_len_bytes": 47.1,
+      "value_total_bytes": 734213
+    },
+    {
+      "field": "subject",
+      "occurrence": 15598,
+      "occurrence_pct": 67.4,
+      "value_cardinality": 774,
+      "cardinality_ratio": 0.774,
+      "value_mean_len_bytes": 53.9,
+      "value_total_bytes": 841157
+    },
+    {
+      "field": "date_parsed",
+      "occurrence": 15598,
+      "occurrence_pct": 67.4,
+      "value_cardinality": 74,
+      "cardinality_ratio": 0.074,
+      "value_mean_len_bytes": 12.0,
+      "value_total_bytes": 187176
+    },
+    {
+      "field": "to",
+      "occurrence": 15598,
+      "occurrence_pct": 67.4,
+      "value_cardinality": 144,
+      "cardinality_ratio": 0.144,
+      "value_mean_len_bytes": 36.8,
+      "value_total_bytes": 573838
+    },
+    {
+      "field": "inferred_tags",
+      "occurrence": 4448,
+      "occurrence_pct": 19.2,
+      "value_cardinality": 832,
+      "cardinality_ratio": 0.832,
+      "value_mean_len_bytes": 63.2,
+      "value_total_bytes": 281320
+    },
+    {
+      "field": "inferred_at",
+      "occurrence": 4448,
+      "occurrence_pct": 19.2,
+      "value_cardinality": 1000,
+      "cardinality_ratio": 1.0,
+      "value_mean_len_bytes": 25.8,
+      "value_total_bytes": 114776
+    },
+    {
+      "field": "title",
+      "occurrence": 2057,
+      "occurrence_pct": 8.9,
+      "value_cardinality": 863,
+      "cardinality_ratio": 0.863,
+      "value_mean_len_bytes": 29.0,
+      "value_total_bytes": 59633
+    },
+    {
+      "field": "natural_date",
+      "occurrence": 1725,
+      "occurrence_pct": 7.4,
+      "value_cardinality": 1000,
+      "cardinality_ratio": 1.0,
+      "value_mean_len_bytes": 16.8,
+      "value_total_bytes": 28984
+    },
+    {
+      "field": "aliases",
+      "occurrence": 1725,
+      "occurrence_pct": 7.4,
+      "value_cardinality": 71,
+      "cardinality_ratio": 0.071,
+      "value_mean_len_bytes": 38.1,
+      "value_total_bytes": 65712
+    },
+    {
+      "field": "generated_by",
+      "occurrence": 1725,
+      "occurrence_pct": 7.4,
+      "value_cardinality": 1,
+      "cardinality_ratio": 0.001,
+      "value_mean_len_bytes": 35.0,
+      "value_total_bytes": 60375
+    },
+    {
+      "field": "generated_content",
+      "occurrence": 1725,
+      "occurrence_pct": 7.4,
+      "value_cardinality": 1,
+      "cardinality_ratio": 0.001,
+      "value_mean_len_bytes": 42.0,
+      "value_total_bytes": 72450
+    },
+    {
+      "field": "event_count",
+      "occurrence": 1725,
+      "occurrence_pct": 7.4,
+      "value_cardinality": 12,
+      "cardinality_ratio": 0.012,
+      "value_mean_len_bytes": 1.0,
+      "value_total_bytes": 1731
+    },
+    {
+      "field": "photo_count",
+      "occurrence": 1725,
+      "occurrence_pct": 7.4,
+      "value_cardinality": 6,
+      "cardinality_ratio": 0.006,
+      "value_mean_len_bytes": 1.0,
+      "value_total_bytes": 1737
+    },
+    {
+      "field": "fitness_sleep_mins",
+      "occurrence": 1725,
+      "occurrence_pct": 7.4,
+      "value_cardinality": 1,
+      "cardinality_ratio": 0.001,
+      "value_mean_len_bytes": 1.2,
+      "value_total_bytes": 2060
+    },
+    {
+      "field": "fitness_steps",
+      "occurrence": 1725,
+      "occurrence_pct": 7.4,
+      "value_cardinality": 1,
+      "cardinality_ratio": 0.001,
+      "value_mean_len_bytes": 1.0,
+      "value_total_bytes": 1725
+    },
+    {
+      "field": "created",
+      "occurrence": 1475,
+      "occurrence_pct": 6.4,
+      "value_cardinality": 920,
+      "cardinality_ratio": 0.92,
+      "value_mean_len_bytes": 21.6,
+      "value_total_bytes": 31817
+    },
+    {
+      "field": "id",
+      "occurrence": 1474,
+      "occurrence_pct": 6.4,
+      "value_cardinality": 986,
+      "cardinality_ratio": 0.986,
+      "value_mean_len_bytes": 13.2,
+      "value_total_bytes": 19470
+    },
+    {
+      "field": "summary",
+      "occurrence": 1294,
+      "occurrence_pct": 5.6,
+      "value_cardinality": 863,
+      "cardinality_ratio": 0.863,
+      "value_mean_len_bytes": 27.9,
+      "value_total_bytes": 36098
+    },
+    {
+      "field": "source_file",
+      "occurrence": 1189,
+      "occurrence_pct": 5.1,
+      "value_cardinality": 28,
+      "cardinality_ratio": 0.028,
+      "value_mean_len_bytes": 23.5,
+      "value_total_bytes": 27998
+    },
+    {
+      "field": "note_type",
+      "occurrence": 1180,
+      "occurrence_pct": 5.1,
+      "value_cardinality": 16,
+      "cardinality_ratio": 0.016,
+      "value_mean_len_bytes": 7.9,
+      "value_total_bytes": 9337
+    },
+    {
+      "field": "domains",
+      "occurrence": 1140,
+      "occurrence_pct": 4.9,
+      "value_cardinality": 7,
+      "cardinality_ratio": 0.007,
+      "value_mean_len_bytes": 4.4,
+      "value_total_bytes": 5042
+    },
+    {
+      "field": "salience",
+      "occurrence": 1027,
+      "occurrence_pct": 4.4,
+      "value_cardinality": 6,
+      "cardinality_ratio": 0.006,
+      "value_mean_len_bytes": 3.1,
+      "value_total_bytes": 3190
+    },
+    {
+      "field": "migrated_from",
+      "occurrence": 1012,
+      "occurrence_pct": 4.4,
+      "value_cardinality": 1000,
+      "cardinality_ratio": 1.0,
+      "value_mean_len_bytes": 64.8,
+      "value_total_bytes": 65546
+    },
+    {
+      "field": "source",
+      "occurrence": 792,
+      "occurrence_pct": 3.4,
+      "value_cardinality": 13,
+      "cardinality_ratio": 0.016,
+      "value_mean_len_bytes": 15.9,
+      "value_total_bytes": 12606
+    },
+    {
+      "field": "captured_at",
+      "occurrence": 742,
+      "occurrence_pct": 3.2,
+      "value_cardinality": 741,
+      "cardinality_ratio": 0.999,
+      "value_mean_len_bytes": 25.0,
+      "value_total_bytes": 18550
+    },
+    {
+      "field": "content_sha1",
+      "occurrence": 742,
+      "occurrence_pct": 3.2,
+      "value_cardinality": 727,
+      "cardinality_ratio": 0.98,
+      "value_mean_len_bytes": 8.0,
+      "value_total_bytes": 5936
+    },
+    {
+      "field": "length_chars",
+      "occurrence": 742,
+      "occurrence_pct": 3.2,
+      "value_cardinality": 278,
+      "cardinality_ratio": 0.375,
+      "value_mean_len_bytes": 2.4,
+      "value_total_bytes": 1815
+    },
+    {
+      "field": "name",
+      "occurrence": 469,
+      "occurrence_pct": 2.0,
+      "value_cardinality": 436,
+      "cardinality_ratio": 0.93,
+      "value_mean_len_bytes": 16.2,
+      "value_total_bytes": 7612
+    },
+    {
+      "field": "basin",
+      "occurrence": 465,
+      "occurrence_pct": 2.0,
+      "value_cardinality": 20,
+      "cardinality_ratio": 0.043,
+      "value_mean_len_bytes": 7.5,
+      "value_total_bytes": 3483
+    },
+    {
+      "field": "emails",
+      "occurrence": 461,
+      "occurrence_pct": 2.0,
+      "value_cardinality": 3,
+      "cardinality_ratio": 0.007,
+      "value_mean_len_bytes": 2.2,
+      "value_total_bytes": 994
+    },
+    {
+      "field": "phones",
+      "occurrence": 461,
+      "occurrence_pct": 2.0,
+      "value_cardinality": 29,
+      "cardinality_ratio": 0.063,
+      "value_mean_len_bytes": 3.9,
+      "value_total_bytes": 1802
+    },
+    {
+      "field": "entity_type",
+      "occurrence": 388,
+      "occurrence_pct": 1.7,
+      "value_cardinality": 44,
+      "cardinality_ratio": 0.113,
+      "value_mean_len_bytes": 8.4,
+      "value_total_bytes": 3270
+    },
+    {
+      "field": "updated",
+      "occurrence": 376,
+      "occurrence_pct": 1.6,
+      "value_cardinality": 304,
+      "cardinality_ratio": 0.809,
+      "value_mean_len_bytes": 16.2,
+      "value_total_bytes": 6091
+    },
+    {
+      "field": "relationships",
+      "occurrence": 376,
+      "occurrence_pct": 1.6,
+      "value_cardinality": 152,
+      "cardinality_ratio": 0.404,
+      "value_mean_len_bytes": 29.1,
+      "value_total_bytes": 10956
+    },
+    {
+      "field": "last_accessed",
+      "occurrence": 340,
+      "occurrence_pct": 1.5,
+      "value_cardinality": 272,
+      "cardinality_ratio": 0.8,
+      "value_mean_len_bytes": 16.1,
+      "value_total_bytes": 5466
+    },
+    {
+      "field": "filename",
+      "occurrence": 233,
+      "occurrence_pct": 1.0,
+      "value_cardinality": 225,
+      "cardinality_ratio": 0.966,
+      "value_mean_len_bytes": 29.4,
+      "value_total_bytes": 6850
+    },
+    {
+      "field": "rel_path",
+      "occurrence": 233,
+      "occurrence_pct": 1.0,
+      "value_cardinality": 233,
+      "cardinality_ratio": 1.0,
+      "value_mean_len_bytes": 43.1,
+      "value_total_bytes": 10052
+    },
+    {
+      "field": "size_bytes",
+      "occurrence": 233,
+      "occurrence_pct": 1.0,
+      "value_cardinality": 218,
+      "cardinality_ratio": 0.936,
+      "value_mean_len_bytes": 6.1,
+      "value_total_bytes": 1420
+    },
+    {
+      "field": "mime_type",
+      "occurrence": 233,
+      "occurrence_pct": 1.0,
+      "value_cardinality": 19,
+      "cardinality_ratio": 0.082,
+      "value_mean_len_bytes": 18.6,
+      "value_total_bytes": 4341
+    },
+    {
+      "field": "modified",
+      "occurrence": 233,
+      "occurrence_pct": 1.0,
+      "value_cardinality": 132,
+      "cardinality_ratio": 0.567,
+      "value_mean_len_bytes": 21.0,
+      "value_total_bytes": 4893
+    },
+    {
+      "field": "status",
+      "occurrence": 161,
+      "occurrence_pct": 0.7,
+      "value_cardinality": 24,
+      "cardinality_ratio": 0.149,
+      "value_mean_len_bytes": 10.3,
+      "value_total_bytes": 1665
+    },
+    {
+      "field": "color",
+      "occurrence": 118,
+      "occurrence_pct": 0.5,
+      "value_cardinality": 1,
+      "cardinality_ratio": 0.008,
+      "value_mean_len_bytes": 7.0,
+      "value_total_bytes": 826
+    },
+    {
+      "field": "created_at",
+      "occurrence": 116,
+      "occurrence_pct": 0.5,
+      "value_cardinality": 116,
+      "cardinality_ratio": 1.0,
+      "value_mean_len_bytes": 25.9,
+      "value_total_bytes": 3002
+    },
+    {
+      "field": "domain",
+      "occurrence": 48,
+      "occurrence_pct": 0.2,
+      "value_cardinality": 4,
+      "cardinality_ratio": 0.083,
+      "value_mean_len_bytes": 10.3,
+      "value_total_bytes": 494
+    },
+    {
+      "field": "agent_source",
+      "occurrence": 33,
+      "occurrence_pct": 0.1,
+      "value_cardinality": 7,
+      "cardinality_ratio": 0.212,
+      "value_mean_len_bytes": 8.5,
+      "value_total_bytes": 279
+    },
+    {
+      "field": "file",
+      "occurrence": 33,
+      "occurrence_pct": 0.1,
+      "value_cardinality": 33,
+      "cardinality_ratio": 1.0,
+      "value_mean_len_bytes": 26.9,
+      "value_total_bytes": 887
+    },
+    {
+      "field": "confidence",
+      "occurrence": 25,
+      "occurrence_pct": 0.1,
+      "value_cardinality": 3,
+      "cardinality_ratio": 0.12,
+      "value_mean_len_bytes": 6.1,
+      "value_total_bytes": 153
+    },
+    {
+      "field": "evidence",
+      "occurrence": 25,
+      "occurrence_pct": 0.1,
+      "value_cardinality": 9,
+      "cardinality_ratio": 0.36,
+      "value_mean_len_bytes": 32.4,
+      "value_total_bytes": 810
+    },
+    {
+      "field": "links",
+      "occurrence": 21,
+      "occurrence_pct": 0.1,
+      "value_cardinality": 1,
+      "cardinality_ratio": 0.048,
+      "value_mean_len_bytes": 0.0,
+      "value_total_bytes": 0
+    },
+    {
+      "field": "pending_review",
+      "occurrence": 13,
+      "occurrence_pct": 0.1,
+      "value_cardinality": 1,
+      "cardinality_ratio": 0.077,
+      "value_mean_len_bytes": 4.0,
+      "value_total_bytes": 52
+    },
+    {
+      "field": "ttl_days",
+      "occurrence": 13,
+      "occurrence_pct": 0.1,
+      "value_cardinality": 1,
+      "cardinality_ratio": 0.077,
+      "value_mean_len_bytes": 2.0,
+      "value_total_bytes": 26
+    },
+    {
+      "field": "source_chain",
+      "occurrence": 13,
+      "occurrence_pct": 0.1,
+      "value_cardinality": 1,
+      "cardinality_ratio": 0.077,
+      "value_mean_len_bytes": 0.0,
+      "value_total_bytes": 0
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+[
+  {
+    "trial": 1,
+    "raw_delta_pp": -26.8,
+    "normalized_delta_pp": -15.1,
+    "output_bytes": 3274
+  },
+  {
+    "trial": 2,
+    "raw_delta_pp": 2.5,
+    "normalized_delta_pp": 14.1,
+    "output_bytes": 1951
+  },
+  {
+    "trial": 3,
+    "raw_delta_pp": 12.3,
+    "normalized_delta_pp": 23.9,
+    "output_bytes": 1685
+  },
+  {
+    "trial": 4,
+    "raw_delta_pp": -18.3,
+    "normalized_delta_pp": -6.7,
+    "output_bytes": 3013
+  },
+  {
+    "trial": 5,
+    "raw_delta_pp": -19.6,
+    "normalized_delta_pp": -8.0,
+    "output_bytes": 5077
+  },
+  {
+    "trial": 6,
+    "raw_delta_pp": -4.4,
+    "normalized_delta_pp": 7.2,
+    "output_bytes": 2699
+  },
+  {
+    "trial": 7,
+    "raw_delta_pp": -1.5,
+    "normalized_delta_pp": 10.1,
+    "output_bytes": 1997
+  },
+  {
+    "trial": 8,
+    "raw_delta_pp": -35.5,
+    "normalized_delta_pp": -23.8,
+    "output_bytes": 3405
+  },
+  {
+    "trial": 9,
+    "raw_delta_pp": -28.1,
+    "normalized_delta_pp": -16.5,
+    "output_bytes": 2525
+  },
+  {
+    "trial": 10,
+    "raw_delta_pp": -29.0,
+    "normalized_delta_pp": -17.4,
+    "output_bytes": 3585
+  },
+  {
+    "trial": 11,
+    "raw_delta_pp": -25.6,
+    "normalized_delta_pp": -13.9,
+    "output_bytes": 4713
+  },
+  {
+    "trial": 12,
+    "raw_delta_pp": -29.1,
+    "normalized_delta_pp": -17.4,
+    "output_bytes": 2428
+  },
+  {
+    "trial": 13,
+    "raw_delta_pp": -13.6,
+    "normalized_delta_pp": -2.0,
+    "output_bytes": 4447
+  },
+  {
+    "trial": 14,
+    "raw_delta_pp": -16.5,
+    "normalized_delta_pp": -4.8,
+    "output_bytes": 5182
+  },
+  {
+    "trial": 15,
+    "raw_delta_pp": -20.0,
+    "normalized_delta_pp": -8.4,
+    "output_bytes": 4234
+  },
+  {
+    "trial": 16,
+    "raw_delta_pp": -18.2,
+    "normalized_delta_pp": -6.6,
+    "output_bytes": 4359
+  },
+  {
+    "trial": 17,
+    "raw_delta_pp": -23.7,
+    "normalized_delta_pp": -12.1,
+    "output_bytes": 3563
+  },
+  {
+    "trial": 18,
+    "raw_delta_pp": -27.9,
+    "normalized_delta_pp": -16.2,
+    "output_bytes": 3022
+  },
+  {
+    "trial": 19,
+    "raw_delta_pp": 5.2,
+    "normalized_delta_pp": 16.8,
+    "output_bytes": 2572
+  },
+  {
+    "trial": 20,
+    "raw_delta_pp": -32.1,
+    "normalized_delta_pp": -20.5,
+    "output_bytes": 3089
+  }
+]

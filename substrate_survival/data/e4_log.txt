@@ -1,0 +1,111 @@
+{
+  "n_files": 23578,
+  "n_files_with_outlinks": 1227,
+  "n_unique_notes": 23533,
+  "n_edges": 5857,
+  "n_link_targets_total": 1310,
+  "n_link_targets_resolved": 87,
+  "n_link_targets_dangling": 1223,
+  "pct_dangling": 93.36,
+  "n_dark_matter_notes": 22292,
+  "pct_dark_matter": 94.73,
+  "out_deg_n": 1223,
+  "out_deg_min": 1,
+  "out_deg_p50": 5,
+  "out_deg_p90": 5,
+  "out_deg_p99": 12,
+  "out_deg_max": 38,
+  "out_deg_mean": 4.79,
+  "in_deg_n": 1310,
+  "in_deg_min": 1,
+  "in_deg_p50": 2,
+  "in_deg_p90": 8,
+  "in_deg_p99": 51,
+  "in_deg_max": 126,
+  "in_deg_mean": 4.47,
+  "top20_hubs_by_inlinks": [
+    [
+      "session 14 check in how are you feeling",
+      126
+    ],
+    [
+      "session 21 disynlex 2 day session harvest",
+      121
+    ],
+    [
+      "session 10 paper revision calendar scaffold",
+      85
+    ],
+    [
+      "daily study cards",
+      81
+    ],
+    [
+      "session 12 how to steal how to learn",
+      71
+    ],
+    [
+      "luca as cognitive self mirror",
+      71
+    ],
+    [
+      "session log 2026 03 15 1600",
+      68
+    ],
+    [
+      "loop composition horserace test cognitive loop combinations",
+      68
+    ],
+    [
+      "session jrlopezdev strategic asset vault",
+      65
+    ],
+    [
+      "session 7 amplifier algorithms anki study targets",
+      63
+    ],
+    [
+      "session log 2026 03 16",
+      63
+    ],
+    [
+      "reddit top 3 aimldata",
+      59
+    ],
+    [
+      "session 16 snowflake recruiter email draft",
+      57
+    ],
+    [
+      "session log 2026 03 16 1100",
+      51
+    ],
+    [
+      "rachel suicidal ideation divorce religion mismatch",
+      47
+    ],
+    [
+      "insight ajs youtube profile 231 subs and cross recommendatio",
+      42
+    ],
+    [
+      "hacker news top 3",
+      42
+    ],
+    [
+      "session 19 disynlex paper round 8 job applications",
+      42
+    ],
+    [
+      "session bootcamp v2 holistic review",
+      41
+    ],
+    [
+      "session michael kirsanov trajectory analysis",
+      38
+    ]
+  ],
+  "two_hop_reach_sample_n": 100,
+  "two_hop_reach_mean": 0.5,
+  "two_hop_reach_max": 17
+}

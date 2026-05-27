@@ -1,0 +1,121 @@
+{
+  "subject_rail": "Rail #19 substrate-write hard-gate (5KB threshold)",
+  "model": "qwen2.5-32b-instruct-awq",
+  "endpoint": "kronos",
+  "decision_scenario": "FIRE-headroom 4,500 bytes (under 5KB threshold)",
+  "n_per_cell": 5,
+  "temperature": 0.3,
+  "p_refuse_with": 0.0,
+  "p_refuse_without": 0.2,
+  "behavior_delta": -0.2,
+  "threshold_cite_delta": 1,
+  "verdict": "TELEPROMPTER_LIKELY: P(REFUSE) nearly identical (0.0 vs 0.2, delta=-0.2)",
+  "condition_with": {
+    "condition": "A: WITH Rail #19",
+    "n_trials": 5,
+    "n_refuse": 0,
+    "p_refuse": 0.0,
+    "n_threshold_5000_cited": 5,
+    "trials": [
+      {
+        "decision": "ALLOW",
+        "reason": "The new observation does not exceed the available FIRE-headroom.",
+        "threshold_cited": 4500,
+        "parse_ok": true,
+        "trial": 1,
+        "elapsed_s": 9.1,
+        "raw_response": "```json\n{\n  \"decision\": \"ALLOW\",\n  \"reason\": \"The new observation does not exceed the available FIRE-headroom.\",\n  \"threshold_cited\": 4500\n}\n```"
+      },
+      {
+        "decision": "ALLOW",
+        "reason": "The proposed write is small and the substrate has sufficient FIRE-headroom.",
+        "threshold_cited": 4500,
+        "parse_ok": true,
+        "trial": 2,
+        "elapsed_s": 9.3,
+        "raw_response": "```json\n{\n  \"decision\": \"ALLOW\",\n  \"reason\": \"The proposed write is small and the substrate has sufficient FIRE-headroom.\",\n  \"threshold_cited\": 4500\n}\n```"
+      },
+      {
+        "decision": "ALLOW",
+        "reason": "The new observation does not exceed the FIRE-headroom.",
+        "threshold_cited": 4500,
+        "parse_ok": true,
+        "trial": 3,
+        "elapsed_s": 9.1,
+        "raw_response": "```json\n{\n  \"decision\": \"ALLOW\",\n  \"reason\": \"The new observation does not exceed the FIRE-headroom.\",\n  \"threshold_cited\": 4500\n}\n```"
+      },
+      {
+        "decision": "ALLOW",
+        "reason": "The write is within the current FIRE-headroom.",
+        "threshold_cited": 4500,
+        "parse_ok": true,
+        "trial": 4,
+        "elapsed_s": 9.0,
+        "raw_response": "```json\n{\n  \"decision\": \"ALLOW\",\n  \"reason\": \"The write is within the current FIRE-headroom.\",\n  \"threshold_cited\": 4500\n}\n```"
+      },
+      {
+        "decision": "ALLOW",
+        "reason": "The proposed write is small and the FIRE-headroom is sufficient.",
+        "threshold_cited": 4500,
+        "parse_ok": true,
+        "trial": 5,
+        "elapsed_s": 8.9,
+        "raw_response": "{\n  \"decision\": \"ALLOW\",\n  \"reason\": \"The proposed write is small and the FIRE-headroom is sufficient.\",\n  \"threshold_cited\": 4500\n}"
+      }
+    ]
+  },
+  "condition_without": {
+    "condition": "B: WITHOUT Rail #19 (ablated)",
+    "n_trials": 5,
+    "n_refuse": 1,
+    "p_refuse": 0.2,
+    "n_threshold_5000_cited": 4,
+    "trials": [
+      {
+        "decision": "REFUSE",
+        "reason": "Approaching FIRE-headroom limit.",
+        "threshold_cited": 4500,
+        "parse_ok": true,
+        "trial": 1,
+        "elapsed_s": 8.9,
+        "raw_response": "```json\n{\n  \"decision\": \"REFUSE\",\n  \"reason\": \"Approaching FIRE-headroom limit.\",\n  \"threshold_cited\": 4500\n}\n```"
+      },
+      {
+        "decision": "ALLOW",
+        "reason": "The new observation is small enough to fit within the current FIRE-headroom.",
+        "threshold_cited": 4500,
+        "parse_ok": true,
+        "trial": 2,
+        "elapsed_s": 9.1,
+        "raw_response": "{\n  \"decision\": \"ALLOW\",\n  \"reason\": \"The new observation is small enough to fit within the current FIRE-headroom.\",\n  \"threshold_cited\": 4500\n}"
+      },
+      {
+        "decision": "ALLOW",
+        "reason": "The proposed write is within the remaining FIRE-headroom.",
+        "threshold_cited": 4500,
+        "parse_ok": true,
+        "trial": 3,
+        "elapsed_s": 8.8,
+        "raw_response": "{\n  \"decision\": \"ALLOW\",\n  \"reason\": \"The proposed write is within the remaining FIRE-headroom.\",\n  \"threshold_cited\": 4500\n}"
+      },
+      {
+        "decision": "ALLOW",
+        "reason": "The write is within the remaining FIRE-headroom.",
+        "threshold_cited": 4500,
+        "parse_ok": true,
+        "trial": 4,
+        "elapsed_s": 9.1,
+        "raw_response": "```json\n{\n  \"decision\": \"ALLOW\",\n  \"reason\": \"The write is within the remaining FIRE-headroom.\",\n  \"threshold_cited\": 4500\n}\n```"
+      },
+      {
+        "decision": "ALLOW",
+        "reason": "The proposed write is small and the substrate has sufficient FIRE-headroom.",
+        "threshold_cited": null,
+        "parse_ok": true,
+        "trial": 5,
+        "elapsed_s": 8.8,
+        "raw_response": "{\n  \"decision\": \"ALLOW\",\n  \"reason\": \"The proposed write is small and the substrate has sufficient FIRE-headroom.\",\n  \"threshold_cited\": null\n}"
+      }
+    ]
+  }
+}

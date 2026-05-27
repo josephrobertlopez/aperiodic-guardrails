@@ -1,0 +1,188 @@
+{
+  "experiment": "E43",
+  "hypothesis": "Explicit relational structure (GraphRAG) improves multi-hop synthesis over flat note concatenation",
+  "pre_registration": {
+    "GRAPH_NULL": "CORRECT_SYNTHESIS rates within 10pp => graph structure is decorative",
+    "GRAPH_HELPS": "GRAPH > FLAT by >15pp CORRECT_SYNTHESIS",
+    "GRAPH_HURTS": "FLAT > GRAPH by >15pp (graph annotation distracts)",
+    "INDETERMINATE": "10-15pp gap",
+    "confound_test": "per-query rates should track between conditions",
+    "mechanism_check": "model must cite/acknowledge all 3 notes per trial (rate >= 85%)"
+  },
+  "verdict": "GRAPH_NULL",
+  "verdict_reasoning": "gap=+0.0pp -- within 10pp null zone. Graph structure is decorative.",
+  "correct_synthesis_rates": {
+    "FLAT": 0.9833,
+    "GRAPH": 0.9833
+  },
+  "paired_gap_pp": 0.0,
+  "citation_rate": 0.0,
+  "mechanism_check": {
+    "pass": false,
+    "citation_rate": 0.0,
+    "threshold": 0.85,
+    "note": "all-3-notes cited rate = 0.0% -- FAIL"
+  },
+  "confound_check": {
+    "spearman_rho": 1.0,
+    "note": "Query difficulty rank correlation across conditions: rho=1.0",
+    "interpretation": "rho > 0.7 = conditions agree on query difficulty (no confound)"
+  },
+  "flat_full": {
+    "n": 60,
+    "correct_synthesis_rate": 0.9833,
+    "partial_synthesis_rate": 0.0,
+    "wrong_synthesis_rate": 0.0,
+    "refused_rate": 0.0167,
+    "all_notes_cited_rate": 0.0
+  },
+  "graph_full": {
+    "n": 60,
+    "correct_synthesis_rate": 0.9833,
+    "partial_synthesis_rate": 0.0,
+    "wrong_synthesis_rate": 0.0,
+    "refused_rate": 0.0167,
+    "all_notes_cited_rate": 0.0
+  },
+  "per_query_condition": {
+    "q1": {
+      "query": "Is Mira Chen likely a defendant in the Vexor Labs lawsuit?",
+      "flat": {
+        "n": 10,
+        "correct_synthesis_rate": 1.0,
+        "partial_synthesis_rate": 0.0,
+        "wrong_synthesis_rate": 0.0,
+        "refused_rate": 0.0,
+        "all_notes_cited_rate": 0.0
+      },
+      "graph": {
+        "n": 10,
+        "correct_synthesis_rate": 1.0,
+        "partial_synthesis_rate": 0.0,
+        "wrong_synthesis_rate": 0.0,
+        "refused_rate": 0.0,
+        "all_notes_cited_rate": 0.0
+      },
+      "gap_pp": 0.0
+    },
+    "q2": {
+      "query": "Did Apex Ventures' compliance framework fail to prevent DataHarbor's GDPR violation?",
+      "flat": {
+        "n": 10,
+        "correct_synthesis_rate": 0.9,
+        "partial_synthesis_rate": 0.0,
+        "wrong_synthesis_rate": 0.0,
+        "refused_rate": 0.1,
+        "all_notes_cited_rate": 0.0
+      },
+      "graph": {
+        "n": 10,
+        "correct_synthesis_rate": 0.9,
+        "partial_synthesis_rate": 0.0,
+        "wrong_synthesis_rate": 0.0,
+        "refused_rate": 0.1,
+        "all_notes_cited_rate": 0.0
+      },
+      "gap_pp": 0.0
+    },
+    "q3": {
+      "query": "Is Kestria on track to meet its Greenway Protocol methane commitment?",
+      "flat": {
+        "n": 10,
+        "correct_synthesis_rate": 1.0,
+        "partial_synthesis_rate": 0.0,
+        "wrong_synthesis_rate": 0.0,
+        "refused_rate": 0.0,
+        "all_notes_cited_rate": 0.0
+      },
+      "graph": {
+        "n": 10,
+        "correct_synthesis_rate": 1.0,
+        "partial_synthesis_rate": 0.0,
+        "wrong_synthesis_rate": 0.0,
+        "refused_rate": 0.0,
+        "all_notes_cited_rate": 0.0
+      },
+      "gap_pp": 0.0
+    },
+    "q4": {
+      "query": "Were the hedge fund drawdowns flagged by RegWatch consistent with Professor Osei's earlier warnings?",
+      "flat": {
+        "n": 10,
+        "correct_synthesis_rate": 1.0,
+        "partial_synthesis_rate": 0.0,
+        "wrong_synthesis_rate": 0.0,
+        "refused_rate": 0.0,
+        "all_notes_cited_rate": 0.0
+      },
+      "graph": {
+        "n": 10,
+        "correct_synthesis_rate": 1.0,
+        "partial_synthesis_rate": 0.0,
+        "wrong_synthesis_rate": 0.0,
+        "refused_rate": 0.0,
+        "all_notes_cited_rate": 0.0
+      },
+      "gap_pp": 0.0
+    },
+    "q5": {
+      "query": "Is Solace Therapeutics violating FDA guidelines by proceeding to Phase 3 for SLT-7?",
+      "flat": {
+        "n": 10,
+        "correct_synthesis_rate": 1.0,
+        "partial_synthesis_rate": 0.0,
+        "wrong_synthesis_rate": 0.0,
+        "refused_rate": 0.0,
+        "all_notes_cited_rate": 0.0
+      },
+      "graph": {
+        "n": 10,
+        "correct_synthesis_rate": 1.0,
+        "partial_synthesis_rate": 0.0,
+        "wrong_synthesis_rate": 0.0,
+        "refused_rate": 0.0,
+        "all_notes_cited_rate": 0.0
+      },
+      "gap_pp": 0.0
+    },
+    "q6": {
+      "query": "Is the 2055 lifespan estimate for the Montara Bridge still reliable given the material recall?",
+      "flat": {
+        "n": 10,
+        "correct_synthesis_rate": 1.0,
+        "partial_synthesis_rate": 0.0,
+        "wrong_synthesis_rate": 0.0,
+        "refused_rate": 0.0,
+        "all_notes_cited_rate": 0.0
+      },
+      "graph": {
+        "n": 10,
+        "correct_synthesis_rate": 1.0,
+        "partial_synthesis_rate": 0.0,
+        "wrong_synthesis_rate": 0.0,
+        "refused_rate": 0.0,
+        "all_notes_cited_rate": 0.0
+      },
+      "gap_pp": 0.0
+    }
+  },
+  "rigor_gates": {
+    "GRAPH_NULL": "abs(gap) <= 10pp",
+    "GRAPH_HELPS": "gap > 15pp",
+    "GRAPH_HURTS": "gap < -15pp",
+    "INDETERMINATE": "10 < abs(gap) <= 15pp"
+  },
+  "design": {
+    "conditions": [
+      "FLAT",
+      "GRAPH"
+    ],
+    "n_queries": 6,
+    "n_trials_per_cell": 10,
+    "total_trials": 120,
+    "model": "qwen2.5-32b-instruct-awq",
+    "endpoint": "http://108.81.9.145:1337/v1/chat/completions"
+  },
+  "trials_path": "/mnt/media/local-storage/code/GitHub/gnosis-substrate-survival/data/e43_trials.jsonl",
+  "run_ts": "2026-05-25T16:54:09.911190+00:00"
+}

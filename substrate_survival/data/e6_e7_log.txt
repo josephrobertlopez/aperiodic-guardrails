@@ -1,0 +1,2 @@
+E6: 167 unique fields across 23156 notes
+E7: 92 unique schema signatures, 14 near-duplicate clusters

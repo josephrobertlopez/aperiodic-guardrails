@@ -1,0 +1,5 @@
+Profiled 4 agents (≥5 notes each)
+  userpromptsubmit: n=742, byte_mean=469.2, lex_density=0.912
+  therapy: n=19, byte_mean=1131.3, lex_density=0.583
+  therapist-session: n=13, byte_mean=697.9, lex_density=0.677
+  observation: n=5, byte_mean=744.2, lex_density=0.631

@@ -1,0 +1,392 @@
+{
+  "hypothesis": "Compaction functor preserves operational-character > facts",
+  "n_cycles": 5,
+  "char_wins": 5,
+  "fact_wins": 0,
+  "ties": 0,
+  "verdict": "STRONG_SUPPORT: character retention > fact retention on all cycles",
+  "cycle_summary": [
+    {
+      "cycle": "v8->v9",
+      "char_retention_pct": 92.31,
+      "fact_retention_pct": 56.0,
+      "char_from_n": 39,
+      "char_kept_n": 36,
+      "fact_from_n": 125,
+      "fact_kept_n": 70,
+      "winner": "character",
+      "delta_pp": 36.31
+    },
+    {
+      "cycle": "v9->v10",
+      "char_retention_pct": 86.54,
+      "fact_retention_pct": 70.09,
+      "char_from_n": 52,
+      "char_kept_n": 45,
+      "fact_from_n": 107,
+      "fact_kept_n": 75,
+      "winner": "character",
+      "delta_pp": 16.45
+    },
+    {
+      "cycle": "v10->v11",
+      "char_retention_pct": 85.45,
+      "fact_retention_pct": 66.67,
+      "char_from_n": 55,
+      "char_kept_n": 47,
+      "fact_from_n": 135,
+      "fact_kept_n": 90,
+      "winner": "character",
+      "delta_pp": 18.78
+    },
+    {
+      "cycle": "v11->v12",
+      "char_retention_pct": 92.98,
+      "fact_retention_pct": 52.83,
+      "char_from_n": 57,
+      "char_kept_n": 53,
+      "fact_from_n": 159,
+      "fact_kept_n": 84,
+      "winner": "character",
+      "delta_pp": 40.15
+    },
+    {
+      "cycle": "v12->v13",
+      "char_retention_pct": 84.62,
+      "fact_retention_pct": 56.59,
+      "char_from_n": 65,
+      "char_kept_n": 55,
+      "fact_from_n": 129,
+      "fact_kept_n": 73,
+      "winner": "character",
+      "delta_pp": 28.03
+    }
+  ],
+  "transitions": [
+    {
+      "from": "v8",
+      "to": "v9",
+      "from_bytes": 39492,
+      "to_bytes": 27979,
+      "byte_compression_pct": 29.15,
+      "per_class": {
+        "char_keyword": {
+          "from_n": 20,
+          "to_n": 29,
+          "kept_n": 19,
+          "dropped_n": 1,
+          "added_n": 10,
+          "retention_pct": 95.0
+        },
+        "version": {
+          "from_n": 9,
+          "to_n": 11,
+          "kept_n": 9,
+          "dropped_n": 0,
+          "added_n": 2,
+          "retention_pct": 100.0
+        },
+        "numeric": {
+          "from_n": 78,
+          "to_n": 73,
+          "kept_n": 41,
+          "dropped_n": 37,
+          "added_n": 32,
+          "retention_pct": 52.56
+        },
+        "date": {
+          "from_n": 20,
+          "to_n": 20,
+          "kept_n": 19,
+          "dropped_n": 1,
+          "added_n": 1,
+          "retention_pct": 95.0
+        },
+        "prose": {
+          "from_n": 1674,
+          "to_n": 1264,
+          "kept_n": 710,
+          "dropped_n": 964,
+          "added_n": 554,
+          "retention_pct": 42.41
+        },
+        "path": {
+          "from_n": 18,
+          "to_n": 3,
+          "kept_n": 1,
+          "dropped_n": 17,
+          "added_n": 2,
+          "retention_pct": 5.56
+        },
+        "rail_id": {
+          "from_n": 19,
+          "to_n": 23,
+          "kept_n": 17,
+          "dropped_n": 2,
+          "added_n": 6,
+          "retention_pct": 89.47
+        }
+      }
+    },
+    {
+      "from": "v9",
+      "to": "v10",
+      "from_bytes": 27979,
+      "to_bytes": 35020,
+      "byte_compression_pct": -25.17,
+      "per_class": {
+        "char_keyword": {
+          "from_n": 29,
+          "to_n": 33,
+          "kept_n": 28,
+          "dropped_n": 1,
+          "added_n": 5,
+          "retention_pct": 96.55
+        },
+        "version": {
+          "from_n": 11,
+          "to_n": 12,
+          "kept_n": 11,
+          "dropped_n": 0,
+          "added_n": 1,
+          "retention_pct": 100.0
+        },
+        "numeric": {
+          "from_n": 73,
+          "to_n": 95,
+          "kept_n": 43,
+          "dropped_n": 30,
+          "added_n": 52,
+          "retention_pct": 58.9
+        },
+        "date": {
+          "from_n": 20,
+          "to_n": 23,
+          "kept_n": 20,
+          "dropped_n": 0,
+          "added_n": 3,
+          "retention_pct": 100.0
+        },
+        "prose": {
+          "from_n": 1264,
+          "to_n": 1541,
+          "kept_n": 732,
+          "dropped_n": 532,
+          "added_n": 809,
+          "retention_pct": 57.91
+        },
+        "path": {
+          "from_n": 3,
+          "to_n": 5,
+          "kept_n": 1,
+          "dropped_n": 2,
+          "added_n": 4,
+          "retention_pct": 33.33
+        },
+        "rail_id": {
+          "from_n": 23,
+          "to_n": 22,
+          "kept_n": 17,
+          "dropped_n": 6,
+          "added_n": 5,
+          "retention_pct": 73.91
+        }
+      }
+    },
+    {
+      "from": "v10",
+      "to": "v11",
+      "from_bytes": 35020,
+      "to_bytes": 34689,
+      "byte_compression_pct": 0.95,
+      "per_class": {
+        "char_keyword": {
+          "from_n": 33,
+          "to_n": 30,
+          "kept_n": 28,
+          "dropped_n": 5,
+          "added_n": 2,
+          "retention_pct": 84.85
+        },
+        "version": {
+          "from_n": 12,
+          "to_n": 13,
+          "kept_n": 12,
+          "dropped_n": 0,
+          "added_n": 1,
+          "retention_pct": 100.0
+        },
+        "numeric": {
+          "from_n": 95,
+          "to_n": 107,
+          "kept_n": 57,
+          "dropped_n": 38,
+          "added_n": 50,
+          "retention_pct": 60.0
+        },
+        "date": {
+          "from_n": 23,
+          "to_n": 24,
+          "kept_n": 18,
+          "dropped_n": 5,
+          "added_n": 6,
+          "retention_pct": 78.26
+        },
+        "prose": {
+          "from_n": 1541,
+          "to_n": 1554,
+          "kept_n": 687,
+          "dropped_n": 854,
+          "added_n": 867,
+          "retention_pct": 44.58
+        },
+        "path": {
+          "from_n": 5,
+          "to_n": 15,
+          "kept_n": 3,
+          "dropped_n": 2,
+          "added_n": 12,
+          "retention_pct": 60.0
+        },
+        "rail_id": {
+          "from_n": 22,
+          "to_n": 27,
+          "kept_n": 19,
+          "dropped_n": 3,
+          "added_n": 8,
+          "retention_pct": 86.36
+        }
+      }
+    },
+    {
+      "from": "v11",
+      "to": "v12",
+      "from_bytes": 34689,
+      "to_bytes": 31561,
+      "byte_compression_pct": 9.02,
+      "per_class": {
+        "char_keyword": {
+          "from_n": 30,
+          "to_n": 31,
+          "kept_n": 29,
+          "dropped_n": 1,
+          "added_n": 2,
+          "retention_pct": 96.67
+        },
+        "version": {
+          "from_n": 13,
+          "to_n": 14,
+          "kept_n": 13,
+          "dropped_n": 0,
+          "added_n": 1,
+          "retention_pct": 100.0
+        },
+        "numeric": {
+          "from_n": 107,
+          "to_n": 88,
+          "kept_n": 53,
+          "dropped_n": 54,
+          "added_n": 35,
+          "retention_pct": 49.53
+        },
+        "date": {
+          "from_n": 24,
+          "to_n": 17,
+          "kept_n": 16,
+          "dropped_n": 8,
+          "added_n": 1,
+          "retention_pct": 66.67
+        },
+        "prose": {
+          "from_n": 1554,
+          "to_n": 1443,
+          "kept_n": 703,
+          "dropped_n": 851,
+          "added_n": 740,
+          "retention_pct": 45.24
+        },
+        "path": {
+          "from_n": 15,
+          "to_n": 10,
+          "kept_n": 2,
+          "dropped_n": 13,
+          "added_n": 8,
+          "retention_pct": 13.33
+        },
+        "rail_id": {
+          "from_n": 27,
+          "to_n": 34,
+          "kept_n": 24,
+          "dropped_n": 3,
+          "added_n": 10,
+          "retention_pct": 88.89
+        }
+      }
+    },
+    {
+      "from": "v12",
+      "to": "v13",
+      "from_bytes": 31561,
+      "to_bytes": 18754,
+      "byte_compression_pct": 40.58,
+      "per_class": {
+        "char_keyword": {
+          "from_n": 31,
+          "to_n": 24,
+          "kept_n": 24,
+          "dropped_n": 7,
+          "added_n": 0,
+          "retention_pct": 77.42
+        },
+        "version": {
+          "from_n": 14,
+          "to_n": 14,
+          "kept_n": 14,
+          "dropped_n": 0,
+          "added_n": 0,
+          "retention_pct": 100.0
+        },
+        "numeric": {
+          "from_n": 88,
+          "to_n": 57,
+          "kept_n": 43,
+          "dropped_n": 45,
+          "added_n": 14,
+          "retention_pct": 48.86
+        },
+        "date": {
+          "from_n": 17,
+          "to_n": 13,
+          "kept_n": 13,
+          "dropped_n": 4,
+          "added_n": 0,
+          "retention_pct": 76.47
+        },
+        "prose": {
+          "from_n": 1443,
+          "to_n": 929,
+          "kept_n": 625,
+          "dropped_n": 818,
+          "added_n": 304,
+          "retention_pct": 43.31
+        },
+        "path": {
+          "from_n": 10,
+          "to_n": 6,
+          "kept_n": 3,
+          "dropped_n": 7,
+          "added_n": 3,
+          "retention_pct": 30.0
+        },
+        "rail_id": {
+          "from_n": 34,
+          "to_n": 32,
+          "kept_n": 31,
+          "dropped_n": 3,
+          "added_n": 1,
+          "retention_pct": 91.18
+        }
+      }
+    }
+  ]
+}

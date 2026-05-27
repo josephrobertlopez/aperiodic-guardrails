@@ -1,0 +1,9 @@
+E14: TYPE_LEAKAGE_REAL: 18 obs have >=2 untagged cross-agent refs; type system would catch
+  Total cross-agent refs: 74
+  Channel tags present: 0
+  Leakage points (>=2 untagged refs in single obs): 18
+    obs[0] -> joey: 3 refs
+    obs[1] -> morgan: 2 refs
+    obs[1] -> joey: 2 refs
+    obs[1] -> mc-amanda: 2 refs
+    obs[2] -> joey: 4 refs

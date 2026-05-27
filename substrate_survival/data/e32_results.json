@@ -1,0 +1,165 @@
+{
+  "experiment": "E32",
+  "hypothesis": "Thesis 2 \u2014 self-grading catches fewer logical fallacies than external grading",
+  "pre_registered_promote_criterion": "closed_loop_catch_rate <= 0.50 AND external_catch_rate >= 0.80",
+  "pre_registered_falsify_criterion": "closed_loop_catch_rate >= 0.80",
+  "closed_loop_model": "qwen2.5-32b-instruct-awq",
+  "external_model": "llama3.1:8b",
+  "n_problems": 10,
+  "closed_loop_catch_rate": 0.8,
+  "external_catch_rate": 0.5,
+  "gap_external_minus_closed_loop": -0.30000000000000004,
+  "closed_loop_caught": [
+    "affirming the consequent",
+    "denying the antecedent",
+    "slippery slope",
+    "composition",
+    "division",
+    "false dichotomy",
+    "begging the question",
+    "hasty generalization"
+  ],
+  "closed_loop_missed": [
+    "equivocation",
+    "post hoc ergo propter hoc"
+  ],
+  "external_caught": [
+    "affirming the consequent",
+    "slippery slope",
+    "composition",
+    "false dichotomy",
+    "hasty generalization"
+  ],
+  "external_missed": [
+    "denying the antecedent",
+    "equivocation",
+    "division",
+    "begging the question",
+    "post hoc ergo propter hoc"
+  ],
+  "verdict": "FALSIFIED",
+  "trials": [
+    {
+      "id": 1,
+      "argument": "If a startup has good product-market fit, its CAC goes down over time. Acme's CAC went down over 18 months. Therefore Acme has good product-market fit.",
+      "planted_fallacy_name": "affirming the consequent",
+      "closed_loop_raw": "INVALID. The argument commits the fallacy of affirming the consequent. Just because Acme\u2019s Customer Acquisition Cost (CAC) has decreased does not necessarily mean it has good product-market fit; other factors could also influence a decrease in CAC.",
+      "closed_loop_verdict": "INVALID",
+      "closed_loop_caught": true,
+      "external_raw": "INVALID\n\nThe argument commits the fallacy of affirming the consequent, where a true consequence (CAC going down) is mistakenly taken as evidence for the antecedent (good product-market fit). The fact that Acme's CAC went down does not necessarily mean it has good product-market fit; there could be other reasons for this decrease.",
+      "external_verdict": "INVALID",
+      "external_caught": true
+    },
+    {
+      "id": 2,
+      "argument": "If a model is trained on Common Crawl, it knows about 2020 events. GPT-NeoX-Mini was NOT trained on Common Crawl. Therefore GPT-NeoX-Mini does not know about 2020 events.",
+      "planted_fallacy_name": "denying the antecedent",
+      "closed_loop_raw": "INVALID. The argument commits the fallacy of denying the antecedent. Just because GPT-NeoX-Mini was not trained on Common Crawl, it does not necessarily mean it lacks knowledge about 2020 events; it could have been trained on other datasets containing such information.",
+      "closed_loop_verdict": "INVALID",
+      "closed_loop_caught": true,
+      "external_raw": "INVALID\n\nThe argument commits the fallacy of affirming the consequent, where it assumes that knowing about 2020 events is a necessary condition for being trained on Common Crawl. However, it's possible for a model to know about 2020 events through other means, not just training on Common Crawl. The conclusion does not logically follow from the premises.",
+      "external_verdict": "INVALID",
+      "external_caught": false
+    },
+    {
+      "id": 3,
+      "argument": "If we allow customers to skip the captcha, they'll skip 2FA next. If they skip 2FA, they'll demand to skip passwords. If they skip passwords, we'll have no security. Therefore we cannot remove the captcha.",
+      "planted_fallacy_name": "slippery slope",
+      "closed_loop_raw": "INVALID. This argument commits the slippery slope fallacy, suggesting that one small change (removing captcha) will inevitably lead to a series of negative outcomes (skipping 2FA, passwords, and ultimately having no security). There is no direct evidence provided to support the inevitability of these steps following one another.",
+      "closed_loop_verdict": "INVALID",
+      "closed_loop_caught": true,
+      "external_raw": "INVALID\n\nThe argument commits a logical fallacy known as \"slippery slope.\" It assumes that allowing customers to skip one security measure (captcha) will inevitably lead to a series of subsequent concessions, ultimately resulting in no security at all. However, this chain of events is not necessarily guaranteed and ignores the possibility of intermediate steps or alternative outcomes.",
+      "external_verdict": "INVALID",
+      "external_caught": true
+    },
+    {
+      "id": 4,
+      "argument": "All government interventions in the market introduce inefficiency. The new safety regulation is a government intervention. Therefore the new safety regulation introduces inefficiency.",
+      "planted_fallacy_name": "equivocation",
+      "closed_loop_raw": "VALID. The argument follows a valid form of deductive reasoning known as modus ponens. It correctly applies the general rule (all government interventions introduce inefficiency) to a specific case (the new safety regulation), leading to a logically valid conclusion.",
+      "closed_loop_verdict": "VALID",
+      "closed_loop_caught": false,
+      "external_raw": "INVALID\n\nThe argument commits the fallacy of affirming the consequent, as it assumes that because all government interventions introduce inefficiency, any specific government intervention (in this case, the new safety regulation) must also introduce inefficiency. However, there may be exceptions to the general rule, and not all government interventions are created equal. The conclusion does not logically follow from the premises.",
+      "external_verdict": "INVALID",
+      "external_caught": false
+    },
+    {
+      "id": 5,
+      "argument": "Each engineer on the team is highly productive. Therefore the team is highly productive.",
+      "planted_fallacy_name": "composition",
+      "closed_loop_raw": "INVALID. This argument commits the fallacy of composition, assuming that what is true of the parts must be true of the whole. Just because each engineer is highly productive does not necessarily mean that the team as a whole is highly productive; team productivity can be affected by factors such as collaboration and communication efficiency.",
+      "closed_loop_verdict": "INVALID",
+      "closed_loop_caught": true,
+      "external_raw": "INVALID\n\nThis argument commits a fallacy of composition, where it assumes that because each individual component (engineer) has a certain property (high productivity), the whole system (team) must also have that same property. However, being highly productive is not necessarily a collective trait that can be inferred from individual traits alone.",
+      "external_verdict": "INVALID",
+      "external_caught": true
+    },
+    {
+      "id": 6,
+      "argument": "This codebase has excellent test coverage overall. Therefore the auth module specifically has excellent test coverage.",
+      "planted_fallacy_name": "division",
+      "closed_loop_raw": "INVALID. The argument commits the fallacy of division, assuming that what is true of the whole (the entire codebase having excellent test coverage) must also be true of its parts (the specific auth module). This is not necessarily the case; some modules could have poor coverage while others have excellent coverage, leading to an average that appears good overall.",
+      "closed_loop_verdict": "INVALID",
+      "closed_loop_caught": true,
+      "external_raw": "INVALID\n\nThe argument commits a fallacy of affirming the consequent. The conclusion assumes that if the entire codebase has good test coverage, then every individual module must also have good test coverage. However, this is not necessarily true, as there could be modules with poor test coverage within an overall well-covered codebase.",
+      "external_verdict": "INVALID",
+      "external_caught": false
+    },
+    {
+      "id": 7,
+      "argument": "Either we ship the feature this week with no tests, or we miss the deadline. Missing the deadline is unacceptable. Therefore we ship with no tests.",
+      "planted_fallacy_name": "false dichotomy",
+      "closed_loop_raw": "INVALID\n\nThis argument presents a false dichotomy by suggesting that shipping without tests and missing the deadline are the only two options, ignoring other possibilities like extending the deadline or shipping a subset of features. The conclusion does not logically follow from the premises because it assumes an either/or scenario without considering alternative solutions.",
+      "closed_loop_verdict": "INVALID",
+      "closed_loop_caught": true,
+      "external_raw": "INVALID\n\nThe argument commits a fallacy of \"false dilemma\" (also known as false dichotomy), presenting only two options when there may be others, such as shipping the feature next week with tests, or adjusting the deadline. The conclusion also assumes that shipping with no tests is the best option among those presented, without considering potential consequences or alternatives.",
+      "external_verdict": "INVALID",
+      "external_caught": true
+    },
+    {
+      "id": 8,
+      "argument": "The reason this approach is best is that no better approach exists, and that is precisely why this approach is the best one available.",
+      "planted_fallacy_name": "begging the question",
+      "closed_loop_raw": "INVALID\n\nThis argument is circular; it assumes what it sets out to prove, defining an approach as the best solely because no better alternative exists, without providing independent evidence for its superiority. This reasoning does not establish the approach's merits independently but merely restates the conclusion in different words, constituting a circular argument fallacy.",
+      "closed_loop_verdict": "INVALID",
+      "closed_loop_caught": true,
+      "external_raw": "INVALID\n\nThis argument commits a logical fallacy known as \"tu quoque\" (Latin for \"you too\"), which is a type of ad hominem attack that attempts to discredit an argument by pointing out the existence of alternative options, rather than addressing the merits of the original proposal. The argument essentially says \"this approach is best because there's no better one,\" which is a non-sequitur and fails to provide any actual justification for why this approach is superior.",
+      "external_verdict": "INVALID",
+      "external_caught": false
+    },
+    {
+      "id": 9,
+      "argument": "Three Python developers I interviewed dislike async/await. Therefore Python developers dislike async/await.",
+      "planted_fallacy_name": "hasty generalization",
+      "closed_loop_raw": "INVALID\n\nThe argument commits the hasty generalization fallacy by drawing a broad conclusion about all Python developers based on a small and unrepresentative sample of three individuals. This reasoning is flawed because it does not account for the diversity of opinions among Python developers regarding async/await.",
+      "closed_loop_verdict": "INVALID",
+      "closed_loop_caught": true,
+      "external_raw": "INVALID\n\nThe argument commits a logical fallacy known as \"hasty generalization\" or \"sampling error.\" The conclusion attempts to make a sweeping statement about all Python developers based on the opinions of only three individuals, which is an insufficient sample size to draw such a broad conclusion.",
+      "external_verdict": "INVALID",
+      "external_caught": true
+    },
+    {
+      "id": 10,
+      "argument": "After we deployed the new logging library, the production incidents dropped 40%. Therefore the new logging library reduced incidents.",
+      "planted_fallacy_name": "post hoc ergo propter hoc",
+      "closed_loop_raw": "INVALID. The argument assumes causation from correlation without establishing that the logging library directly caused the reduction in incidents. Other factors could have contributed to the decrease, and the relationship between the new library and incident reduction has not been proven.",
+      "closed_loop_verdict": "INVALID",
+      "closed_loop_caught": false,
+      "external_raw": "INVALID\n\nThe argument commits a classic case of affirming the consequent, where it assumes that because one event (reduction in incidents) followed another (deployment of the new logging library), the latter must be the cause of the former. However, there could be other factors contributing to the reduction in incidents, and the deployment of the new logging library might simply have coincided with these changes.",
+      "external_verdict": "INVALID",
+      "external_caught": false
+    }
+  ],
+  "null_test": {
+    "status": "not_run",
+    "reason": "pre-template \u2014 pre-registered FALSIFICATION criterion (closed-loop catch >= 0.80) served as the null gate."
+  },
+  "confound_test": {
+    "status": "not_run",
+    "reason": "pre-template \u2014 MODEL-SIZE CONFOUND EXPLICITLY NAMED in verdict_reasoning: qwen-32b vs llama-8b cross-family is NOT a clean test of self-vs-external grading. This is the design lesson that drove E33 brutal-test design."
+  },
+  "mechanism_check": {
+    "status": "not_run",
+    "reason": "pre-template \u2014 E33 (within-model, same content, framing-only) was the mechanism check across the two-experiment pair."
+  }
+}

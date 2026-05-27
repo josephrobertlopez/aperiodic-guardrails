@@ -1,0 +1,97 @@
+{
+  "n_files": 23578,
+  "n_with_agent_field": 793,
+  "n_unique_agent_values": 14,
+  "top_agents_by_volume": [
+    [
+      "userpromptsubmit",
+      742
+    ],
+    [
+      "therapy",
+      19
+    ],
+    [
+      "therapist-session",
+      13
+    ],
+    [
+      "observation",
+      5
+    ],
+    [
+      "reflection",
+      4
+    ],
+    [
+      "conversation",
+      2
+    ],
+    [
+      "joey lopez - downloaded from google drive",
+      1
+    ],
+    [
+      "/home/joey/documents/github/monorepo/agentic/agents/benchmarks",
+      1
+    ],
+    [
+      "reading",
+      1
+    ],
+    [
+      "synthesis",
+      1
+    ],
+    [
+      "event-attendance",
+      1
+    ],
+    [
+      "event-meeting",
+      1
+    ],
+    [
+      "work-planning",
+      1
+    ],
+    [
+      "claude (adversarial review of own prior plans, on joey's request)",
+      1
+    ]
+  ],
+  "profile_top_20": {
+    "userpromptsubmit": {
+      "n_notes": 742,
+      "byte_mean": 469.2,
+      "byte_stdev": 1647.8,
+      "lex_density_mean": 0.912,
+      "code_blocks_mean": 0.01,
+      "list_items_mean": 0.7
+    },
+    "therapy": {
+      "n_notes": 19,
+      "byte_mean": 1131.3,
+      "byte_stdev": 411.7,
+      "lex_density_mean": 0.583,
+      "code_blocks_mean": 0,
+      "list_items_mean": 7.3
+    },
+    "therapist-session": {
+      "n_notes": 13,
+      "byte_mean": 697.9,
+      "byte_stdev": 167.5,
+      "lex_density_mean": 0.677,
+      "code_blocks_mean": 0,
+      "list_items_mean": 1.2
+    },
+    "observation": {
+      "n_notes": 5,
+      "byte_mean": 744.2,
+      "byte_stdev": 364.7,
+      "lex_density_mean": 0.631,
+      "code_blocks_mean": 0,
+      "list_items_mean": 3.2
+    }
+  }
+}

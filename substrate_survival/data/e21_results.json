@@ -1,0 +1,157 @@
+{
+  "experiment": "E21",
+  "hypothesis": "Recall of facts stored in amanda.State degrades as a function of compaction depth (number of intervening compactions between storage and recall point).",
+  "null_condition": "If retention(depth=1) \u2212 retention(depth=6) < 10 percentage points, NULL \u2014 no depth effect; substrate carries facts forward without measurable decay across observed depths.",
+  "falsifier": "Retention falls monotonically with depth, with a gap of \u226510pp between adjacent v_n and v_n-6. Reverse pattern (deeper = more retained) would also falsify the hypothesis as stated.",
+  "method": "For each amanda.State version v8\u2013v14, build a fact set by tokenising all observations: case-fold, keep tokens of length \u2265 4, strip stopwords and pure-punctuation tokens. retention(v_k, v_{k+d}) = |fact_set(v_k) \u2229 fact_set(v_{k+d})| / |fact_set(v_{k+d})|. Average over all (k, k+d) pairs for d = 1..6. Apply pre-registered null rule.",
+  "pre_registration_timestamp": "2026-05-24T18:40:04.707779Z",
+  "versions_used": [
+    "v8",
+    "v9",
+    "v10",
+    "v11",
+    "v12",
+    "v13",
+    "v14"
+  ],
+  "versions_missing": [],
+  "fact_set_sizes": {
+    "v8": 1202,
+    "v9": 953,
+    "v10": 1141,
+    "v11": 1165,
+    "v12": 1093,
+    "v13": 884,
+    "v14": 689
+  },
+  "retention_by_depth": {
+    "d1": [
+      {
+        "from": "v8",
+        "to": "v9",
+        "retention": 0.655824
+      },
+      {
+        "from": "v9",
+        "to": "v10",
+        "retention": 0.555653
+      },
+      {
+        "from": "v10",
+        "to": "v11",
+        "retention": 0.570815
+      },
+      {
+        "from": "v11",
+        "to": "v12",
+        "retention": 0.601098
+      },
+      {
+        "from": "v12",
+        "to": "v13",
+        "retention": 0.692308
+      },
+      {
+        "from": "v13",
+        "to": "v14",
+        "retention": 0.785196
+      }
+    ],
+    "d2": [
+      {
+        "from": "v8",
+        "to": "v10",
+        "retention": 0.535495
+      },
+      {
+        "from": "v9",
+        "to": "v11",
+        "retention": 0.458369
+      },
+      {
+        "from": "v10",
+        "to": "v12",
+        "retention": 0.516926
+      },
+      {
+        "from": "v11",
+        "to": "v13",
+        "retention": 0.597285
+      },
+      {
+        "from": "v12",
+        "to": "v14",
+        "retention": 0.701016
+      }
+    ],
+    "d3": [
+      {
+        "from": "v8",
+        "to": "v11",
+        "retention": 0.477253
+      },
+      {
+        "from": "v9",
+        "to": "v12",
+        "retention": 0.455627
+      },
+      {
+        "from": "v10",
+        "to": "v13",
+        "retention": 0.545249
+      },
+      {
+        "from": "v11",
+        "to": "v14",
+        "retention": 0.635704
+      }
+    ],
+    "d4": [
+      {
+        "from": "v8",
+        "to": "v12",
+        "retention": 0.451967
+      },
+      {
+        "from": "v9",
+        "to": "v13",
+        "retention": 0.487557
+      },
+      {
+        "from": "v10",
+        "to": "v14",
+        "retention": 0.592163
+      }
+    ],
+    "d5": [
+      {
+        "from": "v8",
+        "to": "v13",
+        "retention": 0.50905
+      },
+      {
+        "from": "v9",
+        "to": "v14",
+        "retention": 0.526851
+      }
+    ],
+    "d6": [
+      {
+        "from": "v8",
+        "to": "v14",
+        "retention": 0.53701
+      }
+    ]
+  },
+  "retention_mean_by_depth": {
+    "d1": 0.643482,
+    "d2": 0.561818,
+    "d3": 0.528458,
+    "d4": 0.510562,
+    "d5": 0.51795,
+    "d6": 0.53701
+  },
+  "depth_gap_d1_minus_d6": 10.6472,
+  "verdict": "NON-NULL",
+  "verdict_reasoning": "The mean retention at depth-1 is 64.35pp and at depth-6 is 53.70pp, a difference of 10.65pp, exceeding the 10pp threshold. Retention across depths d1\u2013d6 is non-monotonically distributed. A depth-dependent retention gradient is present in the token-set intersection measure."
+}

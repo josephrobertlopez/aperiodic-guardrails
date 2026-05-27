@@ -1,0 +1,15 @@
+Harvested 5 amanda briefs from today's transcript
+E13: STABLE: mean canonical-fact agreement 88.1% across N=5 rehydrations
+
+Canonical fact agreement:
+        combined_bytes: 100.0% modal=41218
+         fire_headroom: 100.0% modal=15102
+        substrate_band: 100.0% modal=WARN-band
+         v13_obs_count: 50.0% modal=10
+  correction_obs_count: 66.7% modal=10
+            rotation_n: 100.0% modal=7
+           pole_status: 100.0% modal=tent pole
+
+Set-field jaccard:
+             rail_refs: mean_jaccard=0.452
+             sentinels: mean_jaccard=0.25

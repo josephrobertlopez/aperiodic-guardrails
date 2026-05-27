@@ -1,0 +1,168 @@
+{
+  "n_files": 23578,
+  "total_bytes": 200856537,
+  "partitions": {
+    "takeout": {
+      "count": 18531,
+      "bytes": 179883368
+    },
+    "agents": {
+      "count": 772,
+      "bytes": 6604693
+    },
+    "capture": {
+      "count": 284,
+      "bytes": 2713038
+    },
+    "resources": {
+      "count": 299,
+      "bytes": 2479204
+    },
+    "sources": {
+      "count": 133,
+      "bytes": 2253300
+    },
+    "timeline": {
+      "count": 1725,
+      "bytes": 1751210
+    },
+    "plan": {
+      "count": 220,
+      "bytes": 1749120
+    },
+    "therapy": {
+      "count": 142,
+      "bytes": 814992
+    },
+    "reference": {
+      "count": 202,
+      "bytes": 713304
+    },
+    "raw_prompts": {
+      "count": 742,
+      "bytes": 557986
+    },
+    "personal": {
+      "count": 180,
+      "bytes": 286534
+    },
+    "projects": {
+      "count": 22,
+      "bytes": 149904
+    },
+    "observation": {
+      "count": 42,
+      "bytes": 140807
+    },
+    "patterns": {
+      "count": 85,
+      "bytes": 138218
+    },
+    "schemas": {
+      "count": 18,
+      "bytes": 122934
+    },
+    "journal": {
+      "count": 41,
+      "bytes": 110077
+    },
+    "professional": {
+      "count": 36,
+      "bytes": 65866
+    },
+    "decision": {
+      "count": 6,
+      "bytes": 57681
+    },
+    "lesson": {
+      "count": 24,
+      "bytes": 56622
+    },
+    "state": {
+      "count": 2,
+      "bytes": 33348
+    },
+    "dogfood_results": {
+      "count": 5,
+      "bytes": 31795
+    },
+    "engineer": {
+      "count": 29,
+      "bytes": 26454
+    },
+    "methodology": {
+      "count": 3,
+      "bytes": 22830
+    },
+    "insight": {
+      "count": 8,
+      "bytes": 22759
+    },
+    "reflection": {
+      "count": 8,
+      "bytes": 15616
+    },
+    "contract": {
+      "count": 1,
+      "bytes": 9355
+    },
+    "pattern": {
+      "count": 3,
+      "bytes": 8009
+    },
+    "self-observation": {
+      "count": 2,
+      "bytes": 7340
+    },
+    "inbox": {
+      "count": 2,
+      "bytes": 6936
+    },
+    "analysis": {
+      "count": 1,
+      "bytes": 6180
+    },
+    "session_handoff": {
+      "count": 1,
+      "bytes": 4060
+    },
+    "session": {
+      "count": 1,
+      "bytes": 3736
+    },
+    "event": {
+      "count": 1,
+      "bytes": 2032
+    },
+    "dogfood": {
+      "count": 1,
+      "bytes": 1619
+    },
+    "workflow": {
+      "count": 1,
+      "bytes": 1558
+    },
+    "implementation": {
+      "count": 1,
+      "bytes": 1544
+    },
+    "index": {
+      "count": 1,
+      "bytes": 1503
+    },
+    "test": {
+      "count": 2,
+      "bytes": 804
+    },
+    "growth": {
+      "count": 1,
+      "bytes": 201
+    }
+  },
+  "durable_bytes": 317774,
+  "ephemeral_bytes": 183264469,
+  "other_bytes": 17274294,
+  "durable_pct": 0.16,
+  "ephemeral_pct": 91.24,
+  "signal_to_noise_ratio": 0.0017
+}

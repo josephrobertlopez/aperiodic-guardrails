@@ -1,0 +1,76 @@
+{
+  "model": "qwen2.5-32b-instruct-awq",
+  "endpoint": "kronos (108.81.9.145:1337)",
+  "subject": "amanda.State.v13",
+  "payload_bytes": 18754,
+  "single_pass": true,
+  "elapsed_s": 12.3,
+  "usage": {
+    "prompt_tokens": 5695,
+    "completion_tokens": 82,
+    "total_tokens": 5777
+  },
+  "n_questions": 8,
+  "score": 7,
+  "pass_threshold": 6,
+  "verdict": "PORTABLE",
+  "raw_response": "Q1: v12->v13\nQ2: 2026-05-22\nQ3: 2842\nQ4: 7%\nQ5: 7\nQ6: 3\nQ7: 10\nQ8: check-codebase,check-decisions,check-benchmarks,check-blast-radius",
+  "results": [
+    {
+      "qid": "Q1",
+      "question": "Q1: Most recent state compaction migration in vX -> vY form?",
+      "ground_truth": "v12 -> v13",
+      "engine_response": "v12->v13",
+      "correct": true
+    },
+    {
+      "qid": "Q2",
+      "question": "Q2: Date of v13 compaction in YYYY-MM-DD?",
+      "ground_truth": "2026-05-22",
+      "engine_response": "2026-05-22",
+      "correct": true
+    },
+    {
+      "qid": "Q3",
+      "question": "Q3: FIRE-band headroom in bytes that triggered v13 compaction (number only)?",
+      "ground_truth": "2842",
+      "engine_response": "2842",
+      "correct": true
+    },
+    {
+      "qid": "Q4",
+      "question": "Q4: Random write-channel sampling rate as percentage (number with %)?",
+      "ground_truth": "7%",
+      "engine_response": "7%",
+      "correct": true
+    },
+    {
+      "qid": "Q5",
+      "question": "Q5: Schemas RATIFIED from first consolidation-pass invocation (number)?",
+      "ground_truth": "7",
+      "engine_response": "7",
+      "correct": true
+    },
+    {
+      "qid": "Q6",
+      "question": "Q6: Schemas CANDIDATE status-capped from first consolidation-pass (number)?",
+      "ground_truth": "3",
+      "engine_response": "3",
+      "correct": true
+    },
+    {
+      "qid": "Q7",
+      "question": "Q7: amanda.Correction.open.v5 observation count (number)?",
+      "ground_truth": "10",
+      "engine_response": "10",
+      "correct": true
+    },
+    {
+      "qid": "Q8",
+      "question": "Q8: List the four percept quartet skill names (comma-separated)?",
+      "ground_truth": "check-now, check-activity, check-substrate, check-vault",
+      "engine_response": "check-codebase,check-decisions,check-benchmarks,check-blast-radius",
+      "correct": false
+    }
+  ]
+}

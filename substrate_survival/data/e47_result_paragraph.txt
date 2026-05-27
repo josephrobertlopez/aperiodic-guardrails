@@ -1,0 +1,30 @@
+E47 — Persona × Salience × Recursive Thought (Cross-Family)
+Date: 2026-05-27T19:26:19.808940+00:00
+N: 20 base trials per cell (6 cells), scale-up to 40 if CI straddles boundaries.
+
+RESULTS:
+  Sonnet coherence (d=1/d=3/d=6): 0.950 / 1.000 / 1.000
+  Sonnet salience verbatim_mean at d=6: 0.000 CI=[0.000,0.000]
+  Sonnet verdicts: coherence=ANOMALY  salience=SALIENCE_DRIFTED
+
+  Llama3:8b coherence (d=1/d=3/d=6): 1.000 / 0.625 / 0.450
+  Llama3:8b salience verbatim_mean at d=6: 0.013
+  Llama3:8b verdicts: coherence=COLLAPSED_EARLY  salience=SALIENCE_DRIFTED
+
+CROSS-FAMILY:
+  Coherence: SINGLE_FAMILY_ARTIFACT (ANOMALY vs COLLAPSED_EARLY)
+  Salience:  ROBUST (0.0 vs 0.0125)
+
+VERDICTS PER LOCKED CRITERION:
+  Salience drift → Sonnet: SALIENCE_DRIFTED, Llama3: SALIENCE_DRIFTED
+  Recursive coherence → Sonnet: ANOMALY, Llama3: COLLAPSED_EARLY
+  Cross-family → Coherence: SINGLE_FAMILY_ARTIFACT, Salience: ROBUST
+
+ANCHOR: E42 baseline — coherence d=3=0.667, d=6=0.267, LOOPING_DOMINATES
+  Comparison: Sonnet d=6 coh=1.000 vs E42 baseline 0.267
+  Comparison: Llama3 d=6 coh=0.450 vs E42 baseline 0.267
+
+R47 DECISION: EPISODIC_MEMORY_MUST_INJECT_SALIENCE_AT_EACH_DEPTH
+  Both models show SALIENCE_DRIFTED at d=6: persona does not preserve salience through recursive depth. Rail-library must actively re-inject d=1 content at each recursive step rather than relying on implicit persona continuity.
+
+SCALE-UP CELLS: ['llama3|d=3', 'llama3|d=6']

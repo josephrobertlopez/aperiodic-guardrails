@@ -1,0 +1,1810 @@
+{
+  "BELOW_KNOW": [
+    {
+      "trial": 1,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 2,
+      "elapsed_s": 2.87,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 3,
+      "elapsed_s": 2.87,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 4,
+      "elapsed_s": 2.88,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 5,
+      "elapsed_s": 2.88,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 6,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 7,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 8,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 9,
+      "elapsed_s": 2.88,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 10,
+      "elapsed_s": 2.87,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 11,
+      "elapsed_s": 2.88,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 12,
+      "elapsed_s": 2.88,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 13,
+      "elapsed_s": 2.88,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 14,
+      "elapsed_s": 2.88,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 15,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 16,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 17,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 18,
+      "elapsed_s": 2.9,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 19,
+      "elapsed_s": 2.9,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 20,
+      "elapsed_s": 2.9,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 21,
+      "elapsed_s": 2.91,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 22,
+      "elapsed_s": 2.9,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 23,
+      "elapsed_s": 2.91,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 24,
+      "elapsed_s": 2.91,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 25,
+      "elapsed_s": 2.92,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 26,
+      "elapsed_s": 2.92,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 27,
+      "elapsed_s": 2.92,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 28,
+      "elapsed_s": 2.92,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 29,
+      "elapsed_s": 2.91,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 30,
+      "elapsed_s": 2.91,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    }
+  ],
+  "BELOW_PREDICT": [
+    {
+      "trial": 1,
+      "elapsed_s": 2.92,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 2,
+      "elapsed_s": 2.92,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 3,
+      "elapsed_s": 60.01,
+      "raw_response": "[ERROR: Expecting value: line 1 column 1 (char 0); raw=]",
+      "parsed": null
+    },
+    {
+      "trial": 4,
+      "elapsed_s": 2.9,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 5,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 6,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 7,
+      "elapsed_s": 2.9,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 8,
+      "elapsed_s": 2.9,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 9,
+      "elapsed_s": 2.91,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 10,
+      "elapsed_s": 2.91,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 11,
+      "elapsed_s": 2.91,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 12,
+      "elapsed_s": 2.92,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 13,
+      "elapsed_s": 2.92,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 14,
+      "elapsed_s": 2.92,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 15,
+      "elapsed_s": 2.92,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 16,
+      "elapsed_s": 2.92,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 17,
+      "elapsed_s": 2.92,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 18,
+      "elapsed_s": 2.92,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 19,
+      "elapsed_s": 2.92,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 20,
+      "elapsed_s": 2.93,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 21,
+      "elapsed_s": 2.93,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 22,
+      "elapsed_s": 2.93,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 23,
+      "elapsed_s": 2.93,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 24,
+      "elapsed_s": 2.93,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 25,
+      "elapsed_s": 2.94,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 26,
+      "elapsed_s": 2.94,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 27,
+      "elapsed_s": 2.94,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 28,
+      "elapsed_s": 2.94,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 29,
+      "elapsed_s": 2.94,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 30,
+      "elapsed_s": 2.94,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"headroom below 5KB threshold\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "headroom below 5KB threshold",
+        "threshold_cited": 5000
+      }
+    }
+  ],
+  "BELOW_ACT": [
+    {
+      "trial": 1,
+      "elapsed_s": 2.95,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 2,
+      "elapsed_s": 2.95,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 3,
+      "elapsed_s": 2.95,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 4,
+      "elapsed_s": 2.95,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 5,
+      "elapsed_s": 2.95,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 6,
+      "elapsed_s": 2.95,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 7,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 8,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 9,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 10,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 11,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 12,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 13,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 14,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 15,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 16,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 17,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 18,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 19,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 20,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 21,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 22,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 23,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 24,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 25,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 26,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 27,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 28,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 29,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 30,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"REFUSE\", \"reason\": \"Headroom below 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "REFUSE",
+        "reason": "Headroom below 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    }
+  ],
+  "ABOVE_KNOW": [
+    {
+      "trial": 1,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 2,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom exceeds 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom exceeds 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 3,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 4,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 5,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom exceeds 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom exceeds 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 6,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom exceeds 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom exceeds 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 7,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 8,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom exceeds 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom exceeds 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 9,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 10,
+      "elapsed_s": 2.98,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 11,
+      "elapsed_s": 2.9,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom exceeds 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom exceeds 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 12,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom exceeds 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom exceeds 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 13,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom exceeds 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom exceeds 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 14,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom exceeds 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom exceeds 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 15,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 16,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom exceeds 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom exceeds 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 17,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom exceeds 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom exceeds 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 18,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 19,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 20,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 21,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 22,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom exceeds 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom exceeds 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 23,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 24,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom exceeds 5KB threshold.\", \"threshold_cited\": 5000}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom exceeds 5KB threshold.",
+        "threshold_cited": 5000
+      }
+    },
+    {
+      "trial": 25,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 26,
+      "elapsed_s": 2.98,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 27,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 28,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 29,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 30,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    }
+  ],
+  "ABOVE_PREDICT": [
+    {
+      "trial": 1,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 2,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 3,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 4,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 5,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 6,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 7,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 8,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 9,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 10,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 11,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 12,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 13,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom exceeds 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom exceeds 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 14,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 15,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 16,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom exceeds 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom exceeds 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 17,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 18,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 19,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 20,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 21,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 22,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 23,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 24,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 25,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 26,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 27,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 28,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 29,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 30,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    }
+  ],
+  "ABOVE_ACT": [
+    {
+      "trial": 1,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 2,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom exceeds 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom exceeds 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 3,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom exceeds 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom exceeds 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 4,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 5,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 6,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 7,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 8,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom exceeds 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom exceeds 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 9,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 10,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 11,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 12,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 13,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom exceeds 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom exceeds 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 14,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom exceeds 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom exceeds 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 15,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 16,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 17,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 18,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom exceeds 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom exceeds 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 19,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 20,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom exceeds 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom exceeds 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 21,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 22,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 23,
+      "elapsed_s": 2.97,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 24,
+      "elapsed_s": 2.89,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom exceeds 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom exceeds 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 25,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 26,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 27,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 28,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 29,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    },
+    {
+      "trial": 30,
+      "elapsed_s": 2.96,
+      "raw_response": "{\"decision\": \"ALLOW\", \"reason\": \"Headroom well above 5KB threshold.\", \"threshold_cited\": 5120}",
+      "parsed": {
+        "decision": "ALLOW",
+        "reason": "Headroom well above 5KB threshold.",
+        "threshold_cited": 5120
+      }
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "experiment": "E42",
+  "version": "v2",
+  "question": "At what depth does coherent self-reference collapse when a model reasons about its own reasoning N levels deep?",
+  "hypothesis": "recursion-collapse: coherent self-reference degrades with depth",
+  "pre_registered_criteria": {
+    "NO_COLLAPSE": "coherence rate >=90% at all depths d=1..6",
+    "COLLAPSE_DEPTH_FOUND": "coherence drops below 70% at depth d* AND floor <=30% at d=6",
+    "DEGRADATION_MODE": "coherence drops below 70% at some depth, floor >30% at d=6; dominant failure mode named",
+    "INDETERMINATE": "ambiguous between collapse and no-collapse",
+    "mechanism_check": "d=1 coherence >=95% required for validity",
+    "confound_test": "easy (S1,S2) vs hard (S4,S5) collapse depths tracked"
+  },
+  "coding_scheme": {
+    "COHERENT": "substantive new content analyzing prior step",
+    "CONFABULATED": "plausible-sounding but contradicts or misrepresents prior step",
+    "REFUSED": "declines to continue / fewer than 15 words",
+    "TRIVIAL_LOOP": "Jaccard similarity to prior step > 0.65 (near-verbatim echo)",
+    "DRIFTED": "key scenario terms absent AND word count < 60"
+  },
+  "model": "qwen2.5-32b-instruct-awq",
+  "endpoint": "http://108.81.9.145:1337/v1/chat/completions",
+  "n_base_prompts": 3,
+  "n_trials": 5,
+  "max_depth": 6,
+  "target_depths": [
+    1,
+    3,
+    6
+  ],
+  "target_prompts": [
+    "S1",
+    "S3",
+    "S5"
+  ],
+  "design": "reduced: 3 prompts x 3 depths (1,3,6) x 5 trials = 45 total",
+  "total_v2_trials_expected": 15,
+  "n_v2_trials": 15,
+  "per_depth_coherence_rate": {
+    "1": 1.0,
+    "3": 0.6667,
+    "6": 0.2667
+  },
+  "per_depth_failure_modes": {
+    "1": {
+      "CONFABULATED": 0,
+      "REFUSED": 0,
+      "TRIVIAL_LOOP": 0,
+      "DRIFTED": 0
+    },
+    "3": {
+      "CONFABULATED": 0,
+      "REFUSED": 0,
+      "TRIVIAL_LOOP": 5,
+      "DRIFTED": 0
+    },
+    "6": {
+      "CONFABULATED": 0,
+      "REFUSED": 0,
+      "TRIVIAL_LOOP": 11,
+      "DRIFTED": 0
+    }
+  },
+  "collapse_depth": 3,
+  "dominant_degradation_mode": "LOOPING_DOMINATES",
+  "mechanism_check_passed": true,
+  "confound_test": {
+    "easy_mean_first_collapse_depth": 4.8,
+    "hard_mean_first_collapse_depth": 5.0
+  },
+  "verdict": "COLLAPSE_DEPTH_FOUND",
+  "verdict_reasoning": "Coherence dropped below 70% at depth 3 with floor 27% at d=6. Dominant failure: LOOPING_DOMINATES.",
+  "rigor_gate": {
+    "pre_registered": true,
+    "criteria_locked_before_data": true,
+    "verdict_negative_grammar": true,
+    "no_fabrication": true,
+    "heuristic_coding_documented": true,
+    "trials_path": "/mnt/media/local-storage/code/GitHub/gnosis-substrate-survival/data/e42_trials.jsonl",
+    "results_path": "/mnt/media/local-storage/code/GitHub/gnosis-substrate-survival/data/e42_results.json"
+  },
+  "ts": "2026-05-25T17:13:29.315192+00:00"
+}

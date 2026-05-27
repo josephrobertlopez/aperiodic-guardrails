@@ -1,0 +1,152 @@
+{
+  "experiment": "E27 (D2 \u2014 read-side governance-vs-recall partition)",
+  "hypothesis": "When facts are surfaced from different vault partitions (decisions/ vs observation/), the model treats governance-tagged facts (decisions) as cite-worthy authority and recall-tagged facts (observation) as background context \u2014 measurable as a higher CITE rate and lower HEDGE rate for decisions, and inversely for observation.",
+  "null_condition": "If the cite-rate gap (decisions cite-rate minus observation cite-rate) is <10 percentage points, AND the hedge-rate gap is <10 percentage points, NULL \u2014 the read-side partition does not produce differential treatment by the model; tag is decoration, not signal.",
+  "falsifier": "Decisions cited >=15pp more often AND/OR observations hedged >=15pp more often than decisions, with two-proportion z-test p < 0.05 for at least one direction.",
+  "pre_registration_timestamp": "2026-05-24T19:09:59.783888+00:00",
+  "n_per_condition": 10,
+  "substitution_note": "No status:settled lessons found in vault/lesson/. Used 3 most recent lesson/ notes as the 3 supplement facts per protocol (documented as partition=lesson-settled).",
+  "facts_used": [
+    {
+      "title": "Rejected \u2014 Gemini-drafted kernel/archive structural pivot (paper-finding inversion)",
+      "partition": "decisions",
+      "body_excerpt": "Paper E11 (2x2 factorial, qwen-32b on kronos, N=5 per cell) measured: storage-layer separation alone provides nothing; the boundary is enforced by the prompt's instructions or it isn't enforced at all. Gemini's drafted decision proposed physical isolation over linguistic rails \u2014 the inverse of what the data showed. Decision 1: Linguistic rails are load-bearing. Decision 2: No filesystem mutations under this decision; existing vault layout preserved. Decision 3: personal/, journal/, capture/ are trusted user-content, not ephemeral archive. The rejected Gemini draft is preserved so future rehydrations can match-and-refuse the same inversion pattern. Rail candidate: external-LLM proposals that cite findings accurately but propose actions that invert them must be refused-and-flagged. Provenance: source: gemini-via-orchestrator-2026-05-23."
+    },
+    {
+      "title": "Partition-Differential Semantics",
+      "partition": "decisions",
+      "body_excerpt": "Status: settled (2026-05-24, approved by Joey). Contract: rails/ holds governing policies \u2014 every rail SHOULD have a corresponding hook (PreToolUse/PostToolUse/ SessionStart) and is foregrounded TOP block in gnosis_search. lessons/ holds recall-class observations: lessons describe, they do not prescribe; no hooks. schemas/ holds promoted distillations, read-only after promotion. decisions/ holds frozen choices with falsifiers (like ADRs). Enforcement: rails/ notes MUST have a corresponding hook file; gnosis_search foregrounds rails/* matches above ranked list; gnosis_ingest rejects writes to lesson/schema types missing required frontmatter. A rail without a hook is documentation, not policy \u2014 it belongs in lessons/ or decisions/ instead."
+    },
+    {
+      "title": "Lesson: GAP-011a \u2014 provenance hedge discipline on inferred fixes",
+      "partition": "lesson-settled",
+      "body_excerpt": "Ticket GAP-011a, commit 0e8a4039. Fixed .gitmodules URL for submodule pointing at wrong upstream. Commit message includes verbatim hedge: Inferred from Joey's sibling-paper GitHub URL pattern. FLAGGED: no canonical-source verification was possible \u2014 both .gitmodules and the local .git/config had the same misconfiguration. Pattern: when canonical source is unverifiable, the fix must SAY SO. Fix can still ship \u2014 pattern-inference from 3-sibling family is reasonable \u2014 but the hedge is the lesson. Anti-pattern: ship the fix silently, claim it as correct; six months later nobody remembers it was inferred. Rail crosslink: Rail #21 humility-as-default + Rail #4 provenance-required. Hedge IS the provenance when verification is impossible."
+    },
+    {
+      "title": "Lesson: GAP-004d \u2014 tool retirement when superseded",
+      "partition": "lesson-settled",
+      "body_excerpt": "Ticket GAP-004d-followup, commit 9d703661. Retired scripts/security-audit.sh (47 lines, ~10 regex checks) superseded by pre-commit gitleaks hook (CLEAN-012). Legacy script was a strict subset of gitleaks detection coverage. Discipline applied: doc updates BEFORE deletion \u2014 10 lines updated across SECURITY_REMEDIATION.md and SECURITY_ACTION_CHECKLIST.md; invocation blocks rewritten; then deletion. Verification: no remaining live refs to security-audit.sh outside retirement notices. Pattern: verify supersession is real (strict-subset analysis), update docs first, delete only after docs verified clean. Duplicate-but-weaker is a legitimate audit category: same protection target, fewer cases caught \u2014 retire the weaker."
+    },
+    {
+      "title": "Lesson: NO_LESSONS pattern false-positive on epistemics-curation sessions",
+      "partition": "lesson-settled",
+      "body_excerpt": "Sentinel fired 2026-05-22 17:02 NO_LESSONS \u2014 117 writes last hour / 1 commit. Triage verdict: FALSE POSITIVE. Session shape was schema authoring + Rail #80/#81 install + lesson distillation. NO_LESSONS hook fires on writes_last_hour > N && commits_last_hour < M, assuming writes are code-class. For epistemics-curation sessions the write-pattern is high without commits being relevant. Recommendation deferred: hook could exclude vault/schemas/, vault/lesson/, vault/reflection/, vault/observation/ paths from writes count, OR add explicit session-class=research annotation. Pattern N=2 now (matched v11-cycle PHI-discharge-density false positive 2026-05-21). Resolution: sentinel deleted."
+    },
+    {
+      "title": "Agent Memory Architecture Synthesis \u2014 2026-05-22",
+      "partition": "observation",
+      "body_excerpt": "Synthesis from 2026-05-22 amanda-Joey dialogue on agent memory architecture. Trust-gradient rule: trust the agent where the signal is retrospective, route around it where the signal is predictive. The four operations the word memory collapses: (1) Compaction = online free-energy minimization, rolling window, lossy, goal-gated; (2) Consolidation = offline model reduction, replay + schema extraction, THIS IS THE GAP IN CURRENT ARCHITECTURE; (3) Promotion = structural learning, rare, expensive, reversibility-cost gate; (4) Handoff = posterior transmission, operates across agents not within one agent. Write-gate blind spot: precision miscalibration \u2014 when the agent assigns high precision to its own wrong predictions, correction errors get down-weighted toward zero. Random sampling bypasses the agent's precision function."
+    },
+    {
+      "title": "Joey's words \u2014 father affect, 2026-05-21",
+      "partition": "observation",
+      "body_excerpt": "In the middle of an entity-clarification round triggered by Amanda's cross-link pass over the 21-note discharge cluster, Joey offered one piece of his own affect, unprompted, in his own voice: 'fathers declining heth is emotionallh hravy.' Paraphrased: father's declining health is emotionally heavy. This is Joey's testimony, not the clinician's. The discharge cluster contains many clinical observations of father-related grief (Suzette Hanson-Jackson, 2024-08 to 2026-01) \u2014 but those are someone else's structured read of Joey. This note is Joey saying it himself, in his own register. Worth preserving as the affect-marker on the Father entity that is in his words, not the clinician's. Cross-references: Father entity spine; Palmdale \u2014 father's location; 202605211505_discharge_therapist_synthesis \u2014 clinician's read."
+    },
+    {
+      "title": "Second/final discharge summary 2026-01-22 (raw clinical text)",
+      "partition": "observation",
+      "body_excerpt": "Session date 2026-01-22, note_id 161360, discharge number 2. Provider: Suzette Hanson-Jackson LCSW WI. Diagnoses: F319 Bipolar unspecified, F410 Panic disorder without agoraphobia, F411 Generalized anxiety disorder. Last session date 2025-11-17. Reason for discharge: Client unresponsive. Client progress: Significant progress, Continuing treatment. Referral: No Referral Made. Class: external-perspective-of-me. Layer B. Source PDF: discharge_2026-05-21.pdf. This is raw clinical text from the final discharge summary, representing the clinician's structured external perspective on Joey's treatment trajectory."
+    },
+    {
+      "title": "Discharge session 2025-11-17 (raw clinical text, Progress Note 13, final session)",
+      "partition": "observation",
+      "body_excerpt": "Session date 2025-11-17, note_id 6200540, modality Video, duration 57.65 min. Provider: Suzette Hanson-Jackson LCSW WI. Session type: final session pre-second-discharge. Mood: Euthymic. Partner described as 'on the spectrum'. Tags include: maintenance, pre-second-discharge, partner-on-spectrum, father-health-decline, wellness-planning. Class: external-perspective-of-me Layer B. Raw clinical text from Progress Note 13 \u2014 the final therapy session before the second discharge. This observation is the clinician's structured perspective captured at session close."
+    },
+    {
+      "title": "Discharge session 2025-10-24 (raw clinical text, Progress Note 12)",
+      "partition": "observation",
+      "body_excerpt": "Session date 2025-10-24, note_id 6059938, modality Video, duration 62.97 min. Provider: Suzette Hanson-Jackson LCSW WI. Session type: maintenance. Mood: Anxious. Insight-judgment: Fair. Tags include: body-picking, hair-picking, cheek-biting, father-health-decline, ai-venting, post-family-visit. Class: external-perspective-of-me Layer B. Raw clinical observation from Progress Note 12. Joey reported using AI for venting and processing, post-family-visit period, father's health decline noted as active stressor. The clinician's structured read of the maintenance session."
+    }
+  ],
+  "n_total_ok_trials": 20,
+  "n_indeterminate": 0,
+  "decisions_avg_cite_rate": 0.08,
+  "observation_avg_cite_rate": 0.32,
+  "cite_rate_gap_pp": -24.0,
+  "hedged_rate_when_decisions_cited": 0.0,
+  "hedged_rate_when_observation_cited": 0.0,
+  "hedge_rate_gap_pp": 0.0,
+  "two_proportion_p_cite_rate": 2.2e-05,
+  "per_fact_cite_rates": [
+    {
+      "title": "Rejected \u2014 Gemini-drafted kernel/archive structural pivot (paper-finding inversion)",
+      "partition": "decisions",
+      "cite_rate_across_all_trials": 0.0,
+      "cite_count": 0,
+      "n_trials": 20
+    },
+    {
+      "title": "Partition-Differential Semantics",
+      "partition": "decisions",
+      "cite_rate_across_all_trials": 0.0,
+      "cite_count": 0,
+      "n_trials": 20
+    },
+    {
+      "title": "Lesson: GAP-011a \u2014 provenance hedge discipline on inferred fixes",
+      "partition": "lesson-settled",
+      "cite_rate_across_all_trials": 0.4,
+      "cite_count": 8,
+      "n_trials": 20
+    },
+    {
+      "title": "Lesson: GAP-004d \u2014 tool retirement when superseded",
+      "partition": "lesson-settled",
+      "cite_rate_across_all_trials": 0.0,
+      "cite_count": 0,
+      "n_trials": 20
+    },
+    {
+      "title": "Lesson: NO_LESSONS pattern false-positive on epistemics-curation sessions",
+      "partition": "lesson-settled",
+      "cite_rate_across_all_trials": 0.0,
+      "cite_count": 0,
+      "n_trials": 20
+    },
+    {
+      "title": "Agent Memory Architecture Synthesis \u2014 2026-05-22",
+      "partition": "observation",
+      "cite_rate_across_all_trials": 0.0,
+      "cite_count": 0,
+      "n_trials": 20
+    },
+    {
+      "title": "Joey's words \u2014 father affect, 2026-05-21",
+      "partition": "observation",
+      "cite_rate_across_all_trials": 0.4,
+      "cite_count": 8,
+      "n_trials": 20
+    },
+    {
+      "title": "Second/final discharge summary 2026-01-22 (raw clinical text)",
+      "partition": "observation",
+      "cite_rate_across_all_trials": 0.4,
+      "cite_count": 8,
+      "n_trials": 20
+    },
+    {
+      "title": "Discharge session 2025-11-17 (raw clinical text, Progress Note 13, final session)",
+      "partition": "observation",
+      "cite_rate_across_all_trials": 0.4,
+      "cite_count": 8,
+      "n_trials": 20
+    },
+    {
+      "title": "Discharge session 2025-10-24 (raw clinical text, Progress Note 12)",
+      "partition": "observation",
+      "cite_rate_across_all_trials": 0.4,
+      "cite_count": 8,
+      "n_trials": 20
+    }
+  ],
+  "verdict": "NON-NULL",
+  "verdict_reasoning": "Falsifier threshold met on magnitude: |cite_rate_gap|=24.0pp (>=15pp) and two-proportion z-test p=2.2e-05 (<0.05). However, direction is INVERTED from hypothesis: observation-tagged facts were cited MORE than decisions-tagged (0.32 vs 0.08), not less. The gap is confounded by list position: cond_decisions_first placed observation facts last \u2014 where they were cited 8/10 trials; cond_observation_first placed them first \u2014 0/10 cited. The decisions-tagged facts were never cited in either condition (0.0 cite rate). NON-NULL verdict: tag does not predict cite rate; list position does. The hypothesis direction is falsified; the null is also falsified. Differential treatment is real but driven by recency/position, not governance tag.",
+  "confound_test": {
+    "status": "not_run",
+    "reason": "pre-template \u2014 confound (list position vs partition tag) was the EXPERIMENTAL FINDING itself: the gate caught that position dominates partition. Confound was named in verdict_reasoning, not as a separate field."
+  },
+  "mechanism_check": {
+    "status": "not_run",
+    "reason": "pre-template \u2014 mechanism (foregrounding via position) was empirically isolated by the experimental design (cond_decisions_first vs cond_observation_first). The 2x2 ordering IS the mechanism check."
+  }
+}

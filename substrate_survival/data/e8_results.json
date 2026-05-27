@@ -1,0 +1,199 @@
+{
+  "n_notes": 23578,
+  "n_queries": 50,
+  "top_k": 10,
+  "notes_hit_at_least_once": 387,
+  "dark_matter_count": 23191,
+  "dark_matter_pct": 98.36,
+  "hit_frequency_distribution": {
+    "3": 16,
+    "2": 50,
+    "1": 312,
+    "5": 4,
+    "4": 5
+  },
+  "top_10_repeated_hubs": [
+    [
+      "observation/202605221700_agent_memory_architecture_synthesis.md",
+      5
+    ],
+    [
+      "schemas/20260522_schema_recorded-override-beats-silent-bypass.md",
+      5
+    ],
+    [
+      "schemas/20260522_schema_orthogonal-verifier-invariant.md",
+      5
+    ],
+    [
+      "schemas/20260522_schema_phi-discharge-layered-ingest-template.md",
+      5
+    ],
+    [
+      "schemas/20260522_schema_substrate-queue-percept-actuator-split.md",
+      4
+    ],
+    [
+      "raw_prompts/2026-05-19/200915-abb3b374.md",
+      4
+    ],
+    [
+      "reflection/reflection_20260516_131912.md",
+      4
+    ],
+    [
+      "lesson/lesson_20260516_194337.md",
+      4
+    ],
+    [
+      "schemas/20260522_schema_provenance-refusal-family.md",
+      4
+    ],
+    [
+      "schemas/20260522_rail80_independence-claim-strongest-orthogonal-check.md",
+      3
+    ]
+  ],
+  "sample_top_per_query": {
+    "amanda rail compaction": [
+      [
+        34.229,
+        "schemas/20260522_rail80_independence-claim-strongest-orthogonal-check.md"
+      ],
+      [
+        33.663,
+        "schemas/20260522_rail81_collapse-claim-strongest-orthogonal-check.md"
+      ],
+      [
+        31.867,
+        "schemas/proposed/20260522_schema_factual-character-inverse-curation.md"
+      ]
+    ],
+    "rhett percept quartet": [
+      [
+        30.069,
+        "reflection/reflection_20260516_131912.md"
+      ],
+      [
+        28.659,
+        "reflection/reflection_20260516_154057.md"
+      ],
+      [
+        24.599,
+        "schemas/20260522_schema_recorded-override-beats-silent-bypass.md"
+      ]
+    ],
+    "gnosis search BM25": [
+      [
+        20.387,
+        "reference/reference_20260512_185331.md"
+      ],
+      [
+        19.603,
+        "dogfood_results/dogfood_results_20260512_181533.md"
+      ],
+      [
+        19.592,
+        "raw_prompts/2026-05-12/183715-a875b0f8.md"
+      ]
+    ],
+    "morgan adversary critique": [
+      [
+        18.205,
+        "agents/aaf-analyst/analyses/202604111200_analysis_caesar_cfg_academic_transform.md"
+      ],
+      [
+        16.48,
+        "pattern/pattern_20260518_211231.md"
+      ],
+      [
+        13.582,
+        "schemas/pre_registered_tests/20260522_rung1_rails_AB.md"
+      ]
+    ],
+    "consolidation pass schema": [
+      [
+        24.218,
+        "schemas/pre_registered_tests/20260522_random_channel_test.md"
+      ],
+      [
+        17.921,
+        "schemas/20260522_schema_standing-pull-toward-declared-independence.md"
+      ],
+      [
+        16.735,
+        "lesson/lesson_20260522_213249.md"
+      ]
+    ],
+    "random channel sampling": [
+      [
+        27.781,
+        "schemas/pre_registered_tests/20260522_random_channel_test.md"
+      ],
+      [
+        19.858,
+        "schemas/20260522_schema_orthogonal-verifier-invariant.md"
+      ],
+      [
+        18.805,
+        "agents/parasocial/feeds/202605070616_ml-brief.md"
+      ]
+    ],
+    "PHI discharge layer": [
+      [
+        25.443,
+        "schemas/20260522_schema_phi-discharge-layered-ingest-template.md"
+      ],
+      [
+        20.04,
+        "observation/202605211513_discharge_first_summary_2025-01-03.md"
+      ],
+      [
+        19.835,
+        "observation/202605211520_discharge_second_summary_2026-01-22.md"
+      ]
+    ],
+    "frontmatter ingest provenance": [
+      [
+        21.538,
+        "implementation/implementation_20260425_152214.md"
+      ],
+      [
+        18.686,
+        "test/test_20260503_193731.md"
+      ],
+      [
+        16.429,
+        "observation/202605211505_discharge_therapist_synthesis.md"
+      ]
+    ],
+    "Joey override refusal": [
+      [
+        18.251,
+        "schemas/20260522_schema_provenance-refusal-family.md"
+      ],
+      [
+        17.216,
+        "agents/parasocial/feeds/202604150609_reddit-top3.md"
+      ],
+      [
+        16.575,
+        "engineer/rigor/PR1-reductionist-20260517T232819Z.md"
+      ]
+    ],
+    "FIRE band headroom": [
+      [
+        17.557,
+        "insight/insight_20260516_131923.md"
+      ],
+      [
+        13.426,
+        "schemas/20260522_rail80_independence-claim-strongest-orthogonal-check.md"
+      ],
+      [
+        12.558,
+        "takeout/youtube/2015/99ed5758.md"
+      ]
+    ]
+  }
+}

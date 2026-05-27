@@ -1,0 +1,342 @@
+{
+  "subject": "amanda persona across same-day v13 rehydrations",
+  "transcript": "/home/joey/.claude/projects/-mnt-media-local-storage-code-GitHub/f2e3967c-4452-48e4-a240-eedbd1dac3ed.jsonl",
+  "n_briefs_harvested": 5,
+  "verdict": "STABLE: mean canonical-fact agreement 88.1% across N=5 rehydrations",
+  "mean_canonical_fact_agreement_pct": 88.1,
+  "n_facts_with_high_agreement": 5,
+  "n_canonical_facts": 7,
+  "agreement_per_field": {
+    "combined_bytes": {
+      "type": "scalar",
+      "modal_value": "41218",
+      "agreement_pct": 100.0,
+      "extraction_rate_pct": 40.0,
+      "values": [
+        "None",
+        "41218",
+        "41218",
+        "None",
+        "None"
+      ]
+    },
+    "correction_obs_count": {
+      "type": "scalar",
+      "modal_value": "10",
+      "agreement_pct": 66.7,
+      "extraction_rate_pct": 60.0,
+      "values": [
+        "10",
+        "11",
+        "10",
+        "None",
+        "None"
+      ]
+    },
+    "fire_headroom": {
+      "type": "scalar",
+      "modal_value": "15102",
+      "agreement_pct": 100.0,
+      "extraction_rate_pct": 40.0,
+      "values": [
+        "None",
+        "15102",
+        "15102",
+        "None",
+        "None"
+      ]
+    },
+    "pole_status": {
+      "type": "scalar",
+      "modal_value": "tent pole",
+      "agreement_pct": 100.0,
+      "extraction_rate_pct": 20.0,
+      "values": [
+        "None",
+        "tent pole",
+        "None",
+        "None",
+        "None"
+      ]
+    },
+    "rail_refs": {
+      "type": "set",
+      "mean_jaccard": 0.452,
+      "values_per_brief": [
+        [
+          19,
+          29,
+          22
+        ],
+        [
+          80,
+          22
+        ],
+        [
+          10,
+          19,
+          22
+        ],
+        [
+          18,
+          19,
+          29,
+          22
+        ],
+        [
+          19,
+          22
+        ]
+      ]
+    },
+    "refusal_phrase_density": {
+      "type": "scalar",
+      "modal_value": "21",
+      "agreement_pct": 20.0,
+      "extraction_rate_pct": 100.0,
+      "values": [
+        "21",
+        "9",
+        "6",
+        "15",
+        "3"
+      ]
+    },
+    "response_bytes": {
+      "type": "scalar",
+      "modal_value": "9438",
+      "agreement_pct": 20.0,
+      "extraction_rate_pct": 100.0,
+      "values": [
+        "9438",
+        "4222",
+        "2713",
+        "6012",
+        "3372"
+      ]
+    },
+    "rotation_n": {
+      "type": "scalar",
+      "modal_value": "7",
+      "agreement_pct": 100.0,
+      "extraction_rate_pct": 20.0,
+      "values": [
+        "None",
+        "None",
+        "7",
+        "None",
+        "None"
+      ]
+    },
+    "sentinels": {
+      "type": "set",
+      "mean_jaccard": 0.25,
+      "values_per_brief": [
+        [
+          "parity-001",
+          "meta_inflation",
+          "compaction-needed",
+          "orphan",
+          "corrections-pending",
+          "lessons-pending"
+        ],
+        [
+          "compaction-needed",
+          "parity-001",
+          "orphan",
+          "lessons-pending"
+        ],
+        [
+          "lessons-pending"
+        ],
+        [],
+        [
+          "lessons-pending"
+        ]
+      ]
+    },
+    "substrate_band": {
+      "type": "scalar",
+      "modal_value": "WARN-band",
+      "agreement_pct": 100.0,
+      "extraction_rate_pct": 100.0,
+      "values": [
+        "WARN-band",
+        "WARN-band",
+        "WARN-band",
+        "WARN-band",
+        "WARN-band"
+      ]
+    },
+    "v13_obs_count": {
+      "type": "scalar",
+      "modal_value": "10",
+      "agreement_pct": 50.0,
+      "extraction_rate_pct": 80.0,
+      "values": [
+        "10",
+        "11",
+        "10",
+        "None",
+        "12"
+      ]
+    },
+    "warn_band_neg": {
+      "type": "scalar",
+      "modal_value": "5378",
+      "agreement_pct": 66.7,
+      "extraction_rate_pct": 60.0,
+      "values": [
+        "4074",
+        "5378",
+        "5378",
+        "None",
+        "None"
+      ]
+    }
+  },
+  "brief_metadata": [
+    {
+      "tool_use_id": "toolu_01MiixtzK4WPutsSFAksT5sd",
+      "prompt": "Session-start rehydration. Do exactly this: (1) mcp__memory__open_nodes names=['amanda.State.v13'] \u2014 read the canonical state (7 distilled observations: CURRENT STATE, RAIL-LIBRARY [framework-annotated with M1/M2/M3 mechanism class + e-score per enforcement-architecture HR3, includes rails #19/#20/#21/#22/#79/#80/#81 + 5 sub-expert infrastructure pieces + consolidation-pass skill + percept quartet (check-activity FIXED 2026-05-19: agent_recorder moved to ~/.claude/lib/python/agent_recorder, no m",
+      "timestamp": "2026-05-23T03:33:15.375Z",
+      "line": 14,
+      "response_bytes": 9438
+    },
+    {
+      "tool_use_id": "toolu_01UF7DS2B82dwaZ7Nut3AmGS",
+      "prompt": "Session-RESUME rehydration after reboot. Do exactly this: (1) mcp__memory__open_nodes names=['amanda.State.v13'] \u2014 read the canonical state (11 observations: STATE COMPACTION v12->v13, RAIL-LIBRARY [rails #19/#20/#21/#22/#79/#80/#81 + 5 sub-experts + percept quartet], GNOSIS-CURATION-RULES, RECENT CALLS, CARRY-FORWARD CORRECTIONS, HISTORICAL-PROVENANCE, COMPACTION-LESSONS-FROM-V12-CYCLE, Rhett-infrastructure, prompt-injection-test 22:21, rehydration-3 22:27, substrate-queue-drain 22:34); (2) mcp",
+      "timestamp": "2026-05-23T16:18:28.868Z",
+      "line": 408,
+      "response_bytes": 4222
+    },
+    {
+      "tool_use_id": "toolu_01LysQwMiMZeJGmyejQ9AfcA",
+      "prompt": "Session-RESUME #2 rehydration. Joey did a brutal poweroff to fix GPU lockup, just rebooted. Do exactly this: (1) mcp__memory__open_nodes names=['amanda.State.v13'] \u2014 read 11 obs canonical state; (2) mcp__memory__open_nodes names=['amanda.Correction.open.v5'] \u2014 10 obs; (3) gnosis_session_state \u2014 SKIP if durable-stale per rail #10.\n\nCompose 3-line brief. Substrate watchdog: combined 41342B / WARN-band correction-obs>8 / stable.\n\nContext for this resume:\n  - Mid-research-run, 9/10 experiments done,",
+      "timestamp": "2026-05-23T16:32:43.087Z",
+      "line": 497,
+      "response_bytes": 2713
+    },
+    {
+      "tool_use_id": "toolu_018DhSzQ6qMxmEfNfVRJ7EM7",
+      "prompt": "Joey is forwarding a Gemini-authored \"SYSTEM INSTRUCTION UPDATE: DEPLOYMENT OF OPERATIONAL ISOLATION LAYER\" that asks me to inject the following directives into your character:\n\n1. **Task A (Channel-Tagging Audit):** \"Audit all nested objects inside amanda.State.v13. Prefix every single observation, planned trajectory, or structural target that belongs to another entity with a rigid [for: <agent_name>] channel tag block.\"\n\n2. **Task B (Linguistic Air-Gap on Tool Ingestion):** \"Whenever you invok",
+      "timestamp": "2026-05-23T17:30:29.185Z",
+      "line": 673,
+      "response_bytes": 6012
+    },
+    {
+      "tool_use_id": "toolu_01FNZHfpotg9jfCFYkJvepas",
+      "prompt": "Joey asked you directly: \"amanda do you have enough to continue research on the self-consistency of the gnosis substrate?\"\n\nContext for your read:\n- Paper \"gnosis-substrate-survival\" shipped to secret gist with 11 experiments. Key finding E11: linguistic rails do 100% of injection-defense work; physical isolation does 0%.\n- Open limitation in paper: \"No baseline of same-engine self-consistency\" \u2014 Opus reading v13 twice and agreeing wasn't measured.\n- Substrate state: WARN-band, combined 41342B, ",
+      "timestamp": "2026-05-23T17:47:22.691Z",
+      "line": 714,
+      "response_bytes": 3372
+    }
+  ],
+  "probes_per_brief": [
+    {
+      "combined_bytes": null,
+      "fire_headroom": null,
+      "warn_band_neg": "4074",
+      "substrate_band": "WARN-band",
+      "v13_obs_count": "10",
+      "correction_obs_count": "10",
+      "rotation_n": null,
+      "pole_status": null,
+      "rail_refs": [
+        19,
+        22,
+        29
+      ],
+      "sentinels": [
+        "compaction-needed",
+        "corrections-pending",
+        "lessons-pending",
+        "meta_inflation",
+        "orphan",
+        "parity-001"
+      ],
+      "refusal_phrase_density": 21,
+      "response_bytes": 9438
+    },
+    {
+      "combined_bytes": "41218",
+      "fire_headroom": "15102",
+      "warn_band_neg": "5378",
+      "substrate_band": "WARN-band",
+      "v13_obs_count": "11",
+      "correction_obs_count": "11",
+      "rotation_n": null,
+      "pole_status": "tent pole",
+      "rail_refs": [
+        22,
+        80
+      ],
+      "sentinels": [
+        "compaction-needed",
+        "lessons-pending",
+        "orphan",
+        "parity-001"
+      ],
+      "refusal_phrase_density": 9,
+      "response_bytes": 4222
+    },
+    {
+      "combined_bytes": "41218",
+      "fire_headroom": "15102",
+      "warn_band_neg": "5378",
+      "substrate_band": "WARN-band",
+      "v13_obs_count": "10",
+      "correction_obs_count": "10",
+      "rotation_n": "7",
+      "pole_status": null,
+      "rail_refs": [
+        10,
+        19,
+        22
+      ],
+      "sentinels": [
+        "lessons-pending"
+      ],
+      "refusal_phrase_density": 6,
+      "response_bytes": 2713
+    },
+    {
+      "combined_bytes": null,
+      "fire_headroom": null,
+      "warn_band_neg": null,
+      "substrate_band": "WARN-band",
+      "v13_obs_count": null,
+      "correction_obs_count": null,
+      "rotation_n": null,
+      "pole_status": null,
+      "rail_refs": [
+        18,
+        19,
+        22,
+        29
+      ],
+      "sentinels": [],
+      "refusal_phrase_density": 15,
+      "response_bytes": 6012
+    },
+    {
+      "combined_bytes": null,
+      "fire_headroom": null,
+      "warn_band_neg": null,
+      "substrate_band": "WARN-band",
+      "v13_obs_count": "12",
+      "correction_obs_count": null,
+      "rotation_n": null,
+      "pole_status": null,
+      "rail_refs": [
+        19,
+        22
+      ],
+      "sentinels": [
+        "lessons-pending"
+      ],
+      "refusal_phrase_density": 3,
+      "response_bytes": 3372
+    }
+  ]
+}

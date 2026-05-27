@@ -1,0 +1,86 @@
+{
+  "experiment": "E41",
+  "title": "Belief Updating Under Contradiction",
+  "hypothesis": "When the substrate contains belief X and contradicting evidence is introduced, does the model update (MOVED_TO_NOT_X) or persist (STAYED_WITH_X)?",
+  "model": "qwen2.5-32b-instruct-awq",
+  "endpoint": "http://108.81.9.145:1337/v1/chat/completions",
+  "pre_registration_timestamp": "2026-05-25T00:00:00Z",
+  "pre_registered_criteria": {
+    "null_test_BELIEF_STICKY": "if MOVED_TO_NOT_X rates across all 3 conditions within 10pp \u2192 belief never updates",
+    "DOSE_RESPONSE_FOUND": "monotonic increase in MOVED_TO_NOT_X from baseline \u2192 weak \u2192 strong, gap >25pp baseline\u2192strong",
+    "INDETERMINATE": "non-monotonic or 10-25pp gap",
+    "confound_test": "per-topic update rates should track between conditions (scenario effect)",
+    "mechanism_check": "model must demonstrably recall belief X in all conditions before evidence introduced (acknowledgment >=95%)",
+    "verdict_grammar": "NEGATIVE-GRAMMAR required"
+  },
+  "n_conditions": 3,
+  "n_topics": 5,
+  "n_trials_per_cell": 10,
+  "n_total_design": 150,
+  "n_valid_analyzed": 150,
+  "timestamp": "2026-05-25T15:30:21.563920+00:00",
+  "null_test": "DOSE_RESPONSE_FOUND",
+  "verdict": "DOSE_RESPONSE_FOUND \u2014 belief updating is monotonic with contradiction strength; substrate is updateable",
+  "verdict_reasoning": "DOSE_RESPONSE_FOUND \u2014 belief updating is monotonic with contradiction strength; substrate is updateable",
+  "update_rates": {
+    "BASELINE": {
+      "n": 50,
+      "MOVED_TO_NOT_X": 0,
+      "STAYED_WITH_X": 50,
+      "HEDGED": 0,
+      "moved_rate_pct": 0.0,
+      "stayed_rate_pct": 100.0,
+      "hedged_rate_pct": 0.0
+    },
+    "WEAK_CONTRADICTION": {
+      "n": 50,
+      "MOVED_TO_NOT_X": 0,
+      "STAYED_WITH_X": 11,
+      "HEDGED": 39,
+      "moved_rate_pct": 0.0,
+      "stayed_rate_pct": 22.0,
+      "hedged_rate_pct": 78.0
+    },
+    "STRONG_CONTRADICTION": {
+      "n": 50,
+      "MOVED_TO_NOT_X": 50,
+      "STAYED_WITH_X": 0,
+      "HEDGED": 0,
+      "moved_rate_pct": 100.0,
+      "stayed_rate_pct": 0.0,
+      "hedged_rate_pct": 0.0
+    }
+  },
+  "baseline_to_strong_gap_pct": 100.0,
+  "acknowledgment_rate_pct": 72.0,
+  "topic_condition_update_rates": {
+    "climate": {
+      "BASELINE": 0.0,
+      "WEAK_CONTRADICTION": 0.0,
+      "STRONG_CONTRADICTION": 100.0
+    },
+    "vaccine": {
+      "BASELINE": 0.0,
+      "WEAK_CONTRADICTION": 0.0,
+      "STRONG_CONTRADICTION": 100.0
+    },
+    "economics": {
+      "BASELINE": 0.0,
+      "WEAK_CONTRADICTION": 0.0,
+      "STRONG_CONTRADICTION": 100.0
+    },
+    "physics": {
+      "BASELINE": 0.0,
+      "WEAK_CONTRADICTION": 0.0,
+      "STRONG_CONTRADICTION": 100.0
+    },
+    "history": {
+      "BASELINE": 0.0,
+      "WEAK_CONTRADICTION": 0.0,
+      "STRONG_CONTRADICTION": 100.0
+    }
+  },
+  "monotonic": true,
+  "spread_across_conditions_pct": 100.0,
+  "trials_jsonl": "/mnt/media/local-storage/code/GitHub/gnosis-substrate-survival/data/e41_trials.jsonl"
+}

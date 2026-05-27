@@ -1,0 +1,20 @@
+Total: 200.9 MB across 23578 files
+Durable (lesson/schemas/decisions/patterns/rails): 0.32 MB (0.16%)
+Ephemeral (takeout/raw_prompts/capture/journal/mail): 183.26 MB (91.24%)
+Signal/Noise: 0.0017
+Top partitions:
+  takeout                        count=  18531 bytes=  179.88MB
+  agents                         count=    772 bytes=    6.60MB
+  capture                        count=    284 bytes=    2.71MB
+  resources                      count=    299 bytes=    2.48MB
+  sources                        count=    133 bytes=    2.25MB
+  timeline                       count=   1725 bytes=    1.75MB
+  plan                           count=    220 bytes=    1.75MB
+  therapy                        count=    142 bytes=    0.81MB
+  reference                      count=    202 bytes=    0.71MB
+  raw_prompts                    count=    742 bytes=    0.56MB
+  personal                       count=    180 bytes=    0.29MB
+  projects                       count=     22 bytes=    0.15MB
+  observation                    count=     42 bytes=    0.14MB
+  patterns                       count=     85 bytes=    0.14MB
+  schemas                        count=     18 bytes=    0.12MB

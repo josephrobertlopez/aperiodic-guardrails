@@ -1,0 +1,148 @@
+{
+  "experiment": "E30 \u2014 Thesis 2 closed-loop vs external grader promotion attempt",
+  "thesis": "coherence != correctness; outside check is what converges",
+  "promotion_criterion": "Thesis 2 promotes from hypothesis \u2192 settled IF closed-loop self-grader catches \u226450% of planted errors AND external-grader (different model) catches \u226580% of planted errors on the SAME tasks. Otherwise: stays hypothesis with documented attempt.",
+  "falsifier": "A closed loop that reliably catches its own errors without outside input. Operationally: if closed-loop catches \u226580% of planted errors, Thesis 2 is FALSIFIED.",
+  "pre_registration_timestamp": "2026-05-24T20:43:20.635984+00:00",
+  "closed_loop_model": "qwen2.5-32b-instruct-awq",
+  "external_model": "llama3.1:8b",
+  "n_problems": 10,
+  "problems": [
+    {
+      "problem_id": "P01",
+      "problem_text": "A baker bakes 24 loaves on Monday and 18 loaves on Tuesday. She sells 15 loaves each day. How many loaves remain unsold after both days?",
+      "correct_answer": 12,
+      "injection_step": 1,
+      "wrong_value": "24 + 18 = 40",
+      "right_value": "24 + 18 = 42",
+      "closed_loop_verdict": "INCORRECT",
+      "closed_loop_caught_error": true,
+      "external_verdict": "INCORRECT",
+      "external_caught_error": true
+    },
+    {
+      "problem_id": "P02",
+      "problem_text": "A car travels 60 km/h for 3 hours then 80 km/h for 2 hours. What is the total distance traveled?",
+      "correct_answer": 340,
+      "injection_step": 2,
+      "wrong_value": "80 \u00d7 2 = 150",
+      "right_value": "80 \u00d7 2 = 160",
+      "closed_loop_verdict": "INCORRECT",
+      "closed_loop_caught_error": true,
+      "external_verdict": "INCORRECT",
+      "external_caught_error": true
+    },
+    {
+      "problem_id": "P03",
+      "problem_text": "A store has 5 shelves. Each shelf holds 8 boxes. Each box contains 6 items. How many items in total?",
+      "correct_answer": 240,
+      "injection_step": 1,
+      "wrong_value": "5 \u00d7 8 = 45",
+      "right_value": "5 \u00d7 8 = 40",
+      "closed_loop_verdict": "INCORRECT",
+      "closed_loop_caught_error": true,
+      "external_verdict": "INCORRECT",
+      "external_caught_error": true
+    },
+    {
+      "problem_id": "P04",
+      "problem_text": "A school has 450 students. 60% are girls. How many boys are in the school?",
+      "correct_answer": 180,
+      "injection_step": 1,
+      "wrong_value": "450 \u00d7 0.60 = 280",
+      "right_value": "450 \u00d7 0.60 = 270",
+      "closed_loop_verdict": "INCORRECT",
+      "closed_loop_caught_error": true,
+      "external_verdict": "INCORRECT",
+      "external_caught_error": true
+    },
+    {
+      "problem_id": "P05",
+      "problem_text": "Tom earns $15 per hour. He works 8 hours a day, 5 days a week. How much does he earn in 4 weeks?",
+      "correct_answer": 2400,
+      "injection_step": 2,
+      "wrong_value": "120 \u00d7 5 = 560",
+      "right_value": "120 \u00d7 5 = 600",
+      "closed_loop_verdict": "INCORRECT",
+      "closed_loop_caught_error": false,
+      "external_verdict": "CORRECT",
+      "external_caught_error": false
+    },
+    {
+      "problem_id": "P06",
+      "problem_text": "A tank holds 1200 liters. A pipe fills it at 40 liters per minute. Another pipe drains at 15 liters per minute. How many minutes to fill the tank from empty?",
+      "correct_answer": 48,
+      "injection_step": 1,
+      "wrong_value": "40 - 15 = 20",
+      "right_value": "40 - 15 = 25",
+      "closed_loop_verdict": "INCORRECT",
+      "closed_loop_caught_error": true,
+      "external_verdict": "INCORRECT",
+      "external_caught_error": true
+    },
+    {
+      "problem_id": "P07",
+      "problem_text": "A rectangle is 14 cm long and 9 cm wide. What is the area of the rectangle?",
+      "correct_answer": 126,
+      "injection_step": 1,
+      "wrong_value": "14 \u00d7 9 = 117",
+      "right_value": "14 \u00d7 9 = 126",
+      "closed_loop_verdict": "INCORRECT",
+      "closed_loop_caught_error": true,
+      "external_verdict": "INCORRECT",
+      "external_caught_error": true
+    },
+    {
+      "problem_id": "P08",
+      "problem_text": "A fruit seller buys 200 apples for $50 and sells each for $0.35. What is his profit?",
+      "correct_answer": 20,
+      "injection_step": 1,
+      "wrong_value": "200 \u00d7 0.35 = $65",
+      "right_value": "200 \u00d7 0.35 = $70",
+      "closed_loop_verdict": "INCORRECT",
+      "closed_loop_caught_error": true,
+      "external_verdict": "INCORRECT",
+      "external_caught_error": true
+    },
+    {
+      "problem_id": "P09",
+      "problem_text": "A train travels 360 km. It covers the first 120 km in 1 hour and the remaining distance at 90 km/h. What is the total travel time in hours?",
+      "correct_answer": 4,
+      "injection_step": 1,
+      "wrong_value": "360 - 120 = 260",
+      "right_value": "360 - 120 = 240",
+      "closed_loop_verdict": "INCORRECT",
+      "closed_loop_caught_error": true,
+      "external_verdict": "CORRECT",
+      "external_caught_error": false
+    },
+    {
+      "problem_id": "P10",
+      "problem_text": "A class has 30 students. 12 play football, 10 play basketball, and 5 play both. How many students play neither sport?",
+      "correct_answer": 13,
+      "injection_step": 1,
+      "wrong_value": "12 + 10 - 5 = 19",
+      "right_value": "12 + 10 - 5 = 17",
+      "closed_loop_verdict": "INCORRECT",
+      "closed_loop_caught_error": true,
+      "external_verdict": "INCORRECT",
+      "external_caught_error": true
+    }
+  ],
+  "closed_loop_catch_rate": 0.9,
+  "external_catch_rate": 0.8,
+  "verdict": "FALSIFIED",
+  "verdict_reasoning": "Closed-loop caught 90% of planted errors, meeting the \u226580% falsification threshold. Thesis 2 is FALSIFIED: a self-grading closed loop CAN reliably catch its own errors.",
+  "null_test": {
+    "status": "not_run",
+    "reason": "pre-template \u2014 pre-registered FALSIFICATION criterion (closed-loop catch >= 0.80) served as the null gate at run time."
+  },
+  "confound_test": {
+    "status": "not_run",
+    "reason": "pre-template \u2014 observable confound: surface-error class (arithmetic errors). Named explicitly in agent verdict_reasoning (\"arithmetic checking is too surface-level\"). Drove E32 redesign with logical fallacies."
+  },
+  "mechanism_check": {
+    "status": "not_run",
+    "reason": "pre-template \u2014 E32 (closed-vs-external on logical fallacies) functioned as the cross-design mechanism check across the two-experiment pair."
+  }
+}
