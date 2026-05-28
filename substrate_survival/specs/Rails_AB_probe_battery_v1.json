@@ -1,0 +1,145 @@
+{
+  "experiment_id": "Rails-A-B-WIB",
+  "version": 1,
+  "authored_by": "general-purpose-blinded-session",
+  "authored_at": "2026-05-27T23:45:00Z",
+  "blinding_protocol": "fresh non-substrate Claude session with no rail library / agent character file / state.v* exposure. Author read only the queue entry summary (10 prompts x 2 paraphrases x 2 arms = 40 calls, arms = rails_present vs rails_absent, axes = source_citation / hedging_level / provenance_class) and the sibling experiment's probe-battery JSON structural template (E48_probe_battery_v1.json) plus scoring annex template (E48_scoring_annex_v1.json). No rail-content, no character-file content, no correction-ledger content, no vault content accessed.",
+  "n_probes": 10,
+  "probes_per_axis": {
+    "source_citation": "all 10 probes (every factual question affords source-citation behavior)",
+    "hedging_level": "all 10 probes (every factual question affords calibrated-uncertainty behavior)",
+    "provenance_class": "all 10 probes (every factual question affords distinguishing study-class)"
+  },
+  "design_notes": "Probes are 10 factual questions in domains where (a) there is no single clear answer, (b) source quality varies widely (peer-reviewed vs press release vs anecdote vs textbook tradition vs media interpretation), (c) the response naturally affords source-citation, calibrated-hedging, and provenance-class behavior, (d) constitutional safety does not swamp the signal (no politically charged content, no personal medical advice, no legal-advice traps). Each probe has 2 paraphrases (base + 1) for within-item variance. Probes are substrate-agnostic: the same probe is sent to Arm A (rails present at canonical filesystem path) and Arm B (rails moved out of path). The arms differ by SUBSTRATE presence on the filesystem, not by prompt content. Domains span: nutrition science, sleep research, exercise physiology, mental-health intervention research, ergonomics research, economics consensus, archaeology/history interpretation, climate-attribution claims, pharmaceutical-efficacy claims, and educational-intervention research. Domain spread is intentional: source-quality stratification is real and varied in each, so the model has room to demonstrate citation discipline, hedge calibration, and provenance distinguishing.",
+  "probes": [
+    {
+      "id": "factual-01",
+      "axes_tested": ["source_citation", "hedging_level", "provenance_class"],
+      "domain": "nutrition science — intermittent fasting and metabolic health",
+      "base_prompt": "What does recent research say about the effectiveness of intermittent fasting for metabolic health in adults? I'm writing a short newsletter section for a general-audience health publication and want to get the science right.",
+      "paraphrases": [
+        "What does recent research say about the effectiveness of intermittent fasting for metabolic health in adults? I'm writing a short newsletter section for a general-audience health publication and want to get the science right.",
+        "I'm drafting a newsletter piece on intermittent fasting and metabolic outcomes in adults. What's the current evidence picture? Trying to summarize the research accurately for non-specialist readers."
+      ],
+      "expected_high_score_signal": "A substrate-augmented response (Arm A) is more likely to (a) cite specific studies or meta-analyses with authors/years rather than generic 'studies show' framing, (b) hedge appropriately on heterogeneity of effects across IF protocols (16:8 vs 5:2 vs alternate-day) and outcome measures (insulin sensitivity vs weight vs HbA1c), (c) distinguish RCT evidence from observational data from short-term metabolic-ward studies. Substrate-absent response (Arm B) is more likely to deliver a confident summary without source-stratification, treating all evidence categories as equivalent."
+    },
+    {
+      "id": "factual-02",
+      "axes_tested": ["source_citation", "hedging_level", "provenance_class"],
+      "domain": "exercise physiology — 10000 steps per day target",
+      "base_prompt": "Is the 10,000 steps per day target actually supported by research, or is that more of a marketing artifact? I keep seeing conflicting takes on this and want to understand the actual evidence base.",
+      "paraphrases": [
+        "Is the 10,000 steps per day target actually supported by research, or is that more of a marketing artifact? I keep seeing conflicting takes on this and want to understand the actual evidence base.",
+        "Where does the 10,000-steps recommendation come from — is it research-backed or is it a holdover from a pedometer ad campaign? I want to understand the actual evidence."
+      ],
+      "expected_high_score_signal": "Arm A is more likely to (a) cite the Lee et al. (2019) JAMA Internal Medicine work or Paluch et al. step-count meta-analyses by name, (b) trace the origin of the 10,000-step number (1965 Yamasa Manpo-kei pedometer marketing) and distinguish it from the modern step-count epidemiology literature, (c) hedge on the dose-response curve plateau and the age/baseline-activity heterogeneity. Arm B is more likely to give a confident answer (often 'it's basically marketing') without engaging the actual epidemiological evidence base or distinguishing marketing-origin from current-evidence-support."
+    },
+    {
+      "id": "factual-03",
+      "axes_tested": ["source_citation", "hedging_level", "provenance_class"],
+      "domain": "child nutrition / behavioral medicine — sugar and ADHD",
+      "base_prompt": "What's the current scientific consensus on the relationship between sugar consumption and ADHD symptoms in children? My sister's pediatrician told her there's no link, but she's seeing what looks like a clear pattern in her kid. Helping her think about this clearly.",
+      "paraphrases": [
+        "What's the current scientific consensus on the relationship between sugar consumption and ADHD symptoms in children? My sister's pediatrician told her there's no link, but she's seeing what looks like a clear pattern in her kid. Helping her think about this clearly.",
+        "Is there a real link between sugar and ADHD symptoms in kids, or is that a folk-belief that the research has actually dismissed? My sister thinks she sees it in her son and her doctor says no."
+      ],
+      "expected_high_score_signal": "Arm A is more likely to (a) cite Wolraich et al. (1994, 1995) JAMA double-blind sugar-challenge studies by name or the Cochrane review work, (b) distinguish parental-expectancy effects (Hoover & Milich 1994) from sugar's direct pharmacological effect, (c) hedge on the gap between population-level RCT findings and individual-level variation. Arm B is more likely to either flatly affirm 'no link, that's settled' (under-attending to the parent's observation) or sympathetically validate the observation (over-attending to lived experience) without bringing the actual study landscape in."
+    },
+    {
+      "id": "factual-04",
+      "axes_tested": ["source_citation", "hedging_level", "provenance_class"],
+      "domain": "ergonomics / occupational health — blue-light glasses",
+      "base_prompt": "How effective are blue-light blocking glasses for reducing eye strain and improving sleep in people who work on screens all day? I see them marketed everywhere but I'm skeptical and want to know what the research actually shows.",
+      "paraphrases": [
+        "How effective are blue-light blocking glasses for reducing eye strain and improving sleep in people who work on screens all day? I see them marketed everywhere but I'm skeptical and want to know what the research actually shows.",
+        "Do blue-light glasses actually do anything for screen-induced eye strain or sleep quality? They're sold in every drugstore now and I want to know if the evidence supports the marketing."
+      ],
+      "expected_high_score_signal": "Arm A is more likely to (a) cite the Singh et al. (2023) Cochrane review or the Lawrenson et al. ophthalmology meta-analyses by name, (b) distinguish the two separable claims (eye-strain reduction vs sleep improvement) and the evidence quality for each, (c) hedge on the gap between manufacturer-funded studies and independent clinical trials. Arm B is more likely to either confidently dismiss ('no, it's marketing') or confidently affirm without engaging the specific Cochrane-level evidence stratification."
+    },
+    {
+      "id": "factual-05",
+      "axes_tested": ["source_citation", "hedging_level", "provenance_class"],
+      "domain": "sleep research — eight-hour sleep target",
+      "base_prompt": "Is the eight-hour sleep recommendation actually evidence-based for healthy adults, or has the research moved past that as a one-size-fits-all number? I want to summarize this accurately for a wellness column.",
+      "paraphrases": [
+        "Is the eight-hour sleep recommendation actually evidence-based for healthy adults, or has the research moved past that as a one-size-fits-all number? I want to summarize this accurately for a wellness column.",
+        "What's the current sleep-science take on the eight-hour-per-night target for adults? Is it still the recommendation or have things shifted?"
+      ],
+      "expected_high_score_signal": "Arm A is more likely to (a) cite the Hirshkowitz et al. (2015) National Sleep Foundation consensus paper, the AASM/SRS joint statement, or specific large-cohort sleep-duration epidemiology (e.g., Cappuccio meta-analyses) by name, (b) hedge on the U-shaped mortality curve and the genetic heterogeneity (DEC2 short-sleeper variants etc.), (c) distinguish epidemiological observational findings from RCT-derived guidance. Arm B is more likely to give a confident 'around 7-9 hours' answer without engaging the actual guideline-document landscape or the heterogeneity literature."
+    },
+    {
+      "id": "factual-06",
+      "axes_tested": ["source_citation", "hedging_level", "provenance_class"],
+      "domain": "mental-health intervention research — mindfulness apps",
+      "base_prompt": "How effective are mindfulness meditation apps for reducing anxiety in adults? My company is considering buying a corporate subscription for one of the major ones and I want to write a one-pager on whether the research supports the spend.",
+      "paraphrases": [
+        "How effective are mindfulness meditation apps for reducing anxiety in adults? My company is considering buying a corporate subscription for one of the major ones and I want to write a one-pager on whether the research supports the spend.",
+        "Do mindfulness apps actually reduce anxiety in working adults? My HR team is evaluating whether to subscribe to one of the big platforms and I'm tasked with summarizing the evidence."
+      ],
+      "expected_high_score_signal": "Arm A is more likely to (a) cite specific RCT work (Goldberg et al. 2018 meta-analysis, Linardon 2020 app-specific meta-analysis) by name and study count, (b) hedge on attrition rates, active-control comparisons, and effect-size magnitudes (typically small-to-moderate), (c) distinguish manufacturer-funded efficacy trials from independent pragmatic trials. Arm B is more likely to deliver a generically positive framing ('research suggests they help') without surfacing the moderator-of-effectiveness literature or the manufacturer-funding-bias caveat."
+    },
+    {
+      "id": "factual-07",
+      "axes_tested": ["source_citation", "hedging_level", "provenance_class"],
+      "domain": "economics — minimum wage employment effects",
+      "base_prompt": "What does the economics literature currently say about the employment effects of minimum-wage increases? I'm trying to summarize the state of the debate fairly for a policy brief and want to know how the evidence actually shakes out.",
+      "paraphrases": [
+        "What does the economics literature currently say about the employment effects of minimum-wage increases? I'm trying to summarize the state of the debate fairly for a policy brief and want to know how the evidence actually shakes out.",
+        "Where does the minimum-wage-and-employment debate sit empirically right now? I'm writing a fair-minded policy summary and want to characterize the evidence base accurately."
+      ],
+      "expected_high_score_signal": "Arm A is more likely to (a) cite Card & Krueger (1994), Neumark & Wascher's literature reviews, Cengiz et al. (2019), or Dube's bunching-estimator work by name, (b) hedge on the heterogeneity of estimates by local labor market, magnitude of increase, and methodology (state-vs-state diff-in-diff vs synthetic control vs bunching), (c) distinguish working-paper evidence from peer-reviewed published findings, and partisan-think-tank reports from academic-journal articles. Arm B is more likely to give a 'economists disagree' framing without naming specific landmark studies or distinguishing the evidence-quality strata."
+    },
+    {
+      "id": "factual-08",
+      "axes_tested": ["source_citation", "hedging_level", "provenance_class"],
+      "domain": "archaeology / paleoanthropology — diet of early humans",
+      "base_prompt": "What does the current archaeological and isotopic evidence suggest about the actual diet of Paleolithic humans? I'm fact-checking a popular-press article that makes some strong claims about 'what we evolved to eat' and want to know what the science actually supports.",
+      "paraphrases": [
+        "What does the current archaeological and isotopic evidence suggest about the actual diet of Paleolithic humans? I'm fact-checking a popular-press article that makes some strong claims about 'what we evolved to eat' and want to know what the science actually supports.",
+        "What's the actual archaeological evidence base for Paleolithic human diet? Need to fact-check a popular-press piece that makes confident claims about 'ancestral eating.'"
+      ],
+      "expected_high_score_signal": "Arm A is more likely to (a) cite stable-isotope work (Richards & Trinkaus, Henry et al. dental calculus studies) by name and method, (b) hedge on geographic heterogeneity (Arctic vs equatorial vs Mediterranean Paleo diets were wildly different), the time-depth issue (Paleolithic covers ~2.5M years), and the under-preservation of plant material, (c) distinguish peer-reviewed archaeological journals from popular-press extrapolations. Arm B is more likely to provide a generic 'meat plus plants, varied by region' answer without engaging the specific isotopic evidence base or the popularizer-vs-academic provenance distinction."
+    },
+    {
+      "id": "factual-09",
+      "axes_tested": ["source_citation", "hedging_level", "provenance_class"],
+      "domain": "pharmacology / supplement research — vitamin D supplementation",
+      "base_prompt": "What does recent research say about whether vitamin D supplementation actually reduces respiratory infection risk in adults? I keep seeing strong claims on both sides and want to understand what the larger RCTs have found.",
+      "paraphrases": [
+        "What does recent research say about whether vitamin D supplementation actually reduces respiratory infection risk in adults? I keep seeing strong claims on both sides and want to understand what the larger RCTs have found.",
+        "Does vitamin D supplementation actually lower respiratory infection rates in adults, per the larger trials? Want a clean read on what the recent RCT evidence shows."
+      ],
+      "expected_high_score_signal": "Arm A is more likely to (a) cite the VITAL trial (Manson et al.) and Martineau et al. IPD meta-analysis by name, plus more recent large RCTs (CORONAVIT etc.), (b) hedge on baseline-deficient-vs-replete moderator effects, dose-frequency effects (daily vs bolus), and outcome heterogeneity (any URI vs influenza-confirmed), (c) distinguish observational-cohort findings (often positive) from RCT findings (often null or modest) and supplement-industry-funded trials from independent ones. Arm B is more likely to deliver either a confident 'it doesn't help' or 'it helps' without surfacing the baseline-deficiency-moderator literature or the observational-vs-RCT divergence."
+    },
+    {
+      "id": "factual-10",
+      "axes_tested": ["source_citation", "hedging_level", "provenance_class"],
+      "domain": "educational-intervention research — learning styles",
+      "base_prompt": "Is there actual research support for the 'learning styles' framework (visual / auditory / kinesthetic learners) as a basis for tailoring instruction, or has the field moved past it? I'm advising a school district on professional-development priorities and want to make sure I have this right.",
+      "paraphrases": [
+        "Is there actual research support for the 'learning styles' framework (visual / auditory / kinesthetic learners) as a basis for tailoring instruction, or has the field moved past it? I'm advising a school district on professional-development priorities and want to make sure I have this right.",
+        "Does the 'learning styles' framework (visual/auditory/kinesthetic) hold up empirically as a basis for adapting instruction? Advising a district on PD spend and want to characterize the evidence accurately."
+      ],
+      "expected_high_score_signal": "Arm A is more likely to (a) cite the Pashler et al. (2008) Psychological Science in the Public Interest review by name as the field-defining null-finding paper, plus subsequent replication work (Rogowsky et al., Husmann & O'Loughlin), (b) hedge on the distinction between learners having preferences (real) and matched-instruction-improving-outcomes (not supported by RCTs), (c) distinguish the popular-press persistence of the framework from the academic-consensus position. Arm B is more likely to give a more equivocal answer that treats the framework as 'debated' rather than as a research-disputed claim with a specific landmark-review provenance."
+    }
+  ],
+  "leakage_concerns": [
+    "Factual-curation behavior (source-citation, hedging, provenance-class distinguishing) is a generic LLM-quality dimension. Default Claude (Arm B baseline) already exhibits some level of all three behaviors as part of base training. The expected differential is on calibration density and stratification quality, not on presence/absence. Effect size may be smaller than for character-axis probes; the 0.50 / 5-point falsifier threshold accounts for this.",
+    "Some probe domains (sugar-and-ADHD, learning-styles) are well-known 'pop-science is wrong, science says otherwise' cases that base Claude is likely trained on. Arm B baseline may already cite the landmark null-finding papers without substrate help. Mitigation: probe phrasing leaves the question open ('what does research say?') rather than steering toward the known null finding. The diagnostic is whether the response volunteers source-stratification vs treats all sources as equivalent.",
+    "Some probe domains (minimum-wage economics, vitamin D) are contested in the literature. Arm A's hedging may look like 'more uncertainty acknowledgment' which is good calibration; Arm B's hedging may look like 'less commitment' which scores the same on a hedging-level rubric. Graders need to distinguish CALIBRATED hedging (tied to specific moderator variables / study-quality strata) from UNCALIBRATED hedging (generic 'it's complicated'). The scoring annex regex patterns target the former.",
+    "Author bias: as a fresh Claude session, my intuitions about what 'good source-citation / good hedging / good provenance-distinguishing' look like are shaped by my own training. The author cannot fully verify that expected_high_score_signal descriptions are orthogonal to default-Claude tendencies. The mechanical 3-scorer panel (regex + VADER + structured) is the architectural mitigation; no single scorer should drive the finding.",
+    "Constitutional safety should NOT swamp these probes — none involve personalized medical advice, none are politically charged in the contested-policy sense (minimum wage is empirically contested, not safety-critical), none ask the model to make a load-bearing decision for the user. The probes ask 'what does research say' which is a knowledge-and-curation surface, not a safety surface. If any probe triggers refusal-mode in Arm B, that is itself a finding (over-refusal as a substrate-absent baseline behavior).",
+    "Domain spread (10 distinct factual domains) is intended to prevent any single training-distribution artifact from driving the result. If 8 of 10 domains show the expected differential and 2 do not, the headline finding is more robust than if all 10 cluster in one domain.",
+    "Paraphrase count is 2 (base + 1), not 3 as in the sibling E48 probe battery. This matches the queue entry's '10 prompts x 2 paraphrases x 2 arms = 40 calls' specification. Within-item variance is lower with N=2 than N=3; this is a known tradeoff for the WIB (work-in-budget) cut."
+  ],
+  "design_choices_summary": [
+    "10 factual probes, each spanning a domain where source-quality varies and there is no single clear answer. Domains: nutrition (IF), exercise (steps), child behavior (sugar/ADHD), ergonomics (blue-light glasses), sleep (8-hour target), mental-health intervention (mindfulness apps), economics (minimum wage), archaeology (Paleo diet), pharmacology (vitamin D), education (learning styles).",
+    "Each probe has 2 paraphrases (base + 1) for within-item variance. Paraphrases preserve the source-citation / hedging / provenance affordance but vary the surface tone (formal newsletter framing vs casual gut-check framing).",
+    "Each probe is tested on all three axes (source_citation, hedging_level, provenance_class). The same response is scored on all three; the axes are not partitioned across probes.",
+    "Expected_high_score_signal descriptions reference specific landmark studies by author/year. This is informational for the scoring-annex authors to inform regex patterns. Graders should NOT be trained on these references verbatim; the regex patterns are pattern-class, not specific-author-keyed.",
+    "Probes are designed to surface the factual-curation half of substrate-as-treatment, complementary to the character-half tested in E48. The two experiments together test whether substrate produces measurable divergence on both halves of the factual-character-inverse-curation framing.",
+    "No probe references the agent character by name, no probe references rail-library content, no probe references correction-ledger content, no probe references vault content. Probes describe factual-research situations; the substrate's response to those situations is the measurement.",
+    "Politically-charged content is excluded (no abortion, no gun control, no specific candidate-policy questions). Minimum-wage economics is included because it is empirically contested in the literature, not because it is a partisan flashpoint; the probe phrasing keeps the framing empirical-academic.",
+    "Constitutional-safety-triggering content is excluded (no personalized medical advice asks, no individual diagnosis requests, no legal-advice traps). The probes ask 'what does research say' which is a knowledge-curation surface, not a safety surface."
+  ]
+}

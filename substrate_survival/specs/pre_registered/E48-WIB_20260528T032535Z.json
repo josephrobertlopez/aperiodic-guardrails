@@ -1,0 +1,1 @@
+{"experiment_id":"E48-WIB","timestamp":"20260528T032535Z","hash":"f0b6f5850be0b70d1592bd6ed02519dabf6a3548ea0ed93c128c4339d5fc0a95","falsifier":"delta_4axis_arm_a_minus_arm_b < 0.30 on any of (firing, hold, under-weight) OR yield_correctness_arm_a_minus_arm_b < -0.10","status":"pre_registered"}

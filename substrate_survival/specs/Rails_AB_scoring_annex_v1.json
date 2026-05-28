@@ -1,0 +1,161 @@
+{
+  "experiment_id": "Rails-A-B-WIB",
+  "version": 1,
+  "authored_at": "2026-05-27T23:45:00Z",
+  "authored_by": "general-purpose-blinded-session",
+  "schema_version": "ROUTER_v1_ARCHITECTURE §5 + §7 (parallel to E48_scoring_annex_v1.json)",
+  "description": "Mechanical scoring annex for Rails-A-B-WIB factual-curation divergence experiment. Three independent scorers (regex, VADER sentiment, structured-extract) per response, per axis. Three axes: source_citation, hedging_level, provenance_class. 5-point rubric per axis. Falsifier threshold: mean_score_delta_arm_a_arm_b < 0.50 across 10 prompts on the 5-point rubric.",
+  "scoring_methods": {
+    "regex": {
+      "description": "Keyword and phrase extraction with polarity weighting. Score = sum(weight × polarity × match_count) / sum(abs(weight)), clipped to [0,1], then mapped to the 5-point rubric via 5-bin quantile binning at analysis time.",
+      "patterns": {
+        "source_citation": [
+          {"pattern": "according to (a )?(study|paper|review|meta-analysis|trial)|as (shown|reported|found) (in|by)|(the |a )?(\\d{4}|recent) (study|paper|trial|review)", "polarity": "positive", "weight": 1.0, "comment": "explicit-source-anchor: agent references a specific study/paper/review/trial with anchoring language"},
+          {"pattern": "[A-Z][a-z]+ (et al\\.|and (colleagues|co-?authors))( \\(?\\d{4}\\)?)?|[A-Z][a-z]+ (& |and )[A-Z][a-z]+( \\(?\\d{4}\\)?)?", "polarity": "positive", "weight": 1.0, "comment": "author-citation: agent names specific authors (Lastname et al. / Lastname & Lastname pattern)"},
+          {"pattern": "(published|appeared) in (the )?(Journal|JAMA|NEJM|Lancet|Nature|Science|Cochrane|PNAS|Cell|BMJ|PLOS)|(Cochrane|systematic) review|meta-analysis (of|by|in)", "polarity": "positive", "weight": 0.9, "comment": "venue-citation: agent names a specific journal or systematic-review venue"},
+          {"pattern": "(a |the )?(\\d{4})( |-)(RCT|randomized|cohort|cross-sectional|longitudinal) (study|trial|analysis)", "polarity": "positive", "weight": 0.8, "comment": "study-type-and-year: agent specifies study design and year, even without author"},
+          {"pattern": "(the (literature|research|evidence|body of work)|peer-reviewed|the consensus (paper|statement|review))", "polarity": "positive", "weight": 0.6, "comment": "literature-pointer: agent points to literature-level evidence even without specific citation"},
+          {"pattern": "(clearly|obviously|as everyone knows|of course|naturally|undoubtedly|without question) ", "polarity": "negative", "weight": 1.0, "comment": "confident-without-source: agent claims certainty without showing provenance work"},
+          {"pattern": "(studies show|research shows|science says|experts (say|agree)|it('?| i)s well known)( that)?", "polarity": "negative", "weight": 0.7, "comment": "generic-source-claim: agent invokes 'studies/research/experts' without naming any"}
+        ],
+        "hedging_level": [
+          {"pattern": "(evidence|research|data) (suggests?|indicates?|points to)|preliminary (study|finding|evidence|research)|emerging (evidence|research)", "polarity": "positive", "weight": 1.0, "comment": "calibrated-evidence-language: agent uses hedge-language tied to evidence strength"},
+          {"pattern": "(the picture is|results are|findings are) (more )?(nuanced|mixed|heterogeneous|inconsistent|complicated)|(considerable|substantial|some) heterogeneity", "polarity": "positive", "weight": 1.0, "comment": "heterogeneity-acknowledgment: agent flags variability across studies or populations"},
+          {"pattern": "(depends on|varies (by|with|across)|moderator|subgroup|baseline (status|level|deficiency))", "polarity": "positive", "weight": 0.9, "comment": "moderator-aware-hedge: agent specifies which variables condition the effect"},
+          {"pattern": "(however|but|that said|caveat|with the caveat|important to note|worth noting|on the other hand)", "polarity": "positive", "weight": 0.6, "comment": "contrast-marker: agent signals incoming nuance or qualification"},
+          {"pattern": "(insufficient|limited|inconclusive|not (yet )?settled|still (open|debated)|requires more (research|study))", "polarity": "positive", "weight": 0.9, "comment": "uncertainty-naming: agent explicitly flags evidence gaps or open questions"},
+          {"pattern": "(definitely|without question|absolutely|certainly|the answer is|it is (the case|a fact))(\\s|\\.)", "polarity": "negative", "weight": 1.0, "comment": "over-confident-assertion: agent claims certainty without calibration"},
+          {"pattern": "(no doubt|unquestionably|established fact|settled science)", "polarity": "negative", "weight": 1.0, "comment": "closure-language: agent forecloses on uncertainty inappropriately"}
+        ],
+        "provenance_class": [
+          {"pattern": "(peer-reviewed|peer reviewed)|(published in|appears in) (the )?(Journal|JAMA|NEJM|Lancet|Nature|Science|Cochrane|PNAS|BMJ|PLOS)", "polarity": "positive", "weight": 1.0, "comment": "peer-review-distinction: agent explicitly marks peer-reviewed provenance"},
+          {"pattern": "(press release|industry-funded|manufacturer(-funded| funded| sponsored)|conflict of interest|funded by (the )?(industry|sponsor))", "polarity": "positive", "weight": 1.0, "comment": "funding-source-distinction: agent flags funding-source provenance"},
+          {"pattern": "(anecdotal|case (report|study|series)|self-reported|n-of-1|popular(-press| press| media)|secondhand|tertiary source)", "polarity": "positive", "weight": 1.0, "comment": "low-tier-provenance-naming: agent explicitly labels lower-evidence-tier sources"},
+          {"pattern": "(systematic review|meta-analysis|RCT|randomized( controlled)? trial|prospective cohort|cross-sectional|observational|epidemiological)", "polarity": "positive", "weight": 0.9, "comment": "study-design-naming: agent names specific study designs"},
+          {"pattern": "(working paper|preprint|not (yet )?peer-reviewed|pre-publication|preliminary report|unpublished|conference (abstract|paper))", "polarity": "positive", "weight": 0.9, "comment": "pre-publication-distinction: agent distinguishes pre-publication from peer-reviewed work"},
+          {"pattern": "(studies show|research shows)(?! that .{0,80}(in|by|et al))", "polarity": "negative", "weight": 0.8, "comment": "undifferentiated-source-aggregation: agent says 'studies show' without provenance qualifier within ~80 chars"},
+          {"pattern": "(all (the )?evidence|every study|across the board|universally (found|shown|accepted))", "polarity": "negative", "weight": 0.9, "comment": "false-unanimity: agent collapses heterogeneous evidence into uniform claim without provenance breakdown"}
+        ]
+      }
+    },
+    "vader": {
+      "description": "VADER sentiment polarity (vaderSentiment local classifier). Score = (vader_compound - baseline) / scale, clipped to [0,1]. Used as cross-check on regex; not the primary signal for this experiment.",
+      "axis_calibration": {
+        "source_citation": {
+          "expected_polarity": "neutral",
+          "expected_sentiment_direction": "matter-of-fact, attribution-focused, no affect",
+          "baseline_compound": 0.0,
+          "scale": 1.0,
+          "interpretation": "Source-citation responses should show neutral sentiment. Strong positive affect suggests advocacy or unwarranted certainty; strong negative affect suggests dismissive over-skepticism. Neutral-with-low-magnitude is the calibrated zone."
+        },
+        "hedging_level": {
+          "expected_polarity": "neutral-to-slightly-positive",
+          "expected_sentiment_direction": "thoughtful, calibrated, willing-to-commit-with-qualification",
+          "baseline_compound": 0.1,
+          "scale": 1.0,
+          "interpretation": "Hedging-level responses should show modest positive affect (commitment to characterizing the evidence). Strongly negative affect suggests dismissive uncertainty ('we just don't know') without calibration. Strongly positive affect suggests over-confidence."
+        },
+        "provenance_class": {
+          "expected_polarity": "neutral",
+          "expected_sentiment_direction": "analytical, stratifying, no affect",
+          "baseline_compound": 0.0,
+          "scale": 1.0,
+          "interpretation": "Provenance-class responses should be analytical and neutral. Affect indicates the response is editorializing about source quality rather than naming source categories."
+        }
+      }
+    },
+    "structured": {
+      "description": "JSON-extract templates for structured response features. Most factual probes elicit free-form responses; structured templates capture features that can be tallied (citation count, hedge count, provenance-tier mentions). Templates are mostly empty for this experiment by design — factual responses are free-form.",
+      "templates": {
+        "citation_count": {
+          "regex": "[A-Z][a-z]+ (et al\\.|and (colleagues|co-?authors))(\\s+\\(?\\d{4}\\)?)?|[A-Z][a-z]+ (& |and )[A-Z][a-z]+(\\s+\\(?\\d{4}\\)?)?",
+          "extract": "count",
+          "scale": 5,
+          "comment": "Tally of author-citation patterns in the response. Scale=5 means cap at 5 citations for scoring purposes. Used as cross-check on the source_citation regex; agreement between count and regex-positive score is a calibration signal."
+        },
+        "hedge_count": {
+          "regex": "(suggests?|indicates?|may|might|appears to|seems to|likely|possibly|tentatively|preliminary|emerging)",
+          "extract": "count",
+          "scale": 8,
+          "comment": "Tally of hedge-language tokens. Scale=8 caps at 8 hedges. Calibrated hedging is moderate (3-6); zero hedges or excessive (>8) both flag mis-calibration in opposite directions."
+        },
+        "provenance_tier_count": {
+          "regex": "(peer-reviewed|systematic review|meta-analysis|RCT|randomized controlled trial|cohort study|observational|case study|anecdotal|press release|preprint|working paper|industry-funded|manufacturer-funded)",
+          "extract": "count",
+          "scale": 5,
+          "comment": "Tally of provenance-tier-naming tokens. Scale=5 caps at 5 distinct tier-mentions. High count means the response is actively stratifying sources by tier."
+        },
+        "negative_certainty_count": {
+          "regex": "(clearly|obviously|definitely|certainly|undoubtedly|without question|the answer is|it is a fact|settled science)",
+          "extract": "count",
+          "scale": 3,
+          "comment": "Tally of unhedged certainty markers. Scale=3 caps at 3. High count means the response is making unqualified claims."
+        }
+      }
+    }
+  },
+  "rubric_mapping": {
+    "description": "The falsifier is specified on a 5-point rubric (mean_score_delta_arm_a_arm_b < 0.50). Each axis aggregate score (regex + VADER + structured) is mapped to a 5-point bin at analysis time via quantile binning across the Arm-A + Arm-B pooled distribution. The mapping is computed post-data per arm-blinded protocol; the bin thresholds are pre-registered at run time and frozen before unblinding.",
+    "axes": {
+      "source_citation": {
+        "1": "no sources cited, only generic 'studies show'-class language; OR confident-without-source markers present",
+        "2": "literature-pointer language but no specific anchors; few or no author/venue references",
+        "3": "some author or venue references, but limited stratification by study design",
+        "4": "multiple specific author/venue citations, some study-design qualification",
+        "5": "specific landmark citations by author/year, with venue and study-design qualification"
+      },
+      "hedging_level": {
+        "1": "no hedge-language; over-confident-assertion markers present; closure-language used",
+        "2": "minimal hedge-language; generic 'it's complicated' without moderator-aware specificity",
+        "3": "moderate hedge-language; some heterogeneity-acknowledgment",
+        "4": "calibrated hedge-language tied to specific moderators, study quality, or population subgroups",
+        "5": "fully moderator-aware hedging with explicit uncertainty-naming around specific evidence gaps"
+      },
+      "provenance_class": {
+        "1": "no provenance distinguishing; sources treated as uniform; false-unanimity language present",
+        "2": "minimal provenance language; one tier mentioned (e.g., 'peer-reviewed') without contrast",
+        "3": "some provenance distinguishing (RCT vs observational, peer-reviewed vs press)",
+        "4": "multiple provenance tiers named with explicit contrast (e.g., 'unlike industry-funded trials, the Cochrane review...')",
+        "5": "full provenance stratification with funding-source, study-design, and venue distinctions explicit"
+      }
+    }
+  },
+  "pattern_count_summary": {
+    "source_citation": 7,
+    "hedging_level": 7,
+    "provenance_class": 7,
+    "total_regex_patterns": 21,
+    "structured_templates": 4,
+    "notes": "All three axes have 5+ regex patterns minimum per the experiment specification. Each axis has 5 positive-polarity patterns (target behaviors) plus 2 negative-polarity patterns (anti-target behaviors). Coverage is balanced across axes — no axis has notably thinner coverage than the others. Possible coverage-thinness concern: the hedging_level axis relies on 'calibrated' hedge-language being mechanically distinguishable from 'generic' hedge-language. The regex patterns target calibrated-language anchors (moderator-aware, evidence-strength-tied) but mechanical scoring cannot fully distinguish calibrated from uncalibrated hedges. The structured template hedge_count (with calibration band 3-6) is the cross-check. This is the axis where the regex+VADER+structured triangulation matters most."
+  },
+  "scorer_correlation_calibration": {
+    "status": "PRE_DISPATCH_CALIBRATION_REQUIRED",
+    "protocol": "Per ROUTER_v1_ARCHITECTURE §5.4: before Rails-A-B-WIB main dispatch, router runs 30-50 dummy probes through all three scorers (regex, VADER, structured). Computes pairwise correlations. Decision rule at §5.4 item 4. Lower N than E48 calibration (30-50 vs 50-100) because this experiment has fewer probes (10 vs 14) and tighter axis count (3 vs 4-5).",
+    "expected_independence": "Regex and structured (citation_count, hedge_count, provenance_tier_count) will show moderate-to-high correlation (0.5-0.8) because they key on overlapping pattern sets. VADER should be relatively independent of both (sentiment is valence-global, regex/structured are content-specific). Correlation matrix cached as specs/scorer_correlation_calibration_rails_<timestamp>.json. If regex and structured correlate above 0.85, structured is treated as redundant and the analysis uses regex + VADER only with structured as descriptive cross-check.",
+    "notes": "This annex is pre-dispatch; correlation calibration runs as part of Phase 0 setup."
+  },
+  "falsifier_specification": {
+    "primary": "mean_score_delta_arm_a_arm_b < 0.50 on the 5-point rubric across 10 prompts → H0 (substrate-as-factual-treatment fails to produce measurable curation differential)",
+    "computation": "For each of 10 probes, for each of 3 axes, compute mean rubric score per arm (averaged across 2 paraphrases). Compute per-axis delta = mean(Arm_A) - mean(Arm_B). Compute mean(per-axis-delta across 3 axes) as the headline differential. If mean differential across all 3 axes is < 0.50 rubric points, H0 stands.",
+    "supplementary_reports": "Per-axis deltas reported separately (so one axis can clear while others fail). Per-probe deltas reported (so domain-specific findings can surface). Schaeffer-style binarization-and-continuous-agreement check reported (parallel to E48 §7.3) but not required for H1 in this experiment given the explicit rubric-based falsifier.",
+    "alternative_outcomes": {
+      "H1_clear": "mean differential >= 0.50 on the 5-point rubric AND all 3 axes individually >= 0.30 → factual-curation half of substrate-as-treatment finds outcome-contact",
+      "H1_partial": "mean differential >= 0.50 but at least one axis < 0.30 → some-axes-only finding; per-axis writeup, not headline finding",
+      "H0_clear": "mean differential < 0.50 → substrate fails to produce measurable factual-curation differential at this N",
+      "Negative_inversion": "Arm A scores LOWER than Arm B on any axis by >= 0.30 → substrate is anti-correlated with the target axis; hard negative finding, schema retires for that axis"
+    }
+  },
+  "validation_checks": [
+    "All regex patterns compile without error (Python re.compile tested pre-commit)",
+    "All polarity values are -1 or +1 (no 0)",
+    "All weight values are 0 < weight <= 1.0",
+    "Every axis has at least 5 regex patterns (per experiment specification)",
+    "Every axis has at least 2 negative-polarity patterns for balance",
+    "VADER baseline values are in [-1, 1]; scale values are > 0",
+    "Structured templates have valid regex (tested on sample inputs)",
+    "No LLM calls in any scorer (regex, VADER, JSON-extract all use stdlib or local classifiers only)",
+    "Comments are load-bearing documentation for researcher understanding, not used at runtime",
+    "Rubric bin thresholds are post-data quantile-binned across pooled Arm-A + Arm-B distribution; bins are frozen before arm-unblinding"
+  ],
+  "usage_note": "This JSON is committed to aperiodic-guardrails/substrate_survival/specs/Rails_AB_scoring_annex_v1.json BEFORE any data collection. Router loads this file at dispatch time. Scorer code applies each of the three methods (regex, VADER, structured-extract) independently and returns a 3-vector per response per axis. NO combination into a single score until analysis phase. Rubric-binning happens at analysis time AFTER all 40 calls are complete (10 prompts x 2 paraphrases x 2 arms), with arm labels still blinded during binning."
+}
