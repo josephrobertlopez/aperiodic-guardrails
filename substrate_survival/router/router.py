@@ -1079,7 +1079,7 @@ def process_entry(entry: dict, dry_run: bool = False) -> bool:
                             'latency': latency,
                             'endpoint': endpoint,
                             'model': model_name,
-                            'response_preview': response[:200]
+                            'response_preview': response[:1000]
                         }
 
                         trials.append(trial)
@@ -1134,6 +1134,15 @@ def process_entry(entry: dict, dry_run: bool = False) -> bool:
         return False
 
     # Aggregate and apply Schaeffer per-scorer per-axis
+    # Labels reflect what actually got scored: embedding mode returns
+    # (cos_A, cos_B, signed_diff); non-embedding returns (regex, VADER, structured).
+    if embedding_cfg:
+        scorer_labels = ['cos_A', 'cos_B', 'signed_diff']
+        corr_keys = ['r_cosA_cosB', 'r_cosA_signedDiff', 'r_cosB_signedDiff']
+    else:
+        scorer_labels = ['regex', 'vader', 'structured']
+        corr_keys = ['r_regex_vader', 'r_regex_structured', 'r_vader_structured']
+
     per_axis_results = {}
 
     for axis in axes:
@@ -1146,7 +1155,7 @@ def process_entry(entry: dict, dry_run: bool = False) -> bool:
             arm_a_name, arm_b_name = arms[0], arms[1]
 
         # Per-scorer Schaeffer check
-        for scorer_idx, scorer_name in enumerate(['regex', 'vader', 'structured']):
+        for scorer_idx, scorer_name in enumerate(scorer_labels):
             a_scores = [t['scores'][scorer_idx] for t in trials if t['axis'] == axis and t['arm'] == arm_a_name]
             b_scores = [t['scores'][scorer_idx] for t in trials if t['axis'] == axis and t['arm'] == arm_b_name]
 
@@ -1174,7 +1183,7 @@ def process_entry(entry: dict, dry_run: bool = False) -> bool:
         'total_calls': call_count,
         'falsified': falsified,
         'scorer_mc_rule': mc_rule,
-        'scorer_correlations': {'r_regex_vader': r_rv, 'r_regex_structured': r_rs, 'r_vader_structured': r_vs},
+        'scorer_correlations': {corr_keys[0]: r_rv, corr_keys[1]: r_rs, corr_keys[2]: r_vs},
         'per_axis_schaeffer': per_axis_results
     }
 
