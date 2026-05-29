@@ -339,7 +339,12 @@ def dispatch_probe(endpoint: str, model: str, system_prompt: str, user_prompt: s
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt}
         ],
-        "temperature": 0.3
+        "temperature": 0.3,
+        # Cap output length. Without this, kronos generates up to model context
+        # (~1000+ tokens), making 32b-class calls take ~57s each — making a
+        # 90-call experiment take ~85min wall-clock when it should take ~10min.
+        # 512 is enough for any rubric-style scored response.
+        "max_tokens": 512
     }
 
     for attempt in range(3):
