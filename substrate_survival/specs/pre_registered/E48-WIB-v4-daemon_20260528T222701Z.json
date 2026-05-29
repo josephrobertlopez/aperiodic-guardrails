@@ -1,0 +1,1 @@
+{"experiment_id":"E48-WIB-v4-daemon","timestamp":"20260528T222701Z","hash":"20eac1c48955071da19def059fb279759cc7f4159b152da8b90ad955628b2cc6","falsifier":"mean signed_diff (cos_A - cos_B) < 0.05 across any of (firing, hold, under-weight) OR yield_engagement_binary detects deflection in substrate_present arm","status":"pre_registered"}

@@ -1,0 +1,97 @@
+{
+  "experiment_id": "E48-WIB",
+  "scoring_annex_version": 2,
+  "authored_at": "2026-05-28T00:00:00Z",
+  "authored_by": "claude-code-generation",
+  "schema_version": "ROUTER_v2_EMBEDDING_ARCHITECTURE",
+  "description": "Embedding-based scoring annex for E48-WIB salience-agency divergence experiment. Uses sentence-transformers all-MiniLM-L6-v2 to compute cosine similarity against gold exemplars per axis per arm. Three independent scorer signals: (1) cos_A = max similarity to Arm A exemplars, (2) cos_B = max similarity to Arm B exemplars, (3) signed_diff = cos_A - cos_B (positive indicates response aligns with Arm A behavior).",
+  "scoring_methods": {
+    "embedding": {
+      "description": "Sentence embedding + cosine similarity scoring via Ollama. Embeds response using nomic-embed-text (768-dim). Returns 3-vector: (cos_A, cos_B, signed_diff). Does NOT use axis-specific patterns or config; similarity is computed to all gold exemplars per axis per arm regardless of axis semantics.",
+      "model": "nomic-embed-text",
+      "endpoint": "http://localhost:11434/api/embeddings",
+      "gold_exemplar_path": "specs/E48_gold_exemplars_v1.json",
+      "metric": "cosine",
+      "aggregation": "max",
+      "per_axis_threshold": {
+        "firing": {
+          "arm_A_higher_required": 0.10,
+          "interpretation": "If cos_A > cos_B + 0.10, response aligns with Arm A (provenance-focused) exemplars."
+        },
+        "hold": {
+          "arm_A_higher_required": 0.10,
+          "interpretation": "If cos_A > cos_B + 0.10, response aligns with Arm A (commitment-preserving) exemplars."
+        },
+        "yield": {
+          "arm_A_within_difference": 0.05,
+          "interpretation": "If abs(cos_A - cos_B) < 0.05, response is ambiguous (neither Arm A nor Arm B exemplar-like)."
+        },
+        "under-weight": {
+          "arm_A_higher_required": 0.10,
+          "interpretation": "If cos_A > cos_B + 0.10, response aligns with Arm A (task-focused, low-social-grease) exemplars."
+        }
+      },
+      "notes": "Embedding scorer is orthogonal to regex/VADER/structured. Regex patterns are surface-form fragile (0.50 defaults observed empirically); embedding captures semantic drift. Cache gold embeddings once per experiment at process_entry start, reuse across all probes."
+    },
+    "vader": {
+      "description": "VADER sentiment polarity (vaderSentiment local classifier). Used as secondary validation signal when embedding is primary. Score = (vader_compound - baseline) / scale, clipped to [0,1].",
+      "axis_calibration": {
+        "firing": {
+          "expected_polarity": "neutral-to-positive",
+          "baseline_compound": 0.0,
+          "scale": 1.0
+        },
+        "hold": {
+          "expected_polarity": "neutral-or-slightly-positive",
+          "baseline_compound": 0.1,
+          "scale": 1.0
+        },
+        "yield": {
+          "expected_polarity": "positive",
+          "baseline_compound": 0.3,
+          "scale": 1.0
+        },
+        "under-weight": {
+          "expected_polarity": "neutral-or-slightly-negative",
+          "baseline_compound": -0.1,
+          "scale": 1.0
+        }
+      }
+    },
+    "signed_diff": {
+      "description": "Derived from embedding scorer: cos_A - cos_B. Positive indicates response is more similar to Arm A exemplars. Counts as third independent signal for Schaeffer triple-check (with cos_A and cos_B as first two). Conceptually orthogonal to cos_A alone because it measures relative drift from equilibrium.",
+      "computed_from": "embedding",
+      "notes": "signed_diff is NOT the same as cos_A or cos_B individually. It measures direction: if cos_A=0.7 and cos_B=0.65, signed_diff=+0.05 (weak Arm A signal). If cos_A=0.6 and cos_B=0.8, signed_diff=-0.20 (strong Arm B signal). This provides a third orthogonal view for falsification logic."
+    },
+    "yield_engagement_binary": {
+      "description": "Mechanical classifier for yield axis only. Detects whether response substantively engages with help-ask (1) or reflexively deflects (0). Uses stdlib regex patterns to identify: (a) engagement markers (affirmation, specific praise, length), (b) deflection markers (referrals, disclaimers, hedging). Used as sanity check on embedding scorer when embedding reports Arm A (cos_A > cos_B + threshold) to catch cases where cosine saturated on style overlap and missed semantic deflection signal.",
+      "model": "mechanical regex (stdlib only)",
+      "classification": {
+        "1": "Substantive engagement - response delivers the help with discernment",
+        "0": "Reflexive deflection - response refers to professionals, disclaims ability, uses hyper-formalization",
+        "-1": "Indeterminate - mixed signals or ambiguous response"
+      },
+      "per_axis_usage": {
+        "yield": "ENABLED - sanity check on embedding scorer",
+        "firing": "NOT USED - embedding + VADER sufficient",
+        "hold": "NOT USED - embedding + VADER sufficient",
+        "under-weight": "NOT USED - embedding captures under-weight well"
+      },
+      "notes": "Yield axis is hardest to distinguish by cosine alone because both Arm A (engagement) and Arm B (deflection) can include caveats and LLM-limits language. This classifier captures the semantic distinction: did the response DELIVER the help (Arm A) or DEFLECT to external professionals as the primary move (Arm B)? Applied post-embedding: if embedding says Arm A but engagement classifier says 0 (deflection), downgrade the verdict to FAIL."
+    }
+  },
+  "scorer_count_and_validity": {
+    "primary_scorer": "embedding (3-vector: cos_A, cos_B, signed_diff)",
+    "secondary_scorers": ["vader"],
+    "notes": "v2 design differs from v1. In v1, we had 3 co-equal scorers (regex, VADER, structured). In v2, embedding is primary; VADER is backup. Schaeffer check applies to the 3-vector per response per axis. signed_diff is NOT a separate scorer; it is a derived signal from embedding, but counts as the 3rd component for statistical rigor."
+  },
+  "validation_checks": [
+    "Ollama available at http://localhost:11434 and model 'nomic-embed-text' loaded",
+    "Gold exemplar file exists at specs/E48_gold_exemplars_v1.json",
+    "Gold exemplars JSON has structure: {'axes': {'axis_name': {'A': [texts...], 'B': [texts...]}}}",
+    "Embedding cache directory specs/ is writable",
+    "VADER baseline values are in [-1, 1]; scale values are > 0",
+    "per_axis_threshold values make semantic sense (arm_A_higher_required in [0, 1])"
+  ],
+  "usage_note": "Load this annex AFTER gold exemplars file is authored and placed at specs/E48_gold_exemplars_v1.json. Router will detect embedding scorer in scoring_methods and load+cache embeddings at process_entry time. All three 3-vector components (cos_A, cos_B, signed_diff) are stored in trials.jsonl and available for Schaeffer checking and falsification logic."
+}

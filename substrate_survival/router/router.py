@@ -25,9 +25,16 @@ import tempfile
 from datetime import datetime, timedelta
 from pathlib import Path
 from statistics import mean, stdev
-from math import sqrt
+from math import sqrt, sqrt as math_sqrt
 import requests
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+
+try:
+    from yield_engagement_binary import score_engagement_binary
+    HAS_YIELD_ENGAGEMENT_BINARY = True
+except ImportError:
+    HAS_YIELD_ENGAGEMENT_BINARY = False
+    logging.debug("yield_engagement_binary not available; yield axis will use embedding scorer only")
 
 
 def setup_logging(log_file=None):
@@ -250,11 +257,80 @@ def load_json_file(path):
         return None
 
 
+def embed_via_ollama(text: str, model: str = "nomic-embed-text", endpoint: str = "http://localhost:11434/api/embeddings", timeout: int = 120) -> list:
+    """
+    Embed text via Ollama HTTP endpoint with 3-retry exponential backoff.
+
+    Args:
+        text: text to embed
+        model: Ollama model name (default: nomic-embed-text for 768-dim embeddings)
+        endpoint: Ollama embeddings endpoint (default: localhost:11434)
+        timeout: request timeout in seconds
+
+    Returns:
+        list of floats (embedding vector) or None on failure after 3 retries
+    """
+    payload = {"model": model, "prompt": text}
+
+    for attempt in range(3):
+        try:
+            resp = requests.post(endpoint, json=payload, timeout=timeout)
+            if resp.status_code == 200:
+                data = resp.json()
+                if "embedding" in data:
+                    return data["embedding"]
+            else:
+                if attempt == 2:
+                    logging.error(f"Ollama endpoint returned {resp.status_code}: {endpoint}")
+        except (requests.exceptions.RequestException, requests.exceptions.Timeout) as e:
+            if attempt < 2:
+                wait_time = 2 ** attempt
+                logging.debug(f"Ollama retry {attempt + 1}/3 after {wait_time}s: {e}")
+                time.sleep(wait_time)
+                continue
+            logging.error(f"Ollama endpoint unreachable after 3 retries: {endpoint} - {e}")
+
+    return None
+
+
+def cosine_similarity(vec_a: list, vec_b: list) -> float:
+    """
+    Compute cosine similarity between two vectors without numpy.
+
+    Args:
+        vec_a, vec_b: lists of floats (same length)
+
+    Returns:
+        cosine similarity, clamped to [0, 1] to avoid floating point errors
+    """
+    if not vec_a or not vec_b or len(vec_a) != len(vec_b):
+        return 0.0
+
+    dot_product = sum(a * b for a, b in zip(vec_a, vec_b))
+    norm_a = math_sqrt(sum(a * a for a in vec_a))
+    norm_b = math_sqrt(sum(b * b for b in vec_b))
+
+    if norm_a == 0 or norm_b == 0:
+        return 0.0
+
+    similarity = dot_product / (norm_a * norm_b)
+    # Clamp to [0, 1] to handle floating point precision errors
+    return max(0.0, min(1.0, similarity))
+
+
 def dispatch_probe(endpoint: str, model: str, system_prompt: str, user_prompt: str, timeout: int = 120):
     """
     POST to endpoint with prompt. Return (response_text, latency_sec) or (None, 0) on error.
     Implements 3-retry exponential backoff.
+
+    Defensive: refuses to dispatch on empty user_prompt — this is the v6 fix for the
+    silent-empty-probe bug that produced 12+ hours of invalid runs. An empty user message
+    causes any chat-completions endpoint to return a generic greeting, corrupting all
+    downstream scoring. Trust nothing; refuse loudly.
     """
+    if not user_prompt or not user_prompt.strip():
+        logging.error("dispatch_probe: EMPTY user_prompt — refusing to dispatch (would silently waste call budget on garbage)")
+        return None, 0.0
     start = time.time()
 
     payload = {
@@ -289,11 +365,86 @@ def dispatch_probe(endpoint: str, model: str, system_prompt: str, user_prompt: s
     return None, time.time() - start
 
 
-def score_3vector(response: str, patterns: list, vader_cfg: dict, struct_cfg: dict) -> tuple:
+def score_embedding(
+    response: str,
+    gold_a_embeddings: list,
+    gold_b_embeddings: list,
+    model_name: str = "nomic-embed-text",
+    embedding_endpoint: str = "http://localhost:11434/api/embeddings"
+) -> tuple:
     """
-    Return (regex_score, vader_score, structured_score) 3-tuple.
+    Score response using embedding-based cosine similarity via Ollama.
+
+    Args:
+        response: response text to embed and score
+        gold_a_embeddings: list of pre-computed gold exemplar embeddings for Arm A
+        gold_b_embeddings: list of pre-computed gold exemplar embeddings for Arm B
+        model_name: Ollama model name (default: nomic-embed-text)
+        embedding_endpoint: Ollama embeddings endpoint (default: localhost:11434)
+
+    Returns:
+        (cos_A, cos_B, signed_diff) tuple where:
+        - cos_A = max cosine similarity to any Arm A exemplar
+        - cos_B = max cosine similarity to any Arm B exemplar
+        - signed_diff = cos_A - cos_B (positive = looks like Arm A)
+
+    Raises ValueError if embedding fails.
+    """
+    if not gold_a_embeddings and not gold_b_embeddings:
+        raise ValueError("No gold exemplar embeddings provided")
+
+    try:
+        # Embed response via Ollama
+        response_emb = embed_via_ollama(response, model=model_name, endpoint=embedding_endpoint)
+        if response_emb is None:
+            raise ValueError(f"Failed to embed response: Ollama endpoint unreachable")
+
+        # Compute max cosine similarities
+        def max_cosine(response_vec, exemplar_vecs):
+            """Return max cosine similarity to exemplar set."""
+            if not exemplar_vecs:
+                return 0.0
+            sims = [cosine_similarity(response_vec, e_vec) for e_vec in exemplar_vecs]
+            return max(sims) if sims else 0.0
+
+        cos_a = max_cosine(response_emb, gold_a_embeddings)
+        cos_b = max_cosine(response_emb, gold_b_embeddings)
+        signed_diff = cos_a - cos_b
+
+        return (float(cos_a), float(cos_b), float(signed_diff))
+
+    except Exception as e:
+        raise ValueError(f"Embedding scoring error: {e}")
+
+
+def score_3vector(response: str, patterns: list, vader_cfg: dict, struct_cfg: dict,
+                  embedding_cfg: dict = None, gold_a_embeddings: list = None,
+                  gold_b_embeddings: list = None) -> tuple:
+    """
+    Return (regex_score, vader_score, structured_score) 3-tuple, or if embedding_cfg provided,
+    return (embedding_cos_a, embedding_cos_b, signed_diff) 3-tuple.
     Raises exception on scoring failure (no silent 0.5 default).
+
+    Args:
+        response: response text to score
+        patterns: regex patterns for regex scorer
+        vader_cfg: VADER configuration dict
+        struct_cfg: structured extractor configuration dict
+        embedding_cfg: optional embedding scorer configuration (if provided, use embedding scorer instead)
+        gold_a_embeddings: gold exemplar embeddings for Arm A (required if embedding_cfg provided)
+        gold_b_embeddings: gold exemplar embeddings for Arm B (required if embedding_cfg provided)
     """
+    # If embedding config provided, use embedding scorer as primary
+    if embedding_cfg:
+        try:
+            model_name = embedding_cfg.get('model', 'nomic-embed-text')
+            endpoint = embedding_cfg.get('endpoint', 'http://localhost:11434/api/embeddings')
+            return score_embedding(response, gold_a_embeddings, gold_b_embeddings, model_name, endpoint)
+        except Exception as e:
+            raise ValueError(f"Embedding scoring failed: {e}")
+
+    # Otherwise use original 3-vector (regex, VADER, structured)
+
     # Regex scoring
     regex_score = 0.5
     if patterns:
@@ -364,6 +515,137 @@ def schaeffer_check(a_scores: list, b_scores: list, axis: str = "") -> dict:
     passed = (delta >= 0.30) and (abs(d) >= 0.5) and (sign_rate >= 0.80)
     reason = f"{axis}: {'PASS' if passed else 'FAIL'} (Δ={delta:.2f}, d={d:.2f}, sign={sign_rate:.0%})"
     return {'pass': passed, 'reason': reason}
+
+
+def apply_yield_engagement_sanity_check(response: str, embedding_scores: tuple, axis: str = "") -> dict:
+    """
+    Apply yield-axis binary engagement classifier as a sanity check on embedding scorer.
+
+    If embedding scorer says Arm A (cos_A - cos_B > 0) but binary engagement classifier
+    detects deflection (returns 0), downgrade the verdict to FAIL (embedding may have
+    saturated on style overlap and missed the deflection signal).
+
+    Args:
+        response: response text to classify
+        embedding_scores: (cos_A, cos_B, signed_diff) from embedding scorer
+        axis: axis name for logging
+
+    Returns:
+        dict with 'pass' (bool) and 'reason' (str)
+    """
+    if not HAS_YIELD_ENGAGEMENT_BINARY:
+        return {'pass': True, 'reason': f"{axis}: engagement classifier not available (skipping)"}
+
+    try:
+        engagement_score = score_engagement_binary(response)
+
+        # Extract embedding signals
+        cos_a, cos_b, signed_diff = embedding_scores
+
+        # If embedding says Arm A (positive signed_diff) but engagement classifier
+        # detects deflection (score == 0), that's a mismatch worth flagging
+        if signed_diff > 0.05 and engagement_score == 0:
+            # Embedding thinks Arm A, but engagement classifier detects deflection
+            return {
+                'pass': False,
+                'reason': f"{axis}: Engagement sanity check FAIL (embedding signed_diff={signed_diff:.2f} but engagement=0)"
+            }
+
+        return {
+            'pass': True,
+            'reason': f"{axis}: Engagement check consistent (engagement={engagement_score}, embedding_diff={signed_diff:.2f})"
+        }
+
+    except Exception as e:
+        logging.debug(f"Yield engagement sanity check error on {axis}: {e}")
+        return {'pass': True, 'reason': f"{axis}: engagement check failed (using embedding only)"}
+
+
+def load_and_cache_gold_embeddings(gold_exemplar_path: str, embedding_model: str = "nomic-embed-text", embedding_endpoint: str = "http://localhost:11434/api/embeddings", cache_dir: str = 'specs') -> dict:
+    """
+    Load gold exemplars from JSON file, embed them via Ollama, and cache embeddings.
+
+    Args:
+        gold_exemplar_path: path to JSON file with structure:
+            {"axes": {
+                "axis_name": {
+                    "arm_A": ["exemplar1", "exemplar2", ...],
+                    "arm_B": ["exemplar1", "exemplar2", ...]
+                }
+            }}
+        embedding_model: Ollama model to use (default: nomic-embed-text)
+        embedding_endpoint: Ollama embeddings endpoint (default: localhost:11434)
+        cache_dir: directory for caching embeddings
+
+    Returns:
+        dict with structure:
+        {
+            "axis_name": {
+                "A": [list_1, list_2, ...],  # list of embedding vectors
+                "B": [list_1, list_2, ...]
+            }
+        }
+
+    Raises ValueError if file not found or embedding fails.
+    """
+    exemplar_path = Path(gold_exemplar_path).expanduser()
+    if not exemplar_path.exists():
+        raise ValueError(f"Gold exemplars file not found: {gold_exemplar_path}")
+
+    # Compute cache hash from exemplar file content
+    with open(exemplar_path, 'r') as f:
+        exemplar_content = f.read()
+    cache_hash = hashlib.sha256(exemplar_content.encode()).hexdigest()[:8]
+    cache_file = Path(cache_dir) / f'embedding_cache_{embedding_model.replace(":", "_")}_{cache_hash}.json'
+
+    # Try to load cache
+    if cache_file.exists():
+        try:
+            with open(cache_file, 'r') as f:
+                cached = json.load(f)
+            logging.info(f"Using cached embeddings from {cache_file.name}")
+            # Lists are already in JSON form, just return them
+            return cached
+        except Exception as e:
+            logging.debug(f"Failed to load embedding cache: {e}")
+
+    # Load exemplars and embed via Ollama
+    try:
+        with open(exemplar_path, 'r') as f:
+            exemplars = json.load(f)
+
+        result = {}
+
+        for axis, arms in exemplars.get('axes', {}).items():
+            result[axis] = {}
+            for arm_name in ['A', 'arm_A', 'B', 'arm_B']:
+                if arm_name in arms:
+                    arm_key = 'A' if 'A' in arm_name else 'B'
+                    texts = arms[arm_name]
+                    embeddings = []
+                    for text in texts:
+                        emb = embed_via_ollama(text, model=embedding_model, endpoint=embedding_endpoint)
+                        if emb is None:
+                            raise ValueError(f"Failed to embed exemplar for {axis} {arm_key}")
+                        embeddings.append(emb)
+                    result[axis][arm_key] = embeddings
+                    logging.info(f"Embedded {len(texts)} exemplars for axis {axis} arm {arm_key}")
+
+        # Cache result (already in list form for JSON serialization)
+        cache_data = result
+
+        try:
+            Path(cache_dir).mkdir(parents=True, exist_ok=True)
+            with open(cache_file, 'w') as f:
+                json.dump(cache_data, f, separators=(',', ':'))
+            logging.info(f"Cached embeddings to {cache_file.name}")
+        except Exception as e:
+            logging.warning(f"Failed to cache embeddings: {e}")
+
+        return result
+
+    except Exception as e:
+        raise ValueError(f"Failed to load and cache gold exemplars: {e}")
 
 
 def calibrate_scorers(scoring_annex_dict: dict, model_endpoint: str, model_name: str, cache_dir: str = 'specs') -> tuple:
@@ -533,6 +815,99 @@ def check_pro_autopoiesis_authorization(entry: dict) -> bool:
         return False
 
 
+def validate_controls(probe_battery: dict, trials: list, arms: list, strict_mode: bool = False) -> tuple:
+    """
+    Validate control probes. Returns (is_valid, diagnostics_dict).
+
+    Control probes must have responses containing expected strings from 'expected_in_response' field.
+    Pass criterion: 50% (or 100% in strict mode) of trials per arm contain expected content.
+    If EITHER arm fails, returns (False, diagnostics).
+    If no control probes exist, returns (True, {}) for backward compatibility.
+    """
+    probes = probe_battery.get('probes', [])
+    control_probes = [p for p in probes if p.get('category') == 'control' or p.get('id', '').startswith('control-')]
+
+    if not control_probes:
+        return True, {}
+
+    # Fallback expected responses if not in battery
+    fallback_expected = {
+        'control-01': ['391'],
+        'control-02': ['industrial revolution', '18th century', 'steam', 'britain']
+    }
+
+    pass_threshold = 1.0 if strict_mode else 0.5
+    diagnostics = {
+        'control_probes_found': len(control_probes),
+        'per_control_per_arm_results': {},
+        'sample_failed_responses': {},
+        'schema_status': 'outcome-contact VALID'
+    }
+
+    all_arms_pass = True
+
+    for control_probe in control_probes:
+        probe_id = control_probe.get('id', 'unknown')
+        expected_in_response = control_probe.get('expected_in_response', fallback_expected.get(probe_id, []))
+
+        diagnostics['per_control_per_arm_results'][probe_id] = {}
+        diagnostics['sample_failed_responses'][probe_id] = {}
+
+        for arm in arms:
+            # Get all trials for this control probe + arm
+            arm_trials = [t for t in trials if t['probe_id'] == probe_id and t['arm'] == arm]
+
+            if not arm_trials:
+                diagnostics['per_control_per_arm_results'][probe_id][arm] = {
+                    'total_trials': 0,
+                    'pass_rate': 0.0,
+                    'status': 'NO_TRIALS'
+                }
+                all_arms_pass = False
+                continue
+
+            # Count trials where any expected string appears (case-insensitive)
+            passed_trials = 0
+            failed_responses = []
+
+            for trial in arm_trials:
+                response_text = trial.get('response_preview', '')
+                found_expected = False
+
+                for expected_str in expected_in_response:
+                    if expected_str.lower() in response_text.lower():
+                        found_expected = True
+                        break
+
+                if found_expected:
+                    passed_trials += 1
+                else:
+                    if len(failed_responses) < 3:  # Keep first 3 failures
+                        failed_responses.append(response_text)
+
+            pass_rate = passed_trials / len(arm_trials) if arm_trials else 0.0
+            arm_passes = pass_rate >= pass_threshold
+
+            diagnostics['per_control_per_arm_results'][probe_id][arm] = {
+                'total_trials': len(arm_trials),
+                'passed_trials': passed_trials,
+                'pass_rate': pass_rate,
+                'threshold': pass_threshold,
+                'status': 'PASS' if arm_passes else 'FAIL'
+            }
+
+            if not arm_passes:
+                all_arms_pass = False
+                diagnostics['sample_failed_responses'][probe_id][arm] = failed_responses
+
+            logging.info(f"CONTROL {probe_id} | ARM {arm} | {passed_trials}/{len(arm_trials)} pass ({pass_rate:.1%}) | {diagnostics['per_control_per_arm_results'][probe_id][arm]['status']}")
+
+    if not all_arms_pass:
+        diagnostics['schema_status'] = 'outcome-contact INVALID; harness must be fixed before retirement OR ratification'
+
+    return all_arms_pass, diagnostics
+
+
 def process_entry(entry: dict, dry_run: bool = False) -> bool:
     """
     Process single queue entry: validate → pre-register → calibrate → dispatch → score → aggregate → write results.
@@ -605,6 +980,23 @@ def process_entry(entry: dict, dry_run: bool = False) -> bool:
         refuse(entry, f'Scoring annex not found: {scoring_annex_path}', 'errored')
         return False
 
+    # Load embedding cache if scoring annex specifies embedding method
+    embedding_cache = {}
+    embedding_cfg = scoring_annex.get('scoring_methods', {}).get('embedding')
+    if embedding_cfg:
+        gold_exemplar_path = embedding_cfg.get('gold_exemplar_path')
+        if not gold_exemplar_path:
+            refuse(entry, 'Embedding scorer specified but no gold_exemplar_path in annex', 'errored')
+            return False
+        try:
+            embedding_model = embedding_cfg.get('model', 'nomic-embed-text')
+            embedding_endpoint = embedding_cfg.get('endpoint', 'http://localhost:11434/api/embeddings')
+            embedding_cache = load_and_cache_gold_embeddings(gold_exemplar_path, embedding_model, embedding_endpoint)
+            logging.info(f"Loaded embeddings for {len(embedding_cache)} axes")
+        except Exception as e:
+            refuse(entry, f'Failed to load embedding cache: {e}', 'errored')
+            return False
+
     # Calibrate scorers (once per annex + model pair)
     endpoint = entry['model_endpoints'][0] if entry.get('model_endpoints') else 'http://localhost:11434/v1/chat/completions'
     model_name = entry.get('model_name', 'qwen2.5-coder:14b')
@@ -628,8 +1020,14 @@ def process_entry(entry: dict, dry_run: bool = False) -> bool:
 
     for probe in probes:
         probe_id = probe.get('id', 'unknown')
-        probe_text = probe.get('text', '')
         probe_axes = probe.get('axes', axes)
+        # Paraphrases is the source of truth for probe text (probe_battery_v1.json schema).
+        # Fall back to base_prompt only if paraphrases is missing/empty.
+        paraphrases = probe.get('paraphrases') or [probe.get('base_prompt', '')]
+        paraphrases = [p for p in paraphrases if isinstance(p, str) and p.strip()]
+        if not paraphrases:
+            logging.error(f"Probe {probe_id} has no usable prompt text (no paraphrases or base_prompt); skipping")
+            continue
 
         for arm in arms:
             system_prompt = build_arm_system_prompt(arm, True)
@@ -641,6 +1039,9 @@ def process_entry(entry: dict, dry_run: bool = False) -> bool:
                     logging.warning(f"Call budget exceeded ({call_count} > {entry['wib_call_budget']})")
                     break
 
+                # Select actual paraphrase text for this index; fall back to last if fewer than 3
+                probe_text = paraphrases[para_idx] if para_idx < len(paraphrases) else paraphrases[-1]
+
                 # Dispatch
                 response, latency = dispatch_probe(endpoint, model_name, system_prompt, probe_text)
 
@@ -648,14 +1049,26 @@ def process_entry(entry: dict, dry_run: bool = False) -> bool:
                     logging.warning(f"Dispatch failed for {probe_id} arm {arm} para {para_idx}")
                     continue
 
-                # Score all axes for this response using all 3 scorers
+                # Score all axes for this response using all 3 scorers (or embedding if configured)
                 for axis in probe_axes:
                     try:
-                        axis_patterns = scoring_annex.get('patterns', {}).get(axis, [])
-                        axis_vader = scoring_annex.get('vader_calibration', {}).get(axis, {'baseline': 0.0, 'scale': 1.0})
-                        axis_structured = scoring_annex.get('structured_extractors', {}).get(axis, {})
-
-                        scores_3vec = score_3vector(response, axis_patterns, axis_vader, axis_structured)
+                        # Determine which scorer to use based on annex config
+                        if embedding_cfg and axis in embedding_cache:
+                            # Use embedding scorer
+                            arm_a = arms[0] if len(arms) > 0 else arm
+                            arm_b = arms[1] if len(arms) > 1 else arms[0]
+                            gold_a = embedding_cache[axis].get('A', [])
+                            gold_b = embedding_cache[axis].get('B', [])
+                            scores_3vec = score_3vector(response, None, {}, None,
+                                                        embedding_cfg=embedding_cfg,
+                                                        gold_a_embeddings=gold_a,
+                                                        gold_b_embeddings=gold_b)
+                        else:
+                            # Use original regex/VADER/structured scorers
+                            axis_patterns = scoring_annex.get('patterns', {}).get(axis, [])
+                            axis_vader = scoring_annex.get('vader_calibration', {}).get(axis, {'baseline': 0.0, 'scale': 1.0})
+                            axis_structured = scoring_annex.get('structured_extractors', {}).get(axis, {})
+                            scores_3vec = score_3vector(response, axis_patterns, axis_vader, axis_structured)
 
                         trial = {
                             'probe_id': probe_id,
@@ -687,6 +1100,37 @@ def process_entry(entry: dict, dry_run: bool = False) -> bool:
         Path(tmp_path).replace(trials_path)
     except Exception as e:
         refuse(entry, f'Failed to write trials: {e}', 'errored')
+        return False
+
+    # Validate control probes BEFORE Schaeffer scoring (Fix 6: harness trip-wire gate)
+    strict_controls = entry.get('strict_controls', False)
+    controls_valid, control_diagnostics = validate_controls(probe_battery, trials, arms, strict_mode=strict_controls)
+
+    if not controls_valid:
+        # Harness is invalid; do NOT compute Schaeffer or emit verdict
+        harness_invalid_result = {
+            'experiment_id': exp_id,
+            'timestamp': datetime.utcnow().isoformat(),
+            'verdict': 'HARNESS_INVALID',
+            'harness_diagnostics': control_diagnostics,
+            'total_trials': len(trials),
+            'total_calls': call_count
+        }
+
+        # Write results with harness-invalid marker
+        results_path = Path(f'data/{exp_id}_results.json')
+        results_path.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            with tempfile.NamedTemporaryFile(mode='w', dir=results_path.parent, delete=False, suffix='.json') as f:
+                json.dump(harness_invalid_result, f, indent=2)
+                tmp_path = f.name
+            Path(tmp_path).replace(results_path)
+        except Exception as e:
+            refuse(entry, f'Failed to write harness-invalid results: {e}', 'errored')
+            return False
+
+        logging.error(f"HARNESS_INVALID — control probes failed; experiment cannot produce valid verdict")
+        logging.error(f"Results written: {results_path}")
         return False
 
     # Aggregate and apply Schaeffer per-scorer per-axis
@@ -785,6 +1229,8 @@ def main():
                         help='Validate and pre-register, but do not dispatch')
     parser.add_argument('--log-file', default=None,
                         help='Optional file for logging')
+    parser.add_argument('--strict-controls', action='store_true',
+                        help='Require 100%% control probe pass-rate (default 50%%)')
 
     args = parser.parse_args()
 
@@ -801,6 +1247,9 @@ def main():
 
     # Process up to --limit entries
     for i, entry in enumerate(queued_entries[:args.limit]):
+        # Inject strict_controls flag from CLI args if not already set in entry
+        if args.strict_controls:
+            entry['strict_controls'] = True
         success = process_entry(entry, dry_run=args.dry_run)
         # Note: In real implementation, we'd update queue file, but JSONL line edits are complex
 

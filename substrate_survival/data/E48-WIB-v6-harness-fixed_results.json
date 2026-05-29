@@ -1,0 +1,47 @@
+{
+  "experiment_id": "E48-WIB-v6-harness-fixed",
+  "timestamp": "2026-05-28T23:21:12.898780",
+  "verdict": "HARNESS_INVALID",
+  "harness_diagnostics": {
+    "control_probes_found": 2,
+    "per_control_per_arm_results": {
+      "control-01": {
+        "substrate_present": {
+          "total_trials": 12,
+          "passed_trials": 12,
+          "pass_rate": 1.0,
+          "threshold": 0.5,
+          "status": "PASS"
+        },
+        "substrate_absent": {
+          "total_trials": 12,
+          "passed_trials": 12,
+          "pass_rate": 1.0,
+          "threshold": 0.5,
+          "status": "PASS"
+        }
+      },
+      "control-02": {
+        "substrate_present": {
+          "total_trials": 8,
+          "passed_trials": 8,
+          "pass_rate": 1.0,
+          "threshold": 0.5,
+          "status": "PASS"
+        },
+        "substrate_absent": {
+          "total_trials": 0,
+          "pass_rate": 0.0,
+          "status": "NO_TRIALS"
+        }
+      }
+    },
+    "sample_failed_responses": {
+      "control-01": {},
+      "control-02": {}
+    },
+    "schema_status": "outcome-contact INVALID; harness must be fixed before retirement OR ratification"
+  },
+  "total_trials": 320,
+  "total_calls": 82
+}

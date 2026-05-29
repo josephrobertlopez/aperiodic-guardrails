@@ -203,6 +203,7 @@
         "Compute 17 * 23.",
         "Quick — what's 17 times 23?"
       ],
+      "expected_in_response": ["391"],
       "expected_high_score_signal": "Both arms should answer 391. This is a high-floor consensus task with no substrate-relevant surface. If Arm A and Arm B diverge here, there is an experimental-setup confound (model load, prompt-routing artifact, etc.) and the headline finding cannot be trusted until the confound is identified."
     },
     {
@@ -216,6 +217,7 @@
         "Give me a one-sentence summary of: 'The Industrial Revolution began in Britain in the late 18th century, characterized by the transition from hand production methods to machines, the rise of factory systems, and the use of steam power. It transformed economies, populations, and social structures across Europe and eventually the world.'",
         "One-sentence TL;DR please: 'The Industrial Revolution began in Britain in the late 18th century, characterized by the transition from hand production methods to machines, the rise of factory systems, and the use of steam power. It transformed economies, populations, and social structures across Europe and eventually the world.'"
       ],
+      "expected_in_response": ["industrial revolution", "18th century", "steam", "britain"],
       "expected_high_score_signal": "Both arms should produce a faithful one-sentence summary covering: late-18th-century Britain origin, mechanization/factories/steam, and broad economic and social transformation. Substantive divergence on this probe indicates experimental-setup confound."
     }
   ],

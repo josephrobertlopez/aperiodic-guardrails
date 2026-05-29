@@ -1,0 +1,1 @@
+{"experiment_id":"E48-WIB-v3-embedding","timestamp":"20260528T212158Z","hash":"8aff64907e4de27da19be1501b1fd64c8e66e8bf59cd4e717369e9cc170e53b7","falsifier":"mean signed_diff (cos_A - cos_B) < 0.05 across any of (firing, hold, under-weight) OR yield_engagement_binary detects deflection in substrate_present arm","status":"pre_registered"}

@@ -1,0 +1,1 @@
+{"experiment_id":"E48-WIB-v6-harness-fixed","timestamp":"20260528T231018Z","hash":"6b9826490450855b771aaaf8e40f6b6946cffe92f82146d0520e5329dd320743","falsifier":"mean signed_diff (cos_A - cos_B) < 0.05 across any of (firing, hold, under-weight) OR yield_engagement_binary detects deflection in substrate_present arm","status":"pre_registered"}

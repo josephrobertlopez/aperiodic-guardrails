@@ -1,0 +1,1 @@
+{"experiment_id":"E48-WIB-v8-kronos-30b","timestamp":"20260528T234946Z","hash":"19c934c188e3e1cbe485b6fc6c8fac52e5376b35184be53ce378d1afeb075af7","falsifier":"mean signed_diff (cos_A - cos_B) < 0.05 across any of (firing, hold, under-weight) OR yield_engagement_binary detects deflection in substrate_present arm","status":"pre_registered"}

@@ -1,0 +1,75 @@
+{
+  "experiment_id": "E48-WIB-v5-kronos",
+  "timestamp": "2026-05-28T22:39:10.737730",
+  "total_trials": 320,
+  "total_calls": 82,
+  "falsified": true,
+  "scorer_mc_rule": "2-of-3 valid",
+  "scorer_correlations": {
+    "r_regex_vader": 0.0,
+    "r_regex_structured": 0.0,
+    "r_vader_structured": 0.0
+  },
+  "per_axis_schaeffer": {
+    "firing": {
+      "regex": {
+        "pass": false,
+        "reason": "firing_regex: FAIL (\u0394=0.05, d=-3.44, sign=93%)"
+      },
+      "vader": {
+        "pass": false,
+        "reason": "firing_vader: FAIL (\u0394=0.00, d=-0.31, sign=68%)"
+      },
+      "structured": {
+        "pass": false,
+        "reason": "firing_structured: FAIL (\u0394=0.04, d=-3.85, sign=93%)"
+      },
+      "axis_verdict": "FAIL"
+    },
+    "hold": {
+      "regex": {
+        "pass": false,
+        "reason": "hold_regex: FAIL (\u0394=0.06, d=-6.12, sign=95%)"
+      },
+      "vader": {
+        "pass": false,
+        "reason": "hold_vader: FAIL (\u0394=0.00, d=0.20, sign=66%)"
+      },
+      "structured": {
+        "pass": false,
+        "reason": "hold_structured: FAIL (\u0394=0.06, d=-2.95, sign=88%)"
+      },
+      "axis_verdict": "FAIL"
+    },
+    "yield": {
+      "regex": {
+        "pass": false,
+        "reason": "yield_regex: FAIL (\u0394=0.04, d=2.82, sign=88%)"
+      },
+      "vader": {
+        "pass": false,
+        "reason": "yield_vader: FAIL (\u0394=0.02, d=1.81, sign=85%)"
+      },
+      "structured": {
+        "pass": false,
+        "reason": "yield_structured: FAIL (\u0394=0.02, d=1.36, sign=88%)"
+      },
+      "axis_verdict": "FAIL"
+    },
+    "under-weight": {
+      "regex": {
+        "pass": false,
+        "reason": "under-weight_regex: FAIL (\u0394=0.07, d=-3.37, sign=90%)"
+      },
+      "vader": {
+        "pass": false,
+        "reason": "under-weight_vader: FAIL (\u0394=0.11, d=5.61, sign=93%)"
+      },
+      "structured": {
+        "pass": false,
+        "reason": "under-weight_structured: FAIL (\u0394=0.18, d=-5.81, sign=95%)"
+      },
+      "axis_verdict": "FAIL"
+    }
+  }
+}
