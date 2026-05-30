@@ -1,1 +1,0 @@
-{"experiment_id":"E48-WIB-v7-budget-bumped","timestamp":"20260528T233012Z","hash":"191637cc4f2acea7760b0f029b60aa20ff4aed06d06688607cc592f33073101b","falsifier":"mean signed_diff (cos_A - cos_B) < 0.05 across any of (firing, hold, under-weight) OR yield_engagement_binary detects deflection in substrate_present arm","status":"pre_registered"}

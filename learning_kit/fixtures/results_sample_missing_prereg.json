@@ -1,7 +1,0 @@
-{
-  "_comment": "Shape of a results JSON that omits pre_registered_rule entirely. rigor_gate check 1 should BLOCK (fail-closed on missing pre-reg).",
-  "experiment_id": "E50_post_hoc",
-  "n_per_cell": 25,
-  "verdict": "CONFIRMED",
-  "result_value_pp": 4.5
-}
