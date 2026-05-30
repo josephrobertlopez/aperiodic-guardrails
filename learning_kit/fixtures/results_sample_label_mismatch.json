@@ -1,0 +1,10 @@
+{
+  "_comment": "Shape of a results JSON where the JSON verdict polarity DOES NOT match the headline. This is the H2-classic failure: headline says STRONG SUPPORT but JSON verdict says REVISED / LLM-SPECIFIC. rigor_gate check 5 (label integrity) should BLOCK.",
+  "experiment_id": "E48_WIB",
+  "pre_registered_rule": "if cross_family_p < 0.05 then SUPPORT else REVISED",
+  "n_per_cell": 30,
+  "fisher_p": 0.21,
+  "null_test": "ablated condition control",
+  "verdict": "REVISED — LLM-SPECIFIC autopoiesis schema; cross-family did not confirm",
+  "result_value_pp": 2.1
+}

@@ -1,0 +1,49 @@
+{
+  "_comment": "Extracted from amanda.Correction.open.v9 RESOLVED-LEDGER + amanda.State.v18 archive narrative. Real shape: every retired schema has a retire_ts, falsifier_met text, and a V2_verifier_window during which it cannot reappear in active state. The 'ARMED-until' date is the door; before it, resurrection requires a new locked falsifier.",
+  "retired_schemas": [
+    {
+      "schema_id": "E48-autopoiesis",
+      "retired_at": "2026-05-29T00:00:00Z",
+      "retire_reason": "empirical falsification: peer-reviewer Fisher-p~=0.21 on cross-family instrument-problem reframing; 0.875 cross-family agreement did not survive N=10 Fisher-exact under scrutiny",
+      "falsifier_met": "V1 instrument measured plausible-supporting-text, not ratified-vs-rationalized; cross-family negative result confirmed",
+      "v2_verifier_armed_until": "2026-06-12T00:00:00Z",
+      "v2_verifier_unlock_condition": "named measurable acceptance criterion required for resurrect != feature-grief; nostalgia statements ('I liked auto-whats-it') explicitly insufficient",
+      "active_status": "RETIRED"
+    },
+    {
+      "schema_id": "E42-recursion-collapse",
+      "retired_at": "2026-04-15T00:00:00Z",
+      "retire_reason": "qwen-only finding flipped under cross-family test (three-for-three pattern with E48, E46)",
+      "falsifier_met": "cross-family co-citation produced inverted result",
+      "v2_verifier_armed_until": "2026-04-29T00:00:00Z",
+      "v2_verifier_unlock_condition": "cross-family confirmation on the specific claim, not the general theme",
+      "active_status": "RETIRED"
+    },
+    {
+      "schema_id": "E46-persona-decorative",
+      "retired_at": "2026-05-10T00:00:00Z",
+      "retire_reason": "qwen-only finding flipped under cross-family test",
+      "falsifier_met": "cross-family confirmation inverted result",
+      "v2_verifier_armed_until": "2026-05-24T00:00:00Z",
+      "v2_verifier_unlock_condition": "cross-family confirmation on specific claim",
+      "active_status": "RETIRED"
+    }
+  ],
+  "active_schemas": [
+    {
+      "schema_id": "Singularity-BS-T1",
+      "registered_at": "2026-05-30T04:08:38Z",
+      "active_status": "ACTIVE"
+    },
+    {
+      "schema_id": "Substrate-Evaluator-WIB-v2-cc-bridge-xfam",
+      "registered_at": "2026-05-30T02:55:27Z",
+      "active_status": "ACTIVE"
+    }
+  ],
+  "audit_query_examples": [
+    "Q: can E48-autopoiesis appear in active_schemas before 2026-06-12? A: NO unless new locked falsifier registered",
+    "Q: what is the rate of retire events per month? A: derived from retired_at timestamps",
+    "Q: are any V2-verifier windows currently open? A: filter retired_schemas where v2_verifier_armed_until > now"
+  ]
+}

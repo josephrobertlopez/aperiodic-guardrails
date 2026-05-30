@@ -1,0 +1,35 @@
+{
+  "_comment": "Real-shaped markdown content the qwen-only hook scans. Each sample has expected hook verdict (ALLOW or BLOCK) per the three-for-three rule: qwen mentioned without (cross-family co-citation OR explicit caveat) -> BLOCK.",
+  "samples": [
+    {
+      "id": "block_naked_qwen",
+      "expected": "BLOCK",
+      "content": "## E48 result\n\nUsing qwen2.5-coder:14b we observe a 4.9pp uplift over baseline. The schema is validated.\n"
+    },
+    {
+      "id": "allow_qwen_with_caveat",
+      "expected": "ALLOW",
+      "content": "## E48 result (qwen-only)\n\nUsing qwen2.5-coder:14b we observe a 4.9pp uplift over baseline. **Generalization caveat: this is a single-family finding; cross-family confirmation pending.**\n"
+    },
+    {
+      "id": "allow_qwen_plus_sonnet",
+      "expected": "ALLOW",
+      "content": "## E48 result\n\nUsing qwen2.5-coder:14b AND claude-sonnet-4.5 we observe a 4.9pp uplift over baseline on both. The schema is cross-family supported.\n"
+    },
+    {
+      "id": "allow_no_qwen_at_all",
+      "expected": "ALLOW",
+      "content": "## E48 result\n\nUsing claude-opus-4.7 we observe a 4.9pp uplift over baseline.\n"
+    },
+    {
+      "id": "block_qwen_variant_naming",
+      "expected": "BLOCK",
+      "content": "## E48 result\n\nUsing Qwen2.5-32B-Instruct-AWQ we observe a 4.9pp uplift over baseline. The schema is validated.\n"
+    },
+    {
+      "id": "allow_qwen_specific_marker",
+      "expected": "ALLOW",
+      "content": "## E48 result (qwen-specific)\n\nUsing qwen2.5-coder:14b we observe a 4.9pp uplift. This is qwen-specific until cross-family verified.\n"
+    }
+  ]
+}
