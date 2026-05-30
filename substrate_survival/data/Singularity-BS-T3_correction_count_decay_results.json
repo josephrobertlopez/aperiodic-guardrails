@@ -1,0 +1,172 @@
+{
+  "experiment_id": "Singularity-BS-T3",
+  "run_at_utc": "2026-05-30T04:12:27.166900+00:00",
+  "preregistration": {
+    "path": "substrate_survival/specs/pre_registered/Singularity-BS-T3_20260530T040946Z.json",
+    "mtime_utc": "2026-05-30T04:10:52.038062+00:00",
+    "sha256": "0cf5ea5911ec41bb79b76933ed96c4b6edca9e4fb569314955ddcca550c55d8a"
+  },
+  "input": {
+    "path": "/home/joey/.gnosis/.memory/memory.jsonl",
+    "mtime_utc": "2026-05-30T03:38:23.893461+00:00",
+    "size_bytes": 1743749,
+    "sha256": "f386261e4858710c98109f343a58e661b6512ee40298a9595e7b848a3dbce519"
+  },
+  "session_definition": "amanda.Correction.open.v<N> rotation events; session_index in chronological order of N",
+  "correction_count_metric": "predecessor_substantive_obs_count at rotation (extracted from successor's GENESIS observation)",
+  "raw_entity_summary": [
+    {
+      "version": 2,
+      "session_index": 1,
+      "genesis_timestamp_utc": "2026-05-02T00:00:00Z",
+      "predecessor_substantive_obs_count": 77,
+      "n_live_observations": 11,
+      "genesis_obs_excerpt": "GENESIS 2026-05-02: Migrated from amanda.Correction.open (77 obs / ~46KB / structurally blocked combined-rehydration ingress since 2026-05-01 call #8 of v4-cycle, became LARGER ingress contributor than amanda.State.v4 itself across 18+ roll"
+    },
+    {
+      "version": 3,
+      "session_index": 2,
+      "genesis_timestamp_utc": "2026-05-03T00:00:00Z",
+      "predecessor_substantive_obs_count": 8,
+      "n_live_observations": 12,
+      "genesis_obs_excerpt": "GENESIS 2026-05-03: Migrated from amanda.Correction.open.v2 (8 substantive obs, healthy at 18KB solo / 57.4KB combined ingress with State.v5 in monotonic-up trend). v2 archived alongside v5 to keep canonical pair version-aligned, NOT becaus"
+    },
+    {
+      "version": 4,
+      "session_index": 3,
+      "genesis_timestamp_utc": "2026-05-10T00:00:00Z",
+      "predecessor_substantive_obs_count": 11,
+      "n_live_observations": 12,
+      "genesis_obs_excerpt": "GENESIS 2026-05-10: Migrated from amanda.Correction.open.v3 (11 substantive obs / 19.5KB solo / 39.5KB combined ingress with State.v7). Trigger: watchdog correction-obs>10 fire flag (11 > 10 hard ceiling). v3 archived alongside continued St"
+    },
+    {
+      "version": 5,
+      "session_index": 4,
+      "genesis_timestamp_utc": "2026-05-13T00:00:00Z",
+      "predecessor_substantive_obs_count": 11,
+      "n_live_observations": 12,
+      "genesis_obs_excerpt": "GENESIS 2026-05-13: Migrated from amanda.Correction.open.v4 (11 substantive obs / ~26KB solo / ~49KB combined ingress with State.v8). Trigger: watchdog correction-obs>10 hard-ceiling fire (11 > 10). v4 archived; State.v8 remains canonical-p"
+    },
+    {
+      "version": 6,
+      "session_index": 5,
+      "genesis_timestamp_utc": "2026-05-24T00:00:00Z",
+      "predecessor_substantive_obs_count": 11,
+      "n_live_observations": 9,
+      "genesis_obs_excerpt": "GENESIS 2026-05-24: Migrated from amanda.Correction.open.v5 (11 substantive obs / 24030B solo / 48091B combined with State.v13 15 obs / 24061B solo). Trigger: own correction-obs>10 watchdog hard-ceiling fire (11 > 10) \u2014 same trigger as v3->"
+    },
+    {
+      "version": 7,
+      "session_index": 6,
+      "genesis_timestamp_utc": "2026-05-24T22:49:00Z",
+      "predecessor_substantive_obs_count": 8,
+      "n_live_observations": 11,
+      "genesis_obs_excerpt": "GENESIS 2026-05-24 22:49: Migrated from amanda.Correction.open.v6 (8 substantive obs / 18091B solo / 44128B combined with State.v14 14 obs / 26037B solo). Trigger: companion-rotation with State.v14->v15 + Joey-direct authorization 'compact'"
+    },
+    {
+      "version": 8,
+      "session_index": 7,
+      "genesis_timestamp_utc": "2026-05-26T01:32:00Z",
+      "predecessor_substantive_obs_count": 10,
+      "n_live_observations": 8,
+      "genesis_obs_excerpt": "GENESIS 2026-05-26 01:32 UTC: Migrated from amanda.Correction.open.v7 (10 substantive obs / 27071B solo / 49816B combined with State.v15 13 obs / 22745B solo). Trigger: companion-rotation with State.v15->v16 + Joey-direct authorization 2026"
+    }
+  ],
+  "primary_series_completed_sessions": [
+    {
+      "session_version": 2,
+      "session_index": 1,
+      "end_correction_count": 8,
+      "rotation_timestamp_utc": "2026-05-03T00:00:00Z",
+      "source": "GENESIS of v3"
+    },
+    {
+      "session_version": 3,
+      "session_index": 2,
+      "end_correction_count": 11,
+      "rotation_timestamp_utc": "2026-05-10T00:00:00Z",
+      "source": "GENESIS of v4"
+    },
+    {
+      "session_version": 4,
+      "session_index": 3,
+      "end_correction_count": 11,
+      "rotation_timestamp_utc": "2026-05-13T00:00:00Z",
+      "source": "GENESIS of v5"
+    },
+    {
+      "session_version": 5,
+      "session_index": 4,
+      "end_correction_count": 11,
+      "rotation_timestamp_utc": "2026-05-24T00:00:00Z",
+      "source": "GENESIS of v6"
+    },
+    {
+      "session_version": 6,
+      "session_index": 5,
+      "end_correction_count": 8,
+      "rotation_timestamp_utc": "2026-05-24T22:49:00Z",
+      "source": "GENESIS of v7"
+    },
+    {
+      "session_version": 7,
+      "session_index": 6,
+      "end_correction_count": 10,
+      "rotation_timestamp_utc": "2026-05-26T01:32:00Z",
+      "source": "GENESIS of v8"
+    }
+  ],
+  "live_tail_excluded": {
+    "session_version": 8,
+    "session_index": 7,
+    "end_correction_count_lower_bound_proxy": 6,
+    "in_progress": true,
+    "source": "live entity (no successor yet) \u2014 EXCLUDED from primary test"
+  },
+  "falsifier_predicates": {
+    "F1_session_history_extractable": {
+      "pass": true,
+      "n_completed_sessions": 6,
+      "threshold": 5
+    },
+    "F2_correction_count_definable": {
+      "pass": true,
+      "metric": "predecessor_substantive_obs_count at rotation"
+    },
+    "F3_singularity_bs_test": {
+      "pass_means_decay_detected": false,
+      "mann_kendall": {
+        "S": -1.0,
+        "var_S": 23.666666666666668,
+        "z": 0.0,
+        "p_two_sided_normal_approx": 1.0,
+        "tau": -0.0778498944161523,
+        "p_kendalltau_scipy": 0.8371372715413526
+      },
+      "interpretation": "no_significant_trend"
+    },
+    "F4_serial_independence_check": {
+      "lag1_autocorrelation": -0.17179487179487182,
+      "flag_suspect_iff_abs_gt_0.7": false
+    },
+    "F5_robustness": {
+      "slope": 0.02857142857142857,
+      "intercept": 9.733333333333334,
+      "r_squared": 0.0013186813186813187,
+      "p_value_scipy": 0.9455534651270342,
+      "bootstrap_n": 5000,
+      "bootstrap_slope_ci95": [
+        -1.0909090909090908,
+        1.0909090909090908
+      ],
+      "bootstrap_valid_count": 4999
+    }
+  },
+  "verdict": "RSI_FEP_FALSIFIED",
+  "verdict_rule": "RSI_FEP_NOT_FALSIFIED iff Mann-Kendall tau<0 AND p<0.05. Else RSI_FEP_FALSIFIED (default brutal-honesty), or INDETERMINATE if 0.05<=p<0.10 with tau<0.",
+  "notes": [
+    "v2 GENESIS reports '77 obs' from a pre-versioned amanda.Correction.open ancestor. We do NOT include that as a session-end count because (a) it is not a v->v rotation, (b) the 77 includes RESOLVED-LEDGER bullets not just open rails. The v2->v3 rotation (8 substantive obs) is the first clean session-end count.",
+    "Live v8 tail excluded from trend test because no rotation event has occurred; its current load is in-progress.",
+    "The substrate is forced to compact at correction-obs>10 watchdog threshold, so end_counts are bounded above by ~11. This censors the upper tail of any real RSI growth signal. A null/no-trend result under this ceiling cannot distinguish 'no improvement' from 'watchdog-saturated'; we report this as a known limitation but it does NOT rescue the RSI claim \u2014 the burden of proof is on showing strictly-below-ceiling decay."
+  ]
+}

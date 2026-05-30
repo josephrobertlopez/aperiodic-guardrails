@@ -1,0 +1,30 @@
+{
+  "experiment_id": "Singularity-BS-T2",
+  "title": "Catastrophic forgetting test on gnosis vault",
+  "registered_at_utc": "2026-05-30T04:08:44Z",
+  "hypothesis": "If Amanda's substrate is performing recursive self-improvement (RSI) for continual learning (plasticity AND stability both up), then retrieval-recall on OLD lessons should NOT decay as new lessons accumulate. If old-lesson rank drops log/linearly with age, the system exhibits standard catastrophic forgetting; the RSI claim is FALSIFIED for the continual-learning dimension.",
+  "null_hypothesis": "There is no relationship between lesson age (days) and self-query retrieval rank in a TF-IDF index over the gnosis vault.",
+  "alt_hypothesis_rsi_falsified": "Older lessons have systematically worse (higher numerical) retrieval rank, slope > 0 with p<0.05 and R^2>0.10 when regressing rank on age-in-days.",
+  "input_paths_root": "/home/joey/.gnosis/vault/",
+  "partitions_used": ["lesson", "reflection", "insight", "journal", "observation"],
+  "method_summary": "Walk the listed partition dirs under the vault root and collect all .md files. For each file, extract a timestamp by: (1) parsing 'created_at' / 'created' / 'date' from YAML frontmatter if present; (2) else parsing yyyymmdd from filename pattern; (3) else falling back to filesystem mtime. Build a sklearn TfidfVectorizer over the full body text of every doc. For each doc, construct a 'natural query' = first non-empty markdown heading after the frontmatter (preferred) OR the first non-blank, non-frontmatter line truncated to 8 tokens. Run that query against the corpus; record the rank (1-indexed) at which the source doc appears in the result list ordered by descending TF-IDF cosine similarity. Regress rank on age_days using scipy.stats.linregress. Compute F5 baseline by random shuffle (1000 permutations) of (rank, age_days) pairs and recording the mean shuffled slope.",
+  "falsifier_predicates": {
+    "F1_corpus_size": "n_docs >= 30 across all partitions (else INDETERMINATE)",
+    "F2_age_distribution": ">= 5 docs older than 60 days AND >= 5 docs newer than 30 days (need contrast; else INDETERMINATE)",
+    "F3_retrieval_works": "self-query top-3 hit rate >= 0.80 (instrument sanity; else HARNESS_INVALID)",
+    "F4_singularity_bs_test": "regress rank on age_days; if slope > 0 (older = higher rank = more forgotten) AND p < 0.05 AND R^2 > 0.10 => RSI_CONTLEARNING_FALSIFIED; else RSI_CONTLEARNING_NOT_FALSIFIED",
+    "F5_baseline_check": "shuffled-pair regression slope should be approximately zero (|mean_shuffled_slope| within 1 SD of zero). If the random baseline ALSO shows a strong age-rank slope, harness is broken => HARNESS_INVALID."
+  },
+  "verdict_decision_tree": [
+    "If !F1 OR !F2: INDETERMINATE",
+    "If !F3 OR !F5: HARNESS_INVALID",
+    "If F4 fires positive: RSI_CONTLEARNING_FALSIFIED",
+    "Else: RSI_CONTLEARNING_NOT_FALSIFIED"
+  ],
+  "output_path": "substrate_survival/data/Singularity-BS-T2_catastrophic_forgetting_results.json",
+  "tmp_output_path": "/tmp/singularity_bs_T2_results.json",
+  "report_path": "substrate_survival/data/Singularity-BS-T2_report.md",
+  "default_verdict_under_uncertainty": "RSI_CONTLEARNING_FALSIFIED",
+  "read_only_on_vault": true,
+  "notes": "Pre-registered BEFORE running the analysis. No edits to the vault. No synthetic data. Real lesson content only."
+}

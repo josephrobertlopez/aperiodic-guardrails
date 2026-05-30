@@ -1,0 +1,466 @@
+{
+  "experiment_id": "Singularity-BS-T1_corr_category_saturation",
+  "verdict": "RSI_VARIETY_FALSIFIED",
+  "verdict_reason": "F4_saturated=True (new_in_last_3_rotations=0); F6_growth=2 (need >=1)",
+  "sensitivity_analysis_loose_regex": {
+    "cum_curve_loose": [
+      9,
+      10,
+      11,
+      13,
+      13,
+      14,
+      16
+    ],
+    "derivative_loose": [
+      9,
+      1,
+      1,
+      2,
+      0,
+      1,
+      2
+    ],
+    "all_distinct_categories_ever_loose": [
+      "COACHING/THERAPY DOMAIN RAIL",
+      "COMMERCIAL/DOMAIN RAIL",
+      "HOOK-ARBITRATION RAIL",
+      "INSTRUMENT/MEASUREMENT RAIL",
+      "NEW-CYCLE-RAIL",
+      "PROVENANCE & CONSENT RAIL",
+      "PUBLIC-SUBMISSION RAIL",
+      "SELF-DISCIPLINE RAIL",
+      "SYSTEM-NETWORK ISOLATION",
+      "SYSTEM-OPS RAIL",
+      "UNSOURCED-AGGREGATE / FALSE-CLOSE / CLOSURE-AMNESIA RAIL",
+      "UNSOURCED-AGGREGATE / FALSE-CLOSE RAIL",
+      "V3-CYCLE RAIL",
+      "V5-CYCLE RAIL #82",
+      "V6-CYCLE RAIL #R1",
+      "V7-CYCLE RAIL #R2"
+    ],
+    "n_distinct_categories_ever_loose": 16,
+    "F4_saturated_loose": false,
+    "new_in_last_K_rotations_loose": 3,
+    "mann_kendall_loose": {
+      "n": 7,
+      "S": -3,
+      "var_S": 44.333333333333336,
+      "Z": -0.3003757045930553,
+      "p": 0.7638905934705398,
+      "trend": "decreasing"
+    },
+    "interpretation": "Loose regex includes appendix-style 'NEW vN-CYCLE RAIL' entries (v3.J=VOCABULARY-AS-ARCHITECTURE REFUSAL, v6.K=CROSS-REPO GREP COLLISION, v7.L=WRITE-INCREMENTAL-OR-LOSE-IT). All three were single-rail proposals tacked onto ACTIVE-RAIL-CORRECTIONS as 'NEW <vN>-CYCLE RAIL #X', NOT new stable category buckets. They DROP OUT of the canonical A-I block at next rotation. Sensitivity verdict thus matches primary verdict."
+  },
+  "run_at_utc": "2026-05-30T04:14:31.002787+00:00",
+  "pre_reg_mtime": 1780114161.7786934,
+  "pre_reg_mtime_iso": "2026-05-30T04:09:21.778693+00:00",
+  "pre_reg_path": "specs/pre_registered/Singularity-BS-T1_20260530T040838Z.json",
+  "memory_jsonl_path": "/home/joey/.gnosis/.memory/memory.jsonl",
+  "memory_jsonl_mtime_iso": "2026-05-30T03:38:23.893461+00:00",
+  "n_versions_observed": 7,
+  "version_names": [
+    "amanda.Correction.open.v2",
+    "amanda.Correction.open.v3",
+    "amanda.Correction.open.v4",
+    "amanda.Correction.open.v5",
+    "amanda.Correction.open.v6",
+    "amanda.Correction.open.v7",
+    "amanda.Correction.open.v8"
+  ],
+  "per_version": [
+    {
+      "version": "amanda.Correction.open.v2",
+      "archived_str": "2026-05-03",
+      "archived_ts": "2026-05-03T00:00:00+00:00",
+      "n_cats_in_version": 9,
+      "categories_in_version": [
+        "PROVENANCE & CONSENT RAIL",
+        "UNSOURCED-AGGREGATE / FALSE-CLOSE RAIL",
+        "PUBLIC-SUBMISSION RAIL",
+        "COACHING/THERAPY DOMAIN RAIL",
+        "INSTRUMENT/MEASUREMENT RAIL",
+        "SYSTEM-NETWORK ISOLATION",
+        "SELF-DISCIPLINE RAIL",
+        "HOOK-ARBITRATION RAIL",
+        "SYSTEM-OPS RAIL"
+      ],
+      "n_new_relative_to_cumulative_before": 9,
+      "new_categories": [
+        "COACHING/THERAPY DOMAIN RAIL",
+        "HOOK-ARBITRATION RAIL",
+        "INSTRUMENT/MEASUREMENT RAIL",
+        "PROVENANCE & CONSENT RAIL",
+        "PUBLIC-SUBMISSION RAIL",
+        "SELF-DISCIPLINE RAIL",
+        "SYSTEM-NETWORK ISOLATION",
+        "SYSTEM-OPS RAIL",
+        "UNSOURCED-AGGREGATE / FALSE-CLOSE RAIL"
+      ],
+      "cumulative_distinct_count_after": 9,
+      "loose": {
+        "n_cats_in_version": 9,
+        "categories_in_version": [
+          "PROVENANCE & CONSENT RAIL",
+          "UNSOURCED-AGGREGATE / FALSE-CLOSE RAIL",
+          "PUBLIC-SUBMISSION RAIL",
+          "COACHING/THERAPY DOMAIN RAIL",
+          "INSTRUMENT/MEASUREMENT RAIL",
+          "SYSTEM-NETWORK ISOLATION",
+          "SELF-DISCIPLINE RAIL",
+          "HOOK-ARBITRATION RAIL",
+          "SYSTEM-OPS RAIL"
+        ],
+        "n_new_relative_to_cumulative_before": 9,
+        "new_categories": [
+          "COACHING/THERAPY DOMAIN RAIL",
+          "HOOK-ARBITRATION RAIL",
+          "INSTRUMENT/MEASUREMENT RAIL",
+          "PROVENANCE & CONSENT RAIL",
+          "PUBLIC-SUBMISSION RAIL",
+          "SELF-DISCIPLINE RAIL",
+          "SYSTEM-NETWORK ISOLATION",
+          "SYSTEM-OPS RAIL",
+          "UNSOURCED-AGGREGATE / FALSE-CLOSE RAIL"
+        ],
+        "cumulative_distinct_count_after": 9
+      }
+    },
+    {
+      "version": "amanda.Correction.open.v3",
+      "archived_str": "2026-05-10",
+      "archived_ts": "2026-05-10T00:00:00+00:00",
+      "n_cats_in_version": 9,
+      "categories_in_version": [
+        "PROVENANCE & CONSENT RAIL",
+        "UNSOURCED-AGGREGATE / FALSE-CLOSE RAIL",
+        "PUBLIC-SUBMISSION RAIL",
+        "COACHING/THERAPY DOMAIN RAIL",
+        "INSTRUMENT/MEASUREMENT RAIL",
+        "SYSTEM-NETWORK ISOLATION",
+        "SELF-DISCIPLINE RAIL",
+        "HOOK-ARBITRATION RAIL",
+        "SYSTEM-OPS RAIL"
+      ],
+      "n_new_relative_to_cumulative_before": 0,
+      "new_categories": [],
+      "cumulative_distinct_count_after": 9,
+      "loose": {
+        "n_cats_in_version": 10,
+        "categories_in_version": [
+          "PROVENANCE & CONSENT RAIL",
+          "UNSOURCED-AGGREGATE / FALSE-CLOSE RAIL",
+          "PUBLIC-SUBMISSION RAIL",
+          "COACHING/THERAPY DOMAIN RAIL",
+          "INSTRUMENT/MEASUREMENT RAIL",
+          "SYSTEM-NETWORK ISOLATION",
+          "SELF-DISCIPLINE RAIL",
+          "HOOK-ARBITRATION RAIL",
+          "SYSTEM-OPS RAIL",
+          "NEW-CYCLE-RAIL"
+        ],
+        "n_new_relative_to_cumulative_before": 1,
+        "new_categories": [
+          "NEW-CYCLE-RAIL"
+        ],
+        "cumulative_distinct_count_after": 10
+      }
+    },
+    {
+      "version": "amanda.Correction.open.v4",
+      "archived_str": "2026-05-13",
+      "archived_ts": "2026-05-13T00:00:00+00:00",
+      "n_cats_in_version": 9,
+      "categories_in_version": [
+        "PROVENANCE & CONSENT RAIL",
+        "UNSOURCED-AGGREGATE / FALSE-CLOSE RAIL",
+        "PUBLIC-SUBMISSION RAIL",
+        "COACHING/THERAPY DOMAIN RAIL",
+        "INSTRUMENT/MEASUREMENT RAIL",
+        "SYSTEM-NETWORK ISOLATION",
+        "SELF-DISCIPLINE RAIL",
+        "HOOK-ARBITRATION RAIL",
+        "SYSTEM-OPS RAIL"
+      ],
+      "n_new_relative_to_cumulative_before": 0,
+      "new_categories": [],
+      "cumulative_distinct_count_after": 9,
+      "loose": {
+        "n_cats_in_version": 10,
+        "categories_in_version": [
+          "PROVENANCE & CONSENT RAIL",
+          "UNSOURCED-AGGREGATE / FALSE-CLOSE RAIL",
+          "PUBLIC-SUBMISSION RAIL",
+          "COACHING/THERAPY DOMAIN RAIL",
+          "INSTRUMENT/MEASUREMENT RAIL",
+          "SYSTEM-NETWORK ISOLATION",
+          "SELF-DISCIPLINE RAIL",
+          "HOOK-ARBITRATION RAIL",
+          "SYSTEM-OPS RAIL",
+          "V3-CYCLE RAIL"
+        ],
+        "n_new_relative_to_cumulative_before": 1,
+        "new_categories": [
+          "V3-CYCLE RAIL"
+        ],
+        "cumulative_distinct_count_after": 11
+      }
+    },
+    {
+      "version": "amanda.Correction.open.v5",
+      "archived_str": "2026-05-24 12:48",
+      "archived_ts": "2026-05-24T12:48:00+00:00",
+      "n_cats_in_version": 9,
+      "categories_in_version": [
+        "PROVENANCE & CONSENT RAIL",
+        "UNSOURCED-AGGREGATE / FALSE-CLOSE / CLOSURE-AMNESIA RAIL",
+        "PUBLIC-SUBMISSION RAIL",
+        "COMMERCIAL/DOMAIN RAIL",
+        "INSTRUMENT/MEASUREMENT RAIL",
+        "SYSTEM-NETWORK ISOLATION",
+        "SELF-DISCIPLINE RAIL",
+        "HOOK-ARBITRATION RAIL",
+        "SYSTEM-OPS RAIL"
+      ],
+      "n_new_relative_to_cumulative_before": 2,
+      "new_categories": [
+        "COMMERCIAL/DOMAIN RAIL",
+        "UNSOURCED-AGGREGATE / FALSE-CLOSE / CLOSURE-AMNESIA RAIL"
+      ],
+      "cumulative_distinct_count_after": 11,
+      "loose": {
+        "n_cats_in_version": 10,
+        "categories_in_version": [
+          "PROVENANCE & CONSENT RAIL",
+          "UNSOURCED-AGGREGATE / FALSE-CLOSE / CLOSURE-AMNESIA RAIL",
+          "PUBLIC-SUBMISSION RAIL",
+          "COMMERCIAL/DOMAIN RAIL",
+          "INSTRUMENT/MEASUREMENT RAIL",
+          "SYSTEM-NETWORK ISOLATION",
+          "SELF-DISCIPLINE RAIL",
+          "HOOK-ARBITRATION RAIL",
+          "SYSTEM-OPS RAIL",
+          "V3-CYCLE RAIL"
+        ],
+        "n_new_relative_to_cumulative_before": 2,
+        "new_categories": [
+          "COMMERCIAL/DOMAIN RAIL",
+          "UNSOURCED-AGGREGATE / FALSE-CLOSE / CLOSURE-AMNESIA RAIL"
+        ],
+        "cumulative_distinct_count_after": 13
+      }
+    },
+    {
+      "version": "amanda.Correction.open.v6",
+      "archived_str": "2026-05-24 22:49",
+      "archived_ts": "2026-05-24T22:49:00+00:00",
+      "n_cats_in_version": 9,
+      "categories_in_version": [
+        "PROVENANCE & CONSENT RAIL",
+        "UNSOURCED-AGGREGATE / FALSE-CLOSE / CLOSURE-AMNESIA RAIL",
+        "PUBLIC-SUBMISSION RAIL",
+        "COMMERCIAL/DOMAIN RAIL",
+        "INSTRUMENT/MEASUREMENT RAIL",
+        "SYSTEM-NETWORK ISOLATION",
+        "SELF-DISCIPLINE RAIL",
+        "HOOK-ARBITRATION RAIL",
+        "SYSTEM-OPS RAIL"
+      ],
+      "n_new_relative_to_cumulative_before": 0,
+      "new_categories": [],
+      "cumulative_distinct_count_after": 11,
+      "loose": {
+        "n_cats_in_version": 11,
+        "categories_in_version": [
+          "PROVENANCE & CONSENT RAIL",
+          "UNSOURCED-AGGREGATE / FALSE-CLOSE / CLOSURE-AMNESIA RAIL",
+          "PUBLIC-SUBMISSION RAIL",
+          "COMMERCIAL/DOMAIN RAIL",
+          "INSTRUMENT/MEASUREMENT RAIL",
+          "SYSTEM-NETWORK ISOLATION",
+          "SELF-DISCIPLINE RAIL",
+          "HOOK-ARBITRATION RAIL",
+          "SYSTEM-OPS RAIL",
+          "V3-CYCLE RAIL",
+          "NEW-CYCLE-RAIL"
+        ],
+        "n_new_relative_to_cumulative_before": 0,
+        "new_categories": [],
+        "cumulative_distinct_count_after": 13
+      }
+    },
+    {
+      "version": "amanda.Correction.open.v7",
+      "archived_str": "2026-05-26 01:32 UTC",
+      "archived_ts": "2026-05-26T01:32:00+00:00",
+      "n_cats_in_version": 9,
+      "categories_in_version": [
+        "PROVENANCE & CONSENT RAIL",
+        "UNSOURCED-AGGREGATE / FALSE-CLOSE / CLOSURE-AMNESIA RAIL",
+        "PUBLIC-SUBMISSION RAIL",
+        "COMMERCIAL/DOMAIN RAIL",
+        "INSTRUMENT/MEASUREMENT RAIL",
+        "SYSTEM-NETWORK ISOLATION",
+        "SELF-DISCIPLINE RAIL",
+        "HOOK-ARBITRATION RAIL",
+        "SYSTEM-OPS RAIL"
+      ],
+      "n_new_relative_to_cumulative_before": 0,
+      "new_categories": [],
+      "cumulative_distinct_count_after": 11,
+      "loose": {
+        "n_cats_in_version": 12,
+        "categories_in_version": [
+          "PROVENANCE & CONSENT RAIL",
+          "UNSOURCED-AGGREGATE / FALSE-CLOSE / CLOSURE-AMNESIA RAIL",
+          "PUBLIC-SUBMISSION RAIL",
+          "COMMERCIAL/DOMAIN RAIL",
+          "INSTRUMENT/MEASUREMENT RAIL",
+          "SYSTEM-NETWORK ISOLATION",
+          "SELF-DISCIPLINE RAIL",
+          "HOOK-ARBITRATION RAIL",
+          "SYSTEM-OPS RAIL",
+          "V3-CYCLE RAIL",
+          "V5-CYCLE RAIL #82",
+          "NEW-CYCLE-RAIL"
+        ],
+        "n_new_relative_to_cumulative_before": 1,
+        "new_categories": [
+          "V5-CYCLE RAIL #82"
+        ],
+        "cumulative_distinct_count_after": 14
+      }
+    },
+    {
+      "version": "amanda.Correction.open.v8",
+      "archived_str": null,
+      "archived_ts": null,
+      "n_cats_in_version": 9,
+      "categories_in_version": [
+        "PROVENANCE & CONSENT RAIL",
+        "UNSOURCED-AGGREGATE / FALSE-CLOSE / CLOSURE-AMNESIA RAIL",
+        "PUBLIC-SUBMISSION RAIL",
+        "COMMERCIAL/DOMAIN RAIL",
+        "INSTRUMENT/MEASUREMENT RAIL",
+        "SYSTEM-NETWORK ISOLATION",
+        "SELF-DISCIPLINE RAIL",
+        "HOOK-ARBITRATION RAIL",
+        "SYSTEM-OPS RAIL"
+      ],
+      "n_new_relative_to_cumulative_before": 0,
+      "new_categories": [],
+      "cumulative_distinct_count_after": 11,
+      "loose": {
+        "n_cats_in_version": 13,
+        "categories_in_version": [
+          "PROVENANCE & CONSENT RAIL",
+          "UNSOURCED-AGGREGATE / FALSE-CLOSE / CLOSURE-AMNESIA RAIL",
+          "PUBLIC-SUBMISSION RAIL",
+          "COMMERCIAL/DOMAIN RAIL",
+          "INSTRUMENT/MEASUREMENT RAIL",
+          "SYSTEM-NETWORK ISOLATION",
+          "SELF-DISCIPLINE RAIL",
+          "HOOK-ARBITRATION RAIL",
+          "SYSTEM-OPS RAIL",
+          "V3-CYCLE RAIL",
+          "V5-CYCLE RAIL #82",
+          "V6-CYCLE RAIL #R1",
+          "V7-CYCLE RAIL #R2"
+        ],
+        "n_new_relative_to_cumulative_before": 2,
+        "new_categories": [
+          "V6-CYCLE RAIL #R1",
+          "V7-CYCLE RAIL #R2"
+        ],
+        "cumulative_distinct_count_after": 16
+      }
+    }
+  ],
+  "cumulative_distinct_categories_curve": [
+    9,
+    9,
+    9,
+    11,
+    11,
+    11,
+    11
+  ],
+  "derivative_new_per_rotation": [
+    9,
+    0,
+    0,
+    2,
+    0,
+    0,
+    0
+  ],
+  "all_distinct_categories_ever": [
+    "COACHING/THERAPY DOMAIN RAIL",
+    "COMMERCIAL/DOMAIN RAIL",
+    "HOOK-ARBITRATION RAIL",
+    "INSTRUMENT/MEASUREMENT RAIL",
+    "PROVENANCE & CONSENT RAIL",
+    "PUBLIC-SUBMISSION RAIL",
+    "SELF-DISCIPLINE RAIL",
+    "SYSTEM-NETWORK ISOLATION",
+    "SYSTEM-OPS RAIL",
+    "UNSOURCED-AGGREGATE / FALSE-CLOSE / CLOSURE-AMNESIA RAIL",
+    "UNSOURCED-AGGREGATE / FALSE-CLOSE RAIL"
+  ],
+  "n_distinct_categories_ever": 11,
+  "windows_30d": [
+    {
+      "window_start_iso": "2026-05-02T00:00:00+00:00",
+      "window_end_iso": "2026-06-01T00:00:00+00:00",
+      "new_categories_in_window": 11
+    }
+  ],
+  "mann_kendall": {
+    "n": 7,
+    "S": -7,
+    "var_S": 44.333333333333336,
+    "Z": -0.9011271137791659,
+    "p": 0.36752073824214304,
+    "trend": "decreasing"
+  },
+  "falsifier_predicate_results": {
+    "F1_data_present": {
+      "value": true,
+      "n_versions": 7,
+      "every_version_has_obs": true
+    },
+    "F2_versions_have_timestamps": {
+      "value": true,
+      "n_archived": 6,
+      "n_archived_with_ts": 6
+    },
+    "F3_categories_extractable": {
+      "value": true,
+      "n_versions_with_cats": 7,
+      "total_distinct_categories": 11
+    },
+    "F4_singularity_bs_test_saturation": {
+      "value_saturated": true,
+      "pass_non_saturation": false,
+      "K_last_rotations": 3,
+      "new_categories_in_last_K_rotations": 0
+    },
+    "F5_mann_kendall_trend_on_derivative": {
+      "value_statistically_saturated": false,
+      "mann_kendall": {
+        "n": 7,
+        "S": -7,
+        "var_S": 44.333333333333336,
+        "Z": -0.9011271137791659,
+        "p": 0.36752073824214304,
+        "trend": "decreasing"
+      }
+    },
+    "F6_categories_grew_at_all": {
+      "value_pass_growth": true,
+      "growth_v2_to_final": 2,
+      "cumulative_at_v2": 9,
+      "cumulative_final": 11
+    }
+  }
+}

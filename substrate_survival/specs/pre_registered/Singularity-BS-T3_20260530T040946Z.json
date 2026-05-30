@@ -1,0 +1,42 @@
+{
+  "experiment_id": "Singularity-BS-T3",
+  "registered_at_utc": "2026-05-30T04:09:46Z",
+  "registrar": "T3-agent (correction-count decay subtest)",
+  "hypothesis": "Under an FEP-flavored 'substrate is reducing its own prediction error' framing (RSI claim), the per-session correction-count on Amanda's correction-open ledger should show a monotone-decay trend (Mann-Kendall tau < 0, p < 0.05). If stationary or increasing, prediction-error is not improving -> RSI claim falsified.",
+  "session_definition_chosen": {
+    "primary": "amanda.Correction.open.v<N> rotation event. Each archived version represents a session-bounded compaction. Index = chronological version number (v2..v8 = sessions 1..7). Timestamps recovered from GENESIS observation strings inside each entity ('GENESIS YYYY-MM-DD ...').",
+    "rationale": "Correction.open.v* rotation has higher granularity (7 events) than session_handoff vault (6 files, mostly fork markers). Rotation is the actual substrate-compaction signal — when correction-obs>10 watchdog fires, the substrate is forced to triage.",
+    "rejected_alternatives": [
+      "amanda.State.v* rotation (16 versions) — superset, but the question is specifically about CORRECTION count, not State entropy. State rotates for other reasons too.",
+      "/home/joey/.gnosis/vault/session_handoff/*.md — only 6 files, mostly 2026-05-27 forks, not session-cycle markers."
+    ]
+  },
+  "input_paths": [
+    "/home/joey/.gnosis/.memory/memory.jsonl"
+  ],
+  "input_mtimes_utc": {
+    "/home/joey/.gnosis/.memory/memory.jsonl": "captured at run time inside results JSON"
+  },
+  "correction_count_metric": {
+    "primary": "n_substantive_observations_at_rotation: extracted from the ARCHIVED observation of v<N-1> OR the GENESIS observation of v<N>, both of which report the count of 'substantive obs' that the predecessor held at compaction time. This is the count that triggered the watchdog rotation.",
+    "secondary": "n_live_observations: total observations currently held by entity (includes GENESIS + ARCHIVED metadata bullets, not just substantive corrections)."
+  },
+  "method_summary": "1) Parse memory.jsonl, locate amanda.Correction.open.v2..v8. 2) For each version, extract GENESIS timestamp from its observations[0] string, and the predecessor's 'substantive obs' count reported there. 3) Build time series x=session_index (1..N), y=correction_count. 4) Run Mann-Kendall trend test (scipy.stats.kendalltau on (index, count) — equivalent to MK under no x-ties). 5) Run lag-1 autocorrelation. 6) Run OLS slope + bootstrap-CI. 7) Verdict: RSI_FEP_NOT_FALSIFIED iff (tau<0 AND p<0.05); else RSI_FEP_FALSIFIED. INDETERMINATE iff N<5 or all-same.",
+  "falsifier_predicates": {
+    "F1_session_history_extractable": "ge_5_distinct_versions_with_recoverable_timestamps",
+    "F2_correction_count_definable": "each_version_has_an_integer_correction_count_metric",
+    "F3_singularity_bs_test": "mann_kendall_tau_lt_0_AND_p_lt_0.05 => decay observed (RSI_FEP_NOT_FALSIFIED). otherwise RSI_FEP_FALSIFIED.",
+    "F4_serial_independence_check": "abs(lag1_autocorrelation) le 0.7 (flag if exceeded)",
+    "F5_robustness": "report OLS slope, R^2, bootstrap-resampled 95% CI on slope"
+  },
+  "decision_rule": "RSI_FEP_NOT_FALSIFIED iff F1 AND F2 AND F3 pass. RSI_FEP_FALSIFIED iff F1 AND F2 pass but F3 fails. HARNESS_INVALID iff F1 or F2 fails. INDETERMINATE iff borderline (e.g., 0.05 < p < 0.10).",
+  "default_on_uncertainty": "RSI_FEP_FALSIFIED (brutal honesty — burden of proof on the decay claim)",
+  "output_paths": {
+    "script": "substrate_survival/scripts/singularity_bs_T3_correction_count_decay.py",
+    "results": "substrate_survival/data/Singularity-BS-T3_correction_count_decay_results.json",
+    "tmp_copy": "/tmp/singularity_bs_T3_results.json",
+    "report": "substrate_survival/data/Singularity-BS-T3_report.md"
+  },
+  "no_mocking": true,
+  "read_only_gnosis": true
+}

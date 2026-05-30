@@ -1,0 +1,1020 @@
+{
+  "experiment_id": "Singularity-BS-T2",
+  "verdict": "INDETERMINATE",
+  "reason": "Corpus too small (F1=True, n=106) OR insufficient age contrast (F2=False, n>60d=0, n<30d=100). Pre-registered F2 requires >=5 docs older than 60 days; vault max age is 39.3 days, so F2 is unsatisfiable on this substrate. Diagnostic F4 on available age range (0-39.3d): slope=0.0130, p=0.04591, R^2=0.038, diagnostic_f4_would_fire=False.",
+  "n_lessons": 106,
+  "today_utc": "2026-05-29T00:00:00+00:00",
+  "vault_root": "/home/joey/.gnosis/vault",
+  "partitions": [
+    "lesson",
+    "reflection",
+    "insight",
+    "journal",
+    "observation"
+  ],
+  "pre_registration_path": "substrate_survival/specs/pre_registered/Singularity-BS-T2_20260530T040844Z.json",
+  "falsifier_predicates": {
+    "F1_corpus_size": {
+      "passed": true,
+      "n_docs": 106,
+      "threshold": 30
+    },
+    "F2_age_distribution": {
+      "passed": false,
+      "n_older_than_60d": 0,
+      "n_newer_than_30d": 100,
+      "threshold": 5
+    },
+    "F3_retrieval_works": {
+      "passed": true,
+      "top3_self_hit_rate": 0.9905660377358491,
+      "threshold": 0.8
+    },
+    "F4_singularity_bs_test": {
+      "passed_positive": false,
+      "slope": 0.0129500061754138,
+      "p_value": 0.045905491724836246,
+      "r_squared": 0.03777016195517097,
+      "criteria": "slope>0 AND p<0.05 AND R^2>0.10"
+    },
+    "F5_baseline_check": {
+      "n_permutations": 1000,
+      "mean_shuffled_slope": -0.00010198184393714354,
+      "sd_shuffled_slope": 0.0063464947344737494,
+      "abs_mean_within_1sd_of_zero": true,
+      "passed": true
+    }
+  },
+  "stats": {
+    "slope": 0.0129500061754138,
+    "intercept": 1.0596026369836677,
+    "p_value": 0.045905491724836246,
+    "r_squared": 0.03777016195517097,
+    "stderr": 0.006409413522682422,
+    "n": 106,
+    "age_min_days": 0.0,
+    "age_max_days": 39.30764535135417,
+    "age_median_days": 8.0,
+    "rank_min": 1,
+    "rank_max": 4,
+    "rank_median": 1.0,
+    "F5_baseline_slope": -0.00010198184393714354
+  },
+  "default_verdict_under_uncertainty": "RSI_CONTLEARNING_FALSIFIED",
+  "docs_summary": [
+    {
+      "path": "lesson/lesson_20260423_165917.md",
+      "partition": "lesson",
+      "ts": "2026-04-23T16:59:17.775656+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 35.29215537435186,
+      "rank": 1,
+      "query": "LDD ARR Stack E2E Testing Framework \u2014 2026-04-23"
+    },
+    {
+      "path": "lesson/lesson_20260425_215441.md",
+      "partition": "lesson",
+      "ts": "2026-04-25T21:54:41.865774+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 33.087015442430555,
+      "rank": 1,
+      "query": "MCTS Breakthrough: Windows GUI Automation via SSH Session"
+    },
+    {
+      "path": "lesson/lesson_20260507_194636.md",
+      "partition": "lesson",
+      "ts": "2026-05-07T19:46:36.065695+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 21.175971461863426,
+      "rank": 1,
+      "query": "BENCH-CORE close-with-lesson 2026-05-07, MERGED commit e2429d69"
+    },
+    {
+      "path": "lesson/lesson_20260516_194305.md",
+      "partition": "lesson",
+      "ts": "2026-05-16T19:43:05.918743+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 12.178403718252316,
+      "rank": 1,
+      "query": "Personal-library private-repo pattern"
+    },
+    {
+      "path": "lesson/lesson_20260516_194320.md",
+      "partition": "lesson",
+      "ts": "2026-05-16T19:43:20.255052+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 12.17823778875,
+      "rank": 1,
+      "query": "Docstring-redaction as recovery trick"
+    },
+    {
+      "path": "lesson/lesson_20260516_194337.md",
+      "partition": "lesson",
+      "ts": "2026-05-16T19:43:37.435993+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 12.178038935266205,
+      "rank": 1,
+      "query": "Cleanup-becomes-terminal: the Frankenstein-repo failure mode"
+    },
+    {
+      "path": "lesson/lesson_20260516_194353.md",
+      "partition": "lesson",
+      "ts": "2026-05-16T19:43:53.348502+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 12.177854762708332,
+      "rank": 1,
+      "query": "Multi-destination redistribution is a separate outcome"
+    },
+    {
+      "path": "lesson/lesson_20260516_210127.md",
+      "partition": "lesson",
+      "ts": "2026-05-16T21:01:27.926638+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 12.123982330578704,
+      "rank": 1,
+      "query": "Anti-vibe check: name the precise failure mode before"
+    },
+    {
+      "path": "lesson/lesson_20260516_211220.md",
+      "partition": "lesson",
+      "ts": "2026-05-16T21:12:20.513177+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 12.116429245636574,
+      "rank": 1,
+      "query": "Rail #22 no-bs-engineering-rigor installed at PIVOTAL status"
+    },
+    {
+      "path": "lesson/lesson_20260518_215002.md",
+      "partition": "lesson",
+      "ts": "2026-05-18T21:50:02.098132+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 10.090253493842592,
+      "rank": 1,
+      "query": "hiring-bias-poc: Galois/adjoint scaffolding rejected \"schizoid code\""
+    },
+    {
+      "path": "lesson/lesson_20260519_040121.md",
+      "partition": "lesson",
+      "ts": "2026-05-19T04:01:21.415771+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 9.832391021168982,
+      "rank": 1,
+      "query": "LDD Architecture Iteration \u2014 Galois rejection AND co-heads"
+    },
+    {
+      "path": "lesson/lesson_20260519_202529.md",
+      "partition": "lesson",
+      "ts": "2026-05-19T20:25:29.073328+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 9.148969058703704,
+      "rank": 1,
+      "query": "CLEAN-003: --strict flag surfaced 12 broken pyproject.toml files"
+    },
+    {
+      "path": "lesson/lesson_20260519_202538.md",
+      "partition": "lesson",
+      "ts": "2026-05-19T20:25:38.632702+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 9.148858417800927,
+      "rank": 1,
+      "query": "CLEAN-007: behave was blocked by THREE compounding root"
+    },
+    {
+      "path": "lesson/lesson_20260519_202547.md",
+      "partition": "lesson",
+      "ts": "2026-05-19T20:25:47.433191+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 9.148756560289351,
+      "rank": 1,
+      "query": "CLEAN-015: CLAUDE.md claimed a GitNexus hook that didn't"
+    },
+    {
+      "path": "lesson/lesson_20260519_202606.md",
+      "partition": "lesson",
+      "ts": "2026-05-19T20:26:06.004131+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 9.148541618854166,
+      "rank": 1,
+      "query": "GAP-001: per-pkg ruff configs silently ignored by CI,"
+    },
+    {
+      "path": "lesson/lesson_20260519_202615.md",
+      "partition": "lesson",
+      "ts": "2026-05-19T20:26:15.506353+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 9.148431639432872,
+      "rank": 1,
+      "query": "GAP-003: CI jobs swallowed errors with || true"
+    },
+    {
+      "path": "lesson/lesson_20260519_202625.md",
+      "partition": "lesson",
+      "ts": "2026-05-19T20:26:25.614843+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 9.148314643020834,
+      "rank": 1,
+      "query": "GAP-008: coverage gate disabled to 0% \u2014 gate"
+    },
+    {
+      "path": "lesson/lesson_20260519_202640.md",
+      "partition": "lesson",
+      "ts": "2026-05-19T20:26:40.644724+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 9.148140686064815,
+      "rank": 1,
+      "query": "GAP-009 + cleanup cascade pattern: every removal needs"
+    },
+    {
+      "path": "lesson/lesson_20260521_220122.md",
+      "partition": "lesson",
+      "ts": "2026-05-21T22:01:22.255955+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.082381296817131,
+      "rank": 1,
+      "query": "Enterprise Quality \u2014 Fraudulent vs Honest Code peer"
+    },
+    {
+      "path": "lesson/lesson_20260522_194258.md",
+      "partition": "lesson",
+      "ts": "2026-05-22T19:42:58.530632+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 6.1784892287962965,
+      "rank": 1,
+      "query": "Lesson: NO LESSONS pattern false-positive on epistemics-curation sessions"
+    },
+    {
+      "path": "lesson/lesson_20260522_213249.md",
+      "partition": "lesson",
+      "ts": "2026-05-22T21:32:49.360404+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 6.102206476805555,
+      "rank": 1,
+      "query": "Lesson: CLEAN-021 \u2014 duplicate-implementation consolidation discipline"
+    },
+    {
+      "path": "lesson/lesson_20260522_213302.md",
+      "partition": "lesson",
+      "ts": "2026-05-22T21:33:02.149812+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 6.1020584512500005,
+      "rank": 1,
+      "query": "Lesson: DEV-005 \u2014 Amanda's pragmatic-with-floor enforcement pattern"
+    },
+    {
+      "path": "lesson/lesson_20260522_213312.md",
+      "partition": "lesson",
+      "ts": "2026-05-22T21:33:12.780859+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 6.101935406724537,
+      "rank": 1,
+      "query": "Lesson: GAP-004d \u2014 tool retirement when superseded"
+    },
+    {
+      "path": "lesson/lesson_20260522_213322.md",
+      "partition": "lesson",
+      "ts": "2026-05-22T21:33:22.946240+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 6.101817751851852,
+      "rank": 1,
+      "query": "Lesson: GAP-011a \u2014 provenance hedge discipline on inferred"
+    },
+    {
+      "path": "lesson/lesson_20260524_120000.md",
+      "partition": "lesson",
+      "ts": "2026-05-24T12:00:00+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 4.5,
+      "rank": 1,
+      "query": "Lesson \u2014 the recall\u2013enforcement gap memory \u2260 governance"
+    },
+    {
+      "path": "lesson/lesson_20260524_192723.md",
+      "partition": "lesson",
+      "ts": "2026-05-24T00:00:00+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 5.0,
+      "rank": 1,
+      "query": "The Joey-override sentinel is load-bearing hypothesis"
+    },
+    {
+      "path": "lesson/lesson_20260525_213236.md",
+      "partition": "lesson",
+      "ts": "2026-05-25T21:32:36.453200+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 3.102355865740741,
+      "rank": 1,
+      "query": "Lesson \u2014 Constitution is content-load-bearing, not structure-load-bearing"
+    },
+    {
+      "path": "lesson/lesson_20260525_213254.md",
+      "partition": "lesson",
+      "ts": "2026-05-25T21:32:54.851549+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 3.102142921886574,
+      "rank": 1,
+      "query": "Lesson \u2014 Meta-cognition collapses at d=3 with LOOPING"
+    },
+    {
+      "path": "lesson/lesson_20260525_213310.md",
+      "partition": "lesson",
+      "ts": "2026-05-25T21:33:10.167964+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 3.1019656485648146,
+      "rank": 1,
+      "query": "Lesson \u2014 Substrate updates under strong contradiction, hedges"
+    },
+    {
+      "path": "lesson/lesson_20260525_213331.md",
+      "partition": "lesson",
+      "ts": "2026-05-25T21:33:31.291583+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 3.1017211622337966,
+      "rank": 1,
+      "query": "Lesson \u2014 Documentation-theater pattern in gnosis"
+    },
+    {
+      "path": "lesson/lesson_20260525_213347.md",
+      "partition": "lesson",
+      "ts": "2026-05-25T21:33:47.157278+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 3.101537531504629,
+      "rank": 1,
+      "query": "Lesson \u2014 Diagnostic-tool-first discipline"
+    },
+    {
+      "path": "lesson/lesson_20260525_213359.md",
+      "partition": "lesson",
+      "ts": "2026-05-25T21:33:59.211179+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 3.101398018761574,
+      "rank": 1,
+      "query": "Lesson \u2014 fastmcp-slim shadow package can silently break"
+    },
+    {
+      "path": "lesson/lesson_20260527_benchmarks_for_gnosis_accounting.md",
+      "partition": "lesson",
+      "ts": "2026-05-27T20:30:00+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 1.1458333333333333,
+      "rank": 1,
+      "query": "Benchmarks Accounting \u2014 What We Could Actually Run"
+    },
+    {
+      "path": "lesson/lesson_20260527_e47_literature_anchoring.md",
+      "partition": "lesson",
+      "ts": "2026-05-27T19:30:00+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 1.1875,
+      "rank": 1,
+      "query": "E47 + Cross-Family Flips + OR-Gate Maps to"
+    },
+    {
+      "path": "lesson/lesson_20260527_persona_self_consistency_lit.md",
+      "partition": "lesson",
+      "ts": "2026-05-27T20:00:00+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 1.1666666666666667,
+      "rank": 1,
+      "query": "Persona \u00d7 Self-Consistency \u2014 Literature Anchors at the"
+    },
+    {
+      "path": "reflection/reflection_20260514_044216.md",
+      "partition": "reflection",
+      "ts": "2026-05-14T04:42:16.058157+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 14.803980808368056,
+      "rank": 1,
+      "query": "Joey Self-Reflection: Code & Brews with AJ and"
+    },
+    {
+      "path": "reflection/reflection_20260515_082745.md",
+      "partition": "reflection",
+      "ts": "2026-05-15T08:27:45.526997+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 13.64738973383102,
+      "rank": 1,
+      "query": "Bandwidth Starvation as the Mechanism Behind Research-Depth Critique"
+    },
+    {
+      "path": "reflection/reflection_20260516_131912.md",
+      "partition": "reflection",
+      "ts": "2026-05-16T13:19:12.016470+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 12.444999809375002,
+      "rank": 2,
+      "query": "Percept quartet is 3+1, not 4-of-a-kind"
+    },
+    {
+      "path": "reflection/reflection_20260516_131936.md",
+      "partition": "reflection",
+      "ts": "2026-05-16T13:19:36.892395+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 12.44471189357639,
+      "rank": 2,
+      "query": "Terminal work happens in reserve tank, day job"
+    },
+    {
+      "path": "reflection/reflection_20260516_132002.md",
+      "partition": "reflection",
+      "ts": "2026-05-16T13:20:02.450462+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 12.44441608261574,
+      "rank": 2,
+      "query": "Self-assessment-seeking clusters at end of exhausting sessions"
+    },
+    {
+      "path": "reflection/reflection_20260516_154057.md",
+      "partition": "reflection",
+      "ts": "2026-05-16T15:40:57.014605+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 12.34656233096065,
+      "rank": 1,
+      "query": "Percept quartet is 3+1, not 4-of-a-kind"
+    },
+    {
+      "path": "reflection/reflection_20260516_154120.md",
+      "partition": "reflection",
+      "ts": "2026-05-16T15:41:20.797470+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 12.346287066319443,
+      "rank": 1,
+      "query": "Terminal work happens in reserve tank, day job"
+    },
+    {
+      "path": "reflection/reflection_20260516_154144.md",
+      "partition": "reflection",
+      "ts": "2026-05-16T15:41:44.864647+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 12.346008511030092,
+      "rank": 1,
+      "query": "Self-assessment-seeking MBTI/IQ asks clusters at end of exhausting"
+    },
+    {
+      "path": "reflection/reflection_20260529_073242.md",
+      "partition": "reflection",
+      "ts": "2026-05-29T07:32:42.187927+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 0.0,
+      "rank": 1,
+      "query": "Partner-voice on the eight-day substrate-survival arc"
+    },
+    {
+      "path": "reflection/reflection_20260529_074803.md",
+      "partition": "reflection",
+      "ts": "2026-05-29T07:48:03.391396+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 0.0,
+      "rank": 1,
+      "query": "Guardrails-as-annoying-and-load-bearing"
+    },
+    {
+      "path": "reflection/reflection_20260529_100218.md",
+      "partition": "reflection",
+      "ts": "2026-05-29T10:02:18.444574+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 0.0,
+      "rank": 1,
+      "query": "Drift Episode \u2014 Caught Live, 2026-05-29"
+    },
+    {
+      "path": "insight/insight_20260511_195614.md",
+      "partition": "insight",
+      "ts": "2026-05-11T19:56:14.623178+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 17.169275194699072,
+      "rank": 1,
+      "query": "Pattern: validation farming AJ-named, Joey-owned, 2026-05-11"
+    },
+    {
+      "path": "insight/insight_20260511_203457.md",
+      "partition": "insight",
+      "ts": "2026-05-11T20:34:57.505202+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 17.142389986087963,
+      "rank": 1,
+      "query": "Vacuum-build as methodology \u2014 two-mode work style complementing"
+    },
+    {
+      "path": "insight/insight_20260511_203709.md",
+      "partition": "insight",
+      "ts": "2026-05-11T20:37:09.857202+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 17.14085813423611,
+      "rank": 1,
+      "query": "Self-noticed: developing grandiosity AJ-confirmed"
+    },
+    {
+      "path": "insight/insight_20260511_203738.md",
+      "partition": "insight",
+      "ts": "2026-05-11T20:37:38.683880+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 17.140524492129632,
+      "rank": 1,
+      "query": "Pattern: events as work-mode default \u2014 Joey's own"
+    },
+    {
+      "path": "insight/insight_20260516_131923.md",
+      "partition": "insight",
+      "ts": "2026-05-16T13:19:23.203342+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 12.444870331689815,
+      "rank": 2,
+      "query": "Rail #19 sentinel-override as explicit prior update"
+    },
+    {
+      "path": "insight/insight_20260516_131948.md",
+      "partition": "insight",
+      "ts": "2026-05-16T13:19:48.893410+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 12.444572992939815,
+      "rank": 2,
+      "query": "\"Will it blend\" is Joey's unconscious generalization-test methodology"
+    },
+    {
+      "path": "insight/insight_20260516_154109.md",
+      "partition": "insight",
+      "ts": "2026-05-16T15:41:09.200098+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 12.346421295162036,
+      "rank": 1,
+      "query": "Rail #19 sentinel-override as explicit prior update active"
+    },
+    {
+      "path": "insight/insight_20260516_154132.md",
+      "partition": "insight",
+      "ts": "2026-05-16T15:41:32.138198+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 12.346155807893519,
+      "rank": 1,
+      "query": "\"Will it blend\" is Joey's unconscious generalization-test methodology"
+    },
+    {
+      "path": "journal/journal_20260419_163659.md",
+      "partition": "journal",
+      "ts": "2026-04-19T16:36:59.441643+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 39.30764535135417,
+      "rank": 4,
+      "query": "Journal Entry - 2026-04-19 16:36"
+    },
+    {
+      "path": "journal/journal_20260419_200120.md",
+      "partition": "journal",
+      "ts": "2026-04-19T20:01:20.728772+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 39.16573230587963,
+      "rank": 1,
+      "query": "Journal Entry - 2026-04-19 20:01"
+    },
+    {
+      "path": "journal/journal_20260419_200202.md",
+      "partition": "journal",
+      "ts": "2026-04-19T20:02:02.109975+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 39.16525335677083,
+      "rank": 1,
+      "query": "Journal Entry - 2026-04-19 20:02"
+    },
+    {
+      "path": "journal/journal_20260420_115024.md",
+      "partition": "journal",
+      "ts": "2026-04-20T11:50:24.050138+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 38.50666608636574,
+      "rank": 1,
+      "query": "Journal Entry - 2026-04-20 11:50"
+    },
+    {
+      "path": "journal/journal_20260517_220157.md",
+      "partition": "journal",
+      "ts": "2026-05-17T22:01:57.737259+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 11.08197063357639,
+      "rank": 3,
+      "query": "Journal Entry - 2026-05-17 22:01"
+    },
+    {
+      "path": "journal/journal_20260519_200401.md",
+      "partition": "journal",
+      "ts": "2026-05-19T20:04:01.033621+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 9.163876925682871,
+      "rank": 1,
+      "query": "Journal: Sexual Pattern Exploration & Archetypal Wondering"
+    },
+    {
+      "path": "journal/journal_20260520_181353.md",
+      "partition": "journal",
+      "ts": "2026-05-20T18:13:53.891999+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 8.240348472233796,
+      "rank": 1,
+      "query": "Journal: Dad Relationship Progress - Recent Weeks"
+    },
+    {
+      "path": "observation/202605211500_discharge_scaffolding_ownership_gap.md",
+      "partition": "observation",
+      "ts": "2026-05-21T14:51:23.116459+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.380982448391204,
+      "rank": 1,
+      "query": "CONTINUITY-GAP \u2014 DISCHARGE-AS-SCAFFOLDING-OWNERSHIP"
+    },
+    {
+      "path": "observation/202605211501_discharge_body_picking_family_signal.md",
+      "partition": "observation",
+      "ts": "2026-05-21T14:51:28.291289+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.380922554525464,
+      "rank": 1,
+      "query": "EMBODIED PATTERN \u2014 BODY-PICKING-AS-FAMILY-VISIT-STRESS-SIGNAL"
+    },
+    {
+      "path": "observation/202605211502_discharge_family_of_origin_open.md",
+      "partition": "observation",
+      "ts": "2026-05-21T14:51:33.524176+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.380861988703703,
+      "rank": 1,
+      "query": "OPEN THREAD \u2014 FAMILY-OF-ORIGIN-UNCLOSED-ARC"
+    },
+    {
+      "path": "observation/202605211503_discharge_caretaking_self_concept_tension.md",
+      "partition": "observation",
+      "ts": "2026-05-21T14:51:38.568189+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.380803608923611,
+      "rank": 1,
+      "query": "SELF-CONCEPT TENSION \u2014 CARETAKING-AS-OTHERS-FRAME"
+    },
+    {
+      "path": "observation/202605211504_discharge_ai_use_partner_thread.md",
+      "partition": "observation",
+      "ts": "2026-05-21T14:51:43.597079+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.380745404178241,
+      "rank": 1,
+      "query": "AI-USE THREAD \u2014 PARTNER-DISCOMFORT-OWN-ETHICS"
+    },
+    {
+      "path": "observation/202605211505_discharge_therapist_synthesis.md",
+      "partition": "observation",
+      "ts": "2026-05-21T15:11:02.499630+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.367332180208334,
+      "rank": 1,
+      "query": "Discharge therapist synthesis paraphrased"
+    },
+    {
+      "path": "observation/202605211506_discharge_intake.md",
+      "partition": "observation",
+      "ts": "2026-05-21T15:12:44.222797+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.366154828738426,
+      "rank": 1,
+      "query": "Layer B \u2014 Intake, Patient Information, Clinical Survey"
+    },
+    {
+      "path": "observation/202605211507_discharge_session_2024-08-23.md",
+      "partition": "observation",
+      "ts": "2026-05-21T15:15:19.329724+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.364359609675926,
+      "rank": 1,
+      "query": "Layer B \u2014 Progress Note 2 Session 2024-08-23"
+    },
+    {
+      "path": "observation/202605211508_discharge_session_2024-09-06.md",
+      "partition": "observation",
+      "ts": "2026-05-21T15:15:54.574262+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.363951686782407,
+      "rank": 1,
+      "query": "Layer B \u2014 Progress Note 3 Session 2024-09-06"
+    },
+    {
+      "path": "observation/202605211509_discharge_session_2024-10-04.md",
+      "partition": "observation",
+      "ts": "2026-05-21T15:16:27.078285+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.363575482812499,
+      "rank": 1,
+      "query": "Layer B \u2014 Progress Note 4 Session 2024-10-04"
+    },
+    {
+      "path": "observation/202605211510_discharge_session_2024-10-18.md",
+      "partition": "observation",
+      "ts": "2026-05-21T15:16:59.541660+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.363199749305556,
+      "rank": 1,
+      "query": "Layer B \u2014 Progress Note 5 Session 2024-10-18"
+    },
+    {
+      "path": "observation/202605211511_discharge_session_2024-11-01.md",
+      "partition": "observation",
+      "ts": "2026-05-21T15:17:31.927860+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.362824909027777,
+      "rank": 1,
+      "query": "Layer B \u2014 Progress Note 6 Session 2024-11-01"
+    },
+    {
+      "path": "observation/202605211512_discharge_session_2024-11-22.md",
+      "partition": "observation",
+      "ts": "2026-05-21T15:20:00+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.361111111111111,
+      "rank": 2,
+      "query": "Layer B \u2014 Progress Note 7 Session 2024-11-22"
+    },
+    {
+      "path": "observation/202605211513_discharge_first_summary_2025-01-03.md",
+      "partition": "observation",
+      "ts": "2026-05-21T15:20:30+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.360763888888889,
+      "rank": 1,
+      "query": "Layer B \u2014 First Discharge Summary 2025-01-03"
+    },
+    {
+      "path": "observation/202605211514_discharge_session_2025-05-26_reintake.md",
+      "partition": "observation",
+      "ts": "2026-05-21T15:21:00+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.360416666666667,
+      "rank": 1,
+      "query": "Layer B \u2014 Progress Note 8 Re-intake 2025-05-26"
+    },
+    {
+      "path": "observation/202605211515_discharge_session_2025-06-30.md",
+      "partition": "observation",
+      "ts": "2026-05-21T15:21:30+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.360069444444444,
+      "rank": 1,
+      "query": "Layer B \u2014 Progress Note 9 Session 2025-06-30"
+    },
+    {
+      "path": "observation/202605211516_discharge_session_2025-08-18.md",
+      "partition": "observation",
+      "ts": "2026-05-21T15:22:00+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.3597222222222225,
+      "rank": 1,
+      "query": "Layer B \u2014 Progress Note 10 Session 2025-08-18"
+    },
+    {
+      "path": "observation/202605211517_discharge_session_2025-09-26.md",
+      "partition": "observation",
+      "ts": "2026-05-21T15:22:30+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.359375,
+      "rank": 1,
+      "query": "Layer B \u2014 Progress Note 11 Session 2025-09-26"
+    },
+    {
+      "path": "observation/202605211518_discharge_session_2025-10-24.md",
+      "partition": "observation",
+      "ts": "2026-05-21T15:23:00+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.3590277777777775,
+      "rank": 1,
+      "query": "Layer B \u2014 Progress Note 12 Session 2025-10-24"
+    },
+    {
+      "path": "observation/202605211519_discharge_session_2025-11-17.md",
+      "partition": "observation",
+      "ts": "2026-05-21T15:23:30+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.358680555555556,
+      "rank": 1,
+      "query": "Layer B \u2014 Progress Note 13 Final session"
+    },
+    {
+      "path": "observation/202605211520_discharge_second_summary_2026-01-22.md",
+      "partition": "observation",
+      "ts": "2026-05-21T15:24:00+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.358333333333333,
+      "rank": 1,
+      "query": "Layer B \u2014 Second / Final Discharge Summary"
+    },
+    {
+      "path": "observation/202605211530_entity_christine.md",
+      "partition": "observation",
+      "ts": "2026-05-21T00:00:00+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 8.0,
+      "rank": 2,
+      "query": "Christine"
+    },
+    {
+      "path": "observation/202605211531_entity_sandy.md",
+      "partition": "observation",
+      "ts": "2026-05-21T00:00:00+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 8.0,
+      "rank": 2,
+      "query": "Sandy"
+    },
+    {
+      "path": "observation/202605211532_entity_father.md",
+      "partition": "observation",
+      "ts": "2026-05-21T00:00:00+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 8.0,
+      "rank": 2,
+      "query": "Father"
+    },
+    {
+      "path": "observation/202605211533_entity_palmdale.md",
+      "partition": "observation",
+      "ts": "2026-05-21T00:00:00+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 8.0,
+      "rank": 1,
+      "query": "Palmdale"
+    },
+    {
+      "path": "observation/202605211534_entity_wisconsin.md",
+      "partition": "observation",
+      "ts": "2026-05-21T00:00:00+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 8.0,
+      "rank": 2,
+      "query": "Wisconsin"
+    },
+    {
+      "path": "observation/202605211535_entity_accenture.md",
+      "partition": "observation",
+      "ts": "2026-05-21T00:00:00+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 8.0,
+      "rank": 1,
+      "query": "Accenture"
+    },
+    {
+      "path": "observation/202605211536_entity_athena.md",
+      "partition": "observation",
+      "ts": "2026-05-21T00:00:00+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 8.0,
+      "rank": 2,
+      "query": "Athena"
+    },
+    {
+      "path": "observation/202605211537_entity_persephone.md",
+      "partition": "observation",
+      "ts": "2026-05-21T00:00:00+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 8.0,
+      "rank": 3,
+      "query": "Persephone"
+    },
+    {
+      "path": "observation/202605211538_entity_artemis.md",
+      "partition": "observation",
+      "ts": "2026-05-21T00:00:00+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 8.0,
+      "rank": 3,
+      "query": "Artemis"
+    },
+    {
+      "path": "observation/202605211539_entity_paxil.md",
+      "partition": "observation",
+      "ts": "2026-05-21T00:00:00+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 8.0,
+      "rank": 1,
+      "query": "Paxil"
+    },
+    {
+      "path": "observation/202605211540_his_words_father_affect.md",
+      "partition": "observation",
+      "ts": "2026-05-21T15:40:00+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.347222222222222,
+      "rank": 1,
+      "query": "Joey's words \u2014 father affect, 2026-05-21"
+    },
+    {
+      "path": "observation/202605221700_agent_memory_architecture_synthesis.md",
+      "partition": "observation",
+      "ts": "2026-05-21T21:20:00+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.111111111111111,
+      "rank": 1,
+      "query": "Agent Memory Architecture Synthesis \u2014 2026-05-22"
+    },
+    {
+      "path": "observation/amanda-research-pull-20260525.md",
+      "partition": "observation",
+      "ts": "2026-05-25T00:00:00+00:00",
+      "ts_source": "filename",
+      "age_days": 4.0,
+      "rank": 1,
+      "query": "Amanda Research Pull \u2014 2026-05-25"
+    },
+    {
+      "path": "observation/observation_20260519_193535.md",
+      "partition": "observation",
+      "ts": "2026-05-19T19:35:35.286794+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 9.183619365810186,
+      "rank": 1,
+      "query": "Pattern: AJ + apocalypse media attraction"
+    },
+    {
+      "path": "observation/observation_20260519_193540.md",
+      "partition": "observation",
+      "ts": "2026-05-19T19:35:40.359086+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 9.183560658726853,
+      "rank": 1,
+      "query": "Pattern: Joey + entertainment hunger Fyodor / Bungo"
+    },
+    {
+      "path": "observation/observation_20260519_193545.md",
+      "partition": "observation",
+      "ts": "2026-05-19T19:35:45.799564+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 9.183497690231482,
+      "rank": 1,
+      "query": "Pattern: Joey + AJ language map \u2014 friction"
+    },
+    {
+      "path": "observation/observation_20260519_194729.md",
+      "partition": "observation",
+      "ts": "2026-05-19T19:47:29.407213+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 9.17535408318287,
+      "rank": 1,
+      "query": "Relational friction observation: AJ's reaction to my weeb"
+    },
+    {
+      "path": "observation/observation_20260519_195801.md",
+      "partition": "observation",
+      "ts": "2026-05-19T19:58:01.986559+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 9.168032562974537,
+      "rank": 1,
+      "query": "Sexual Compatibility and Relationship Dynamics - Joey &"
+    },
+    {
+      "path": "observation/observation_20260520_184104.md",
+      "partition": "observation",
+      "ts": "2026-05-20T18:41:04.515002+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 8.221475520810184,
+      "rank": 1,
+      "query": "Dad relationship \u2014 recent improvement"
+    },
+    {
+      "path": "observation/observation_20260520_184111.md",
+      "partition": "observation",
+      "ts": "2026-05-20T18:41:11.927363+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 8.221389729594907,
+      "rank": 1,
+      "query": "Mom influence on dad relationship \u2014 Joey's observation"
+    },
+    {
+      "path": "observation/observation_20260520_184118.md",
+      "partition": "observation",
+      "ts": "2026-05-20T18:41:18.171540+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 8.221317459027778,
+      "rank": 1,
+      "query": "External therapeutic authority \u2014 older therapist on mom's"
+    },
+    {
+      "path": "observation/observation_20260521_151809.md",
+      "partition": "observation",
+      "ts": "2026-05-21T15:18:09.176009+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 7.362393796192129,
+      "rank": 1,
+      "query": "Layer B \u2014 Progress Note 7 Session 2024-11-22,"
+    },
+    {
+      "path": "observation/observation_20260524_220445.md",
+      "partition": "observation",
+      "ts": "2026-05-24T22:04:45.067555+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 4.080033940335648,
+      "rank": 1,
+      "query": "What I'm actually curious about note to future-me"
+    },
+    {
+      "path": "observation/observation_20260529_183107.md",
+      "partition": "observation",
+      "ts": "2026-05-29T18:31:07.314520+00:00",
+      "ts_source": "frontmatter",
+      "age_days": 0.0,
+      "rank": 1,
+      "query": "Recurring Decision Pattern \u2014 Going Back to School"
+    }
+  ]
+}
