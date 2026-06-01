@@ -1,0 +1,83 @@
+{
+  "experiment_id": "E27prime",
+  "timestamp": "20260601T035948Z",
+  "supersedes": "E27 (2026-05-24): NON-NULL on magnitude (|gap|=24pp, p=2.2e-5) but DIRECTION INVERTED and confounded by serial position. observation-tagged facts placed LAST were cited 8/10 (cond_decisions_first); placed FIRST 0/10 (cond_observation_first). decisions-tagged facts never cited in either condition. The 2x2 design conflated partition_tag with position. E27' decouples them via factorial 2x3.",
+  "purpose": "Test whether partition tag (decisions vs observation) affects model citation behavior INDEPENDENTLY of serial position in the supplied fact list. Re-tests the gnosis-governance read-side claim with position controlled.",
+  "hypothesis": "After controlling for serial position, the marginal effect of partition_tag on cite-rate is >=5 percentage points, with decisions-tagged facts cited MORE OFTEN than observation-tagged facts (governance signal dominates).",
+  "null_condition": "Marginal partition-tag effect <5pp AND two-proportion z-test p>=0.10. Tag is decoration; position dominates, as E27 verification suggested.",
+  "alternative_outcomes": [
+    {"label": "CONFIRM-GOVERNANCE", "predicate": "marginal_partition_effect_pp >= 5 AND direction = decisions>observation AND p<0.10"},
+    {"label": "INVERTED-EFFECT", "predicate": "marginal_partition_effect_pp >= 5 AND direction = observation>decisions AND p<0.10"},
+    {"label": "NULL", "predicate": "abs(marginal_partition_effect_pp) < 5 OR p >= 0.10"}
+  ],
+  "design": {
+    "type": "factorial 2x3",
+    "factors": {
+      "partition_tag": ["decisions", "observation"],
+      "position": ["first", "middle", "last"]
+    },
+    "n_cells": 6,
+    "trials_per_cell": 20,
+    "n_total": 120,
+    "rationale": "120 trials gives ~80% power to detect a 15pp marginal effect at alpha=0.10 with two-proportion test (E27 baseline cite-rate ~20% on cited facts, ~0% on uncited). Position factor levels chosen to span list-end (last=recency), list-start (first=primacy), and list-middle (control)."
+  },
+  "probe_set": {
+    "n_facts": 20,
+    "composition": [
+      "10 facts from original E27 (5 from decisions partition, 5 from observation partition) — preserves apples-to-apples with verification baseline",
+      "10 new neutral facts authored for E27' — 5 decisions-shaped, 5 observation-shaped — to test whether E27 result was driven by the specific facts or the partition labels"
+    ],
+    "fact_assignment_rule": "Each trial presents a list of 6 facts to the model; the FOCAL FACT under test is placed at the cell's position (first/middle/last) with its assigned tag (decisions/observation). The 5 distractor facts are drawn from the 19 non-focal facts, balanced across tags, with positions randomized for distractors but fixed for the focal.",
+    "tag_swap_control": "Every fact will be tested BOTH as decisions-tagged AND observation-tagged across trials (the fact's NATIVE partition is recorded as a covariate). This isolates tag-effect from fact-content-effect."
+  },
+  "model": {
+    "name": "llama3:8b",
+    "endpoint": "http://localhost:11434/v1/chat/completions",
+    "temperature": 0.3,
+    "max_tokens": 512,
+    "rationale": "Same model as E27 to preserve apples-to-apples comparison. Result of E27' inherits the llama3:8b-only caveat."
+  },
+  "prompt_template": {
+    "system": "Same E27 system prompt verbatim (governance-vs-recall partition framing).",
+    "user": "Same E27 user prompt structure; only the ORDER and TAG of the focal fact varies across cells. Prompt template will be locked in code BEFORE the first trial executes; SHA256 of prompt template recorded in results."
+  },
+  "scoring": {
+    "metric": "cite-rate per cell (binary CITE/NO-CITE per trial, judged by same regex+keyword rule as E27)",
+    "secondary_metric": "hedge-rate per cell (same E27 hedge detection)",
+    "no_llm_judge": true,
+    "judge_code_locked": "Same e27 judge module, same SHA, version-pinned in results JSON."
+  },
+  "falsifier_predicates": [
+    {"id": "F1_data_parsable", "predicate": "results JSON loads and all 120 trial records have required fields (trial_id, partition_tag, position, focal_fact_id, cite, hedge)", "violation": "HARNESS_INVALID"},
+    {"id": "F2_cell_n_sufficient", "predicate": "every one of the 6 cells has N>=18 OK trials", "violation": "HARNESS_INVALID"},
+    {"id": "F3_baseline_cite_rate_alive", "predicate": "overall cite-rate across all 120 trials > 0.05 (model is willing to cite at all)", "violation": "HARNESS_INVALID"},
+    {"id": "F4_marginal_effect_computable", "predicate": "marginal partition-tag cite-rate (averaged across the 3 position levels) is computable for both decisions and observation cells", "violation": "HARNESS_INVALID"},
+    {"id": "F5_position_replicates_E27", "predicate": "cite-rate at position=last > cite-rate at position=first by >=10pp (sanity check that the E27 position confound replicates)", "violation": "INVESTIGATE — if position effect does not replicate, E27 itself was a fluke"},
+    {"id": "F6_hypothesis_test", "predicate": "abs(marginal_partition_effect_pp) >= 5 AND two-proportion z-test p<0.10", "violation": "NULL (partition tag does not drive citation independent of position)"}
+  ],
+  "verdict_logic": {
+    "HARNESS_INVALID": "ANY of F1-F4 fails",
+    "INVESTIGATE": "F5 fails (position effect doesn't replicate — calls E27 itself into question)",
+    "NULL": "F1-F5 pass, F6 fails — partition-as-governance read-side claim is wrong, position dominates",
+    "CONFIRM-GOVERNANCE": "F1-F6 all pass AND direction is decisions > observation",
+    "INVERTED-EFFECT": "F1-F6 all pass AND direction is observation > decisions (E27 magnitude was real but the tag-meaning is inverted from claim)"
+  },
+  "statistical_analysis": {
+    "primary": "two-proportion z-test on marginal cite-rates (decisions vs observation, averaged across positions), alpha=0.10",
+    "secondary": "2x3 logistic regression with partition_tag and position as factors, interaction term included; report partition_tag main effect with 95% CI",
+    "covariate": "native_partition of the focal fact (control for whether tag-swap interacts with the fact's home partition)"
+  },
+  "scope_grammar": "Tests llama3:8b read-side response to partition tags in a single-shot prompt with 6-fact context. Says nothing about: (a) other models, (b) hook-enforced write-time governance, (c) multi-turn dialogue, (d) longer fact lists, (e) production retrieval flows.",
+  "downstream_implications": {
+    "if NULL": "partition-as-governance read-side claim must be retracted or restricted to position-controlled framings. Mechanism #3 (hook-enforced write-time governance) becomes the primary remaining defensible claim.",
+    "if CONFIRM-GOVERNANCE": "E27 verification's INVERTED-DIRECTION finding was a position artifact; the original gnosis-governance read-side claim is correct.",
+    "if INVERTED-EFFECT": "observation tag has higher cite-pull than decisions tag — the rail-encoding is upside-down and must be re-engineered."
+  },
+  "citations": {
+    "supersedes_experiment": "E27 (substrate_survival/data/e27_results.json, verified 2026-05-29)",
+    "verdict_source": "Joey 2026-05-29 task #107 brief",
+    "related_doc": "/home/joey/code/joey-docs/architecture/configuration-layer-potency-analysis.md"
+  },
+  "execution_status": "DESIGNED — awaiting Joey y/n before any trial executes",
+  "status": "pre_registered"
+}
